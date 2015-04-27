@@ -1,6 +1,7 @@
 {
   "name": "selene-framework/admin-module",
   "description": "Selene Framework Administration Module",
+  "keywords": ["selene", "selene framework", "module"],
   "license": "MIT",
   "authors": [
     {
