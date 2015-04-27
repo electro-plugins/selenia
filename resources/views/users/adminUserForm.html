@@ -1,0 +1,23 @@
+<t:admin>
+  <p:page-content>
+    <t:form>
+
+      <p:content>
+
+        <c:field label="Nome de utilizador" name="username">
+          <c:input value="{username}" autofocus="yes" autocomplete="no"/>
+        </c:field>
+
+        <c:field label="Senha" name="password">
+          <c:input name="password" type="password" autocomplete="no"/>
+        </c:field>
+
+      </p:content>
+
+      <p:actions>
+        <t:buttons-save-delete key="{username}"/>
+      </p:actions>
+
+    </t:form>
+  </p:page-content>
+</t:admin>

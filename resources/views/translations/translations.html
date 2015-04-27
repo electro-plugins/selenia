@@ -1,0 +1,24 @@
+<t:admin>
+  <p:page-content>
+  	<fieldset class="mainPanel">
+  		<div class="fieldset">
+        <c:data-grid data="{!translations}">
+            <p:column width="40"   type="row-selector" />
+            <p:column width="150"  title="Chave"       />
+            <p:column width="50%"  title="Português"   />
+            <p:column width="50%"  title="Inglês"      />
+            <p:row-template on-click="translations/{key}">
+                <p:column>{#ord}</p:column>
+                <p:column>{key}</p:column>
+                <p:column>{text_pt}</p:column>
+                <p:column>{text_en}</p:column>
+            </p:row-template>
+            <p:no-data>
+                Não existem traduções.
+            </p:no-data>
+        </c:data-grid>
+        <t:button-new label="Nova chave" url="translations/{key}"/>
+      </div>
+    </fieldset>
+  </p:page-content>
+</t:admin>

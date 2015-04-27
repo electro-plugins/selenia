@@ -1,0 +1,112 @@
+<c:template name="admin">
+  <p:param name="page-content" type="source"/>
+  <p:stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
+  <p:stylesheet src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>
+  <p:stylesheet src="lib/datatables-responsive/css/dataTables.responsive.css"/>
+  <p:stylesheet src="lib/metisMenu/dist/metisMenu.min.css"/>
+  <p:stylesheet src="lib/chosen/chosen.min.css"/>
+  <p:stylesheet src="lib/font-awesome/css/font-awesome.min.css"/>
+  <p:stylesheet src="dist/main.css"/>
+  <p:script src="lib/jquery/dist/jquery.min.js"/>
+  <p:script src="lib/chosen/chosen.jquery.min.js"/>
+  <p:script src="lib/bootstrap/dist/js/bootstrap.min.js"/>
+  <p:script src="lib/datatables/media/js/jquery.dataTables.js"/>
+  <p:script src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>
+  <p:script src="lib/datatables-responsive/js/dataTables.responsive.js"/>
+  <p:script src="lib/metisMenu/dist/metisMenu.min.js"/>
+  <p:script src="js/main.js"/>
+  <p:body>
+
+    <c:test value="{!controller.showLogin}">
+      <p:if-false>
+
+        <div id="wrapper">
+
+          <!-- Navigation -->
+          <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="">{!application.appName}</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+
+              <li><a href="">$HOME</a></li>
+              <t:user-menu/>
+
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+              <div class="sidebar-nav navbar-collapse">
+
+                <c:main-menu class="nav" id="side-menu" expand-icon="fa.arrow">
+                  <p:header>
+                    <!--li class="sidebar-search">
+                      <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" placeholder="Procurar...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>&nbsp;&nbsp;
+                          </button>
+                        </span>
+                      </div>
+                    </li-->
+                  </p:header>
+                </c:main-menu>
+
+              </div>
+              <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+          </nav>
+
+          <!-- =============================================== -->
+
+          <!-- Page Content -->
+          <div id="page-wrapper">
+
+            {!page.statusMessage}
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h1 class="page-header">{!admin.pageTitle}</h1>
+                  <ol class="breadcrumb">
+                    {!admin.navPath}
+                  </ol>
+                </div>
+                <!-- /.col-lg-12 -->
+              </div>
+              <!-- /.row -->
+              {@page-content}
+
+              <footer>
+                  Selene Admin v1.0 &nbsp;-&nbsp; Copyright &copy; 2005-2015 <a href="http://impactwave.com">Impactwave, Lda</a>.
+                  All rights reserved.
+              </footer>
+
+            </div>
+            <!-- /.container-fluid -->
+
+          </div>
+          <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+      </p:if-false>
+
+      <p:if-true>
+        <t:login/>
+      </p:if-true>
+    </c:test>
+
+  </p:body>
+</c:template>

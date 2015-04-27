@@ -1,0 +1,6 @@
+<c:template name="terminal-output">
+  <p:param name="data" type="data"/>
+  <p:body>
+    <div class="terminal dark" style="{!controller.errorStyle}"><c:literal value="{@data}" encode="true"/></div>
+  </p:body>
+</c:template>

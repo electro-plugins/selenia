@@ -1,0 +1,13 @@
+<c:template name="form">
+  <p:param name="type" type="text" default="form-horizontal"/>
+  <p:param name="content" type="source"/>
+  <p:param name="actions" type="source"/>
+  <p:body>
+    <article class="form {@type}">
+      {@content}
+      <div class="form-footer">
+        {@actions}
+      </div>
+    </article>
+  </p:body>
+</c:template>

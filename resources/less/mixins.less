@@ -1,0 +1,17 @@
+@import "@{bootstrap-path}/mixins.less";
+
+#layer() {
+  content:  '';
+  display:  block;
+  position: absolute;
+}
+
+#gradient {
+  .left-sidebar(@bar-color; @width) {
+    @color-stop: @width + 5px;
+    background-image:  -webkit-linear-gradient(left, @bar-color, @bar-color @color-stop, transparent @color-stop);
+    background-image:  -o-linear-gradient(left, @bar-color, @bar-color @color-stop, transparent @color-stop);
+    background-image:  linear-gradient(to right, @bar-color, @bar-color @color-stop, transparent @color-stop);
+    background-repeat: no-repeat;
+  }
+}

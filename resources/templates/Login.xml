@@ -1,0 +1,40 @@
+<c:template name="login">
+  <p:body>
+    <input type="hidden" name="_prevPost" value="{!controller.prevPost}"/>
+
+    {!page.statusMessage}
+
+    <div class="login-box">
+      <!--
+      <div class="login-logo">
+        <img src="i/logo.png"/>
+      </div>
+      -->
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <h1 class="text-info">$LOGIN_TITLE</h1>
+        <div class="text-center2 sub">$LOGIN_SUBTITLE</div>
+        <p class="login-box-msg">$LOGIN_PROMPT</p>
+        <div class="form-group has-feedback">
+          <input name="username" type="text" class="form-control" placeholder="$LOGIN_USERNAME" autofocus="yes"/>
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input name="password" type="password" class="form-control" placeholder="$LOGIN_PASSWORD"/>
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-8 col-xs-4">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="doAction('login')">$LOGIN_BUTTON
+            </button>
+          </div>
+          <!-- /.col -->
+        </div>
+
+      </div>
+      <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+
+  </p:body>
+</c:template>

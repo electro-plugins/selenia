@@ -1,0 +1,20 @@
+<t:admin>
+  <p:page-content>
+    <c:data-grid data="{!default}">
+      <p:column width="40" type="row-selector"/>
+      <p:column width="80" title="Ativo" align="center"/>
+      <p:column width="100%" title="Nome"/>
+      <p:row-template on-click="{!URI.mainForm}">
+        <p:column>{#ord}</p:column>
+        <p:column>
+          <c:checkbox test-value="" disabled="yes"/>
+        </p:column>
+        <p:column>{username}</p:column>
+      </p:row-template>
+      <p:no-data>
+        {!admin.noItems}
+      </p:no-data>
+    </c:data-grid>
+    <t:button-new url="{!URI.mainForm}"/>
+  </p:page-content>
+</t:admin>

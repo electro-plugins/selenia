@@ -1,0 +1,36 @@
+<c:template name="user-menu">
+  <p:body>
+
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-user fa-fw"></i>
+        {!sessionInfo.userFullName} &nbsp;
+        <i class="fa fa-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-user">
+        <li>
+          <a href="user">
+            <i class="fa fa-user fa-fw"></i>
+            $PROFILE
+          </a>
+        </li>
+        <!--li>
+          <a href="#">
+            <i class="fa fa-gear fa-fw"></i>
+            Settings
+          </a>
+        </li-->
+        <li class="divider"></li>
+        <li>
+          <a href="javascript:doAction('logout')">
+            <i class="fa fa-sign-out fa-fw"></i>
+            $LOGOUT
+          </a>
+        </li>
+      </ul>
+      <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+
+  </p:body>
+</c:template>

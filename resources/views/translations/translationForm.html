@@ -1,0 +1,36 @@
+<t:admin>
+  <p:page-content>
+    <fieldset class="mainPanel">
+      <div class="fieldset">
+        <table class="form">
+          <col width="33%"><col width="33%"><col width="33%">
+          <tr>
+            <td>
+              <label for="key" class="form">Chave:</label>
+          <c:test value="{!translation.key}">
+            <p:if-set>
+              <t:static-field name="key" value="{!translation.key}" label="{!translation.key}"/>
+            </p:if-set>
+            <p:if-not-set>
+              <c:input name="key" value="{!translation.key}" focus="yes"/>
+            </p:if-not-set>
+          </c:test>
+          </td>
+          <td></td>
+          <td></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+          <c:tabs data="{!languages}">
+            <p:page-template>
+              <c:input type="multiline" name="text_{value}" value="{!translation.text_{value}}"/>
+            </p:page-template>
+          </c:tabs>
+          </td>
+          </tr>
+        </table>
+        <t:buttons-save-delete key="{!translation.key}" item-name="esta chave de tradução"/>
+      </div>
+    </fieldset>
+  </p:page-content>
+</t:admin>
