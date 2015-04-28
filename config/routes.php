@@ -1,6 +1,6 @@
 <?php
 $module    = 'selene-framework/admin-module';
-$namespace = 'Selene\Modules\Admin\Controllers';
+$namespace = 'Selene\Modules\Admin';
 
 return [
 
@@ -57,7 +57,6 @@ return [
     'title'      => '$PROFILE',
     'URI'        => 'user',
     'module'     => $module,
-    'namespace'  => $namespace,
     'model'      => '$namespace\\Models\\User',
     'view'       => "users/adminUserForm",
     'controller' => "$namespace\\Controllers\\Users\\AdminUserForm",

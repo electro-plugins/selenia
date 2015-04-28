@@ -1,6 +1,12 @@
 <?php
 namespace Selene\Modules\Admin\Controllers;
 
+use Application;
+use ConfigException;
+use FatalException;
+use ModuleInfo;
+use RouteGroup;
+
 class AdminController extends \Controller
 {
   public $navigationPath;
@@ -138,8 +144,8 @@ class AdminController extends \Controller
     $page = $pageInfo;
     $ok   = false;
     while (isset ($page->parent)) {
-      if ($page->parent instanceof SiteGroup && isset($page->parent->parent)) {
-        $this->setViewModel ('subMenu', $page->parent->pages);
+      if ($page->parent instanceof RouteGroup && isset($page->parent->parent)) {
+        $this->setViewModel ('subMenu', $page->parent->routes);
         $this->subnavURI = $page->URI_regexp;
         if (isset($page->parent->baseSubnavURI)) {
           if (preg_match ("#{$page->parent->baseSubnavURI}#", $this->URI, $match))

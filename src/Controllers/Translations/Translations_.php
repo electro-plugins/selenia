@@ -4,7 +4,7 @@ use Selene\Modules\Admin\Controllers\AdminController;
 use Selene\Modules\Admin\Models\TranslationData;
 use Selene\Matisse\DataSet;
 
-class TranslationsController extends AdminController {
+class Translations extends AdminController {
 
   //--------------------------------------------------------------------------
   protected function setupViewModel() {

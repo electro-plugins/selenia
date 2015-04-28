@@ -3,7 +3,7 @@ namespace Selene\Modules\Admin\Controllers\Users;
 use Selene\Modules\Admin\Controllers\AdminController;
 use Selene\Matisse\DataRecord;
 
-class AdminUserFormController extends AdminController
+class AdminUserForm extends AdminController
 {
   protected function setupViewModel ()
   {

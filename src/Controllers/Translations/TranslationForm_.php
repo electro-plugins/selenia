@@ -4,7 +4,7 @@ use Selene\Modules\Admin\Controllers\AdminController;
 use Selene\Modules\Admin\Models\TranslationData;
 use Selene\Matisse\DataRecord;
 
-class TranslationFormController extends AdminController {
+class TranslationForm extends AdminController {
 
 	private $translationData;
 
