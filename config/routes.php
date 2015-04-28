@@ -6,50 +6,30 @@ $settings  = get ($application->config, 'admin', []);
 
 return [
 
-  RouteGroup ([
-    'title'      => '$ADMIN_USERS_MANAGEMENT',
-    'icon'       => 'fa fa-user',
-    'defaultURI' => 'users',
-    'module'     => $module,
-    'routes'     => [
+  PageRoute ([
+    'title'          => '$ADMIN_ADMIN_USERS',
+    'URI'            => 'users',
+    'module'         => $module,
+    'model'          => "$namespace\\Models\\User",
+    'view'           => "users/usersIndex.html",
+    'autoController' => true,
+    'isIndex'        => true,
+    'format'         => 'grid',
+    'singular'       => 'utilizador',
+    'plural'         => 'Utilizadores',
+    'gender'         => 'o',
+    'links'          => [
+      'mainForm' => 'users/{username}'
+    ],
+    'routes'         => [
+      SubPageRoute ([
+        'URI'            => 'users/{username}',
+        'view'           => "users/adminUserForm.html",
+        'controller'     => "$namespace\\Controllers\\Users\\AdminUserForm",
+        'autoController' => false,
+        'format'         => 'form',
+      ])
 
-      PageRoute ([
-        'title'          => '$ADMIN_ADMIN_USERS',
-        'URI'            => 'users',
-        'model'          => "$namespace\\Models\\User",
-        'view'           => "users/usersIndex.html",
-        'autoController' => true,
-        'isIndex'        => true,
-        'format'         => 'grid',
-        'singular'       => 'utilizador',
-        'plural'         => 'Utilizadores',
-        'gender'         => 'o',
-        'links'          => [
-          'mainForm' => 'users/{username}'
-        ],
-        'routes'         => [
-          SubPageRoute ([
-            'URI'            => 'users/{username}',
-            'view'           => "users/adminUserForm.html",
-            'controller'     => "$namespace\\Controllers\\Users\\AdminUserForm",
-            'autoController' => false,
-            'format'         => 'form',
-          ])
-
-        ]
-      ]),
-      when (!get ($settings, 'hidePublicUsers'), PageRoute ([
-        'title'          => '$ADMIN_WEBSITE_USERS',
-        'URI'            => 'site-users',
-        'model'          => "$namespace\\Models\\SiteUser",
-        'view'           => 'siteUsers/siteUsersIndex',
-        'autoController' => true,
-        'isIndex'        => true,
-        'format'         => 'grid',
-        'singular'       => 'utilizador',
-        'plural'         => 'Utilizadores',
-        'gender'         => 'o',
-      ])),
     ]
   ]),
 
