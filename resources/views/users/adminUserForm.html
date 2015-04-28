@@ -3,13 +3,15 @@
     <t:form>
 
       <p:content>
+        <!-- disable autofill -->
+        <input type="password" style="display:none">
 
         <c:field label="Nome de utilizador" name="username">
           <c:input value="{username}" autofocus="yes" autocomplete="no"/>
         </c:field>
 
         <c:field label="Senha" name="password">
-          <c:input name="password" type="password" autocomplete="no"/>
+          <c:input name="password" value="{password}" type="password" autocomplete="no"/>
         </c:field>
 
       </p:content>

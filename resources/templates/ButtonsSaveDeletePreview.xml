@@ -1,5 +1,4 @@
 <c:template name="buttons-save-delete-preview">
-  <p:param name="item-name"      type="text"/>
   <p:param name="key"            type="identifier"/>
   <p:param name="enable-if-set"  type="identifier"/>
   <p:param name="preview-label"  type="text" default="Pré-visualizar"/>
@@ -15,7 +14,7 @@
       <c:test value="{@key}">
         <p:if-set>
           <c:button class="btn-danger ActionDelete" action="delete"
-            confirm="yes" message="Tem a certeza de que deseja apagar {@item-name}?" label="$BUTTON_DELETE"/>
+            confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
           <c:test value="{@enable-if-set}">
             <p:if-set>
               <c:test value="{@preview-url}">

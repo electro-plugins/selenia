@@ -27,10 +27,11 @@ return [
         ],
         'routes'         => [
           SubPageRoute ([
-            'URI'        => 'users/{username}',
-            'view'       => "users/adminUserForm.html",
-            'controller' => "$namespace\\Controllers\\Users\\AdminUserForm",
-            'format'     => 'form',
+            'URI'            => 'users/{username}',
+            'view'           => "users/adminUserForm.html",
+            'controller'     => "$namespace\\Controllers\\Users\\AdminUserForm",
+            'autoController' => false,
+            'format'         => 'form',
           ])
 
         ]
@@ -57,13 +58,12 @@ return [
     'title'      => '$PROFILE',
     'URI'        => 'user',
     'module'     => $module,
-    'model'      => '$namespace\\Models\\User',
-    'view'       => "users/adminUserForm",
+    'model'      => "$namespace\\Models\\User",
+    'view'       => "users/adminUserForm.html",
     'controller' => "$namespace\\Controllers\\Users\\AdminUserForm",
     'format'     => 'form',
-    'isIndex'    => true,
-    'singular'   => 'Senha',
-    'gender'     => 'a',
+    'singular'   => 'utilizador',
+    'gender'     => 'o',
   ])
 
 ];
