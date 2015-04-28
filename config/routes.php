@@ -1,6 +1,8 @@
 <?php
+global $application;
 $module    = 'selene-framework/admin-module';
 $namespace = 'Selene\Modules\Admin';
+$settings  = get ($application->config, 'admin', []);
 
 return [
 
@@ -36,7 +38,7 @@ return [
 
         ]
       ]),
-      PageRoute ([
+      when (!get ($settings, 'hidePublicUsers'), PageRoute ([
         'title'          => '$ADMIN_WEBSITE_USERS',
         'URI'            => 'site-users',
         'model'          => "$namespace\\Models\\SiteUser",
@@ -47,7 +49,7 @@ return [
         'singular'       => 'utilizador',
         'plural'         => 'Utilizadores',
         'gender'         => 'o',
-      ]),
+      ])),
     ]
   ]),
 

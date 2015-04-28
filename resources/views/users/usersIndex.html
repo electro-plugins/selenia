@@ -3,13 +3,15 @@
     <c:data-grid data="{!default}">
       <p:column width="40" type="row-selector"/>
       <p:column width="80" title="Ativo" align="center"/>
-      <p:column width="100%" title="Nome"/>
+      <p:column width="80%" title="Nome"/>
+      <p:column width="20%" title="Tipo"/>
       <p:row-template on-click="{!URI.mainForm}">
         <p:column>{#ord}</p:column>
         <p:column>
           <c:checkbox test-value="{active}" disabled="yes"/>
         </p:column>
         <p:column>{username}</p:column>
+        <p:column>{type}</p:column>
       </p:row-template>
       <p:no-data>
         {!admin.noItems}

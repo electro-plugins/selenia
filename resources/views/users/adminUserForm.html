@@ -11,7 +11,13 @@
         </c:field>
 
         <c:field label="Senha" name="password">
-          <c:input name="password" value="{password}" type="password" autocomplete="no"/>
+          <c:input value="{password}" type="password" autocomplete="no"/>
+        </c:field>
+
+        <c:field label="Tipo" name="type">
+          <c:radiobutton value="admin" label="Administrador" test-value="{type}"/>
+          <c:radiobutton value="standard" label="Normal" test-value="{type}"/>
+          <c:radiobutton value="guest" label="Convidado" test-value="{type}"/>
         </c:field>
 
       </p:content>
