@@ -11,7 +11,7 @@
         <li>
           <a href="user">
             <i class="fa fa-user fa-fw"></i>
-            $PROFILE
+            $LOGIN_PROFILE
           </a>
         </li>
         <!--li>

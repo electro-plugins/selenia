@@ -3,7 +3,7 @@ namespace Selene\Modules\Admin\Models;
 
 class User extends \DataObject
 {
-  public $fieldNames       = ['username', 'password', 'token', 'type'];
+  public $fieldNames       = ['username', 'password', 'token', 'type', 'active'];
   public $primaryKeyName   = 'username';
   public $tableName        = 'users';
   public $primarySortField = 'username';
@@ -14,5 +14,6 @@ class User extends \DataObject
   public $password;
   public $token;
   public $type;
+  public $active;
 
 }

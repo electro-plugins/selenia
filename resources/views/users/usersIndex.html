@@ -2,14 +2,12 @@
   <p:page-content>
     <c:data-grid data="{!default}">
       <p:column width="40" type="row-selector"/>
-      <p:column width="80" title="Ativo" align="center"/>
-      <p:column width="80%" title="Nome"/>
-      <p:column width="20%" title="Tipo"/>
+      <p:column width="80" title="$LOGIN_ACTIVE" align="center" type="field"/>
+      <p:column width="80%" title="$LOGIN_USERNAME"/>
+      <p:column width="20%" title="$LOGIN_TYPE"/>
       <p:row-template on-click="{!URI.mainForm}">
         <p:column>{#ord}</p:column>
-        <p:column>
-          <c:checkbox test-value="{active}" disabled="yes"/>
-        </p:column>
+        <p:column><c:checkbox test-value="{active}" disabled="yes"/></p:column>
         <p:column>{username}</p:column>
         <p:column>{type}</p:column>
       </p:row-template>
