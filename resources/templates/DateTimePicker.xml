@@ -6,9 +6,9 @@
   <p:param name="format" type="text" default="YYYY-MM-DD HH:mm"/>
   <p:param name="locale" type="text" default="pt"/>
   <p:param name="side-by-side" type="boolean" default="true"/>
-  <p:script src="public/lib/moment/min/moment-with-locales.min.js"/>
-  <p:script src="public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"/>
-  <p:stylesheet src="public/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+  <p:script src="modules/admin/js/moment-with-locales.min.js"/>
+  <p:script src="modules/admin/js/bootstrap-datetimepicker.min.js"/>
+  <p:stylesheet src="modules/admin/css/bootstrap-datetimepicker.min.css"/>
   <p:body>
     <div class="Field form-group">
       <label class="control-label col-sm-4 col-md-3" for="{@name}_input">{@label}</label>
