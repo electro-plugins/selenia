@@ -11,16 +11,14 @@
   <p:stylesheet src="public/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
   <p:body>
     <div class="Field form-group">
-      <label for="date">{@label}</label>
-      <div class='input-group date' id='{@name}'>
-        <input type='text' class="form-control" name="{@name}"/>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+      <label class="control-label col-sm-4 col-md-3" for="{@name}_input">{@label}</label>
+      <div class='input-group col-sm-8 col-md-7 col-lg-6' id='{@name}_field'>
+        <input id="{@name}_input" type='text' class="form-control" name="{@name}"/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
       </div>
       <script type="text/javascript">
         $(function () {
-          $('#{@name}').datetimepicker({
+          $('#{@name}_field').datetimepicker({
             locale:      '{@locale}',
             defaultDate: '{@value}' || new moment(),
             format:      '{@format}',
