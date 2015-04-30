@@ -89,7 +89,7 @@ a:not([href]) {
 
 // Remove default bootstrap round corners for input elements.
 input[type=text], input[type=search], input[type=password], textarea, select,
-.input-group-btn button {
+.input-group-btn button, .input-group-addon {
   border-radius: 0 !important;
 }
 
@@ -248,6 +248,11 @@ input[type=text], input[type=search], input[type=password], textarea, select,
   position: absolute;
   left: 10px;
   top: 9px;
+}
+
+.input-group-btn .btn {
+  min-height: 34px;
+  padding-right: 5px;
 }
 
 .buttonBar {
