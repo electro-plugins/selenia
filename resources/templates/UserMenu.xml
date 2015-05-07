@@ -8,12 +8,14 @@
         <i class="fa fa-caret-down"></i>
       </a>
       <ul class="dropdown-menu dropdown-user">
-        <li>
-          <a href="user">
-            <i class="fa fa-user fa-fw"></i>
-            $LOGIN_PROFILE
-          </a>
-        </li>
+        <c:test value="{!admin-config.profile}">
+          <li>
+            <a href="{!admin-config.profilePrefix}user">
+              <i class="fa fa-user fa-fw"></i>
+              $LOGIN_PROFILE
+            </a>
+          </li>
+        </c:test>
         <!--li>
           <a href="#">
             <i class="fa fa-gear fa-fw"></i>

@@ -24,15 +24,14 @@ class AdminUserForm extends AdminController
       $this->action_logout ();
   }
 
-  protected function setupViewModel ()
+  protected function setupModel ()
   {
     global $session;
-    parent::setupViewModel ();
+    parent::setupModel ();
     if (empty($this->dataItem->type))
       $this->dataItem->type = 'standard';
-    if ($this->moduleLoader->virtualURI == 'user') {
-      $this->dataItem->username = $session->username;
-      $this->dataItem->read ();
+    if (get($this->sitePage->config,'self')) {
+      $this->dataItem = $session->user();
       $this->setDataSource ('default', new DataRecord($this->dataItem));
     }
   }

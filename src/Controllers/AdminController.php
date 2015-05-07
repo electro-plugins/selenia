@@ -62,10 +62,10 @@ class AdminController extends \Controller
             case 'form':
               $moduleInfo = new ModuleInfo($page->getDataModule ());
               if (isset($page->model)) {
-                $dataClass = $page->getModel ();
+                list ($dataClass, $modelMethod) = $this->evalModelRef($page->getModel ());
                 $data      = newInstanceOf ($dataClass);
                 if (!isset($data))
-                  throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b> for the module <b>$moduleInfo->modulePage</b> with URI <b>$moduleInfo->URI</b>.");
+                  throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b> for the module <b>$moduleInfo->module</b>.");
                 extend ($data, $URIParams);
                 $presetParams = $page->getPresetParameters ();
                 extend ($data, $presetParams);
@@ -158,7 +158,10 @@ class AdminController extends \Controller
       $page = $page->parent;
     };
     if (!$ok) $this->setViewModel ('subMenu', null);
-
+    foreach ($application->config as $k=>$v) {
+      $this->setViewModel("$k-config", $v);
+    }
+    //var_dump($this->engine->context->dataSources);
   }
 
 }
