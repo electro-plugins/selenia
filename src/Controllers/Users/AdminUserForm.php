@@ -1,13 +1,15 @@
 <?php
 namespace Selene\Modules\Admin\Controllers\Users;
-use DataObject;
+use Selene\DataObject;
+use Selene\Exceptions\ValidationException;
 use Selene\Matisse\DataRecord;
 use Selene\Modules\Admin\Controllers\AdminController;
-use ValidationException;
+use Selene\Modules\Admin\Models\User;
+use Selene\Session;
 
 class AdminUserForm extends AdminController
 {
-  public function action_submit (DataObject $data = null, $param = null)
+  public function action_submit (User $data = null, $param = null)
   {
     if ($data->username == '')
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
@@ -26,6 +28,7 @@ class AdminUserForm extends AdminController
 
   protected function setupModel ()
   {
+    /** @var $session Session */
     global $session;
     parent::setupModel ();
     if (empty($this->dataItem->type))

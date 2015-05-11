@@ -1,7 +1,9 @@
 <?php
 namespace Selene\Modules\Admin\Models;
 
-class User extends \DataObject
+use Selene\DataObject;
+
+class User extends DataObject
 {
   public $fieldNames       = ['username', 'password', 'token', 'type', 'active'];
   public $primaryKeyName   = 'username';

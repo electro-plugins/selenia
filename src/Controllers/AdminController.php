@@ -1,13 +1,14 @@
 <?php
 namespace Selene\Modules\Admin\Controllers;
 
-use Application;
-use ConfigException;
-use FatalException;
-use ModuleInfo;
-use RouteGroup;
+use Selene\Application;
+use Selene\Controller;
+use Selene\Exceptions\ConfigException;
+use Selene\Exceptions\FatalException;
+use Selene\Routing\RouteGroup;
+use Selene\Session;
 
-class AdminController extends \Controller
+class AdminController extends Controller
 {
   public $navigationPath;
   public $subnavURI;
@@ -16,7 +17,7 @@ class AdminController extends \Controller
 
   public function setupView ()
   {
-    /** @var \Session $session */
+    /** @var Session $session */
     global $session;
     parent::setupView ();
     $this->page->bodyAttrs = ['class' => $session->isValid ? '' : ' login-page'];
@@ -60,12 +61,11 @@ class AdminController extends \Controller
               array_unshift ($result, [$subtitle, $link]);
               break;
             case 'form':
-              $moduleInfo = new ModuleInfo($page->getDataModule ());
               if (isset($page->model)) {
                 list ($dataClass, $modelMethod) = $this->evalModelRef($page->getModel ());
                 $data      = newInstanceOf ($dataClass);
                 if (!isset($data))
-                  throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b> for the module <b>$moduleInfo->module</b>.");
+                  throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b>.");
                 extend ($data, $URIParams);
                 $presetParams = $page->getPresetParameters ();
                 extend ($data, $presetParams);
