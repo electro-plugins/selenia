@@ -9,8 +9,9 @@ use Selene\Session;
 
 class AdminUserForm extends AdminController
 {
-  public function action_submit (User $data = null, $param = null)
+  public function action_submit (DataObject $data = null, $param = null)
   {
+    /** @var User $data */
     if ($data->username == '')
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
     if ($data->password == '')
