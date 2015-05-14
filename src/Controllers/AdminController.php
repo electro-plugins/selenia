@@ -3,6 +3,7 @@ namespace Selene\Modules\Admin\Controllers;
 
 use Selene\Application;
 use Selene\Controller;
+use Selene\DataObject;
 use Selene\Exceptions\ConfigException;
 use Selene\Exceptions\FatalException;
 use Selene\Routing\RouteGroup;
@@ -25,12 +26,6 @@ class AdminController extends Controller
   }
 
 
-  //--------------------------------------------------------------------------
-  protected function getTitle ()
-  {
-    //--------------------------------------------------------------------------
-    return $this->sitePage->getTitle ();
-  }
   /**
    * Defines the navigation breadcrumb trail for the current page.
    * Override to define a custom trail for each application page.
@@ -63,19 +58,20 @@ class AdminController extends Controller
             case 'form':
               if (isset($page->model)) {
                 list ($dataClass, $modelMethod) = $this->evalModelRef($page->getModel ());
-                $data      = newInstanceOf ($dataClass);
+                /** @var DataObject $data */
+                $data      = new $dataClass;
                 if (!isset($data))
                   throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b>.");
                 extend ($data, $URIParams);
                 $presetParams = $page->getPresetParameters ();
                 extend ($data, $presetParams);
-                if ($data->isNew () && isset($page->gender) && isset($page->singular))
-                  array_unshift ($result, ["Nov$page->gender $page->singular", $link]);
+                if ($data->isNew () && isset($data->gender) && isset($data->singular))
+                  array_unshift ($result, ["Nov$data->gender $data->singular", $link]);
                 else {
                   $data->read ();
                   $subtitle = $page->getSubtitle ();
-                  $title    = $data->getTitle (isset($page->singular)
-                    ? ucfirst ($page->singular)
+                  $title    = $data->getTitle (isset($data->singular)
+                    ? ucfirst ($data->singular)
                     :
                     (isset($subtitle) ? $subtitle : $this->getTitle ()));
                   array_unshift ($result, [$title, $link]);
