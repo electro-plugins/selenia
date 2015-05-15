@@ -1,6 +1,9 @@
 <?php
 namespace Selene\Modules\Admin\Controllers\Users;
+use Impactwave\WebConsole\WebConsole;
 use Selene\DataObject;
+use Selene\Exceptions\ConfigException;
+use Selene\Exceptions\FatalException;
 use Selene\Exceptions\ValidationException;
 use Selene\Matisse\DataRecord;
 use Selene\Modules\Admin\Controllers\AdminController;
@@ -16,29 +19,42 @@ class AdminUserForm extends AdminController
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
     if ($data->password == '')
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_PASSWORD');
-    parent::action_submit ($data, $param);
+    _log($data);
+    return;
+//    parent::action_submit ($data, $param);
+    if (!isset($data))
+      throw new BaseException('Can\'t insert/update NULL DataObject.', Status::FATAL);
+    if ($data->isNew ())
+      $this->insertData ($data, $param);
+    else $this->updateData ($data, $param);
   }
 
   public function action_delete (DataObject $data = null, $param = null)
   {
     global $session;
     parent::action_delete ($data, $param);
-    if ($data->username == $session->username)
+    if ($data->id () == $session->user->id)
       $this->action_logout ();
   }
 
   protected function setupModel ()
   {
     /** @var $session Session */
-    global $session;
-    parent::setupModel ();
-    if (empty($this->dataItem->type))
-      $this->dataItem->type = 'standard';
-    if (get($this->sitePage->config,'self')) {
-      $this->dataItem = $session->user();
-      $this->setDataSource ('default', new DataRecord($this->dataItem));
-    }
-  }
+    global $session, $application;
 
+    if (get ($this->sitePage->config, 'self'))
+      $this->dataItem = $session->user;
+    else {
+      $this->dataItem = new $application->userModel;
+      $this->applyPresets ();
+      if (!$this->dataItem->read ()) {
+        _log ($this->dataItem);
+        WebConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
+      }
+    }
+    if (empty($this->dataItem->role ()))
+      $this->dataItem->role ('standard');
+    $this->setDataSource ('default', new DataRecord($this->dataItem));
+  }
 
 }
