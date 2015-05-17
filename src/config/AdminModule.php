@@ -3,23 +3,28 @@ namespace Selene\Modules\Admin\Config;
 
 class AdminModule
 {
+  static function settings ()
+  {
+    global $application;
+    return get ($application->config, 'admin-module', []);
+  }
 
   static function routes ()
   {
     global $application;
     $module    = 'selene-framework/admin-module';
     $namespace = 'Selene\Modules\Admin';
-    $settings  = get ($application->config, 'admin', []);
+    $settings  = self::settings();
 
     return [
 
-      get ($settings, 'users') ?
+      get ($settings, 'users', true) ?
         PageRoute ([
           'title'          => '$ADMIN_ADMIN_USERS',
           'URI'            => 'users',
           'module'         => $module,
           'model'          => "$application->userModel",
-          'view'           => "users/usersIndex.html",
+          'view'           => "users/users.html",
           'autoController' => true,
           'isIndex'        => true,
           'format'         => 'grid',
@@ -32,7 +37,7 @@ class AdminModule
           'routes'         => [
             SubPageRoute ([
               'URI'            => 'users/{username}',
-              'view'           => "users/adminUserForm.html",
+              'view'           => "users/user.html",
               'controller'     => "$namespace\\Controllers\\Users\\AdminUserForm",
               'autoController' => false,
               'format'         => 'form',
@@ -44,9 +49,9 @@ class AdminModule
 
       // This is hidden from the main menu.
 
-      get ($settings, 'profile') ?
+      get ($settings, 'profile', true) ?
         PageRoute ([
-          'onMenu'     => false,
+          'onMenu'     => $application->VURI == 'user',
           'title'      => '$LOGIN_PROFILE',
           'URI'        => 'user',
           'module'     => $module,

@@ -25,7 +25,7 @@
         </div>
         <div class="row">
           <div class="col-xs-offset-8 col-xs-4">
-            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="doAction('login')">$LOGIN_BUTTON
+            <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="doAction('login')">$LOGIN_BUTTON
             </button>
           </div>
           <!-- /.col -->

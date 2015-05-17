@@ -8,9 +8,9 @@
         <i class="fa fa-caret-down"></i>
       </a>
       <ul class="dropdown-menu dropdown-user">
-        <c:test value="{!admin-config.profile}">
+        <c:test value="{!admin-module.profile}">
           <li>
-            <a href="{!admin-config.profilePrefix}user">
+            <a href="{!admin-module.profilePrefix}user">
               <i class="fa fa-user fa-fw"></i>
               $LOGIN_PROFILE
             </a>

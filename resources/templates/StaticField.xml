@@ -7,16 +7,23 @@
   <p:body>
     <c:test value="{@name}">
       <p:if-set>
-        <c:hidden-field name="{@name}" value="{@value}"/>
+        <input type="hidden" name="{@name}" value="{@value}"/>
       </p:if-set>
     </c:test>
-    <c:test value="{@url}">
-      <p:if-set>
-        <a class="staticField {@class}" href="{@url}">{@label}</a>
-      </p:if-set>
-      <p:if-not-set>
-        <div class="staticField {@class}">{@label}</div>
-      </p:if-not-set>
-    </c:test>
+    <div class="form-group">
+      <c:test is-set="{@label}">
+        <label class="control-label col-sm-4 col-md-3">{@label}</label>
+      </c:test>
+      <div class="col-sm-8 col-md-7 col-lg-6">
+        <c:test value="{@url}">
+          <p:if-set>
+            <a class="form-control staticField {@class}" href="{@url}">{@value}</a>
+          </p:if-set>
+          <p:if-not-set>
+            <div class="form-control staticField {@class}">{@value}</div>
+          </p:if-not-set>
+        </c:test>
+      </div>
+    </div>
   </p:body>
 </c:template>

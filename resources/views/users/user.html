@@ -1,0 +1,39 @@
+<t:admin>
+  <p:content>
+    <t:form>
+
+      <p:content>
+        <!-- disable autofill -->
+        <input type="password" style="display:none">
+
+        <c:test value="{!login.showActive}">
+          <c:field name="_active" label="$LOGIN_ACTIVE">
+            <c:checkbox test-value="{!login._active}"/>
+          </c:field>
+        </c:test>
+
+        <c:field label="$LOGIN_USERNAME" name="_username">
+          <c:input value="{!login._username}" autofocus="yes" autocomplete="no"/>
+        </c:field>
+
+        <c:field label="$LOGIN_PASSWORD" name="_password">
+          <c:input value="{!login._password}" type="password" autocomplete="no"/>
+        </c:field>
+
+        <c:test value="{!login.showRoles}">
+          <c:field label="$LOGIN_TYPE" name="_role">
+            <c:radiobutton value="{!login.admin_role}" label="$LOGIN_TYPE_ADMIN" test-value="{!login._role}" visible="{!login.isAdmin}"/>
+            <c:radiobutton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" test-value="{!login._role}"/>
+            <c:radiobutton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" test-value="{!login._role}"/>
+          </c:field>
+        </c:test>
+
+      </p:content>
+
+      <p:actions>
+        <t:buttons-save-delete key="{!login.canDelete}"/>
+      </p:actions>
+
+    </t:form>
+  </p:content>
+</t:admin>

@@ -2,7 +2,7 @@
     <p:param name="buttons" type="source"/>
     <p:body>
         <div class="buttonBar right">
-          <c:button class="btn-primary ActionSave" action="submit" label="$BUTTON_SAVE"/>
+          <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
           {@buttons}
         </div>
     </p:body>

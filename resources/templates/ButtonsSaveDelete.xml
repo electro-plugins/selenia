@@ -5,7 +5,7 @@
     <div class="buttonBar right">
       <c:test value="1">
         <p:if-set>
-          <c:button class="btn-primary ActionSave" action="submit" label="$BUTTON_SAVE"/>
+          <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
         </p:if-set>
       </c:test>
       <c:test value="{@key}">

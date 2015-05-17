@@ -57,9 +57,9 @@ class AdminController extends Controller
               break;
             case 'form':
               if (isset($page->model)) {
-                list ($dataClass, $modelMethod) = $this->evalModelRef($page->getModel ());
+                list ($dataClass, $modelMethod) = $this->evalModelRef ($page->getModel ());
                 /** @var DataObject $data */
-                $data      = new $dataClass;
+                $data = new $dataClass;
                 if (!isset($data))
                   throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b>.");
                 extend ($data, $URIParams);
@@ -117,7 +117,7 @@ class AdminController extends Controller
       'navPath'    => $navPath,
       'subtitle'   => $pageInfo->getSubtitle (),
       'titleField' => property ($this->dataItem, 'titleField'),
-      'noItems'    => 'Não existem {!sitePage.plural}.'
+      'noItems'    => 'Não existem ' - property ($this->dataItem, 'plural') . '.'
     ];
     $this->setViewModel ('admin', $admin);
     $this->setViewModel ('sitePage', $pageInfo);
@@ -154,10 +154,11 @@ class AdminController extends Controller
       $page = $page->parent;
     };
     if (!$ok) $this->setViewModel ('subMenu', null);
-    foreach ($application->config as $k=>$v) {
-      $this->setViewModel("$k-config", $v);
+    // Generate datasources for configuration settings groups.
+    // Ex: 'admin-module' group becames {!admin-module} datasource.
+    foreach ($application->config as $k => $v) {
+      $this->setViewModel ($k, $v);
     }
-    //var_dump($this->engine->context->dataSources);
   }
 
 }
