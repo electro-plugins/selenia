@@ -38,7 +38,7 @@ class AdminModule
             SubPageRoute ([
               'URI'            => 'users/{username}',
               'view'           => "users/user.html",
-              'controller'     => "$namespace\\Controllers\\Users\\AdminUserForm",
+              'controller'     => "$namespace\\Controllers\\Users\\User",
               'autoController' => false,
               'format'         => 'form',
             ])
@@ -55,8 +55,8 @@ class AdminModule
           'title'      => '$LOGIN_PROFILE',
           'URI'        => 'user',
           'module'     => $module,
-          'view'       => "users/adminUserForm.html",
-          'controller' => "$namespace\\Controllers\\Users\\AdminUserForm",
+          'view'       => "users/user.html",
+          'controller' => "$namespace\\Controllers\\Users\\User",
           'config'     => [
             'self' => true // Editing the logged-in user.
           ]
