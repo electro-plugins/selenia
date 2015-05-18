@@ -21,6 +21,12 @@ class User extends DataObject implements UserInterface
   public $role;
   public $active;
 
+  public function insert ($insertFiles = true)
+  {
+    $this->lastLogin = self::now ();
+    parent::insert ($insertFiles);
+  }
+
   public function findByName ($username)
   {
     $this->username = $username;
@@ -32,7 +38,7 @@ class User extends DataObject implements UserInterface
     if ($password == $this->password) {
       // Migrate plain text password to hashed version.
       $this->password ($password);
-      $this->update();
+      $this->update ();
       return true;
     }
     return password_verify ($password, $this->password);
@@ -78,7 +84,8 @@ class User extends DataObject implements UserInterface
     return $this->registrationDate;
   }
 
-  function lastLogin ($set = null) {
+  function lastLogin ($set = null)
+  {
     if (isset($set))
       $this->lastLogin = $set;
     return $this->lastLogin;
@@ -98,5 +105,9 @@ class User extends DataObject implements UserInterface
     return $this->active;
   }
 
-  function onLogin () {}
+  function onLogin ()
+  {
+    $this->lastLogin = self::now ();
+    $this->update ();
+  }
 }
