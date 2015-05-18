@@ -107,6 +107,7 @@ $ (window).ready (function ()
   $ (".chzn-select").chosen ({
     placeholder_text: '--- seleccione ---'
   });
+  $ (".chosen-container").css ('width', '');
 });
 
 /*--------------------------------------------------------------------
