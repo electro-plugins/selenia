@@ -482,6 +482,18 @@ form label {
   .unselectable;
 }
 
+.longText {
+  height: 362px !important;
+}
+
+.mediumText {
+  height: 226px !important;
+}
+
+.shortText {
+  height: 110px !important;
+}
+
 /* FIELDS */
 
 input[type=radio] {
@@ -522,16 +534,16 @@ input[type=radio] {
   visibility: hidden;
 }
 
-.adminLongHTMLText .redactor-editor {
-  height: 362px !important;
+.longText .redactor-editor {
+  .longText;
 }
 
-.adminMediumHTMLText .redactor-editor {
-  height: 226px !important;
+.mediumText .redactor-editor {
+  .mediumText;
 }
 
-.adminShortHTMLText .redactor-editor {
-  height: 110px !important;
+.shortText .redactor-editor {
+  .shortText;
 }
 
 .Input.type-number {

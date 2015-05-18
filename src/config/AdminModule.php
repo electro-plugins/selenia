@@ -38,6 +38,7 @@ class AdminModule
           'routes'     => [
             SubPageRoute ([
               'URI'            => 'users/{username}',
+              'preset'         => 'username={username}',
               'view'           => "users/user.html",
               'controller'     => "$namespace\\Controllers\\Users\\User",
               'autoController' => false,
