@@ -446,6 +446,10 @@ form label {
   color: #999;
 }
 
+label.static {
+  margin: 0 0 10px 12px;
+}
+
 .section {
   font-size: 20px;
   border-bottom: 1px solid #E5E5E5;
@@ -492,6 +496,10 @@ form label {
 
 .shortText {
   height: 110px !important;
+}
+
+.veryShortText {
+  height: 72px !important;
 }
 
 /* FIELDS */
@@ -544,6 +552,12 @@ input[type=radio] {
 
 .shortText .redactor-editor {
   .shortText;
+}
+
+textarea[readonly].static {
+  background: #FFF;
+  border: 1px solid #e8e8e8;
+  box-shadow: none;
 }
 
 .Input.type-number {
