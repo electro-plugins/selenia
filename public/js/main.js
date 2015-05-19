@@ -2,31 +2,34 @@
  SB ADMIN
  --------------------------------------------------------------------*/
 
-$(function() {
 
-  $('#side-menu').metisMenu();
+$ (function ()
+{
+  $ ('#side-menu').metisMenu ({
+    toggle:        true, // true to close other group when opening new group
+    doubleTapToGo: false
+  });
 
-});
+  // Loads the correct sidebar on window load,
+  // Collapses the sidebar on window resize.
+  // Sets the min-height of #page-wrapper to window size
 
-//Loads the correct sidebar on window load,
-//collapses the sidebar on window resize.
-// Sets the min-height of #page-wrapper to window size
-$(function() {
-  $(window).bind("load resize", function() {
+  $ (window).bind ("load resize", function ()
+  {
     topOffset = 50;
     width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
     if (width < 768) {
-      $('div.navbar-collapse').addClass('collapse');
+      $ ('div.navbar-collapse').addClass ('collapse');
       topOffset = 100; // 2-row-menu
     } else {
-      $('div.navbar-collapse').removeClass('collapse');
+      $ ('div.navbar-collapse').removeClass ('collapse');
     }
 
     height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
     height = height - topOffset;
     if (height < 1) height = 1;
     if (height > topOffset) {
-      $("#page-wrapper").css("min-height", (height) + "px");
+      $ ("#page-wrapper").css ("min-height", (height) + "px");
     }
   });
 
@@ -92,9 +95,9 @@ var tpl = (function ()
     if (str == last) return cache;
     last = str;
     return cache = "'" + str.replace (/\$\{(.*?)}/g, function (m, exp)
-    {
-      return "'+(" + exp + ")+'"
-    }) + "'";
+      {
+        return "'+(" + exp + ")+'"
+      }) + "'";
   }
 }) ();
 
@@ -118,73 +121,73 @@ var mem = {
   listeners: {},
 
   init: function ()
-  {
-    $ (window).on ('storage', function (ev)
-    {
-      this.onChange (ev.key, this.get (ev.key));
-    }.bind (this));
-  },
+        {
+          $ (window).on ('storage', function (ev)
+          {
+            this.onChange (ev.key, this.get (ev.key));
+          }.bind (this));
+        },
 
   onChange: function (key, val)
-  {
-    var list = this.listeners[key];
-    if (list && list.length)
-      list.forEach (function (l) { l (val) });
-  },
+            {
+              var list = this.listeners[key];
+              if (list && list.length)
+                list.forEach (function (l) { l (val) });
+            },
 
   get: function (key, defaultVal)
-  {
-    var v = localStorage[key];
-    if (v === undefined)
-      return defaultVal !== undefined ? this.set (key, defaultVal) : null;
-    return JSON.parse (v);
-  },
+       {
+         var v = localStorage[key];
+         if (v === undefined)
+           return defaultVal !== undefined ? this.set (key, defaultVal) : null;
+         return JSON.parse (v);
+       },
 
   set: function (key, val)
-  {
-    var g = key.lastIndexOf ('.');
-    if (g >= 0) {
-      var group = key.substr (0, g);
-      var k = key.substr (g + 1);
-      var keys = JSON.parse (localStorage[group] || '{}');
-      if (!keys[k]) {
-        keys[k] = 1;
-        localStorage[group] = JSON.stringify (keys);
-      }
-    }
-    var s = JSON.stringify (val);
-    if (localStorage[key] != s) {
-      localStorage[key] = s;
-      this.onChange (key, val);
-    }
-    return val;
-  },
+       {
+         var g = key.lastIndexOf ('.');
+         if (g >= 0) {
+           var group = key.substr (0, g);
+           var k = key.substr (g + 1);
+           var keys = JSON.parse (localStorage[group] || '{}');
+           if (!keys[k]) {
+             keys[k] = 1;
+             localStorage[group] = JSON.stringify (keys);
+           }
+         }
+         var s = JSON.stringify (val);
+         if (localStorage[key] != s) {
+           localStorage[key] = s;
+           this.onChange (key, val);
+         }
+         return val;
+       },
 
   getGroup: function (group)
-  {
-    var keys = this.get (group, {});
-    var o = {};
-    for (var k in keys)
-      if (keys.hasOwnProperty (k))
-        o[k] = JSON.parse (localStorage[group + '.' + k] || '{}');
-    return o;
-  },
+            {
+              var keys = this.get (group, {});
+              var o = {};
+              for (var k in keys)
+                if (keys.hasOwnProperty (k))
+                  o[k] = JSON.parse (localStorage[group + '.' + k] || '{}');
+              return o;
+            },
 
   setGroup: function (group, obj)
-  {
-    var keys = JSON.parse (localStorage[group] || '{}');
-    for (var k in obj)
-      if (obj.hasOwnProperty (k)) {
-        localStorage[group + '.' + k] = JSON.stringify (obj[k]);
-        keys[k] = 1;
-      }
-    localStorage[group] = JSON.stringify (keys);
-  },
+            {
+              var keys = JSON.parse (localStorage[group] || '{}');
+              for (var k in obj)
+                if (obj.hasOwnProperty (k)) {
+                  localStorage[group + '.' + k] = JSON.stringify (obj[k]);
+                  keys[k] = 1;
+                }
+              localStorage[group] = JSON.stringify (keys);
+            },
 
   listen: function (key, handler)
-  {
-    (this.listeners [key] = (this.listeners [key] || [])).push (handler);
-  }
+          {
+            (this.listeners [key] = (this.listeners [key] || [])).push (handler);
+          }
 };
 
 /*--------------------------------------------------------------------

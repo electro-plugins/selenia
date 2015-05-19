@@ -3,7 +3,7 @@
   <p:stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
   <p:stylesheet src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>
   <p:stylesheet src="lib/datatables-responsive/css/dataTables.responsive.css"/>
-  <p:stylesheet src="lib/metisMenu/dist/metisMenu.min.css"/>
+  <p:stylesheet src="modules/admin/css/metisMenu.css"/>
   <p:stylesheet src="lib/chosen/chosen.min.css"/>
   <p:stylesheet src="lib/font-awesome/css/font-awesome.min.css"/>
   <p:stylesheet src="modules/admin/dist/main.css"/>
@@ -13,7 +13,7 @@
   <p:script src="lib/datatables/media/js/jquery.dataTables.js"/>
   <p:script src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>
   <p:script src="lib/datatables-responsive/js/dataTables.responsive.js"/>
-  <p:script src="lib/metisMenu/dist/metisMenu.min.js"/>
+  <p:script src="modules/admin/js/metisMenu.js"/>
   <p:script src="modules/admin/js/main.js"/>
   <p:body>
     {@content}
