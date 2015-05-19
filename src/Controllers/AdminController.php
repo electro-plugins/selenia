@@ -105,8 +105,7 @@ class AdminController extends Controller
     if (isset($path)) {
       $navPath = count ($path) < 2
         ? ''
-        : '<li><a href=""><i class="' . $application->homeIcon . '"></i> &nbsp;' . $application->homeTitle .
-          '</a></li>';
+        : "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
       for ($i = 0; $i < count ($path); ++$i)
         if (isset($path[$i]))
           $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
