@@ -57,7 +57,7 @@ class AdminController extends Controller
               break;
             case 'form':
               if (isset($page->model)) {
-                list ($dataClass, $modelMethod) = $this->evalModelRef ($page->getModel ());
+                list ($dataClass, $modelMethod) = parseMethodRef ($page->getModel ());
                 /** @var DataObject $data */
                 $data = new $dataClass;
                 if (!isset($data))
