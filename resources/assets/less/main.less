@@ -734,6 +734,11 @@ textarea[readonly].static {
     border-style: none none none solid;
     height: 100%;
     width: 36px;
+    background-color: #f8f8f8;
+
+    &:focus {
+      outline: none !important;
+    }
   }
   &.with-file input + button {
     display: block;
