@@ -1,0 +1,30 @@
+<c:template name="form-layout-2-columns">
+  <p:param name="column-1" type="source"/>
+  <p:param name="column-2" type="source"/>
+  <p:param name="column-classes" type="text" default="col-sm-12 col-lg-6"/>
+  <p:param name="form-classes" type="text" default="form-horizontal"/>
+  <p:param name="label-classes" type="text" default="col-md-4"/>
+  <p:param name="field-classes" type="text" default="col-md-8"/>
+  <p:body>
+
+    <div class="row">
+      <div class="{@column-classes}">
+        <div class="{@form-classes}">
+          <c:apply>
+            <p:attrs width="{@field-classes}" label-width="{@label-classes}"/>
+            {@column-1}
+          </c:apply>
+        </div>
+      </div>
+      <div class="{@column-classes}">
+        <div class="{@form-classes}">
+          <c:apply>
+            <p:attrs width="{@field-classes}" label-width="{@label-classes}"/>
+            {@column-2}
+          </c:apply>
+        </div>
+      </div>
+    </div>
+
+  </p:body>
+</c:template>
