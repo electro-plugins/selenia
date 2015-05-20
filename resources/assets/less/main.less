@@ -522,6 +522,10 @@ input[type=radio] {
   border-bottom: 1px solid #e8e8e8;
 }
 
+.numeric .staticField {
+  text-align: right;
+}
+
 .Radiobutton.form-control, .input-group-addon .Radiobutton {
   border: none;
   box-shadow: none;
@@ -654,17 +658,87 @@ textarea[readonly].static {
   }
 }
 
-.FileUpload + button {
-  position: absolute;
-  top: 0;
-  right: 15px;
-  border-radius: 0;
-  height: 100%;
-  min-width: 37px;
-}
-
 .FileUpload {
   border-radius: 0;
+  position: relative;
+  padding: 0;
+
+  &.with-file .custom-input {
+    display: none;
+  }
+
+  .custom-input::before {
+    content:  'Browse...';
+    display:  block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #FFF;
+    padding: 6px 0 0 12px;
+    color: #999;
+  }
+  .custom-input[data-file]::before {
+    content: attr(data-file);
+    color: #555;
+  }
+
+  .custom-input::after {
+    content: '\f15b';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: FontAwesome;
+    font-size: 14px;
+    border-left: 1px solid #ccc;
+    padding: 6px 11px 0;
+    color: #777;
+    background: #f8f8f8;
+    bottom: 0;
+    width: 36px;
+  }
+
+  input[type=file] {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    display: block;
+    cursor: pointer;
+  }
+
+  input[type=text] {
+    display:  none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  &.with-file input[type=text] {
+    display: block;
+  }
+
+  input + button {
+    display:  none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0;
+    border-style: none none none solid;
+    height: 100%;
+    width: 36px;
+  }
+  &.with-file input + button {
+    display: block;
+  }
+
 }
 
 /*--------------------------------------------------------------------
@@ -761,7 +835,7 @@ textarea[readonly].static {
     box-shadow: none;
     /* arrow */
     div b {
-      background-position-y: 7px;
+      background-position: -2px 7px !important;
     }
   }
   .chosen-search {
@@ -793,7 +867,7 @@ textarea[readonly].static {
       box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
       /* arrow */
       div b {
-        background-position-y: 7px;
+        background-position: -2px 7px !important;
       }
     }
     .chosen-drop {
