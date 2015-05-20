@@ -551,6 +551,13 @@ input[type=radio] {
   visibility: hidden;
 }
 
+.Redactor {
+  &.longText, &.mediumText, &.shortText {
+    height: auto !important;
+  }
+
+}
+
 .longText .redactor-editor {
   .longText;
 }
@@ -890,7 +897,7 @@ textarea[readonly].static {
 
 /* HTML EDITOR */
 
-.HtmlEditor .redactor_editor {
+.Redactor .redactor_editor {
   padding: 7px 8px;
 
   div, p, ul, ol, table, dl, blockquote, pre {
