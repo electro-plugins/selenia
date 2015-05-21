@@ -1,4 +1,4 @@
-<c:template name="form-page">
+<c:template name="form-page" default-param="content">
   <p:param name="content" type="source"/>
   <p:param name="actions" type="source"/>
   <p:body>

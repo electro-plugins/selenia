@@ -1,6 +1,6 @@
-<c:template name="button-submit">
+<c:template name="button-submit" default-param="content">
   <p:param name="label" type="text" default="$BUTTON_SAVE"/>
-  <p:param name="buttons" type="source"/>
+  <p:param name="content" type="source"/>
   <p:param name="auto-disable" type="bool"/>
   <p:body>
     <div class="buttonBar right">
@@ -12,7 +12,7 @@
           <c:button class="btn-primary ActionSave" label="{@label}" action="submit"/>
         </p:default>
       </c:test>
-      {@buttons}
+      {@content}
     </div>
   </p:body>
 </c:template>

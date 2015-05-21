@@ -1,4 +1,4 @@
-<c:template name="base-admin">
+<c:template name="base-admin" default-param="content">
   <p:param name="content" type="source"/>
   <p:stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
   <p:stylesheet src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>

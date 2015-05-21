@@ -1,5 +1,5 @@
-<c:template name="main">
-  <p:param name="page-content" type="source"/>
+<c:template name="main" default-param="content">
+  <p:param name="content" type="source"/>
   <p:stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
   <p:script src="lib/jquery/dist/jquery.min.js"/>
   <p:script src="lib/bootstrap/dist/js/bootstrap.min.js"/>
@@ -26,7 +26,7 @@
 
       {!page.statusMessage}
 
-      {@page-content}
+      {@content}
 
     </div>
 

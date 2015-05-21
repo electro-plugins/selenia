@@ -1,4 +1,4 @@
-<c:template name="form-layout">
+<c:template name="form-layout" default-param="content">
   <p:param name="content" type="source"/>
   <p:param name="column-classes" type="text" default="col-sm-12"/>
   <p:param name="form-classes" type="text" default="form-horizontal"/>

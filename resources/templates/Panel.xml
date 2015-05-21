@@ -1,4 +1,4 @@
-<c:template name="panel">
+<c:template name="panel" default-param="content">
   <p:param name="type" type="text" default=""/>
   <p:param name="title" type="text"/>
   <p:param name="content" type="source"/>

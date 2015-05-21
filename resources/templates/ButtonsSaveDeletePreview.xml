@@ -1,9 +1,9 @@
-<c:template name="buttons-save-delete-preview">
+<c:template name="buttons-save-delete-preview" default-param="content">
   <p:param name="key"            type="identifier"/>
   <p:param name="enable-if-set"  type="identifier"/>
   <p:param name="preview-label"  type="text" default="Pré-visualizar"/>
   <p:param name="preview-url"    type="text"/>
-  <p:param name="buttons" type="source"/>
+  <p:param name="content" type="source"/>
   <p:body>
     <div class="buttonBar right">
       <c:test value="1">
@@ -32,7 +32,7 @@
           </c:test>
         </p:if-set>
       </c:test>
-      {@buttons}
+      {@content}
     </div>
   </p:body>
 </c:template>

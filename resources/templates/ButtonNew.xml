@@ -1,11 +1,11 @@
-<c:template name="button-new">
+<c:template name="button-new" default-param="content">
   <p:param name="url" type="text"/>
   <p:param name="label" type="text" default="$BUTTON_CREATE"/>
-  <p:param name="buttons" type="source"/>
+  <p:param name="content" type="source"/>
   <p:body>
     <div class="buttonBar right">
       <c:button icon="glyphicon glyphicon-plus-sign" class="btn-success ActionNew" label="{@label}" url="{@url}"/>
-      {@buttons}
+      {@content}
     </div>
   </p:body>
 </c:template>
