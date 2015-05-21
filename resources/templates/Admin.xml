@@ -1,93 +1,93 @@
 <c:template name="admin" default-param="content">
   <p:param name="content" type="source"/>
-  <p:body>
-    <t:base-admin>
 
-      <div id="wrapper">
+  <t:base-admin>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{!application.homeURI}">{!application.appName}</a>
+    <div id="wrapper">
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{!application.homeURI}">{!application.appName}</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+
+          <li>
+            <a href="">$HOME</a>
+          </li>
+          <t:user-menu/>
+
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+
+            <c:main-menu class="nav" id="side-menu" expand-icon="fa.arrow">
+              <p:header>
+                <!--li class="sidebar-search">
+                  <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Procurar...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;
+                      </button>
+                    </span>
+                  </div>
+                </li-->
+              </p:header>
+            </c:main-menu>
+
           </div>
-          <!-- /.navbar-header -->
+          <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+      </nav>
 
-          <ul class="nav navbar-top-links navbar-right">
+      <!-- =============================================== -->
 
-            <li>
-              <a href="">$HOME</a>
-            </li>
-            <t:user-menu/>
+      <!-- Page Content -->
+      <div id="page-wrapper">
 
-          </ul>
-          <!-- /.navbar-top-links -->
+        {!page.statusMessage}
 
-          <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-
-              <c:main-menu class="nav" id="side-menu" expand-icon="fa.arrow">
-                <p:header>
-                  <!--li class="sidebar-search">
-                    <div class="input-group custom-search-form">
-                      <input type="text" class="form-control" placeholder="Procurar...">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                          <i class="fa fa-search"></i>&nbsp;&nbsp;
-                        </button>
-                      </span>
-                    </div>
-                  </li-->
-                </p:header>
-              </c:main-menu>
-
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12">
+              <h1 class="page-header">{!admin.pageTitle}</h1>
+              <ol class="breadcrumb">
+                {!admin.navPath}
+              </ol>
             </div>
-            <!-- /.sidebar-collapse -->
+            <!-- /.col-lg-12 -->
           </div>
-          <!-- /.navbar-static-side -->
-        </nav>
+          <!-- /.row -->
+          {@content}
 
-        <!-- =============================================== -->
-
-        <!-- Page Content -->
-        <div id="page-wrapper">
-
-          {!page.statusMessage}
-
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-12">
-                <h1 class="page-header">{!admin.pageTitle}</h1>
-                <ol class="breadcrumb">
-                  {!admin.navPath}
-                </ol>
-              </div>
-              <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            {@content}
-
-            <footer>
-              {!application.appName} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">
-              Impactwave,
-              Lda</a>.
-              All rights reserved.
-            </footer>
-
-          </div>
-          <!-- /.container-fluid -->
+          <footer>
+            {!application.appName} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">
+            Impactwave,
+            Lda</a>.
+            All rights reserved.
+          </footer>
 
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /.container-fluid -->
 
       </div>
-      <!-- /#wrapper -->
+      <!-- /#page-wrapper -->
 
-    </t:base-admin>
-  </p:body>
+    </div>
+    <!-- /#wrapper -->
+
+  </t:base-admin>
+
 </c:template>

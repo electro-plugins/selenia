@@ -4,35 +4,35 @@
   <p:param name="preview-label"  type="text" default="Pré-visualizar"/>
   <p:param name="preview-url"    type="text"/>
   <p:param name="content" type="source"/>
-  <p:body>
-    <div class="buttonBar right">
-      <c:test value="1">
-        <p:if-set>
-          <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-        </p:if-set>
-      </c:test>
-      <c:test value="{@key}">
-        <p:if-set>
-          <c:button class="btn-danger ActionDelete" action="delete"
-            confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
-          <c:test value="{@enable-if-set}">
-            <p:if-set>
-              <c:test value="{@preview-url}">
-                <p:if-set>
-                  <c:button class="ActionPreview" url="{@preview-url}" label="{@preview-label}"/>
-                </p:if-set>
-                <p:default>
-                  <c:button class="ActionPreview" action="preview" label="{@preview-label}"/>
-                </p:default>
-              </c:test>
-            </p:if-set>
-            <p:default>
-              <c:button disabled="yes" class="ActionPreview" label="{@preview-label}"/>
-            </p:default>
-          </c:test>
-        </p:if-set>
-      </c:test>
-      {@content}
-    </div>
-  </p:body>
+
+  <div class="buttonBar right">
+    <c:test value="1">
+      <p:if-set>
+        <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+      </p:if-set>
+    </c:test>
+    <c:test value="{@key}">
+      <p:if-set>
+        <c:button class="btn-danger ActionDelete" action="delete"
+          confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
+        <c:test value="{@enable-if-set}">
+          <p:if-set>
+            <c:test value="{@preview-url}">
+              <p:if-set>
+                <c:button class="ActionPreview" url="{@preview-url}" label="{@preview-label}"/>
+              </p:if-set>
+              <p:default>
+                <c:button class="ActionPreview" action="preview" label="{@preview-label}"/>
+              </p:default>
+            </c:test>
+          </p:if-set>
+          <p:default>
+            <c:button disabled="yes" class="ActionPreview" label="{@preview-label}"/>
+          </p:default>
+        </c:test>
+      </p:if-set>
+    </c:test>
+    {@content}
+  </div>
+
 </c:template>

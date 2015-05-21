@@ -2,17 +2,18 @@
   <p:param name="label" type="text" default="$BUTTON_SAVE"/>
   <p:param name="content" type="source"/>
   <p:param name="auto-disable" type="bool"/>
-  <p:body>
-    <div class="buttonBar right">
-      <c:test value="{@auto-disable}">
-        <p:if-true>
-          <c:button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}" script="Button_disable('submitBtn');doAction('submit')"/>
-        </p:if-true>
-        <p:default>
-          <c:button class="btn-primary ActionSave" label="{@label}" action="submit"/>
-        </p:default>
-      </c:test>
-      {@content}
-    </div>
-  </p:body>
+
+  <div class="buttonBar right">
+    <c:test value="{@auto-disable}">
+      <p:if-true>
+        <c:button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}"
+                  script="Button_disable('submitBtn');doAction('submit')"/>
+      </p:if-true>
+      <p:default>
+        <c:button class="btn-primary ActionSave" label="{@label}" action="submit"/>
+      </p:default>
+    </c:test>
+    {@content}
+  </div>
+
 </c:template>

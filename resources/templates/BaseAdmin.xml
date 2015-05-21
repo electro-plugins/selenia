@@ -15,7 +15,7 @@
   <p:script src="lib/datatables-responsive/js/dataTables.responsive.js"/>
   <p:script src="modules/admin/js/metisMenu.js"/>
   <p:script src="modules/admin/js/main.js"/>
-  <p:body>
-    {@content}
-  </p:body>
+
+  {@content}
+
 </c:template>

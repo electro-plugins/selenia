@@ -1,16 +1,18 @@
 <c:template name="grid-page" default-param="content">
   <p:param name="content" type="source"/>
   <p:param name="actions" type="source"/>
-  <p:body>
-    <t:admin>
-      <p:content>
 
-      <article class="grid-page">
-        {@content}
-        <div class="form-footer"> {@actions} </div>
-      </article>
+  <t:admin>
+    <p:content>
 
-      </p:content>
-    </t:admin>
-  </p:body>
+    <article class="grid-page">
+
+      {@content}
+
+      <div class="form-footer"> {@actions} </div>
+    </article>
+
+    </p:content>
+  </t:admin>
+
 </c:template>

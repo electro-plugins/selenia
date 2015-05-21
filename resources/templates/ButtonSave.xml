@@ -1,9 +1,9 @@
 <c:template name="button-save" default-param="content">
-    <p:param name="content" type="source"/>
-    <p:body>
-        <div class="buttonBar right">
-          <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-          {@content}
-        </div>
-    </p:body>
+  <p:param name="content" type="source"/>
+
+  <div class="buttonBar right">
+    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+    {@content}
+  </div>
+
 </c:template>

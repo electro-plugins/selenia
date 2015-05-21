@@ -1,38 +1,36 @@
 <c:template name="user-menu">
-  <p:body>
 
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <i class="fa fa-user fa-fw"></i>
-        {!sessionInfo.userRealName} &nbsp;
-        <i class="fa fa-caret-down"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-user">
-        <c:test value="{!admin-module.profile}">
-          <li>
-            <a href="{!admin-module.profilePrefix}user">
-              <i class="fa fa-user fa-fw"></i>
-              $LOGIN_PROFILE
-            </a>
-          </li>
-        </c:test>
-        <!--li>
-          <a href="#">
-            <i class="fa fa-gear fa-fw"></i>
-            Settings
-          </a>
-        </li-->
-        <li class="divider"></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-user fa-fw"></i>
+      {!sessionInfo.userRealName} &nbsp;
+      <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <c:test value="{!admin-module.profile}">
         <li>
-          <a href="javascript:doAction('logout')">
-            <i class="fa fa-sign-out fa-fw"></i>
-            $LOGOUT
+          <a href="{!admin-module.profilePrefix}user">
+            <i class="fa fa-user fa-fw"></i>
+            $LOGIN_PROFILE
           </a>
         </li>
-      </ul>
-      <!-- /.dropdown-user -->
-    </li>
-    <!-- /.dropdown -->
+      </c:test>
+      <!--li>
+        <a href="#">
+          <i class="fa fa-gear fa-fw"></i>
+          Settings
+        </a>
+      </li-->
+      <li class="divider"></li>
+      <li>
+        <a href="javascript:doAction('logout')">
+          <i class="fa fa-sign-out fa-fw"></i>
+          $LOGOUT
+        </a>
+      </li>
+    </ul>
+    <!-- /.dropdown-user -->
+  </li>
+  <!-- /.dropdown -->
 
-  </p:body>
 </c:template>

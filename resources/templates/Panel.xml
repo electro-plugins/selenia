@@ -3,19 +3,19 @@
   <p:param name="title" type="text"/>
   <p:param name="content" type="source"/>
   <p:param name="actions" type="source"/>
-  <p:body>
-    <div class="form {@type}">
-      <c:test is-set="{@title}">
-        <div class="box-header with-border">
-          <h3 class="box-title">{@title}</h3>
-        </div>
-      </c:test>
-      <div class="box-body">
-        {@content}
+
+  <div class="form {@type}">
+    <c:test is-set="{@title}">
+      <div class="box-header with-border">
+        <h3 class="box-title">{@title}</h3>
       </div>
-      <div class="box-footer">
-        {@actions}
-      </div>
+    </c:test>
+    <div class="box-body">
+      {@content}
     </div>
-  </p:body>
+    <div class="box-footer">
+      {@actions}
+    </div>
+  </div>
+
 </c:template>

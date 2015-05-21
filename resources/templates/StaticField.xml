@@ -6,26 +6,26 @@
   <p:param name="class" type="identifier"/>
   <p:param name="label-classes" type="text" default="col-sm-4 col-md-3"/>
   <p:param name="value-classes" type="text" default="col-sm-8 col-md-7 col-lg-6"/>
-  <p:body>
-    <c:test value="{@name}">
-      <p:if-set>
-        <input type="hidden" name="{@name}" value="{@value}"/>
-      </p:if-set>
+
+  <c:test value="{@name}">
+    <p:if-set>
+      <input type="hidden" name="{@name}" value="{@value}"/>
+    </p:if-set>
+  </c:test>
+  <div class="form-group">
+    <c:test is-set="{@label}">
+      <label class="control-label {@label-classes}">{@label}</label>
     </c:test>
-    <div class="form-group">
-      <c:test is-set="{@label}">
-        <label class="control-label {@label-classes}">{@label}</label>
+    <div class="{@value-classes}">
+      <c:test value="{@url}">
+        <p:if-set>
+          <a class="form-control staticField {@class}" href="{@url}">{@value}</a>
+        </p:if-set>
+        <p:if-not-set>
+          <div class="form-control staticField {@class}">{@value}</div>
+        </p:if-not-set>
       </c:test>
-      <div class="{@value-classes}">
-        <c:test value="{@url}">
-          <p:if-set>
-            <a class="form-control staticField {@class}" href="{@url}">{@value}</a>
-          </p:if-set>
-          <p:if-not-set>
-            <div class="form-control staticField {@class}">{@value}</div>
-          </p:if-not-set>
-        </c:test>
-      </div>
     </div>
-  </p:body>
+  </div>
+
 </c:template>
