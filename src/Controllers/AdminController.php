@@ -47,7 +47,7 @@ class AdminController extends Controller
         $URIParams  = $page->getURIParams ();
         $defaultURI = '';
         if ($page instanceof RouteGroup && !empty($page->defaultURI))
-          $defaultURI = empty($page->inheritedPrefix) ? $page->defaultURI : "$page->inheritedPrefix/$page->defaultURI";
+          $defaultURI = $page->defaultURI;
         $link = self::modPathOf ($defaultURI ?: $page->evalURI ($URIParams));
         if (isset($page->format))
           switch ($page->format) {
