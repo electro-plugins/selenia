@@ -1,15 +1,15 @@
 <c:template name="form-layout" default-param="content">
   <p:param name="content" type="source"/>
-  <p:param name="column-classes" type="text" default="col-sm-12"/>
-  <p:param name="form-classes" type="text" default="form-horizontal"/>
-  <p:param name="label-classes" type="text" default="col-md-2"/>
-  <p:param name="field-classes" type="text" default="col-md-10"/>
+  <p:param name="column-class" type="text" default="col-sm-12"/>
+  <p:param name="form-class" type="text" default="form-horizontal"/>
+  <p:param name="label-class" type="text" default="col-sm-2"/>
+  <p:param name="field-class" type="text" default="col-sm-10 col-md-9 col-lg-7"/>
 
   <div class="row">
-    <div class="{@column-classes}">
-      <div class="{@form-classes}">
-        <c:apply>
-          <p:attrs width="{@field-classes}" label-width="{@label-classes}"/>
+    <div class="{@column-class}">
+      <div class="{@form-class}">
+        <c:apply where="field">
+          <p:attrs width="{@field-class}" label-width="{@label-class}"/>
           {@content}
         </c:apply>
       </div>
