@@ -5,34 +5,31 @@
   <p:param name="preview-url"    type="text"/>
   <p:param name="content" type="source"/>
 
-  <div class="buttonBar right">
-    <c:test value="1">
-      <p:if-set>
-        <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-      </p:if-set>
-    </c:test>
-    <c:test value="{@key}">
-      <p:if-set>
+  <c:action-bar>
+
+    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+
+    <c:if the="{@key}" is-set>
+
         <c:button class="btn-danger ActionDelete" action="delete"
           confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
-        <c:test value="{@enable-if-set}">
-          <p:if-set>
-            <c:test value="{@preview-url}">
-              <p:if-set>
-                <c:button class="ActionPreview" url="{@preview-url}" label="{@preview-label}"/>
-              </p:if-set>
-              <p:default>
-                <c:button class="ActionPreview" action="preview" label="{@preview-label}"/>
-              </p:default>
-            </c:test>
-          </p:if-set>
-          <p:default>
+
+        <c:if the="{@enable-if-set}" is-set>
+          <c:if the="{@preview-url}" is-set>
+            <c:button class="ActionPreview" url="{@preview-url}" label="{@preview-label}"/>
+            <p:lese>
+              <c:button class="ActionPreview" action="preview" label="{@preview-label}"/>
+            </p:lese>
+          </c:if>
+          <p:else>
             <c:button disabled="yes" class="ActionPreview" label="{@preview-label}"/>
-          </p:default>
-        </c:test>
-      </p:if-set>
-    </c:test>
+          </p:else>
+        </c:if>
+
+    </c:if>
+
     {@content}
-  </div>
+
+  </c:action-bar>
 
 </c:template>

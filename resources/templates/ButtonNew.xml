@@ -3,9 +3,11 @@
   <p:param name="label" type="text" default="$BUTTON_CREATE"/>
   <p:param name="content" type="source"/>
 
-  <div class="buttonBar right">
+  <c:action-bar>
+
     <c:button icon="glyphicon glyphicon-plus-sign" class="btn-success ActionNew" label="{@label}" url="{@url}"/>
     {@content}
-  </div>
+
+  </c:action-bar>
 
 </c:template>

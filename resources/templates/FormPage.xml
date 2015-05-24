@@ -2,7 +2,7 @@
   <p:param name="content" type="source"/>
   <p:param name="actions" type="source"/>
 
-  <t:admin>
+  <c:admin>
 
     <article class="form-page">
 
@@ -11,6 +11,6 @@
       <div class="form-footer"> {@actions} </div>
     </article>
 
-  </t:admin>
+  </c:admin>
 
 </c:template>

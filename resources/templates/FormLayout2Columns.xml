@@ -3,8 +3,8 @@
   <p:param name="column-2" type="source"/>
   <p:param name="column-class" type="text" default="col-sm-12 col-lg-6"/>
   <p:param name="form-class" type="text" default="form-horizontal"/>
-  <p:param name="label-class" type="text" default="col-md-4"/>
-  <p:param name="field-class" type="text" default="col-md-8"/>
+  <p:param name="label-class" type="text" default="col-md-3"/>
+  <p:param name="field-class" type="text" default="col-md-9"/>
 
   <div class="row">
     <div class="{@column-class}">

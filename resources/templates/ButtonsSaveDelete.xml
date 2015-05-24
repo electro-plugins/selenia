@@ -1,20 +1,18 @@
 <c:template name="buttons-save-delete" default-param="content">
-  <p:param name="key"       type="identifier"/>
-  <p:param name="content"   type="source"/>
+  <p:param name="key" type="identifier"/>
+  <p:param name="content" type="source"/>
 
-  <div class="buttonBar right">
-    <c:test value="1">
-      <p:if-set>
-        <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-      </p:if-set>
-    </c:test>
-    <c:test value="{@key}">
-      <p:if-set>
-        <c:button class="btn-danger ActionDelete" action="delete"
-                  confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
-      </p:if-set>
-    </c:test>
+  <c:action-bar>
+
+    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+
+    <c:if the="{@key}" is-set>
+      <c:button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
+                message="Tem a certeza de que deseja apagar {gender} {singular}?"/>
+    </c:if>
+
     {@content}
-  </div>
+
+  </c:action-bar>
 
 </c:template>

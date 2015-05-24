@@ -1,0 +1,9 @@
+<c:template name="action-bar" default-param="content">
+  <p:param name="content" type="source"/>
+  <p:param name="align" type="text" enum="left,center,right" default="right"/>
+
+  <div class="action-bar row {@align}">
+    <div class="col-sm-12 col-md-11 col-lg-9">{@content}</div>
+  </div>
+
+</c:template>

@@ -44,40 +44,32 @@ jQuery(document).ready(function() {
   });
 });
     </p:script>
-    <p:body>
-      <div id="{@id}" class="jQPresenter">
-        <c:test value="{@thumbs}">
-          <p:if-true>
-            <div class="thumbs">
-              <c:repeater data="{@data}" rewind="yes">
-                <p:repeat>
-                  <c:image value="{id}" styles="width:{@thumb-width};height:{@thumb-height};quality:{@quality};crop:1"/>
-                </p:repeat>
-              </c:repeater>
-            </div>
-          </p:if-true>
-        </c:test>
-        <div class="main" style="width:{@width}px;height:{@height}px">
-          <c:repeater data="{@data}">
+
+    <div id="{@id}" class="jQPresenter">
+      <c:if the="{@thumbs}" is-true>
+        <div class="thumbs">
+          <c:repeater data="{@data}" rewind="yes">
             <p:repeat>
-              <c:test value="{link}">
-                <p:if-set>
-                  <a href="{link}"><c:image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/></a>
-                </p:if-set>
-                <p:default>
-                  <c:image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
-                </p:default>
-              </c:test>
+              <c:image value="{id}" styles="width:{@thumb-width};height:{@thumb-height};quality:{@quality};crop:1"/>
             </p:repeat>
-            <p:no-data>
-              <c:test value="{@default-image}">
-                <p:if-set>
-                  <c:image value="{@default-image}" description="{@default-caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
-                </p:if-set>
-              </c:test>
-            </p:no-data>
           </c:repeater>
         </div>
+      </c:if>
+      <div class="main" style="width:{@width}px;height:{@height}px">
+        <c:repeater data="{@data}">
+          <c:if the="{link}" is-set>
+            <a href="{link}"><c:image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/></a>
+            <p:else>
+              <c:image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
+            </p:else>
+          </c:if>
+          <p:no-data>
+            <c:if the="{@default-image}" is-set>
+              <c:image value="{@default-image}" description="{@default-caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
+            </c:if>
+          </p:no-data>
+        </c:repeater>
       </div>
-    </p:body>
+    </div>
+
 </c:template>

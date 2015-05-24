@@ -4,11 +4,11 @@
 
   <c:form-layout>
 
-    <c:test value="{!login.showActive}">
+    <c:if is="{!login.showActive}">
       <c:field name="_active" label="$LOGIN_ACTIVE">
         <c:checkbox test-value="{!login._active}"/>
       </c:field>
-    </c:test>
+    </c:if>
 
     <c:field label="$LOGIN_USERNAME" name="_username">
       <c:input value="{!login._username}" autofocus="yes" autocomplete="no"/>
@@ -18,7 +18,7 @@
       <c:input value="{!login._password}" type="password" autocomplete="no"/>
     </c:field>
 
-    <c:test value="{!login.showRoles}">
+    <c:if is="{!login.showRoles}">
       <c:field label="$LOGIN_TYPE" name="_role">
         <c:radiobutton value="{!login.admin_role}"
                        label="$LOGIN_TYPE_ADMIN"
@@ -27,7 +27,7 @@
         <c:radiobutton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" test-value="{!login._role}"/>
         <c:radiobutton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" test-value="{!login._role}"/>
       </c:field>
-    </c:test>
+    </c:if>
 
   </c:form-layout>
 

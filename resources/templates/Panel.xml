@@ -5,11 +5,11 @@
   <p:param name="actions" type="source"/>
 
   <div class="form {@type}">
-    <c:test is-set="{@title}">
+    <c:if the="{@title}" is-set>
       <div class="box-header with-border">
         <h3 class="box-title">{@title}</h3>
       </div>
-    </c:test>
+    </c:if>
     <div class="box-body">
       {@content}
     </div>

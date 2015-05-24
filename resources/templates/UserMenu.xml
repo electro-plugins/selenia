@@ -7,14 +7,14 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <c:test value="{!admin-module.profile}">
+      <c:if the="{!admin-module.profile}" is-true>
         <li>
           <a href="{!admin-module.profilePrefix}user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>
         </li>
-      </c:test>
+      </c:if>
       <!--li>
         <a href="#">
           <i class="fa fa-gear fa-fw"></i>
