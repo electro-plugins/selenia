@@ -12,6 +12,8 @@ class User extends DataObject implements UserInterface
   public $primarySortField = 'username';
   public $filterFields     = ['role', 'active'];
   public $orderBy          = 'username';
+  public $dateTimeFields   = ['registrationDate', 'lastLogin'];
+  public $booleanFields    = ['active'];
 
   public $username;
   public $password;
@@ -30,6 +32,7 @@ class User extends DataObject implements UserInterface
   public function findByName ($username)
   {
     $this->username = $username;
+    $this->read ();
     return $this->read ();
   }
 
