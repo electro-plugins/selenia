@@ -7,6 +7,7 @@ use Selene\Exceptions\FatalException;
 use Selene\Exceptions\ValidationException;
 use Selene\Modules\Admin\Config\AdminModule;
 use Selene\Modules\Admin\Controllers\AdminController;
+use Selene\Modules\Admin\Models\User as UserModel;
 use Selene\Session;
 
 class User extends AdminController
@@ -14,14 +15,23 @@ class User extends AdminController
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
 
+  protected $pageTitle = '$ADMIN_ADMIN_USER';
+
   public function action_submit (DataObject $data = null, $param = null)
   {
+    /** @var $session Session */
+    global $session;
+
     $settings = AdminModule::settings ();
     $username = $_POST['_username'];
     $password = $_POST['_password'];
-    // If !activeUsers, $active is always true.
-    $active   = get ($_POST, '_active', !get ($settings, 'activeUsers', true));
-    $role     = get ($_POST, '_role');
+
+    // If the user active checkbox is not shown, $active is always true.
+    $isSelf     = $data->id () == $session->user->id ();
+    $showActive = !$isSelf && get ($settings, 'activeUsers', true);
+    $active     = get ($_POST, '_active', !$showActive);
+
+    $role = get ($_POST, '_role');
     /** @var User $data */
     if (!isset($data))
       throw new FatalException('Can\'t insert/update NULL DataObject.');
@@ -58,47 +68,61 @@ class User extends AdminController
       $this->action_logout ();
   }
 
-  protected function setupModel ()
+  protected function model ()
   {
     /** @var $session Session */
     global $session, $application;
     $settings = AdminModule::settings ();
 
-    if (get ($this->sitePage->config, 'self'))
-      $this->dataItem = $session->user;
+    /** @var UserModel $user */
+    if (get ($this->sitePage->config, 'self')) {
+      $user = $this->dataItem = $session->user;
+      $user->read ();
+    }
     else {
-      $this->dataItem = new $application->userModel;
-      $this->dataItem->initFromQueryString ();
-      $this->applyPresets ();
-      if (!$this->dataItem->read ()) {
-        _log ('<#section|User>', $this->dataItem, '</#section>');
+      $user = $this->dataItem = $this->loadRequested (new $application->userModel);
+      if (!$user) {
+        _log ('<#section|User>', $user, '</#section>');
         WebConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
       }
     }
     // Set a default role for a new user.
-    if (!exists ($this->dataItem->role ()))
-      $this->dataItem->role (get ($settings, 'defaultRole', UserInterface::USER_ROLE_STANDARD));
+    if (!exists ($user->role ()))
+      $user->role (get ($settings, 'defaultRole', UserInterface::USER_ROLE_STANDARD));
+  }
 
-    $isAdmin = $this->dataItem->role () == UserInterface::USER_ROLE_ADMIN;
+  protected function setupViewModel ()
+  {
+    /** @var $session Session */
+    global $session;
+    $settings = AdminModule::settings ();
+
+    $user    = $this->dataItem;
+    $isDev   = $session->user->role () == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $session->user->role () == UserInterface::USER_ROLE_ADMIN;
     // Has it the Standard or Admin roles?
-    $isStandard = $isAdmin || $this->dataItem->role () == UserInterface::USER_ROLE_STANDARD;
-    $isSelf     = $this->dataItem->id () == $session->user->id ();
+    $isStandard = $isAdmin || $session->user->role () == UserInterface::USER_ROLE_STANDARD;
+    $isSelf     = $user->id () == $session->user->id ();
 
     $viewModel = [
-      '_username'     => $this->dataItem->username (),
-      '_password'     => strlen ($this->dataItem->password ()) ? self::DUMMY_PASS : '',
-      '_active'       => $this->dataItem->active (),
-      '_role'         => $this->dataItem->role (),
-      'isAdmin'       => $isAdmin,
-      'isStandard'    => $isStandard,
-      'showRoles'     => $isStandard && get ($settings, 'editRoles', true),
-      'admin_role'    => UserInterface::USER_ROLE_ADMIN,
-      'standard_role' => UserInterface::USER_ROLE_STANDARD,
-      'guest_role'    => UserInterface::USER_ROLE_GUEST,
-      'showActive'    => !$isSelf && get ($settings, 'activeUsers', true),
-      'canDelete'     => // Will be either true or null.
+      '_username'       => $user->username (),
+      '_password'       => strlen ($user->password ()) ? self::DUMMY_PASS : '',
+      '_active'         => $user->active (),
+      '_role'           => $user->role (),
+      'isAdmin'         => $isAdmin,
+      'isNotAdminOrDev' => !$isAdmin && !$isDev,
+      'isDev'           => $isDev,
+      'isNotDev'        => !$isDev,
+      'isStandard'      => $isStandard,
+      'showRoles'       => $isDev || ($isAdmin && get ($settings, 'editRoles', true)),
+      'dev_role'        => UserInterface::USER_ROLE_DEVELOPER,
+      'admin_role'      => UserInterface::USER_ROLE_ADMIN,
+      'standard_role'   => UserInterface::USER_ROLE_STANDARD,
+      'guest_role'      => UserInterface::USER_ROLE_GUEST,
+      'showActive'      => !$isSelf && get ($settings, 'activeUsers', true),
+      'canDelete'       => // Will be either true or null.
         (
-          !$this->dataItem->isNew () &&
+          !$user->isNew () &&
           // User is not self or delete self is allowed.
           (!$isSelf || get ($settings, 'allowDeleteSelf', true))
         ) ?: null,

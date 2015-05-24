@@ -21,27 +21,23 @@ class AdminModule
 
       get ($settings, 'users', true) ?
         PageRoute ([
-          'title'      => '$ADMIN_ADMIN_USERS',
-          'URI'        => 'users',
-          'module'     => $module,
-          'model'      => $userModel,
-          'view'       => "users/users.html",
-          'controller' => "$namespace\\Controllers\\Users\\Users",
-          'isIndex'    => true,
-          'format'     => 'grid',
-          'singular'   => 'utilizador',
-          'plural'     => 'Utilizadores',
-          'gender'     => 'o',
-          'links'      => [
-            'mainForm' => 'users/{username}'
+          'title'         => '$ADMIN_ADMIN_USERS',
+          'URI'           => 'users',
+          'module'        => $module,
+          'model'         => $userModel,
+          'view'          => "users/users.html",
+          'controller'    => "$namespace\\Controllers\\Users\\Users",
+          'autoloadModel' => true,
+          'isIndex'       => true,
+          'format'        => 'grid',
+          'links'         => [
+            'mainForm' => 'users/{id}'
           ],
-          'routes'     => [
-            SubPageRoute ([
-              'URI'            => 'users/{username}',
-              'preset'         => 'username={username}',
+          'routes'        => [
+            PageRoute ([
+              'URI'            => 'users/{id}',
               'view'           => "users/user.html",
               'controller'     => "$namespace\\Controllers\\Users\\User",
-              'autoController' => false,
               'format'         => 'form',
             ])
 

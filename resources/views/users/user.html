@@ -20,10 +20,14 @@
 
     <c:if is="{!login.showRoles}">
       <c:field label="$LOGIN_TYPE" name="_role">
+        <c:radiobutton value="{!login.dev_role}"
+                       label="$LOGIN_TYPE_DEV"
+                       test-value="{!login.dev_role}"
+                       hidden="{!login.isNotDev}"/>
         <c:radiobutton value="{!login.admin_role}"
                        label="$LOGIN_TYPE_ADMIN"
                        test-value="{!login._role}"
-                       visible="{!login.isAdmin}"/>
+                       hidden="{!login.isNotAdminOrDev}"/>
         <c:radiobutton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" test-value="{!login._role}"/>
         <c:radiobutton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" test-value="{!login._role}"/>
       </c:field>
