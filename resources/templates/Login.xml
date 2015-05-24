@@ -12,7 +12,7 @@
     -->
     <!-- /.login-logo -->
     <div class="login-box-body">
-      <h1 class="text-info">$LOGIN_TITLE</h1>
+      <h1 class="text-info">{!application.appName}</h1>
       <div class="text-center2 sub">$LOGIN_SUBTITLE</div>
       <p class="login-box-msg">$LOGIN_PROMPT</p>
       <div class="form-group has-feedback">
