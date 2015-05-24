@@ -7,8 +7,18 @@ ModuleOptions (__DIR__, [
   'templates' => true,
   'views'     => true,
   'config'    => [
-    'main' => [
+    'main'         => [
       'userModel' => 'Selene\Modules\Admin\Models\User',
+    ],
+    'admin-module' => [
+      'users'           => true,
+      'profile'         => true,
+      'editRoles'       => true,
+      'defaultRole'     => 'standard',
+      'activeUsers'     => true,
+      'allowDeleteSelf' => true,
+      'profilePrefix'   => '',
+      'translations'    => true
     ]
   ]
 ]);
