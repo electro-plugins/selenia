@@ -18,7 +18,8 @@ ModuleOptions (__DIR__, [
       'activeUsers'     => true,
       'allowDeleteSelf' => true,
       'profilePrefix'   => '',
-      'translations'    => true
+      'translations'    => true,
+      'footer'          => '{!application.appName} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave, Lda</a>. All rights reserved.',
     ]
   ]
 ]);

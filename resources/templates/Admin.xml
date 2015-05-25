@@ -72,12 +72,7 @@
           <!-- /.row -->
           {@content}
 
-          <footer>
-            {!application.appName} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">
-            Impactwave,
-            Lda</a>.
-            All rights reserved.
-          </footer>
+          <footer>{!admin-module.footer}</footer>
 
         </div>
         <!-- /.container-fluid -->
