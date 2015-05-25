@@ -8,7 +8,7 @@
 
 #theme() when (@theme = default) {
   .background { background: #D2D6DE; #gradient.left-sidebar (@default-sidebar-color, @sidebar-width) }
-  .main-background { background: #FFF }
+  .main-background { background: #FFF;border-right: 1px solid #c2c5cc }
   .sidebar { background: #F8F8F8 }
   .top-bar { background: #444 }
   .top-bar-text { color: #DDD }
@@ -27,7 +27,7 @@
 
 #theme() when (@theme = alternate) {
   .background { background: #D2D6DE; #gradient.left-sidebar (@alternate-sidebar-color, @sidebar-width) }
-  .main-background { background: #EEEEF0 }
+  .main-background { background: #EEEEF0;border-right: 1px solid #c2c5cc }
   .top-bar { background: #444 }
   .top-bar-text { color: #DDD }
   .main-menu-item { color: #666; font-weight: 100 }

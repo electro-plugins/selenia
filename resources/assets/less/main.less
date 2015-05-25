@@ -916,36 +916,42 @@ textarea[readonly].static {
 --------------------------------------------------------------------*/
 
 .login-box-body {
-  box-shadow: 0 0 5px;
-  width: 360px;
-  padding: 30px;
+  display: inline-block;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  max-width: 450px;
+  width: 100%;
+  padding: 45px 60px;
   background: #FFF;
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  margin-left: -180px;
+  margin-bottom: 20px;
+
+  h1 {
+    color: #666;
+    font-weight: 300;
+    text-align: center;
+    margin: 0 0 30px;
+  }
+
+  h4 {
+    color: #666;
+    margin: 0 0 25px;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .btn {
+    margin: 25px 0 0;
+    i {
+      position: static;
+    }
+  }
 }
 
-.login-box-body h1 {
-  text-align: center;
-}
-
-.login-box-body .sub {
-  text-align: center;
-  font-size: 10px;
-  margin-top: -5px;
-  color: #888;
-  text-transform: uppercase;
-}
-
-.login-box-msg {
-  margin-top: 30px;
-}
 /*--------------------------------------------------------------------
    CENTER LOGIN - OVERRIDE
 --------------------------------------------------------------------*/
 body.login-page {
-  background-image: none;
+  background: #EEE;
 
   form {
     display: table;
@@ -961,10 +967,5 @@ body.login-page {
   text-align: center;
   vertical-align: middle;
   display: table-cell;
-}
-.login-box-body {
-  display: inline-block;
-  position: static!important;
-  margin-left: 0!important;
 }
 
