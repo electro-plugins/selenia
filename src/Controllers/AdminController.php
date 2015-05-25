@@ -65,6 +65,9 @@ class AdminController extends Controller
                 extend ($data, $URIParams);
                 $presetParams = $page->getPresetParameters ();
                 extend ($data, $presetParams);
+              }
+              else $data = $this->model ();
+              if (isset($data)) {
                 if ($data->isNew () && isset($data->gender) && isset($data->singular))
                   array_unshift ($result, ["Nov$data->gender $data->singular", $link]);
                 else {
@@ -77,6 +80,7 @@ class AdminController extends Controller
                   array_unshift ($result, [$title, $link]);
                 }
               }
+
               break;
           }
         else if (isset($page->parent)) {
