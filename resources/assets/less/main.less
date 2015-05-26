@@ -88,7 +88,8 @@ a:not([href]) {
 }
 
 // Remove default bootstrap round corners for input elements.
-input[type=text], input[type=search], input[type=password], textarea, select,
+input[type=text], input[type=search], input[type=password], input[type=number],
+textarea, select,
 .input-group-btn button, .input-group-addon {
   border-radius: 0 !important;
 }
@@ -512,6 +513,10 @@ label.static {
 
 /* FIELDS */
 
+input:invalid {
+  border-color: #C00;
+}
+
 input[type=radio] {
   padding-bottom: 2px;
 
@@ -582,7 +587,6 @@ textarea[readonly].static {
 }
 
 .Input.type-number {
-  max-width: 33%;
   text-align: right;
 }
 
