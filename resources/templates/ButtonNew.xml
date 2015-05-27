@@ -2,8 +2,9 @@
   <p:param name="url" type="text"/>
   <p:param name="label" type="text" default="$BUTTON_CREATE"/>
   <p:param name="content" type="source"/>
+  <p:param name="bar-class" type="text"/>
 
-  <c:action-bar>
+  <c:action-bar class="{@bar-class}">
 
     <c:button icon="glyphicon glyphicon-plus-sign" class="btn-success ActionNew" label="{@label}" url="{@url}"/>
     {@content}

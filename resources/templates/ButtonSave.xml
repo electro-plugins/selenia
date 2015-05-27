@@ -1,7 +1,8 @@
 <c:template name="button-save" default-param="content">
   <p:param name="content" type="source"/>
+  <p:param name="bar-class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <c:action-bar>
+  <c:action-bar class="{@bar-class}">
 
     <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
     {@content}
