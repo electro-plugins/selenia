@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<c:template name="date-time-picker">
-  <p:param name="name" type="identifier" default="datetimepicker"/>
-  <p:param name="label" type="text"/>
-  <p:param name="value" type="text"/>
-  <p:param name="format" type="text" default="YYYY-MM-DD HH:mm"/>
-  <p:param name="locale" type="text" default="pt"/>
-  <p:param name="side-by-side" type="boolean" default="true"/>
-  <p:script src="modules/admin/js/moment-with-locales.min.js"/>
-  <p:script src="modules/admin/js/bootstrap-datetimepicker.min.js"/>
-  <p:stylesheet src="modules/admin/css/bootstrap-datetimepicker.min.css"/>
-  <p:body>
-    <div class="Field form-group">
-      <label class="control-label col-sm-4 col-md-3" for="{@name}_input">{@label}</label>
-      <div class='input-group col-sm-8 col-md-7 col-lg-6' id='{@name}_field'>
-        <input id="{@name}_input" type='text' class="form-control" name="{@name}"/>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-      </div>
-      <script type="text/javascript">
-        $(function () {
-          $('#{@name}_field').datetimepicker({
-            locale:      '{@locale}',
-            defaultDate: '{@value}' || new moment(),
-            format:      '{@format}',
-            sideBySide:  {@side-by-side}
-          });
-        });
-      </script>
+<Template name="DateTimePicker">
+  <Param name="name" type="identifier" default="datetimepicker"/>
+  <Param name="label" type="text"/>
+  <Param name="value" type="text"/>
+  <Param name="format" type="text" default="YYYY-MM-DD HH:mm"/>
+  <Param name="locale" type="text" default="pt"/>
+  <Param name="sideBySide" type="boolean" default="true"/>
+  <Script src="modules/admin/js/moment-with-locales.min.js"/>
+  <Script src="modules/admin/js/bootstrap-datetimepicker.min.js"/>
+  <Stylesheet src="modules/admin/css/bootstrap-datetimepicker.min.css"/>
+
+  <div class="Field form-group">
+    <label class="control-label col-sm-4 col-md-3" for="{@name}_input">{@label}</label>
+    <div class='input-group col-sm-8 col-md-7 col-lg-6' id='{@name}_field'>
+      <input id="{@name}_input" type='text' class="form-control" name="{@name}"/>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
     </div>
-  </p:body>
-</c:template>
+    <script type="text/javascript">
+      $(function () {
+        $('#{@name}_field').datetimepicker({
+          locale:      '{@locale}',
+          defaultDate: '{@value}' || new moment(),
+          format:      '{@format}',
+          sideBySide:  {@sideBySide}
+        });
+      });
+    </script>
+  </div>
+
+</Template>

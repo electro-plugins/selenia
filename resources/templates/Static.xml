@@ -1,20 +1,20 @@
-<c:template name="static">
-  <p:param name="url" type="text"/>
-  <p:param name="name" type="identifier"/>
-  <p:param name="value" type="text"/>
-  <p:param name="class" type="text"/>
+<Template name="Static">
+  <Param name="url" type="text"/>
+  <Param name="name" type="identifier"/>
+  <Param name="value" type="text"/>
+  <Param name="class" type="text"/>
 
-  <h:div class="staticField {@class}">
+  <H.div class="staticField {@class}">
 
-    <c:if the="{@url}" is-set>
+    <If the="{@url}" is-set>
       <a href="{@url}">{@value}</a>
-      <p:else>{@value}</p:else>
-    </c:if>
+      <Else>{@value}</Else>
+    </If>
 
-    <c:if the="{@name}">
+    <If the="{@name}">
       <input type="hidden" name="{@name}" value="{@value}"/>
-    </c:if>
+    </If>
 
-  </h:div>
+  </H.div>
 
-</c:template>
+</Template>

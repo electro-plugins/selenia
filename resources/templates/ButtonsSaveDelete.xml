@@ -1,19 +1,19 @@
-<c:template name="buttons-save-delete" default-param="content">
-  <p:param name="key" type="identifier"/>
-  <p:param name="content" type="source"/>
-  <p:param name="bar-class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
+<Template name="ButtonsSaveDelete" defaultParam="Content">
+  <Param name="key" type="identifier"/>
+  <Param name="Content" type="source"/>
+  <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <c:action-bar class="{@bar-class}">
+  <ActionBar class="{@bar-class}">
 
-    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+    <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
 
-    <c:if the="{@key}" is-set>
-      <c:button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
+    <If the="{@key}" is-set>
+      <Button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
                 message="Tem a certeza de que deseja apagar {gender} {singular}?"/>
-    </c:if>
+    </If>
 
     {@content}
 
-  </c:action-bar>
+  </ActionBar>
 
-</c:template>
+</Template>

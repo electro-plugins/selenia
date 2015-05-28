@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<c:template name="google-map">
-  <p:param name="id" type="identifier"/>
-  <p:param name="background-color" type="text" default="#FFF"/>
-  <p:param name="latitude" type="number" default="0"/>
-  <p:param name="longitude" type="number" default="0"/>
-  <p:param name="zoom" type="number" default="1"/>
-  <p:param name="text" type="text"/>
-  <p:param name="autoshow" type="boolean" default="yes"/>
-  <p:param name="show-marker" type="boolean" default="no"/>
-  <p:param name="draggable-marker" type="boolean" default="no"/>
-  <p:param name="draggable" type="boolean" default="true"/>
+<Template name="GoogleMap">
+  <Param name="id" type="identifier"/>
+  <Param name="backgroundColor" type="text" default="#FFF"/>
+  <Param name="latitude" type="number" default="0"/>
+  <Param name="longitude" type="number" default="0"/>
+  <Param name="zoom" type="number" default="1"/>
+  <Param name="text" type="text"/>
+  <Param name="autoshow" type="boolean" default="yes"/>
+  <Param name="showMarker" type="boolean" default="no"/>
+  <Param name="draggableMarker" type="boolean" default="no"/>
+  <Param name="draggable" type="boolean" default="true"/>
 
-  <p:param name="sensor" type="boolean" default="false"/>
-  <p:param name="language" type="identifier" default="en"/>
-  <p:param name="region" type="text"/>
+  <Param name="sensor" type="boolean" default="false"/>
+  <Param name="language" type="identifier" default="en"/>
+  <Param name="region" type="text"/>
 
-  <p:script name="gmap">
+  <Script name="gmap">
     var mapsOnPage=[];
 
     function loadMap(args) {
@@ -46,26 +46,26 @@
       if (t && exists('mapReady'))
         mapReady();
     }
-  </p:script>
-  <p:script>
+  </Script>
+  <Script>
     mapsOnPage.push({
       id:'{@id}',
       autoshow: {@autoshow},
-      backgroundColor: '{@background-color}',
+      backgroundColor: '{@backgroundColor}',
       latitude: number('{@latitude}',0),
       longitude: number('{@longitude}',0),
       zoom: number('{@zoom}',1),
       text: '{@text}',
-      showMarker: {@show-marker},
-      draggableMarker: {@draggable-marker},
+      showMarker: {@showMarker},
+      draggableMarker: {@draggableMarker},
       draggable: {@draggable}
     });
     if (mapsOnPage.length == 1)
       listen('onLoad',function(){
         loadScript('http://maps.googleapis.com/maps/api/js?sensor={@sensor}&language={@language}&region={@region}&callback=googleMapsInit');
       });
-  </p:script>
-  <p:body>
-    <div id="{@id}" style="height:100%"></div>
-  </p:body>
-</c:template>
+  </Script>
+
+  <div id="{@id}" style="height:100%"></div>
+
+</Template>

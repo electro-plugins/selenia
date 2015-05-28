@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<c:template name="menu-item">
-  <p:param name="label"     type="text"/>
-  <p:param name="uri"       type="text" default=" "/>
-  <p:param name="url"       type="text" default="?/"/>
-  <p:param name="match"     type="text"/>
-  <p:param name="css-class" type="text"/>
+<Template name="MenuItem">
+  <Param name="label"     type="text"/>
+  <Param name="uri"       type="text" default=" "/>
+  <Param name="url"       type="text" default="?/"/>
+  <Param name="match"     type="text"/>
+  <Param name="cssClass" type="text"/>
 
-  <c:if the="{@match}" is-set>
+  <If the="{@match}" is-set>
 
-      <c:if the="{!sitePage.URI_regexp}" matches="{@match}">
-        <a class="{@css-class} selected" href="{@url}{@uri}">{@label}</a>
-        <p:else>
-          <a class="{@css-class}" href="{@url}{@uri}">{@label}</a>
-        </p:else>
-      </c:if>
+      <If the="{!sitePage.URI_regexp}" matches="{@match}">
+        <a class="{@cssClass} selected" href="{@url}{@uri}">{@label}</a>
+        <Else>
+          <a class="{@cssClass}" href="{@url}{@uri}">{@label}</a>
+        </Else>
+      </If>
 
-    <p:else>
+    <Else>
 
-      <c:if the="{!sitePage.URI_regexp}" matches="{@uri}">
-        <a class="{@css-class} selected" href="{@url}{@uri}">{@label}</a>
-        <p:else>
-          <a class="{@css-class}" href="{@url}{@uri}">{@label}</a>
-        </p:else>
-      </c:if>
+      <If the="{!sitePage.URI_regexp}" matches="{@uri}">
+        <a class="{@cssClass} selected" href="{@url}{@uri}">{@label}</a>
+        <Else>
+          <a class="{@cssClass}" href="{@url}{@uri}">{@label}</a>
+        </Else>
+      </If>
 
-    </p:else>
-  </c:if>
+    </Else>
+  </If>
 
-</c:template>
+</Template>

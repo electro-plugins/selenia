@@ -1,42 +1,42 @@
-<t:form-page>
+<FormPage>
   <!-- disable autofill -->
   <input type="password" style="display:none">
 
-  <c:form-layout>
+  <FormLayout>
 
-    <c:if is="{!login.showActive}">
-      <c:field name="_active" label="$LOGIN_ACTIVE">
-        <c:checkbox test-value="{!login._active}"/>
-      </c:field>
-    </c:if>
+    <If is="{!login.showActive}">
+      <Field name="_active" label="$LOGIN_ACTIVE">
+        <Checkbox test-value="{!login._active}"/>
+      </Field>
+    </If>
 
-    <c:field label="$LOGIN_USERNAME" name="_username">
-      <c:input value="{!login._username}" autofocus="yes" autocomplete="no"/>
-    </c:field>
+    <Field label="$LOGIN_USERNAME" name="_username">
+      <Input value="{!login._username}" autofocus="yes" autocomplete="no"/>
+    </Field>
 
-    <c:field label="$LOGIN_PASSWORD" name="_password">
-      <c:input value="{!login._password}" type="password" autocomplete="no"/>
-    </c:field>
+    <Field label="$LOGIN_PASSWORD" name="_password">
+      <Input value="{!login._password}" type="password" autocomplete="no"/>
+    </Field>
 
-    <c:if is="{!login.showRoles}">
-      <c:field label="$LOGIN_TYPE" name="_role">
-        <c:radiobutton value="{!login.dev_role}"
-                       label="$LOGIN_TYPE_DEV"
-                       test-value="{!login.dev_role}"
-                       hidden="{!login.isNotDev}"/>
-        <c:radiobutton value="{!login.admin_role}"
-                       label="$LOGIN_TYPE_ADMIN"
-                       test-value="{!login._role}"
-                       hidden="{!login.isNotAdminOrDev}"/>
-        <c:radiobutton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" test-value="{!login._role}"/>
-        <c:radiobutton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" test-value="{!login._role}"/>
-      </c:field>
-    </c:if>
+    <If is="{!login.showRoles}">
+      <Field label="$LOGIN_TYPE" name="_role">
+        <RadioButton value="{!login.dev_role}"
+                     label="$LOGIN_TYPE_DEV"
+                     test-value="{!login.dev_role}"
+                     hidden="{!login.isNotDev}"/>
+        <RadioButton value="{!login.admin_role}"
+                     label="$LOGIN_TYPE_ADMIN"
+                     test-value="{!login._role}"
+                     hidden="{!login.isNotAdminOrDev}"/>
+        <RadioButton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" test-value="{!login._role}"/>
+        <RadioButton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" test-value="{!login._role}"/>
+      </Field>
+    </If>
 
-  </c:form-layout>
+  </FormLayout>
 
-  <p:actions>
-    <t:buttons-save-delete key="{!login.canDelete}"/>
-  </p:actions>
+  <Actions>
+    <ButtonsSaveDelete key="{!login.canDelete}"/>
+  </Actions>
 
-</t:form-page>
+</FormPage>

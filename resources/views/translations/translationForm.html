@@ -1,4 +1,4 @@
-<t:form-page>
+<FormPage>
 
   <fieldset class="mainPanel">
     <div class="fieldset">
@@ -7,31 +7,31 @@
         <tr>
           <td>
             <label for="key" class="form">Chave:</label>
-            <c:if the="{!translation.key}" is-set>
-              <t:static name="key" value="{!translation.key}" label="{!translation.key}"/>
-              <p:else>
-                <c:input name="key" value="{!translation.key}" focus="yes"/>
-              </p:else>
-            </c:if>
+            <If the="{!translation.key}" is-set>
+              <Static name="key" value="{!translation.key}" label="{!translation.key}"/>
+              <Else>
+                <Input name="key" value="{!translation.key}" focus="yes"/>
+              </Else>
+            </If>
           </td>
           <td></td>
           <td></td>
           </tr>
           <tr>
             <td colspan="3">
-              <c:tabs data="{!languages}">
-                <p:page-template>
-                  <c:input type="multiline" name="text_{value}" value="{!translation.text_{value}}"/>
-                </p:page-template>
-              </c:tabs>
+              <Tabs data="{!languages}">
+                <PageTemplate>
+                  <Input type="multiline" name="text_{value}" value="{!translation.text_{value}}"/>
+                </PageTemplate>
+              </Tabs>
             </td>
           </tr>
         </table>
     </div>
   </fieldset>
 
-  <p:actions>
-    <t:buttons-save-delete key="{!translation.key}" item-name="esta chave de tradução"/>
-  </p:actions>
+  <Actions>
+    <ButtonsSaveDelete key="{!translation.key}" item-name="esta chave de tradução"/>
+  </Actions>
 
-</t:form-page>
+</FormPage>

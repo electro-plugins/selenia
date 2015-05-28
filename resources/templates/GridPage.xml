@@ -1,9 +1,8 @@
-<c:template name="grid-page" default-param="content">
-  <p:param name="content" type="source"/>
-  <p:param name="actions" type="source"/>
+<Template name="GridPage" defaultParam="Content">
+  <Param name="Content" type="source"/>
+  <Param name="actions" type="source"/>
 
-  <t:admin>
-    <p:content>
+  <Admin>
 
     <article class="grid-page">
 
@@ -12,7 +11,6 @@
       <div class="form-footer"> {@actions} </div>
     </article>
 
-    </p:content>
-  </t:admin>
+  </Admin>
 
-</c:template>
+</Template>

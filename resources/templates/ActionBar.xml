@@ -1,10 +1,10 @@
-<c:template name="action-bar" default-param="content">
-  <p:param name="content" type="source"/>
-  <p:param name="class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
-  <p:param name="align" type="text" enum="left,center,right" default="right"/>
+<Template name="ActionBar" defaultParam="Content">
+  <Param name="Content" type="source"/>
+  <Param name="class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
+  <Param name="align" type="text" enum="left,center,right" default="right"/>
 
   <div class="action-bar row {@align}">
     <div class="{@class}">{@content}</div>
   </div>
 
-</c:template>
+</Template>

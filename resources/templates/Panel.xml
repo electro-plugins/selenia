@@ -1,15 +1,15 @@
-<c:template name="panel" default-param="content">
-  <p:param name="type" type="text" default=""/>
-  <p:param name="title" type="text"/>
-  <p:param name="content" type="source"/>
-  <p:param name="actions" type="source"/>
+<Template name="Panel" defaultParam="Content">
+  <Param name="type" type="text" default=""/>
+  <Param name="title" type="text"/>
+  <Param name="Content" type="source"/>
+  <Param name="actions" type="source"/>
 
   <div class="form {@type}">
-    <c:if the="{@title}" is-set>
+    <If the="{@title}" is-set>
       <div class="box-header with-border">
         <h3 class="box-title">{@title}</h3>
       </div>
-    </c:if>
+    </If>
     <div class="box-body">
       {@content}
     </div>
@@ -18,4 +18,4 @@
     </div>
   </div>
 
-</c:template>
+</Template>

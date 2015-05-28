@@ -1,4 +1,4 @@
-<c:template name="login">
+<Template name="Login">
 
   <input type="hidden" name="_prevPost" value="{!controller.prevPost}"/>
 
@@ -35,4 +35,4 @@
   </div>
   <!-- /.login-box -->
 
-</c:template>
+</Template>
