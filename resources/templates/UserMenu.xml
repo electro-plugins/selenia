@@ -7,7 +7,7 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <If the="{!admin-module.profile}" is-true>
+      <If the="{!admin-module.profile}" isTrue>
         <li>
           <a href="{!admin-module.profilePrefix}user">
             <i class="fa fa-user fa-fw"></i>

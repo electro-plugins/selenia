@@ -1,12 +1,12 @@
-<Template name="ButtonSubmit" defaultParam="Content">
+<Template name="ButtonSubmit" defaultParam="content">
   <Param name="label" type="text" default="$BUTTON_SAVE"/>
-  <Param name="Content" type="source"/>
+  <Param name="content" type="source"/>
   <Param name="autoDisable" type="bool"/>
   <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
   <ActionBar class="{@barClass}">
 
-    <If the="{@autoDisable}" is-true>
+    <If the="{@autoDisable}" isTrue>
       <Button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}"
                 script="Button_disable('submitBtn');doAction('submit')"/>
       <Else>

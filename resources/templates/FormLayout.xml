@@ -1,5 +1,5 @@
-<Template name="FormLayout" defaultParam="Content">
-  <Param name="Content" type="source"/>
+<Template name="FormLayout" defaultParam="content">
+  <Param name="content" type="source"/>
   <Param name="formClass" type="text" default="form-horizontal"/>
   <Param name="labelClass" type="text" default="col-sm-2"/>
   <Param name="fieldClass" type="text" default="col-sm-10 col-md-9 col-lg-7"/>

@@ -1,11 +1,11 @@
-<Template name="Panel" defaultParam="Content">
+<Template name="Panel" defaultParam="content">
   <Param name="type" type="text" default=""/>
   <Param name="title" type="text"/>
-  <Param name="Content" type="source"/>
+  <Param name="content" type="source"/>
   <Param name="actions" type="source"/>
 
   <div class="form {@type}">
-    <If the="{@title}" is-set>
+    <If the="{@title}" isSet>
       <div class="box-header with-border">
         <h3 class="box-title">{@title}</h3>
       </div>

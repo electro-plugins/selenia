@@ -1,7 +1,7 @@
-<Template name="ButtonNew" defaultParam="Content">
+<Template name="ButtonNew" defaultParam="content">
   <Param name="url" type="text"/>
   <Param name="label" type="text" default="$BUTTON_CREATE"/>
-  <Param name="Content" type="source"/>
+  <Param name="content" type="source"/>
   <Param name="barClass" type="text"/>
 
   <ActionBar class="{@barClass}">

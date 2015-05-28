@@ -46,7 +46,7 @@ jQuery(document).ready(function() {
     </Script>
 
     <div id="{@id}" class="jQPresenter">
-      <If the="{@thumbs}" is-true>
+      <If the="{@thumbs}" isTrue>
         <div class="thumbs">
           <Repeater data="{@data}" rewind="yes">
             <Image value="{id}" styles="width:{@thumb-width};height:{@thumb-height};quality:{@quality};crop:1"/>
@@ -55,14 +55,14 @@ jQuery(document).ready(function() {
       </If>
       <div class="main" style="width:{@width}px;height:{@height}px">
         <Repeater data="{@data}">
-          <If the="{link}" is-set>
+          <If the="{link}" isSet>
             <a href="{link}"><Image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/></a>
             <Else>
               <Image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
             </Else>
           </If>
           <NoDdata>
-            <If the="{@default-image}" is-set>
+            <If the="{@default-image}" isSet>
               <image value="{@default-image}" description="{@default-caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
             </If>
           </NoDdata>

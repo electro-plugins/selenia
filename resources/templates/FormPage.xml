@@ -1,5 +1,5 @@
-<Template name="FormPage" defaultParam="Content">
-  <Param name="Content" type="source"/>
+<Template name="FormPage" defaultParam="content">
+  <Param name="content" type="source"/>
   <Param name="actions" type="source"/>
 
   <Admin>

@@ -5,7 +5,7 @@
   <Param name="match"     type="text"/>
   <Param name="cssClass" type="text"/>
 
-  <If the="{@match}" is-set>
+  <If the="{@match}" isSet>
 
       <If the="{!sitePage.URI_regexp}" matches="{@match}">
         <a class="{@cssClass} selected" href="{@url}{@uri}">{@label}</a>

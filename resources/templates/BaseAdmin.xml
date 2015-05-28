@@ -1,5 +1,5 @@
-<Template name="BaseAdmin" defaultParam="Content">
-  <Param name="Content" type="source"/>
+<Template name="BaseAdmin" defaultParam="content">
+  <Param name="content" type="source"/>
   <Stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
   <Stylesheet src="lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>
   <Stylesheet src="lib/datatables-responsive/css/dataTables.responsive.css"/>

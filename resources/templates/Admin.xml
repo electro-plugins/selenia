@@ -1,5 +1,5 @@
-<Template name="Admin" defaultParam="Content">
-  <Param name="Content" type="source"/>
+<Template name="Admin" defaultParam="content">
+  <Param name="content" type="source"/>
 
   <BaseAdmin>
 
@@ -31,9 +31,10 @@
         <div class="navbar-default sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
 
-            <MainMenu class="nav" id="side-menu" expand-icon="fa.arrow">
+            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow">
               <Header>
-                <!--li class="sidebar-search">
+              <!--
+                <li class="sidebar-search">
                   <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Procurar...">
                     <span class="input-group-btn">
@@ -42,7 +43,8 @@
                       </button>
                     </span>
                   </div>
-                </li-->
+                </li>
+              -->
               </Header>
             </MainMenu>
 

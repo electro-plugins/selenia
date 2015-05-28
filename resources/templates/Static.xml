@@ -6,7 +6,7 @@
 
   <H.div class="staticField {@class}">
 
-    <If the="{@url}" is-set>
+    <If the="{@url}" isSet>
       <a href="{@url}">{@value}</a>
       <Else>{@value}</Else>
     </If>
