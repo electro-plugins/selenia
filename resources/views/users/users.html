@@ -8,9 +8,9 @@
     <Column width="145" title="$LOGIN_REGISTRATION_DATE"/>
     <Column width="145" title="$LOGIN_LAST_LOGIN"/>
     <Column width="80" title="$LOGIN_TYPE"/>
-    <RowTemplate on-click="{!URI.mainForm}">
+    <RowTemplate onClick="{!URI.mainForm}">
       <Column>{#ord}</Column>
-      <Column><Checkbox test-value="{active}" disabled="yes"/></Column>
+      <Column><Checkbox testValue="{active}" disabled="yes"/></Column>
       <Column>{realName}</Column>
       <Column>{username}</Column>
       <Column>{registrationDate}</Column>
