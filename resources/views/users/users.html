@@ -1,22 +1,27 @@
 <GridPage>
 
-  <DataGrid data="{!default}">
-    <Column width="40" type="row-selector"/>
-    <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field"/>
-    <Column width="70%" title="$LOGIN_REAL_NAME"/>
-    <Column width="30%" title="$LOGIN_USERNAME"/>
-    <Column width="145" title="$LOGIN_REGISTRATION_DATE"/>
-    <Column width="145" title="$LOGIN_LAST_LOGIN"/>
-    <Column width="80" title="$LOGIN_TYPE"/>
-    <RowTemplate onClick="{!URI.mainForm}">
-      <Column>{#ord}</Column>
-      <Column><Checkbox testValue="{active}" disabled="yes"/></Column>
-      <Column>{realName}</Column>
-      <Column>{username}</Column>
-      <Column>{registrationDate}</Column>
-      <Column>{lastLogin}</Column>
-      <Column>{role}</Column>
-    </RowTemplate>
+  <DataGrid data="{!default}" onClickGoTo="{!URI.mainForm}">
+    <Column width="40" type="row-selector">
+      {#ord}
+    </Column>
+    <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
+      <Checkbox testValue="{active}" disabled="yes"/>
+    </Column>
+    <Column width="70%" title="$LOGIN_REAL_NAME">
+      {realName}
+    </Column>
+    <Column width="30%" title="$LOGIN_USERNAME">
+      {username}
+    </Column>
+    <Column width="145" title="$LOGIN_REGISTRATION_DATE">
+      {registrationDate}
+    </Column>
+    <Column width="145" title="$LOGIN_LAST_LOGIN">
+      {lastLogin}
+    </Column>
+    <Column width="80" title="$LOGIN_TYPE">
+      {role}
+    </Column>
   </DataGrid>
 
   <Actions>
