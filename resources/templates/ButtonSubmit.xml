@@ -1,21 +1,21 @@
-<c:template name="button-submit" default-param="content">
-  <p:param name="label" type="text" default="$BUTTON_SAVE"/>
-  <p:param name="content" type="source"/>
-  <p:param name="auto-disable" type="bool"/>
-  <p:param name="bar-class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
+<Template name="ButtonSubmit" defaultParam="content">
+  <Param name="label" type="text" default="$BUTTON_SAVE"/>
+  <Param name="content" type="source"/>
+  <Param name="autoDisable" type="bool"/>
+  <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <c:action-bar class="{@bar-class}">
+  <ActionBar class="{@barClass}">
 
-    <c:if the="{@auto-disable}" is-true>
-      <c:button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}"
+    <If the="{@autoDisable}" isTrue>
+      <Button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}"
                 script="Button_disable('submitBtn');doAction('submit')"/>
-      <p:else>
-        <c:button class="btn-primary ActionSave" label="{@label}" action="submit"/>
-      </p:else>
-    </c:if>
+      <Else>
+        <Button class="btn-primary ActionSave" label="{@label}" action="submit"/>
+      </Else>
+    </If>
 
     {@content}
 
-  </c:action-bar>
+  </ActionBar>
 
-</c:template>
+</Template>

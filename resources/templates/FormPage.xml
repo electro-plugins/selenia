@@ -1,8 +1,8 @@
-<c:template name="form-page" default-param="content">
-  <p:param name="content" type="source"/>
-  <p:param name="actions" type="source"/>
+<Template name="FormPage" defaultParam="content">
+  <Param name="content" type="source"/>
+  <Param name="actions" type="source"/>
 
-  <c:admin>
+  <Admin>
 
     <article class="form-page">
 
@@ -11,6 +11,6 @@
       <div class="form-footer"> {@actions} </div>
     </article>
 
-  </c:admin>
+  </Admin>
 
-</c:template>
+</Template>

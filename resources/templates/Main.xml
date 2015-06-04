@@ -1,8 +1,8 @@
-<c:template name="main" default-param="content">
-  <p:param name="content" type="source"/>
-  <p:stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
-  <p:script src="lib/jquery/dist/jquery.min.js"/>
-  <p:script src="lib/bootstrap/dist/js/bootstrap.min.js"/>
+<Template name="Main" defaultParam="content">
+  <Param name="content" type="source"/>
+  <Stylesheet src="lib/bootstrap/dist/css/bootstrap.min.css"/>
+  <Script src="lib/jquery/dist/jquery.min.js"/>
+  <Script src="lib/bootstrap/dist/js/bootstrap.min.js"/>
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -16,7 +16,7 @@
         <a class="navbar-brand" href="">{!application.appName}</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
-        <c:main-menu class="nav navbar-nav navbar-right" depth="1"/>
+        <MainMenu class="nav navbar-nav navbar-right" depth="1"/>
       </div><!--/.nav-collapse -->
     </div>
   </nav>
@@ -29,4 +29,4 @@
 
   </div>
 
-</c:template>
+</Template>

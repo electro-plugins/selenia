@@ -1,36 +1,36 @@
-<c:template name="buttons-save-delete-preview" default-param="content">
-  <p:param name="key"            type="identifier"/>
-  <p:param name="enable-if-set"  type="identifier"/>
-  <p:param name="preview-label"  type="text" default="Pré-visualizar"/>
-  <p:param name="preview-url"    type="text"/>
-  <p:param name="content" type="source"/>
-  <p:param name="bar-class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
+<Template name="ButtonsSaveDeletePreview" defaultParam="content">
+  <Param name="key"            type="identifier"/>
+  <Param name="enableIfSet"  type="identifier"/>
+  <Param name="previewLabel"  type="text" default="Pré-visualizar"/>
+  <Param name="previewUrl"    type="text"/>
+  <Param name="content" type="source"/>
+  <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <c:action-bar class="{@bar-class}">
+  <ActionBar class="{@barClass}">
 
-    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+    <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
 
-    <c:if the="{@key}" is-set>
+    <If the="{@key}" isSet>
 
-        <c:button class="btn-danger ActionDelete" action="delete"
-          confirm="yes" message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
+        <Button class="btn-danger ActionDelete" action="delete"
+          confirm message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?" label="$BUTTON_DELETE"/>
 
-        <c:if the="{@enable-if-set}" is-set>
-          <c:if the="{@preview-url}" is-set>
-            <c:button class="ActionPreview" url="{@preview-url}" label="{@preview-label}"/>
-            <p:lese>
-              <c:button class="ActionPreview" action="preview" label="{@preview-label}"/>
-            </p:lese>
-          </c:if>
-          <p:else>
-            <c:button disabled="yes" class="ActionPreview" label="{@preview-label}"/>
-          </p:else>
-        </c:if>
+        <If the="{@enableIfSet}" isSet>
+          <If the="{@previewUrl}" isSet>
+            <Button class="ActionPreview" url="{@previewUrl}" label="{@previewLabel}"/>
+            <Else>
+              <Button class="ActionPreview" action="preview" label="{@previewLabel}"/>
+            </Else>
+          </If>
+          <Else>
+            <Button disabled="yes" class="ActionPreview" label="{@previewLabel}"/>
+          </Else>
+        </If>
 
-    </c:if>
+    </If>
 
     {@content}
 
-  </c:action-bar>
+  </ActionBar>
 
-</c:template>
+</Template>

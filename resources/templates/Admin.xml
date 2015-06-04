@@ -1,7 +1,7 @@
-<c:template name="admin" default-param="content">
-  <p:param name="content" type="source"/>
+<Template name="Admin" defaultParam="content">
+  <Param name="content" type="source"/>
 
-  <t:base-admin>
+  <BaseAdmin>
 
     <div id="wrapper">
 
@@ -23,7 +23,7 @@
           <li>
             <a href="">$HOME</a>
           </li>
-          <t:user-menu/>
+          <UserMenu/>
 
         </ul>
         <!-- /.navbar-top-links -->
@@ -31,9 +31,10 @@
         <div class="navbar-default sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
 
-            <c:main-menu class="nav" id="side-menu" expand-icon="fa.arrow">
-              <p:header>
-                <!--li class="sidebar-search">
+            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow">
+              <Header>
+              <!--
+                <li class="sidebar-search">
                   <div class="input-group custom-search-form">
                     <input type="text" class="form-control" placeholder="Procurar...">
                     <span class="input-group-btn">
@@ -42,9 +43,10 @@
                       </button>
                     </span>
                   </div>
-                </li-->
-              </p:header>
-            </c:main-menu>
+                </li>
+              -->
+              </Header>
+            </MainMenu>
 
           </div>
           <!-- /.sidebar-collapse -->
@@ -83,6 +85,6 @@
     </div>
     <!-- /#wrapper -->
 
-  </t:base-admin>
+  </BaseAdmin>
 
-</c:template>
+</Template>

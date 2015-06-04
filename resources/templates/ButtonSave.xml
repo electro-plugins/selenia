@@ -1,12 +1,12 @@
-<c:template name="button-save" default-param="content">
-  <p:param name="content" type="source"/>
-  <p:param name="bar-class" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
+<Template name="ButtonSave" defaultParam="content">
+  <Param name="content" type="source"/>
+  <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <c:action-bar class="{@bar-class}">
+  <ActionBar class="{@barClass}">
 
-    <c:button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
+    <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
     {@content}
 
-  </c:action-bar>
+  </ActionBar>
 
-</c:template>
+</Template>

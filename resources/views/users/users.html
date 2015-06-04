@@ -1,26 +1,31 @@
-<t:grid-page>
+<GridPage>
 
-  <c:data-grid data="{!default}">
-    <p:column width="40" type="row-selector"/>
-    <p:column width="80" title="$LOGIN_ACTIVE" align="center" type="field"/>
-    <p:column width="70%" title="$LOGIN_REAL_NAME"/>
-    <p:column width="30%" title="$LOGIN_USERNAME"/>
-    <p:column width="145" title="$LOGIN_REGISTRATION_DATE"/>
-    <p:column width="145" title="$LOGIN_LAST_LOGIN"/>
-    <p:column width="80" title="$LOGIN_TYPE"/>
-    <p:row-template on-click="{!URI.mainForm}">
-      <p:column>{#ord}</p:column>
-      <p:column><c:checkbox test-value="{active}" disabled="yes"/></p:column>
-      <p:column>{realName}</p:column>
-      <p:column>{username}</p:column>
-      <p:column>{registrationDate}</p:column>
-      <p:column>{lastLogin}</p:column>
-      <p:column>{role}</p:column>
-    </p:row-template>
-  </c:data-grid>
+  <DataGrid data="{!default}" onClickGoTo="{!URI.mainForm}">
+    <Column width="40" type="row-selector">
+      {#ord}
+    </Column>
+    <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
+      <Checkbox testValue="{active}" disabled="yes"/>
+    </Column>
+    <Column width="70%" title="$LOGIN_REAL_NAME">
+      {realName}
+    </Column>
+    <Column width="30%" title="$LOGIN_USERNAME">
+      {username}
+    </Column>
+    <Column width="145" title="$LOGIN_REGISTRATION_DATE">
+      {registrationDate}
+    </Column>
+    <Column width="145" title="$LOGIN_LAST_LOGIN">
+      {lastLogin}
+    </Column>
+    <Column width="80" title="$LOGIN_TYPE">
+      {role}
+    </Column>
+  </DataGrid>
 
-  <p:actions>
-    <t:button-new url="{!URI.mainForm}"/>
-  </p:actions>
+  <Actions>
+    <ButtonNew url="{!URI.mainForm}"/>
+  </Actions>
 
-</t:grid-page>
+</GridPage>

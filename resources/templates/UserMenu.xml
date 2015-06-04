@@ -1,4 +1,4 @@
-<c:template name="user-menu">
+<Template name="UserMenu">
 
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -7,14 +7,14 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <c:if the="{!admin-module.profile}" is-true>
+      <If the="{!admin-module.profile}" isTrue>
         <li>
           <a href="{!admin-module.profilePrefix}user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>
         </li>
-      </c:if>
+      </If>
       <!--li>
         <a href="#">
           <i class="fa fa-gear fa-fw"></i>
@@ -33,4 +33,4 @@
   </li>
   <!-- /.dropdown -->
 
-</c:template>
+</Template>

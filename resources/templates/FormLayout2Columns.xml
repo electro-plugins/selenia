@@ -1,28 +1,28 @@
-<c:template name="form-layout-2-columns">
-  <p:param name="column-1" type="source"/>
-  <p:param name="column-2" type="source"/>
-  <p:param name="column-class" type="text" default="col-sm-12 col-lg-6"/>
-  <p:param name="form-class" type="text" default="form-horizontal"/>
-  <p:param name="label-class" type="text" default="col-md-3"/>
-  <p:param name="field-class" type="text" default="col-md-9"/>
+<Template name="FormLayout2Columns">
+  <Param name="column1" type="source"/>
+  <Param name="column2" type="source"/>
+  <Param name="columnClass" type="text" default="col-sm-12 col-lg-6"/>
+  <Param name="formClass" type="text" default="form-horizontal"/>
+  <Param name="labelClass" type="text" default="col-md-3"/>
+  <Param name="fieldClass" type="text" default="col-md-9"/>
 
   <div class="row">
-    <div class="{@column-class}">
-      <div class="{@form-class}">
-        <c:apply where="field">
-          <p:attrs width="{@field-class}" label-width="{@label-class}"/>
-          {@column-1}
-        </c:apply>
+    <div class="{@columnClass}">
+      <div class="{@formClass}">
+        <Apply where="Field">
+          <Attrs width="{@fieldClass}" labelWidth="{@labelClass}"/>
+          {@column1}
+        </Apply>
       </div>
     </div>
-    <div class="{@column-class}">
-      <div class="{@form-class}">
-        <c:apply where="field">
-          <p:attrs width="{@field-class}" label-width="{@label-class}"/>
-          {@column-2}
-        </c:apply>
+    <div class="{@columnClass}">
+      <div class="{@formClass}">
+        <Apply where="Field">
+          <Attrs width="{@fieldClass}" labelWidth="{@labelClass}"/>
+          {@column2}
+        </Apply>
       </div>
     </div>
   </div>
 
-</c:template>
+</Template>
