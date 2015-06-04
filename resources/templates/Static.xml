@@ -4,7 +4,7 @@
   <Param name="value" type="text"/>
   <Param name="class" type="text"/>
 
-  <H.div class="staticField {@class}">
+  <div class="staticField {@class}">
 
     <If the="{@url}" isSet>
       <a href="{@url}">{@value}</a>
@@ -15,6 +15,6 @@
       <input type="hidden" name="{@name}" value="{@value}"/>
     </If>
 
-  </H.div>
+  </div>
 
 </Template>

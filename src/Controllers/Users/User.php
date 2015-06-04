@@ -93,6 +93,7 @@ class User extends AdminController
 
   protected function setupViewModel ()
   {
+    parent::setupViewModel();
     /** @var $session Session */
     global $session;
     $settings = AdminModule::settings ();
