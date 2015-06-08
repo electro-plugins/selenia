@@ -16,53 +16,53 @@
   <Param name="region" type="text"/>
 
   <Script name="gmap">
-    var mapsOnPage=[];
+    var mapsOnPage = [];
 
-    function loadMap(args) {
-      var myLatlng = new google.maps.LatLng(args.latitude, args.longitude);
+    function loadMap (args) {
+      var myLatlng  = new google.maps.LatLng (args.latitude, args.longitude);
       var myOptions = {
-        zoom: args.zoom,
-        center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        draggable: args.draggable,
-        zoomControl: true,
+        zoom:            args.zoom,
+        center:          myLatlng,
+        mapTypeId:       google.maps.MapTypeId.ROADMAP,
+        draggable:       args.draggable,
+        zoomControl:     true,
         backgroundColor: args.backgroundColor
-      }
-    var map = window[args.id + 'Obj'] = new google.maps.Map(document.getElementById(args.id),myOptions);
+      };
+      var map       = window[args.id + 'Obj'] = new google.maps.Map (document.getElementById (args.id), myOptions);
       if (args.showMarker) {
-        var marker = window[args.id + 'Marker'] = new google.maps.Marker({
+        var marker = window[args.id + 'Marker'] = new google.maps.Marker ({
           draggable: args.draggableMarker,
-          map: map,
-          position: myLatlng,
-          title: args.text
+          map:       map,
+          position:  myLatlng,
+          title:     args.text
         });
       }
     }
-    function googleMapsInit(deferredInit) {
-      var t=deferredInit !== true;
+    function googleMapsInit (deferredInit) {
+      var t = deferredInit !== true;
       for (var n = 0; n < mapsOnPage.length; ++n)
         if (mapsOnPage[n].autoshow == t)
-          loadMap(mapsOnPage[n]);
-      if (t && exists('mapReady'))
-        mapReady();
+          loadMap (mapsOnPage[n]);
+      if (t && exists ('mapReady'))
+        mapReady ();
     }
   </Script>
   <Script>
-    mapsOnPage.push({
-      id:'{@id}',
-      autoshow: {@autoshow},
+    mapsOnPage.push ({
+      id:              '{@id}',
+      autoshow:        {@autoshow},
       backgroundColor: '{@backgroundColor}',
-      latitude: number('{@latitude}',0),
-      longitude: number('{@longitude}',0),
-      zoom: number('{@zoom}',1),
-      text: '{@text}',
-      showMarker: {@showMarker},
+      latitude:        number ('{@latitude}', 0),
+      longitude:       number ('{@longitude}', 0),
+      zoom:            number ('{@zoom}', 1),
+      text:            '{@text}',
+      showMarker:      {@showMarker},
       draggableMarker: {@draggableMarker},
-      draggable: {@draggable}
+      draggable:       {@draggable}
     });
     if (mapsOnPage.length == 1)
-      listen('onLoad',function(){
-        loadScript('http://maps.googleapis.com/maps/api/js?sensor={@sensor}&language={@language}&region={@region}&callback=googleMapsInit');
+      listen ('onLoad', function () {
+        loadScript ('http://maps.googleapis.com/maps/api/js?sensor={@sensor}&language={@language}&region={@region}&callback=googleMapsInit');
       });
   </Script>
 

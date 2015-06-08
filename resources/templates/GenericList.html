@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Template name="GenericList">
-    <Param name="onClick"      type="text" default="{!URI.mainForm}"/>
-    <Param name="titleLabel"   type="text" default="{!labels.title}"/>
+    <Param name="onClick" type="text" default="{!URI.mainForm}"/>
+    <Param name="titleLabel" type="text" default="{!labels.title}"/>
     <Param name="titleContent" type="text" default="{title}"/>
 
     <fieldset class="mainPanel">
       <div class="fieldset">
         <DataGrid data="{!default}">
-          <Column width="40"   type="row-selector" />
-          <Column width="100%" title="{@titleLabel}"   />
+          <Column width="40" type="row-selector"/>
+          <Column width="100%" title="{@titleLabel}"/>
           <RowTemplate onClick="{@onClick}">
             <Column>{#ord}</Column>
             <Column>{@titleContent}</Column>

@@ -16,10 +16,10 @@
       <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
     </div>
     <script type="text/javascript">
-      $(function () {
-        $('#{@name}_field').datetimepicker({
+      $ (function () {
+        $ ('#{@name}_field').datetimepicker ({
           locale:      '{@locale}',
-          defaultDate: '{@value}' || new moment(),
+          defaultDate: '{@value}' || new moment (),
           format:      '{@format}',
           sideBySide:  {@sideBySide}
         });

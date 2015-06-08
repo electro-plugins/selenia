@@ -7,8 +7,10 @@
   <ActionBar class="{@barClass}">
 
     <If the="{@autoDisable}" isTrue>
-      <Button id="submitBtn" class="btn btn-primary ActionSave" label="{@label}"
-                script="Button_disable('submitBtn');doAction('submit')"/>
+      <Button id="submitBtn"
+              class="btn btn-primary ActionSave"
+              label="{@label}"
+              script="Button_disable('submitBtn');doAction('submit')"/>
       <Else>
         <Button class="btn-primary ActionSave" label="{@label}" action="submit"/>
       </Else>
