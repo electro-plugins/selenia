@@ -551,14 +551,18 @@ input[type=radio] {
   margin-top: 7px;
 }
 
-.HtmlEditor.form-control, .Redactor.form-control {
+// ------------------------------------------
+// REDACTOR COMPONENT
+// ------------------------------------------
+
+.Redactor.form-control {
   height: auto;
   border: none;
   padding: 0;
 }
 
-.HtmlEditor textarea, .Redactor textarea {
-  visibility: hidden;
+.Redactor textarea {
+  border: 1px solid #000;
 }
 
 .Redactor {
@@ -579,6 +583,8 @@ input[type=radio] {
 .shortText .redactor-editor {
   .shortText;
 }
+
+// ------------------------------------------
 
 textarea[readonly].static {
   background: #FFF;
