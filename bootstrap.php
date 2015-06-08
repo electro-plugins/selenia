@@ -9,6 +9,7 @@ ModuleOptions (__DIR__, [
   'config'    => [
     'main'         => [
       'userModel' => 'Selene\Modules\Admin\Models\User',
+      'loginView' => 'login.html',
     ],
     'admin-module' => [
       'users'           => true,
