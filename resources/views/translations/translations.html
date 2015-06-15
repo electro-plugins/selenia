@@ -2,13 +2,13 @@
   <PageContent>
   	<fieldset class="mainPanel">
   		<div class="fieldset">
-        <DataGrid data="{!translations}">
+        <DataGrid data="{{ !translations }}">
             <Column width="40"   type="row-selector" />
             <Column width="150"  title="Chave"       />
             <Column width="50%"  title="Português"   />
             <Column width="50%"  title="Inglês"      />
             <RowTemplate on-click="translations/{key}">
-                <Column>{#ord}</Column>
+                <Column>{{ #ord }}</Column>
                 <Column>{key}</Column>
                 <Column>{text_pt}</Column>
                 <Column>{text_en}</Column>

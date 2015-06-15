@@ -6,31 +6,31 @@
   <Param name="content" type="source"/>
   <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <ActionBar class="{@barClass}">
+  <ActionBar class="{{ @barClass }}">
 
     <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
 
-    <If the="{@key}" isSet>
+    <If the="{{ @key }}" isSet>
 
         <Button class="btn-danger ActionDelete" action="delete" confirm
-                message="Tem a certeza de que deseja apagar {!sitePage.gender} {!sitePage.singular}?"
+                message="Tem a certeza de que deseja apagar {{ !sitePage.gender }} {{ !sitePage.singular }}?"
                 label="$BUTTON_DELETE"/>
 
-        <If the="{@enableIfSet}" isSet>
-          <If the="{@previewUrl}" isSet>
-            <Button class="ActionPreview" url="{@previewUrl}" label="{@previewLabel}"/>
+        <If the="{{ @enableIfSet }}" isSet>
+          <If the="{{ @previewUrl }}" isSet>
+            <Button class="ActionPreview" url="{{ @previewUrl }}" label="{{ @previewLabel }}"/>
             <Else>
-              <Button class="ActionPreview" action="preview" label="{@previewLabel}"/>
+              <Button class="ActionPreview" action="preview" label="{{ @previewLabel }}"/>
             </Else>
           </If>
           <Else>
-            <Button disabled="yes" class="ActionPreview" label="{@previewLabel}"/>
+            <Button disabled="yes" class="ActionPreview" label="{{ @previewLabel }}"/>
           </Else>
         </If>
 
     </If>
 
-    {@content}
+    {{ @content }}
 
   </ActionBar>
 

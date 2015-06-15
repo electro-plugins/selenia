@@ -4,17 +4,17 @@
   <Param name="content" type="source"/>
   <Param name="actions" type="source"/>
 
-  <div class="form {@type}">
-    <If the="{@title}" isSet>
+  <div class="form {{ @type }}">
+    <If the="{{ @title }}" isSet>
       <div class="box-header with-border">
-        <h3 class="box-title">{@title}</h3>
+        <h3 class="box-title">{{ @title }}</h3>
       </div>
     </If>
     <div class="box-body">
-      {@content}
+      {{ @content }}
     </div>
     <div class="box-footer">
-      {@actions}
+      {{ @actions }}
     </div>
   </div>
 

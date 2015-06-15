@@ -5,21 +5,21 @@
   <Param name="match" type="text"/>
   <Param name="cssClass" type="text"/>
 
-  <If the="{@match}" isSet>
+  <If the="{{ @match }}" isSet>
 
-    <If the="{!sitePage.URI_regexp}" matches="{@match}">
-      <a class="{@cssClass} selected" href="{@url}{@uri}">{@label}</a>
+    <If the="{{ !sitePage.URI_regexp }}" matches="{{ @match }}">
+      <a class="{{ @cssClass }} selected" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
       <Else>
-        <a class="{@cssClass}" href="{@url}{@uri}">{@label}</a>
+        <a class="{{ @cssClass }}" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
       </Else>
     </If>
 
     <Else>
 
-      <If the="{!sitePage.URI_regexp}" matches="{@uri}">
-        <a class="{@cssClass} selected" href="{@url}{@uri}">{@label}</a>
+      <If the="{{ !sitePage.URI_regexp }}" matches="{{ @uri }}">
+        <a class="{{ @cssClass }} selected" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
         <Else>
-          <a class="{@cssClass}" href="{@url}{@uri}">{@label}</a>
+          <a class="{{ @cssClass }}" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
         </Else>
       </If>
 
