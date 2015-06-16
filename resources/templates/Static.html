@@ -4,15 +4,15 @@
   <Param name="value" type="text"/>
   <Param name="class" type="text"/>
 
-  <div class="staticField {{ @class }}">
+  <div class="staticField {{ @class }}">
 
-    <If the="{{ @url }}" isSet>
-      <a href="{{ @url }}">{{ @value }}</a>
-      <Else>{{ @value }}</Else>
+    <If the="{{ @url }}" isSet>
+      <a href="{{ @url }}">{{ @value }}</a>
+      <Else>{{ @value }}</Else>
     </If>
 
-    <If the="{{ @name }}">
-      <input type="hidden" name="{{ @name }}" value="{{ @value }}"/>
+    <If the="{{ @name }}">
+      <input type="hidden" name="{{ @name }}" value="{{ @value }}"/>
     </If>
 
   </div>

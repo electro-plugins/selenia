@@ -10,18 +10,18 @@
   <Stylesheet src="modules/admin/css/bootstrap-datetimepicker.min.css"/>
 
   <div class="Field form-group">
-    <label class="control-label col-sm-4 col-md-3" for="{{ @name }}_input">{{ @label }}</label>
-    <div class='input-group col-sm-8 col-md-7 col-lg-6' id='{{ @name }}_field'>
-      <input id="{{ @name }}_input" type='text' class="form-control" name="{{ @name }}"/>
+    <label class="control-label col-sm-4 col-md-3" for="{{ @name }}_input">{{ @label }}</label>
+    <div class='input-group col-sm-8 col-md-7 col-lg-6' id='{{ @name }}_field'>
+      <input id="{{ @name }}_input" type='text' class="form-control" name="{{ @name }}"/>
       <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
     </div>
     <script type="text/javascript">
       $ (function () {
-        $ ('#{{ @name }}_field').datetimepicker ({
-          locale:      '{{ @locale }}',
-          defaultDate: '{{ @value }}' || new moment (),
-          format:      '{{ @format }}',
-          sideBySide:  {{ @sideBySide }}
+        $ ('#{{ @name }}_field').datetimepicker ({
+          locale:      '{{ @locale }}',
+          defaultDate: '{{ @value }}' || new moment (),
+          format:      '{{ @format }}',
+          sideBySide:  {{ @sideBySide }}
         });
       });
     </script>
