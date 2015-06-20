@@ -6,6 +6,7 @@ ModuleOptions (__DIR__, [
   'less'      => 'main.less',
   'templates' => true,
   'views'     => true,
+  'presets'   => ['Selene\Modules\Admin\Config\AdminPresets'],
   'config'    => [
     'main'         => [
       'userModel' => 'Selene\Modules\Admin\Models\User',

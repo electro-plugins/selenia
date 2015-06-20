@@ -1,5 +1,5 @@
 <?php
-namespace Selene\Modules\Admin\Presets;
+namespace Selene\Modules\Admin\Config;
 
 use Selene\Matisse\Components\DataGrid;
 
@@ -9,8 +9,8 @@ class AdminPresets
   {
     global $controller;
     $grid->attrs ()->apply ([
-      'lang'        => $controller->langISO,
-      'page_length' => "mem.get ('prefs.rowsPerPage', 10)",
+      'lang'       => $controller->langISO,
+      'pageLength' => "mem.get ('prefs.rowsPerPage', 10)",
     ]);
   }
 }
