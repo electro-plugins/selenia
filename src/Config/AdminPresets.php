@@ -9,8 +9,9 @@ class AdminPresets
   {
     global $controller;
     $grid->attrs ()->apply ([
-      'lang'       => $controller->langISO,
-      'pageLength' => "mem.get ('prefs.rowsPerPage', 10)",
+      'lang'               => $controller->langISO,
+      'pageLength'         => "mem.get ('prefs.rowsPerPage', 10)",
+      'lengthChangeScript' => "mem.set ('prefs.rowsPerPage', len)",
     ]);
   }
 }
