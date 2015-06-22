@@ -1,31 +1,31 @@
 <GridPage>
 
-  <DataGrid data="{!default}" onClickGoTo="{!URI.mainForm}">
+  <DataGrid data="{{ !default }}" onClickGoTo="{{ !URI.mainForm }}">
     <Column width="40" type="row-selector">
-      {#ord}
+      {{ #ord }}
     </Column>
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
-      <Checkbox testValue="{active}" disabled="yes"/>
+      <Checkbox testValue="{{ active }}" disabled/>
     </Column>
     <Column width="70%" title="$LOGIN_REAL_NAME">
-      {realName}
+      {{ realName }}
     </Column>
     <Column width="30%" title="$LOGIN_USERNAME">
-      {username}
+      {{ username }}
     </Column>
     <Column width="145" title="$LOGIN_REGISTRATION_DATE">
-      {registrationDate}
+      {{ registrationDate }}
     </Column>
     <Column width="145" title="$LOGIN_LAST_LOGIN">
-      {lastLogin}
+      {{ lastLogin }}
     </Column>
     <Column width="80" title="$LOGIN_TYPE">
-      {role}
+      {{ role }}
     </Column>
   </DataGrid>
 
   <Actions>
-    <ButtonNew url="{!URI.mainForm}"/>
+    <ButtonNew url="{{ !URI.mainForm }}"/>
   </Actions>
 
 </GridPage>

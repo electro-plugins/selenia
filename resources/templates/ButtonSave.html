@@ -2,10 +2,10 @@
   <Param name="content" type="source"/>
   <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
-  <ActionBar class="{@barClass}">
+  <ActionBar class="{{ @barClass }}">
 
     <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-    {@content}
+    {{ @content }}
 
   </ActionBar>
 

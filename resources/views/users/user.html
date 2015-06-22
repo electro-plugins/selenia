@@ -4,39 +4,39 @@
 
   <FormLayout>
 
-    <If is="{!login.showActive}">
+    <If is="{{ !login.showActive }}">
       <Field name="_active" label="$LOGIN_ACTIVE">
-        <Checkbox testValue="{!login._active}"/>
+        <Checkbox testValue="{{ !login._active }}"/>
       </Field>
     </If>
 
     <Field label="$LOGIN_USERNAME" name="_username">
-      <Input value="{!login._username}" autofocus="yes" autocomplete="no"/>
+      <Input value="{{ !login._username }}" autofocus autocomplete="no"/>
     </Field>
 
     <Field label="$LOGIN_PASSWORD" name="_password">
-      <Input value="{!login._password}" type="password" autocomplete="no"/>
+      <Input value="{{ !login._password }}" type="password" autocomplete="no"/>
     </Field>
 
-    <If is="{!login.showRoles}">
+    <If is="{{ !login.showRoles }}">
       <Field label="$LOGIN_TYPE" name="_role">
-        <RadioButton value="{!login.dev_role}"
+        <RadioButton value="{{ !login.dev_role }}"
                      label="$LOGIN_TYPE_DEV"
-                     testValue="{!login.dev_role}"
-                     hidden="{!login.isNotDev}"/>
-        <RadioButton value="{!login.admin_role}"
+                     testValue="{{ !login.dev_role }}"
+                     hidden="{{ !login.isNotDev }}"/>
+        <RadioButton value="{{ !login.admin_role }}"
                      label="$LOGIN_TYPE_ADMIN"
-                     testValue="{!login._role}"
-                     hidden="{!login.isNotAdminOrDev}"/>
-        <RadioButton value="{!login.standard_role}" label="$LOGIN_TYPE_STANDARD" testValue="{!login._role}"/>
-        <RadioButton value="{!login.guest_role}" label="$LOGIN_TYPE_GUEST" testValue="{!login._role}"/>
+                     testValue="{{ !login._role }}"
+                     hidden="{{ !login.isNotAdminOrDev }}"/>
+        <RadioButton value="{{ !login.standard_role }}" label="$LOGIN_TYPE_STANDARD" testValue="{{ !login._role }}"/>
+        <RadioButton value="{{ !login.guest_role }}" label="$LOGIN_TYPE_GUEST" testValue="{{ !login._role }}"/>
       </Field>
     </If>
 
   </FormLayout>
 
   <Actions>
-    <ButtonsSaveDelete key="{!login.canDelete}"/>
+    <ButtonsSaveDelete key="{{ !login.canDelete }}"/>
   </Actions>
 
 </FormPage>

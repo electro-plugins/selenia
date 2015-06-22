@@ -11,18 +11,17 @@ use Selene\Session;
 
 class AdminController extends Controller
 {
-  public $navigationPath;
-  public $subnavURI;
   public $baseSubnavURI;
   public $mainMenu;
+  public $navigationPath;
+  public $subnavURI;
 
-  public function setupView ()
+  function setupView ()
   {
     /** @var Session $session */
     global $session;
     parent::setupView ();
     $this->page->bodyAttrs = ['class' => $session->isValid ? '' : ' login-page'];
-    $this->page->extraHeadTags .= '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
   }
 
 
@@ -36,10 +35,8 @@ class AdminController extends Controller
    * @throws FatalException
    * @global Application $application
    */
-  //--------------------------------------------------------------------------
   protected function getNavigationPath ()
   {
-    //--------------------------------------------------------------------------
     $result = [];
     $page   = $this->sitePage;
     if (isset($page) && isset($page->parent->parent))
@@ -93,13 +90,12 @@ class AdminController extends Controller
       } while (isset($page) && isset($page->parent));
     if (count ($result) == 1)
       return [];
+
     return $result;
   }
 
-  //--------------------------------------------------------------------------
   protected function setupBaseModel ()
   {
-    //--------------------------------------------------------------------------
     parent::setupBaseModel ();
     global $application, $model;
     $pageInfo  = $this->sitePage;
@@ -120,7 +116,7 @@ class AdminController extends Controller
       'navPath'    => $navPath,
       'subtitle'   => $pageInfo->getSubtitle (),
       'titleField' => property ($this->dataItem, 'titleField'),
-      'noItems'    => 'Não existem ' - property ($this->dataItem, 'plural') . '.'
+      'noItems'    => 'Não existem ' - property ($this->dataItem, 'plural') . '.',
     ];
     $this->setViewModel ('admin', $admin);
     $this->setViewModel ('sitePage', $pageInfo);
@@ -158,7 +154,7 @@ class AdminController extends Controller
     };
     if (!$ok) $this->setViewModel ('subMenu', null);
     // Generate datasources for configuration settings groups.
-    // Ex: 'admin-module' group becames {!admin-module} datasource.
+    // Ex: 'admin-module' group becames {{ !admin-module }} datasource.
     foreach ($application->config as $k => $v) {
       $this->setViewModel ($k, $v);
     }

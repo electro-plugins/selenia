@@ -7,10 +7,10 @@
         <tr>
           <td>
             <label for="key" class="form">Chave:</label>
-            <If the="{!translation.key}" isSet>
-              <Static name="key" value="{!translation.key}" label="{!translation.key}"/>
+            <If the="{{ !translation.key }}" isSet>
+              <Static name="key" value="{{ !translation.key }}" label="{{ !translation.key }}"/>
               <Else>
-                <Input name="key" value="{!translation.key}" focus="yes"/>
+                <Input name="key" value="{{ !translation.key }}" focus="yes"/>
               </Else>
             </If>
           </td>
@@ -19,9 +19,9 @@
           </tr>
           <tr>
             <td colspan="3">
-              <Tabs data="{!languages}">
+              <Tabs data="{{ !languages }}">
                 <PageTemplate>
-                  <Input type="multiline" name="text_{value}" value="{!translation.text_{value}}"/>
+                  <Input type="multiline" name="text_{value}" value="{{ !translation.text_{value }}}"/>
                 </PageTemplate>
               </Tabs>
             </td>
@@ -31,7 +31,7 @@
   </fieldset>
 
   <Actions>
-    <ButtonsSaveDelete key="{!translation.key}" item-name="esta chave de tradução"/>
+    <ButtonsSaveDelete key="{{ !translation.key }}" item-name="esta chave de tradução"/>
   </Actions>
 
 </FormPage>

@@ -1,23 +1,25 @@
 <Admin>
   <PageContent>
-  	<fieldset class="mainPanel">
-  		<div class="fieldset">
-        <DataGrid data="{!translations}">
-            <Column width="40"   type="row-selector" />
-            <Column width="150"  title="Chave"       />
-            <Column width="50%"  title="Português"   />
-            <Column width="50%"  title="Inglês"      />
-            <RowTemplate on-click="translations/{key}">
-                <Column>{#ord}</Column>
-                <Column>{key}</Column>
-                <Column>{text_pt}</Column>
-                <Column>{text_en}</Column>
-            </RowTemplate>
-            <NoData>
-                Não existem traduções.
-            </NoData>
+    <fieldset class="mainPanel">
+      <div class="fieldset">
+        <DataGrid data="{{ !translations }}" onClickGoTo="translations/{{ key }}">
+          <Column width="40" type="row-selector">
+            {{ #ord }}
+          </Column>
+          <Column width="150" title="Chave">
+            {{ key }}
+          </Column>
+          <Column width="50%" title="Português">
+            {{ text_pt }}
+          </Column>
+          <Column width="50%" title="Inglês">
+            {{ text_en }}
+          </Column>
+          <NoData>
+            Não existem traduções.
+          </NoData>
         </DataGrid>
-        <ButtonNew label="Nova chave" url="translations/{key}"/>
+        <ButtonNew label="Nova chave" url="translations/{{ key }}"/>
       </div>
     </fieldset>
   </PageContent>

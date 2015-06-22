@@ -29,41 +29,41 @@
     <Script src="private/selene/addons/templates/jQPresenter/jQPresenter.js"/>
     <Script name="slideshow">
 jQuery(document).ready(function() {
-  jQuery('#{@id}').jQPresenter({
-    animation: '{@animation}',
-    delay: {@delay},
-    transitionDuration: {@duration},
-    continuous: {@continuous},
-    thumbOpacity: {@thumb-opacity},
-    thumbsScrollDuration: {@thumbs-scroll-duration},
-    circularThumbs: {@circular-thumbs},
-    thumbsPosition: '{@thumbs-position}',
-    navigation: '{@navigation}',
-    autoPlay: {@auto-play},
+  jQuery('#{{ @id }}').jQPresenter({
+    animation: '{{ @animation }}',
+    delay: {{ @delay }},
+    transitionDuration: {{ @duration }},
+    continuous: {{ @continuous }},
+    thumbOpacity: {{ @thumb-opacity }},
+    thumbsScrollDuration: {{ @thumbs-scroll-duration }},
+    circularThumbs: {{ @circular-thumbs }},
+    thumbsPosition: '{{ @thumbs-position }}',
+    navigation: '{{ @navigation }}',
+    autoPlay: {{ @auto-play }},
     plugins: ['Controller','Navigation','Thumbnails']
   });
 });
     </Script>
 
-    <div id="{@id}" class="jQPresenter">
-      <If the="{@thumbs}" isTrue>
+    <div id="{{ @id }}" class="jQPresenter">
+      <If the="{{ @thumbs }}" isTrue>
         <div class="thumbs">
-          <Repeater data="{@data}" rewind="yes">
-            <Image value="{id}" styles="width:{@thumb-width};height:{@thumb-height};quality:{@quality};crop:1"/>
+          <Repeater data="{{ @data }}" rewind="yes">
+            <Image value="{{ id }}" styles="width:{{ @thumb-width }};height:{{ @thumb-height }};quality:{{ @quality }};crop:1"/>
           </Repeater>
         </div>
       </If>
-      <div class="main" style="width:{@width}px;height:{@height}px">
-        <Repeater data="{@data}">
-          <If the="{link}" isSet>
-            <a href="{link}"><Image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/></a>
+      <div class="main" style="width:{{ @width }}px;height:{{ @height }}px">
+        <Repeater data="{{ @data }}">
+          <If the="{{ link }}" isSet>
+            <a href="{{ link }}"><Image value="{{ id }}" description="{{ caption }}" styles="width:{{ @width }};height:{{ @height }};quality:{{ @quality }};crop:{{ @crop }};watermark:{{ @watermark }};watermark-opacity:{{ @watermark-opacity }};watermark-padding:{{ @watermark-padding }}"/></a>
             <Else>
-              <Image value="{id}" description="{caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
+              <Image value="{{ id }}" description="{{ caption }}" styles="width:{{ @width }};height:{{ @height }};quality:{{ @quality }};crop:{{ @crop }};watermark:{{ @watermark }};watermark-opacity:{{ @watermark-opacity }};watermark-padding:{{ @watermark-padding }}"/>
             </Else>
           </If>
           <NoDdata>
-            <If the="{@default-image}" isSet>
-              <image value="{@default-image}" description="{@default-caption}" styles="width:{@width};height:{@height};quality:{@quality};crop:{@crop};watermark:{@watermark};watermark-opacity:{@watermark-opacity};watermark-padding:{@watermark-padding}"/>
+            <If the="{{ @default-image }}" isSet>
+              <image value="{{ @default-image }}" description="{{ @default-caption }}" styles="width:{{ @width }};height:{{ @height }};quality:{{ @quality }};crop:{{ @crop }};watermark:{{ @watermark }};watermark-opacity:{{ @watermark-opacity }};watermark-padding:{{ @watermark-padding }}"/>
             </If>
           </NoDdata>
         </Repeater>

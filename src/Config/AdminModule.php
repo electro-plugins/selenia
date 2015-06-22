@@ -31,7 +31,7 @@ class AdminModule
           'isIndex'       => true,
           'format'        => 'grid',
           'links'         => [
-            'mainForm' => 'users/{id}'
+            'mainForm' => 'users/{{id}}'
           ],
           'routes'        => [
             PageRoute ([

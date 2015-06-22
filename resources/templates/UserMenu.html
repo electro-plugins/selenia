@@ -3,13 +3,13 @@
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
       <i class="fa fa-user fa-fw"></i>
-      {!sessionInfo.userRealName} &nbsp;
+      {{ !sessionInfo.userRealName }} &nbsp;
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <If the="{!admin-module.profile}" isTrue>
+      <If the="{{ !admin-module.profile }}" isTrue>
         <li>
-          <a href="{!admin-module.profilePrefix}user">
+          <a href="{{ !admin-module.profilePrefix }}user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>

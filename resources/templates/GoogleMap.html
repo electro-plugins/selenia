@@ -49,23 +49,23 @@
   </Script>
   <Script>
     mapsOnPage.push ({
-      id:              '{@id}',
-      autoshow:        {@autoshow},
-      backgroundColor: '{@backgroundColor}',
-      latitude:        number ('{@latitude}', 0),
-      longitude:       number ('{@longitude}', 0),
-      zoom:            number ('{@zoom}', 1),
-      text:            '{@text}',
-      showMarker:      {@showMarker},
-      draggableMarker: {@draggableMarker},
-      draggable:       {@draggable}
+      id:              '{{ @id }}',
+      autoshow:        {{ @autoshow }},
+      backgroundColor: '{{ @backgroundColor }}',
+      latitude:        number ('{{ @latitude }}', 0),
+      longitude:       number ('{{ @longitude }}', 0),
+      zoom:            number ('{{ @zoom }}', 1),
+      text:            '{{ @text }}',
+      showMarker:      {{ @showMarker }},
+      draggableMarker: {{ @draggableMarker }},
+      draggable:       {{ @draggable }}
     });
     if (mapsOnPage.length == 1)
       listen ('onLoad', function () {
-        loadScript ('http://maps.googleapis.com/maps/api/js?sensor={@sensor}&language={@language}&region={@region}&callback=googleMapsInit');
+        loadScript ('http://maps.googleapis.com/maps/api/js?sensor={{ @sensor }}&language={{ @language }}&region={{ @region }}&callback=googleMapsInit');
       });
   </Script>
 
-  <div id="{@id}" style="height:100%"></div>
+  <div id="{{ @id }}" style="height:100%"></div>
 
 </Template>
