@@ -52,6 +52,7 @@ class AdminModule
           'onMenu'     => $application->VURI == 'user',
           'title'      => '$LOGIN_PROFILE',
           'URI'        => 'user',
+          'indexURL'   => 'admin',
           'module'     => $module,
           'view'       => "users/user.html",
           'controller' => "$namespace\\Controllers\\Users\\User",

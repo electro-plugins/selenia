@@ -6,8 +6,8 @@ use Selene\DataObject;
 
 class User extends DataObject implements UserInterface
 {
-  public $fieldNames       = ['username', 'password', 'token', 'registrationDate', 'lastLogin', 'role', 'active'];
-  public $primaryKeyName   = 'username';
+  public $fieldNames       = ['id', 'username', 'password', 'token', 'registrationDate', 'lastLogin', 'role', 'active'];
+  public $primaryKeyName   = 'id';
   public $tableName        = 'users';
   public $primarySortField = 'username';
   public $filterFields     = ['role', 'active'];
@@ -15,6 +15,7 @@ class User extends DataObject implements UserInterface
   public $dateTimeFields   = ['registrationDate', 'lastLogin'];
   public $booleanFields    = ['active'];
 
+  public $id;
   public $username;
   public $password;
   public $token;
@@ -25,14 +26,13 @@ class User extends DataObject implements UserInterface
 
   public function insert ($insertFiles = true)
   {
-    $this->lastLogin = self::now ();
+    $this->registrationDate = self::now ();
     parent::insert ($insertFiles);
   }
 
   public function findByName ($username)
   {
-    $this->username = $username;
-    $this->read ();
+    $this->id = database_get ("SELECT id FROM $this->tableName WHERE username=?", [$username]);
     return $this->read ();
   }
 
@@ -50,8 +50,8 @@ class User extends DataObject implements UserInterface
   function id ($set = null)
   {
     if (isset($set))
-      $this->username = $set;
-    return $this->username;
+      $this->id = $set;
+    return $this->id;
   }
 
   function realName ()
