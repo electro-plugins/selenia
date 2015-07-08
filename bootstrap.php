@@ -3,7 +3,6 @@
 ModuleOptions (__DIR__, [
   'public'    => 'modules/admin',
   'lang'      => true,
-  'less'      => 'main.less',
   'templates' => true,
   'views'     => true,
   'presets'   => ['Selene\Modules\Admin\Config\AdminPresets'],
