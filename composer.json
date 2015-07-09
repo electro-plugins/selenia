@@ -19,7 +19,8 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "php": ">=5.4.0"
+    "php": ">=5.4.0",
+    "selene-framework/matisse-components": "dev-master"
   },
   "autoload": {
     "psr-4": {
