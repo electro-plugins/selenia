@@ -20,7 +20,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.4.0",
-    "selene-framework/matisse-components": "dev-master"
+    "selene-framework/matisse-components": "~0.3.3"
   },
   "autoload": {
     "psr-4": {
