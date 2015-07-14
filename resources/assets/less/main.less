@@ -495,7 +495,7 @@ label.static {
   padding-left: 15px;
 }
 
-.form-group {
+.form-group label {
   .unselectable;
 }
 
@@ -574,6 +574,15 @@ input[type=radio] {
     height: auto !important;
   }
 
+}
+
+.Redactor .redactor_editor {
+  padding: 7px 8px;
+
+  div, p, ul, ol, table, dl, blockquote, pre {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 14px !important;
+  }
 }
 
 .longText .redactor-editor {
@@ -912,17 +921,6 @@ textarea[readonly].static {
 
 .chosen-container .chosen-results {
   max-height: 250px;
-}
-
-/* HTML EDITOR */
-
-.Redactor .redactor_editor {
-  padding: 7px 8px;
-
-  div, p, ul, ol, table, dl, blockquote, pre {
-    font-family: 'Roboto', sans-serif !important;
-    font-size: 14px !important;
-  }
 }
 
 /*--------------------------------------------------------------------
