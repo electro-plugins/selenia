@@ -14,13 +14,10 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
-  "config": {
-    "preferred-install": "dist"
-  },
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.4.0",
-    "selene-framework/matisse-components": "~0.3.3"
+    "selene-framework/matisse-components": "^0.4"
   },
   "autoload": {
     "psr-4": {
