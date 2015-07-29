@@ -1,7 +1,7 @@
 {
   "name": "selene-framework/admin-module",
   "description": "Selene Framework Administration Module",
-  "keywords": ["selene", "selene framework", "module"],
+  "type": "selene-plugin",
   "license": "MIT",
   "authors": [
     {
@@ -14,12 +14,9 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
-  "config": {
-    "preferred-install": "dist"
-  },
-  "minimum-stability": "dev",
   "require": {
     "php": ">=5.4.0",
+    "selene-framework/installers": "^1.0.0",
     "selene-framework/matisse-components": "dev-master"
   },
   "autoload": {
