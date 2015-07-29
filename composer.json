@@ -2,6 +2,10 @@
   "name": "selene-framework/admin-module",
   "description": "Selene Framework Administration Module",
   "type": "selene-plugin",
+  "keywords": [
+    "plugin",
+    "selene framework"
+  ],
   "license": "MIT",
   "authors": [
     {
