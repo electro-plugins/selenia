@@ -12,6 +12,8 @@ use Selene\Session;
 
 class User extends AdminController
 {
+  const ref = __CLASS__;
+
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
 

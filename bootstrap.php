@@ -1,11 +1,14 @@
 <?php
 
+use Selene\Modules\Admin\Config\AdminModule;
+
 ModuleOptions (__DIR__, [
   'public'    => 'modules/admin',
   'lang'      => true,
   'templates' => true,
   'views'     => true,
   'presets'   => ['Selene\Modules\Admin\Config\AdminPresets'],
+  'routes'    => AdminModule::routes(),
   'config'    => [
     'main'         => [
       'userModel' => 'Selene\Modules\Admin\Models\User',

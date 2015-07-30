@@ -5,6 +5,8 @@ use Selene\Modules\Admin\Controllers\AdminController;
 
 class Users extends AdminController
 {
+  const ref = __CLASS__;
+
   public function interceptViewDataSet ($dataSourceName, array &$data)
   {
     $data = $this->dataItem->map ($data, function (UserInterface $user) {

@@ -1,21 +1,19 @@
 <?php
 namespace Selene\Modules\Admin\Config;
 
+use Selene\Modules\Admin\Controllers\Users\User;
+use Selene\Modules\Admin\Controllers\Users\Users;
+
 class AdminModule
 {
-  static function settings ()
-  {
-    global $application;
-    return get ($application->config, 'admin-module', []);
-  }
+  const ref = __CLASS__;
 
   static function routes ()
   {
     global $application;
-    $module    = 'selene-framework/admin-module';
-    $namespace = 'Selene\Modules\Admin';
-    $settings  = self::settings ();
-    $userModel = $application->userModel ?: 'Selene\Modules\Admin\Model\User';
+    $module   = 'selene-framework/admin-module';
+    $settings = self::settings ();
+    $userModel = $application->userModel ?: \Selene\Modules\Admin\Models\User::ref();
 
     return [
 
@@ -26,22 +24,22 @@ class AdminModule
           'module'        => $module,
           'model'         => $userModel,
           'view'          => "users/users.html",
-          'controller'    => "$namespace\\Controllers\\Users\\Users",
+          'controller'    => Users::ref,
           'autoloadModel' => true,
           'isIndex'       => true,
           'format'        => 'grid',
           'links'         => [
-            'mainForm' => 'users/{{id}}'
+            'mainForm' => 'users/{{id}}',
           ],
           'routes'        => [
             PageRoute ([
-              'URI'            => 'users/{id}',
-              'view'           => "users/user.html",
-              'controller'     => "$namespace\\Controllers\\Users\\User",
-              'format'         => 'form',
-            ])
+              'URI'        => 'users/{id}',
+              'view'       => "users/user.html",
+              'controller' => User::ref,
+              'format'     => 'form',
+            ]),
 
-          ]
+          ],
         ])
         : null,
 
@@ -55,14 +53,20 @@ class AdminModule
           'indexURL'   => 'admin',
           'module'     => $module,
           'view'       => "users/user.html",
-          'controller' => "$namespace\\Controllers\\Users\\User",
+          'controller' => User::ref,
           'config'     => [
             'self' => true // Editing the logged-in user.
-          ]
+          ],
         ])
         : null,
 
     ];
 
+  }
+
+  static function settings ()
+  {
+    global $application;
+    return get ($application->config, 'admin-module', []);
   }
 }
