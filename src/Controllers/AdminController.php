@@ -38,7 +38,7 @@ class AdminController extends Controller
   protected function getNavigationPath ()
   {
     $result = [];
-    $page   = $this->sitePage;
+    $page   = $this->activeRoute;
     if (isset($page) && isset($page->parent->parent))
       do {
         $URIParams  = $page->getURIParams ();
@@ -98,7 +98,7 @@ class AdminController extends Controller
   {
     parent::setupBaseModel ();
     global $application, $model;
-    $pageInfo  = $this->sitePage;
+    $pageInfo  = $this->activeRoute;
     $prefix    = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
     $path      = $this->navigationPath = $this->getNavigationPath ();
     $pageTitle = $this->getTitle ();

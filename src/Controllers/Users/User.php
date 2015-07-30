@@ -12,8 +12,6 @@ use Selene\Session;
 
 class User extends AdminController
 {
-  const ref = __CLASS__;
-
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
 
@@ -77,7 +75,7 @@ class User extends AdminController
     $settings = AdminModule::settings ();
 
     /** @var UserModel $user */
-    if (get ($this->sitePage->config, 'self')) {
+    if (get ($this->activeRoute->config, 'self')) {
       $user = $this->dataItem = $session->user;
       $user->read ();
     }

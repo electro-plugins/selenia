@@ -11,9 +11,9 @@ class AdminModule
   static function routes ()
   {
     global $application;
-    $module   = 'selene-framework/admin-module';
-    $settings = self::settings ();
-    $userModel = $application->userModel ?: \Selene\Modules\Admin\Models\User::ref();
+    $module    = 'selene-framework/admin-module';
+    $settings  = self::settings ();
+    $userModel = $application->userModel ?: \Selene\Modules\Admin\Models\User::ref ();
 
     return [
 
@@ -24,7 +24,7 @@ class AdminModule
           'module'        => $module,
           'model'         => $userModel,
           'view'          => "users/users.html",
-          'controller'    => Users::ref,
+          'controller'    => Users::ref (),
           'autoloadModel' => true,
           'isIndex'       => true,
           'format'        => 'grid',
@@ -35,7 +35,7 @@ class AdminModule
             PageRoute ([
               'URI'        => 'users/{id}',
               'view'       => "users/user.html",
-              'controller' => User::ref,
+              'controller' => User::ref (),
               'format'     => 'form',
             ]),
 
@@ -53,7 +53,7 @@ class AdminModule
           'indexURL'   => 'admin',
           'module'     => $module,
           'view'       => "users/user.html",
-          'controller' => User::ref,
+          'controller' => User::ref (),
           'config'     => [
             'self' => true // Editing the logged-in user.
           ],
