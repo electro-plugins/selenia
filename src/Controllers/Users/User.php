@@ -75,7 +75,7 @@ class User extends AdminController
     $settings = AdminModule::settings ();
 
     /** @var UserModel $user */
-    if (get ($this->activeRoute->config, 'self')) {
+    if (get ($this->activeRoute->config ?: [], 'self')) {
       $user = $this->dataItem = $session->user;
       $user->read ();
     }
