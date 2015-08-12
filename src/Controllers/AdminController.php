@@ -15,16 +15,7 @@ class AdminController extends Controller
   public $mainMenu;
   public $navigationPath;
   public $subnavURI;
-
-  function setupView ()
-  {
-    /** @var Session $session */
-    global $session;
-    parent::setupView ();
-    $this->page->bodyAttrs = ['class' => $session->isValid ? '' : ' login-page'];
-  }
-
-
+  
   /**
    * Defines the navigation breadcrumb trail for the current page.
    * Override to define a custom trail for each application page.

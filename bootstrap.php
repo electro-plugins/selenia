@@ -12,6 +12,7 @@ ModuleOptions (__DIR__, [
     'main'         => [
       'userModel' => 'Selene\Modules\Admin\Models\User',
       'loginView' => 'login.html',
+      'translation'    => true,
     ],
     'admin-module' => [
       'prefix'          => 'admin',
@@ -20,9 +21,8 @@ ModuleOptions (__DIR__, [
       'editRoles'       => true,
       'defaultRole'     => 'standard',
       'activeUsers'     => true,
+      'translations'    => true, // Translations management
       'allowDeleteSelf' => true,
-      'profilePrefix'   => '',
-      'translations'    => true,
       'footer'          => '{{ !application.appName }} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave, Lda</a>. All rights reserved.',
     ],
   ],
@@ -48,6 +48,7 @@ ModuleOptions (__DIR__, [
   return [
     'routes' => [
       RouteGroup ([
+        'title' => '$ADMIN_MENU_TITLE',
         'prefix' => $application->config['admin-module']['prefix'],
         'routes' => AdminModule::routes (),
       ]),
