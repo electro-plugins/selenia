@@ -89,7 +89,6 @@ class AdminController extends Controller
     $prefix    = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
     $path      = $this->navigationPath = $this->getNavigationPath ();
     $pageTitle = $this->getTitle ();
-    _log($path);
     if (isset($path)) {
       if (!$path || !$path[0][1] || $path[0][1] == '.')
         $navPath = '';
