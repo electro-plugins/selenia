@@ -4,6 +4,7 @@ use Impactwave\WebConsole\WebConsole;
 use Selene\Contracts\UserInterface;
 use Selene\DataObject;
 use Selene\Exceptions\FatalException;
+use Selene\Exceptions\HttpException;
 use Selene\Exceptions\ValidationException;
 use Selene\Modules\Admin\Config\AdminModule;
 use Selene\Modules\Admin\Controllers\AdminController;
@@ -91,11 +92,20 @@ class User extends AdminController
       $user->role (get ($settings, 'defaultRole', UserInterface::USER_ROLE_STANDARD));
   }
 
+  protected function initialize ()
+  {
+    global $session;
+    if (!$session->user)
+      throw new HttpException(403);
+    parent::initialize ();
+  }
+
   protected function setupViewModel ()
   {
     parent::setupViewModel();
     /** @var $session Session */
     global $session;
+
     $settings = AdminModule::settings ();
 
     $user    = $this->dataItem;

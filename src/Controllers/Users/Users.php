@@ -1,10 +1,19 @@
 <?php
 namespace Selene\Modules\Admin\Controllers\Users;
 use Selene\Contracts\UserInterface;
+use Selene\Exceptions\HttpException;
 use Selene\Modules\Admin\Controllers\AdminController;
 
 class Users extends AdminController
 {
+  protected function initialize ()
+  {
+    global $session;
+    if (!$session->user)
+      throw new HttpException(403);
+    parent::initialize ();
+  }
+
   public function interceptViewDataSet ($dataSourceName, array &$data)
   {
     $data = $this->dataItem->map ($data, function (UserInterface $user) {

@@ -1,6 +1,6 @@
 <GridPage>
 
-  <DataGrid data="{{ !default }}" onClickGoTo="{{ !URI.mainForm }}">
+  <DataGrid data="{{ !default }}" onClickGoTo="{{ !links.mainForm }}">
     <Column width="40" type="row-selector">
       {{ #ord }}
     </Column>
@@ -25,7 +25,7 @@
   </DataGrid>
 
   <Actions>
-    <ButtonNew url="{{ !URI.mainForm }}"/>
+    <ButtonNew url="{{ !links.mainForm }}"/>
   </Actions>
 
 </GridPage>

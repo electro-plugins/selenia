@@ -15,7 +15,7 @@ class AdminController extends Controller
   public $mainMenu;
   public $navigationPath;
   public $subnavURI;
-  
+
   /**
    * Defines the navigation breadcrumb trail for the current page.
    * Override to define a custom trail for each application page.
@@ -30,19 +30,16 @@ class AdminController extends Controller
   {
     $result = [];
     $page   = $this->activeRoute;
-    if (isset($page) && isset($page->parent->parent))
+    if (isset($page) && isset($page->parent))
       do {
         $URIParams  = $page->getURIParams ();
         $defaultURI = '';
         if ($page instanceof RouteGroup && !empty($page->defaultURI))
           $defaultURI = $page->defaultURI;
         $link = self::modPathOf ($defaultURI ?: $page->evalURI ($URIParams));
+
         if (isset($page->format))
           switch ($page->format) {
-            case 'grid':
-              $subtitle = $page->getSubtitle ();
-              array_unshift ($result, [$subtitle, $link]);
-              break;
             case 'form':
               if (isset($page->model)) {
                 list ($dataClass, $modelMethod) = parseMethodRef ($page->getModel ());
@@ -70,17 +67,16 @@ class AdminController extends Controller
               }
 
               break;
+            case 'grid':
+              $subtitle = $page->getSubtitle ();
+              array_unshift ($result, [$subtitle, $link]);
+              break;
           }
-        else if (isset($page->parent)) {
-          if ($page instanceof RouteGroup && (count ($result) == 0 || $page->title != $result[0][0]))
-            array_unshift ($result, [$page->title, $link]);
-        }
-        else if (isset($page->URL))
-          array_unshift ($result, [$page->getSubtitle (), $page->URL]);
+
+        else array_unshift ($result, [$page->getTitle(), $link]);
+
         $page = $page->parent;
       } while (isset($page) && isset($page->parent));
-    if (count ($result) == 1)
-      return [];
 
     return $result;
   }
@@ -93,13 +89,16 @@ class AdminController extends Controller
     $prefix    = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
     $path      = $this->navigationPath = $this->getNavigationPath ();
     $pageTitle = $this->getTitle ();
+    _log($path);
     if (isset($path)) {
-      $navPath = count ($path) < 2
-        ? ''
-        : "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
-      for ($i = 0; $i < count ($path); ++$i)
-        if (isset($path[$i]))
-          $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
+      if (!$path || !$path[0][1] || $path[0][1] == '.')
+        $navPath = '';
+      else {
+        $navPath = "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
+        for ($i = 0; $i < count ($path); ++$i)
+          if (isset($path[$i]))
+            $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
+      }
     }
     else $navPath = '';
     $admin = [
@@ -123,7 +122,7 @@ class AdminController extends Controller
           $URIs[$name] = $application->baseURI . "/$prefix" . $URI;
         else $URIs[$name] = "$prefix$URI";
     }
-    $this->setViewModel ("URI", $URIs);
+    $this->setViewModel ("links", $URIs);
     $this->setViewModel ("URIParams", $this->URIParams);
     $this->setViewModel ("config", $pageInfo->config);
     $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
