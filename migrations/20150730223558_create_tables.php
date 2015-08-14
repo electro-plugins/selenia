@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateUsers extends AbstractMigration
+class CreateTables extends AbstractMigration
 {
   /**
    * Change Method.
@@ -30,5 +30,23 @@ class CreateUsers extends AbstractMigration
       INSERT INTO users (username, registrationDate, role, active)
       VALUES ('admin', '$now', 'developer', 1);
 ");
+
+    $this
+      ->table ('images', ['id' => false, 'primary_key' => ['id']])
+      ->addColumn ('id', 'string', ['limit' => 13])
+      ->addColumn ('ext', 'string', ['limit' => 4])
+      ->addColumn ('key', 'string', ['limit' => 30])
+      ->addColumn ('caption', 'string', ['limit' => 255])
+      ->addColumn ('gallery', 'integer')
+      ->addColumn ('sort', 'integer')
+      ->create ();
+
+    $this
+      ->table ('files', ['id' => false, 'primary_key' => ['id']])
+      ->addColumn ('id', 'string', ['limit' => 13])
+      ->addColumn ('ext', 'string', ['limit' => 4])
+      ->addColumn ('name', 'string', ['limit' => 255])
+      ->create ();
+
   }
 }
