@@ -8,6 +8,7 @@ use Selene\Exceptions\ConfigException;
 use Selene\Exceptions\FatalException;
 use Selene\Routing\RouteGroup;
 use Selene\Session;
+use Selene\Exceptions\Status;
 
 class AdminController extends Controller
 {
@@ -16,6 +17,23 @@ class AdminController extends Controller
   public $navigationPath;
   public $subnavURI;
 
+  function action_delete (DataObject $data = null, $param = null)
+  {
+    parent::action_delete ($data, $param);
+    $this->setStatus (Status::INFO, '$ADMIN_MSG_DELETED');
+  }
+
+  protected function insertData (DataObject $data, $param = null)
+  {
+    parent::insertData ($data, $param);
+    $this->setStatus (Status::INFO,'$ADMIN_MSG_SAVED');
+  }
+
+  protected function updateData (DataObject $data, $param = null)
+  {
+    parent::updateData ($data, $param);
+    $this->setStatus (Status::INFO, '$ADMIN_MSG_SAVED');
+  }
   /**
    * Defines the navigation breadcrumb trail for the current page.
    * Override to define a custom trail for each application page.
