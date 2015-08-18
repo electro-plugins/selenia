@@ -6,9 +6,8 @@ use Selene\Controller;
 use Selene\DataObject;
 use Selene\Exceptions\ConfigException;
 use Selene\Exceptions\FatalException;
-use Selene\Routing\RouteGroup;
-use Selene\Session;
 use Selene\Exceptions\Status;
+use Selene\Routing\RouteGroup;
 
 class AdminController extends Controller
 {
@@ -123,7 +122,7 @@ class AdminController extends Controller
       'navPath'    => $navPath,
       'subtitle'   => $pageInfo->getSubtitle (),
       'titleField' => property ($this->dataItem, 'titleField'),
-      'noItems'    => 'Não existem ' - property ($this->dataItem, 'plural') . '.',
+      'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->dataItem, 'plural') . '.',
     ];
     $this->setViewModel ('admin', $admin);
     $this->setViewModel ('sitePage', $pageInfo);
@@ -143,6 +142,12 @@ class AdminController extends Controller
     $this->setViewModel ("URIParams", $this->URIParams);
     $this->setViewModel ("config", $pageInfo->config);
     $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
+    if (isset($model))
+      $this->setViewModel ("modelInfo", [
+        'gender'   => $model->gender,
+        'singular' => $model->singular,
+        'plural'   => $model->plural,
+      ]);
     $page = $pageInfo;
     $ok   = false;
     while (isset ($page->parent)) {
