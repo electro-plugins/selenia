@@ -24,16 +24,18 @@
     "selene-framework/matisse-components": "dev-master"
   },
   "extra": {
-    "require-bower": {
-      "bootstrap": "~3.3.4",
-      "chosen": "~1.4.2",
-      "datatables": "~1.10.5",
-      "datatables-plugins": "~1.0.1",
-      "datatables-responsive": "~1.0.4",
-      "font-awesome": "~4.2.0",
-      "metisMenu": "~2.0.0",
-      "eonasdan-bootstrap-datetimepicker": "~4.7.14",
-      "moment": "~2.10.2"
+    "bower": {
+      "require": {
+        "bootstrap": "~3.3.4",
+        "chosen": "~1.4.2",
+        "datatables": "~1.10.5",
+        "datatables-plugins": "~1.0.1",
+        "datatables-responsive": "~1.0.4",
+        "font-awesome": "~4.2.0",
+        "metisMenu": "~2.0.0",
+        "eonasdan-bootstrap-datetimepicker": "~4.7.14",
+        "moment": "~2.10.2"
+      }
     }
   },
   "autoload": {
