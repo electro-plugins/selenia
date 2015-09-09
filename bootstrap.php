@@ -3,7 +3,7 @@
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 
 ModuleOptions (__DIR__, [
-  'public'    => 'modules/admin',
+  'public'    => 'modules/selenia-plugins/admin-interface',
   'lang'      => true,
   'templates' => true,
   'views'     => true,
