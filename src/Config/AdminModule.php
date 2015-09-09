@@ -1,8 +1,8 @@
 <?php
-namespace Selene\Modules\Admin\Config;
+namespace Selenia\Plugins\AdminInterface\Config;
 
-use Selene\Modules\Admin\Controllers\Users\User;
-use Selene\Modules\Admin\Controllers\Users\Users;
+use Selenia\Plugins\AdminInterface\Controllers\Users\User;
+use Selenia\Plugins\AdminInterface\Controllers\Users\Users;
 
 class AdminModule
 {
@@ -11,9 +11,9 @@ class AdminModule
   static function routes ()
   {
     global $application;
-    $module    = 'selene-framework/admin-module';
+    $module    = 'selenia-framework/admin-module';
     $settings  = self::settings ();
-    $userModel = $application->userModel ?: \Selene\Modules\Admin\Models\User::ref ();
+    $userModel = $application->userModel ?: \Selenia\Plugins\AdminInterface\Models\User::ref ();
 
     return [
 

@@ -1,8 +1,8 @@
 <?php
-namespace Selene\Modules\Admin\Controllers\Translations;
-use Selene\Matisse\DataSet;
-use Selene\Modules\Admin\Controllers\AdminController;
-use Selene\Modules\Admin\Models\TranslationData;
+namespace Selenia\Plugins\AdminInterface\Controllers\Translations;
+use Selenia\Matisse\DataSet;
+use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Models\TranslationData;
 
 class Translations extends AdminController
 {

@@ -1,8 +1,8 @@
 <?php
-namespace Selene\Modules\Admin\Controllers\Users;
-use Selene\Contracts\UserInterface;
-use Selene\Exceptions\HttpException;
-use Selene\Modules\Admin\Controllers\AdminController;
+namespace Selenia\Plugins\AdminInterface\Controllers\Users;
+use Selenia\Contracts\UserInterface;
+use Selenia\Exceptions\HttpException;
+use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 
 class Users extends AdminController
 {

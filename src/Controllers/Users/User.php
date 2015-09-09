@@ -1,15 +1,15 @@
 <?php
-namespace Selene\Modules\Admin\Controllers\Users;
+namespace Selenia\Plugins\AdminInterface\Controllers\Users;
 use Impactwave\WebConsole\WebConsole;
-use Selene\Contracts\UserInterface;
-use Selene\DataObject;
-use Selene\Exceptions\FatalException;
-use Selene\Exceptions\HttpException;
-use Selene\Exceptions\ValidationException;
-use Selene\Modules\Admin\Config\AdminModule;
-use Selene\Modules\Admin\Controllers\AdminController;
-use Selene\Modules\Admin\Models\User as UserModel;
-use Selene\Session;
+use Selenia\Contracts\UserInterface;
+use Selenia\DataObject;
+use Selenia\Exceptions\FatalException;
+use Selenia\Exceptions\HttpException;
+use Selenia\Exceptions\ValidationException;
+use Selenia\Plugins\AdminInterface\Config\AdminModule;
+use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Selenia\Session;
 
 class User extends AdminController
 {

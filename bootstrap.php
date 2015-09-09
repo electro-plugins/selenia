@@ -1,16 +1,16 @@
 <?php
 
-use Selene\Modules\Admin\Config\AdminModule;
+use Selenia\Plugins\AdminInterface\Config\AdminModule;
 
 ModuleOptions (__DIR__, [
   'public'    => 'modules/admin',
   'lang'      => true,
   'templates' => true,
   'views'     => true,
-  'presets'   => ['Selene\Modules\Admin\Config\AdminPresets'],
+  'presets'   => ['Selenia\Plugins\AdminInterface\Config\AdminPresets'],
   'config'    => [
     'main'         => [
-      'userModel' => 'Selene\Modules\Admin\Models\User',
+      'userModel' => 'Selenia\Plugins\AdminInterface\Models\User',
       'loginView' => 'login.html',
       'translation'    => true,
     ],

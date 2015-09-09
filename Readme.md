@@ -1,60 +1,35 @@
-# Selene Framework Admin Module
+# Admin Interface
 
 > An administration interface for your app.
 
-This module is an integrant part of the Selene Framework.
+This plugin is an integrant, but optional, part of the Selenia framework.
 
 ## Installation
 
-To install this module on your application, using the terminal, `cd` to your app's directory and type:
-
+To install this plugin on your application, using the terminal, `cd` to your app's directory and type:
 
 ```shell
-composer require selene-framework/admin-module
+selenia module:install-plugin
 ```
 
-Then, edit your `application.ini.php` and add the module to the `modules` list.
+and select the plugin from the displayed list, or type
 
-For example:
-
-```php
-return [
-  'main' => [
-    'modules' => [
-      'selene-framework/admin-module'
-    ]
-  ]
-];
+```shell
+selenia module:install-plugin selenia-plugins/admin-module
 ```
 
-Finally, define a mount point for the module's route map on your app's route map (at `routes.php`).
+or type
 
-Choose an URI prefix for the module's URIs (ex: `'admin'`) and create a `RouteGroup` to define it.
-
-For example:
-
-```php
-return [
-  'routes' => [
-  	RouteGroup ([
-      'title'      => '$ADMIN',
-      'icon'       => 'fa fa-wrench',
-      'URI'        => 'admin',       // the URI prefix
-      'defaultURI' => 'admin/users', // which page to show when entering the admin interface
-      'routes'     => [
-        RoutingMap::loadModule ('selene-framework/admin-module'),
-      ]
-    ])
-  ]
-];
+```shell
+composer require selenia-plugins/admin-module
 ```
 
 ### Multilingual support
 
-The admin module is multilingual, so make sure you have translations enabled on your app's configuration, or create a sub-configuration to enable it for the chosen URI prefix.
+The admin interface is multilingual (even if you use just one language on your app), so make sure you have translations enabled on your app's configuration, or create a sub-configuration to enable it for the chosen URI prefix.
 
 ## License
 
-The Selene Framework is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The Selenia framework is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-**Selene Framework** - Copyright &copy; Impactwave, Lda.
+**Selenia framework** - Copyright &copy; Impactwave, Lda.

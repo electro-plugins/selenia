@@ -1,10 +1,10 @@
 {
-  "name": "selene-framework/admin-module",
-  "description": "Selene Framework Administration Module",
-  "type": "selene-plugin",
+  "name": "selenia-plugins/admin-interface",
+  "description": "An administration interface for you app",
+  "type": "selenia-plugin",
   "keywords": [
     "plugin",
-    "selene framework"
+    "selenia"
   ],
   "license": "MIT",
   "authors": [
@@ -20,8 +20,8 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "selene-framework/installers": "^1.0.0",
-    "selene-framework/matisse-components": "dev-master"
+    "selenia/installers": "^1.0.0",
+    "selenia-plugins/matisse-widgets": "dev-master"
   },
   "extra": {
     "bower": {
@@ -40,7 +40,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Selene\\Modules\\Admin\\": "src/"
+      "Selenia\\Plugins\\AdminInterface\\": "src/"
     }
   }
 }

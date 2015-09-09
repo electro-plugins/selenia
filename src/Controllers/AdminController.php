@@ -1,13 +1,13 @@
 <?php
-namespace Selene\Modules\Admin\Controllers;
+namespace Selenia\Plugins\AdminInterface\Controllers;
 
-use Selene\Application;
-use Selene\Controller;
-use Selene\DataObject;
-use Selene\Exceptions\ConfigException;
-use Selene\Exceptions\FatalException;
-use Selene\Exceptions\Status;
-use Selene\Routing\RouteGroup;
+use Selenia\Application;
+use Selenia\Controller;
+use Selenia\DataObject;
+use Selenia\Exceptions\ConfigException;
+use Selenia\Exceptions\FatalException;
+use Selenia\Exceptions\Status;
+use Selenia\Routing\RouteGroup;
 
 class AdminController extends Controller
 {
