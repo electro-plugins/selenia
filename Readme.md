@@ -12,7 +12,7 @@ To install this plugin on your application, using the terminal, `cd` to your app
 selenia module:install-plugin
 ```
 
-and select the plugin from the displayed list, or type
+and select `admin-module` from the displayed list, or type
 
 ```shell
 selenia module:install-plugin selenia-plugins/admin-module
