@@ -12,7 +12,7 @@ To install this plugin on your application, using the terminal, `cd` to your app
 selenia module:install-plugin
 ```
 
-and select `admin-module` from the displayed list, or type
+and select `selenia-plugins/admin-module` from the displayed list, or type
 
 ```shell
 selenia module:install-plugin selenia-plugins/admin-module
@@ -32,4 +32,4 @@ The admin interface is multilingual (even if you use just one language on your a
 
 The Selenia framework is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-**Selenia framework** - Copyright &copy; Impactwave, Lda.
+**Selenia framework** - Copyright &copy; 2015 Impactwave, Lda.
