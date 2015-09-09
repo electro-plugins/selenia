@@ -18,6 +18,7 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
+  "homepage": "https://github.com/selenia-plugins/admin-interface",
   "require": {
     "php": ">=5.4.0",
     "selenia/installers": "^1.0.0",
