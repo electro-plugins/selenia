@@ -1,8 +1,8 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
-use Selenia\Matisse\Components\DataGrid;
-use Selenia\Matisse\Components\Input;
+use Selenia\Plugins\MatisseWidgets\DataGrid;
+use Selenia\Plugins\MatisseWidgets\Input;
 
 class AdminPresets
 {

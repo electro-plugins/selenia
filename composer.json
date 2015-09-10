@@ -31,7 +31,7 @@
         "chosen": "~1.4.2",
         "datatables": "~1.10.5",
         "datatables-plugins": "~1.0.1",
-        "datatables-responsive": "~1.0.4",
+        "datatables-responsive": "1.0.4",
         "font-awesome": "~4.2.0",
         "metisMenu": "~2.0.0",
         "eonasdan-bootstrap-datetimepicker": "~4.7.14",

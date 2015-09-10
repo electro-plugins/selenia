@@ -6,6 +6,7 @@ use Selenia\Controller;
 use Selenia\DataObject;
 use Selenia\Exceptions\ConfigException;
 use Selenia\Exceptions\FatalException;
+use Selenia\Exceptions\HttpException;
 use Selenia\Exceptions\Status;
 use Selenia\Routing\RouteGroup;
 
@@ -16,6 +17,16 @@ class AdminController extends Controller
   public $navigationPath;
   public $subnavURI;
 
+  protected function initialize ()
+  {
+    global $session, $application;
+    if (!$session->user && !$application->requireLogin)
+      throw new HttpException(403, $application->debugMode
+        ? '<h3>Access denied: no user is logged-in</h3>Have you forgotten to enable the <code>requireLogin</code> config setting?'
+        : null);
+    parent::initialize ();
+  }
+
   function action_delete (DataObject $data = null, $param = null)
   {
     parent::action_delete ($data, $param);
@@ -25,7 +36,7 @@ class AdminController extends Controller
   protected function insertData (DataObject $data, $param = null)
   {
     parent::insertData ($data, $param);
-    $this->setStatus (Status::INFO,'$ADMIN_MSG_SAVED');
+    $this->setStatus (Status::INFO, '$ADMIN_MSG_SAVED');
   }
 
   protected function updateData (DataObject $data, $param = null)
@@ -33,6 +44,7 @@ class AdminController extends Controller
     parent::updateData ($data, $param);
     $this->setStatus (Status::INFO, '$ADMIN_MSG_SAVED');
   }
+
   /**
    * Defines the navigation breadcrumb trail for the current page.
    * Override to define a custom trail for each application page.
@@ -90,7 +102,7 @@ class AdminController extends Controller
               break;
           }
 
-        else array_unshift ($result, [$page->getTitle(), $link]);
+        else array_unshift ($result, [$page->getTitle (), $link]);
 
         $page = $page->parent;
       } while (isset($page) && isset($page->parent));
@@ -110,7 +122,8 @@ class AdminController extends Controller
       if (!$path || !$path[0][1] || $path[0][1] == '.')
         $navPath = '';
       else {
-        $navPath = "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
+        $navPath =
+          "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
         for ($i = 0; $i < count ($path); ++$i)
           if (isset($path[$i]))
             $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
