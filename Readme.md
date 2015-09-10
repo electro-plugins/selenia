@@ -12,16 +12,16 @@ To install this plugin on your application, using the terminal, `cd` to your app
 selenia module:install-plugin
 ```
 
-and select `selenia-plugins/admin-module` from the displayed list, or type
+and select `selenia-plugins/admin-interface` from the displayed list, or type
 
 ```shell
-selenia module:install-plugin selenia-plugins/admin-module
+selenia module:install-plugin selenia-plugins/admin-interface
 ```
 
 or type
 
 ```shell
-composer require selenia-plugins/admin-module
+composer require selenia-plugins/admin-interface
 ```
 
 ### Multilingual support

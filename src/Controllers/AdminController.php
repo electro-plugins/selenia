@@ -166,7 +166,7 @@ class AdminController extends Controller
     };
     if (!$ok) $this->setViewModel ('subMenu', null);
     // Generate datasources for configuration settings groups.
-    // Ex: 'admin-module' group becames {{ !admin-module }} datasource.
+    // Ex: 'admin-interface' group becames {{ !admin-interface }} datasource.
     foreach ($application->config as $k => $v) {
       $this->setViewModel ($k, $v);
     }

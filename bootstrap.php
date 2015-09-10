@@ -14,7 +14,7 @@ ModuleOptions (__DIR__, [
       'loginView' => 'login.html',
       'translation'    => true,
     ],
-    'admin-module' => [
+    'admin-interface' => [
       'prefix'          => 'admin',
       'users'           => true,
       'profile'         => true,
@@ -49,7 +49,7 @@ ModuleOptions (__DIR__, [
     'routes' => [
       RouteGroup ([
         'title' => '$ADMIN_MENU_TITLE',
-        'prefix' => $application->config['admin-module']['prefix'],
+        'prefix' => $application->config['admin-interface']['prefix'],
         'routes' => AdminModule::routes (),
       ]),
     ],

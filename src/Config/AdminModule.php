@@ -11,7 +11,7 @@ class AdminModule
   static function routes ()
   {
     global $application;
-    $module    = 'selenia-framework/admin-module';
+    $module    = 'selenia-plugins/admin-interface';
     $settings  = self::settings ();
     $userModel = $application->userModel ?: \Selenia\Plugins\AdminInterface\Models\User::ref ();
 
@@ -67,6 +67,6 @@ class AdminModule
   static function settings ()
   {
     global $application;
-    return get ($application->config, 'admin-module', []);
+    return get ($application->config, 'admin-interface', []);
   }
 }
