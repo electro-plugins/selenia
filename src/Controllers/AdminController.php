@@ -63,9 +63,12 @@ class AdminController extends Controller
       do {
         $URIParams  = $page->getURIParams ();
         $defaultURI = '';
-        if ($page instanceof RouteGroup && !empty($page->defaultURI))
-          $defaultURI = $page->defaultURI;
-        $link = self::modPathOf ($defaultURI ?: $page->evalURI ($URIParams));
+        if ($page instanceof RouteGroup) {
+          if (!empty($page->defaultURI))
+            $defaultURI = $page->defaultURI;
+          else $defaultURI = 'javascript:nop()';
+        }
+        $link = $defaultURI ?: $page->evalURI ($URIParams);
 
         if (isset($page->format))
           switch ($page->format) {
@@ -179,9 +182,9 @@ class AdminController extends Controller
     };
     if (!$ok) $this->setViewModel ('subMenu', null);
     // Generate datasources for configuration settings groups.
-    // Ex: 'admin-interface' group becames {{ !admin-interface }} datasource.
+    // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
     foreach ($application->config as $k => $v) {
-      $this->setViewModel ($k, $v);
+      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', $v);
     }
   }
 

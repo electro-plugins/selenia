@@ -102,7 +102,7 @@ textarea, select,
   margin-top: 15px;
 }
 
-.alert {
+#status {
   position: fixed;
   z-index: 9999;
   top: 1px;
@@ -114,6 +114,33 @@ textarea, select,
   text-align: center;
   padding: 13px;
   border-radius: 0;
+}
+
+.terminal {
+  font-family: Menlo, "Lucida Console", Monaco, monospace;
+  font-size: 12px;
+  width: 100%;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: none;
+  white-space: pre-wrap;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.terminal.dark {
+  background-color: #2D2D2D;
+  color: #C4C4C4;
+}
+
+.whitePage {
+  color: #444;
+  min-height: 370px;
+  padding: 40px;
+  background-color: #FFF;
+  border: 1px solid #CCC;
 }
 
 /*--------------------------------------------------------------------
@@ -264,6 +291,10 @@ textarea, select,
   padding-right: 5px;
 }
 
+/*--------------------------------------------------------------------
+   ACTION BAR
+--------------------------------------------------------------------*/
+
 .action-bar {
   margin-top: 15px;
   padding-top: 10px;
@@ -293,6 +324,10 @@ textarea, select,
 .action-bar .btn-group button {
   float: left;
 }
+
+/*--------------------------------------------------------------------
+   PAGINATION
+--------------------------------------------------------------------*/
 
 .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
   background-color: #2B6280;
@@ -325,6 +360,7 @@ textarea, select,
 
 .DataGrid {
   display: none;
+  .clearfix();
 
   table {
     table-layout: fixed;
@@ -411,37 +447,6 @@ textarea, select,
     }
   }
 
-}
-
-/*--------------------------------------------------------------------
-   MISC
---------------------------------------------------------------------*/
-
-.terminal {
-  font-family: Menlo, "Lucida Console", Monaco, monospace;
-  font-size: 12px;
-  width: 100%;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: none;
-  white-space: pre-wrap;
-  height: 400px;
-  overflow-y: auto;
-}
-
-.terminal.dark {
-  background-color: #2D2D2D;
-  color: #C4C4C4;
-}
-
-.whitePage {
-  color: #444;
-  min-height: 370px;
-  padding: 40px;
-  background-color: #FFF;
-  border: 1px solid #CCC;
 }
 
 /*--------------------------------------------------------------------

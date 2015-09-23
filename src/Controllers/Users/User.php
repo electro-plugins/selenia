@@ -1,6 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
-use Impactwave\WebConsole\WebConsole;
+use PhpKit\WebConsole\WebConsole;
 use Selenia\Contracts\UserInterface;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
@@ -18,6 +18,15 @@ class User extends AdminController
 
   protected $pageTitle = '$ADMIN_ADMIN_USER';
 
+  public function action_delete (DataObject $data = null, $param = null)
+  {
+    global $session;
+    /** @var UserInterface $data */
+    parent::action_delete ($data, $param);
+    if ($data->id () == $session->user->id)
+      $this->action_logout ();
+  }
+
   public function action_submit (DataObject $data = null, $param = null)
   {
     /** @var $session Session */
@@ -33,7 +42,8 @@ class User extends AdminController
     $active     = get ($_POST, '_active', !$showActive);
 
     $role = get ($_POST, '_role');
-    /** @var User $data */
+
+    /** @var $data UserInterface|DataObject */
     if (!isset($data))
       throw new FatalException('Can\'t insert/update NULL DataObject.');
 
@@ -50,6 +60,10 @@ class User extends AdminController
     }
     else $data->password ($password);
 
+    if ($username != $data->username ()) {
+      if ($data->findByName ($username))
+        throw new ValidationException(ValidationException::DUPLICATE_RECORD, '$LOGIN_USERNAME');
+    }
     $data->username ($username);
     $data->active ($active);
     if (isset($role))
@@ -60,13 +74,12 @@ class User extends AdminController
     else $this->updateData ($data, $param);
   }
 
-  public function action_delete (DataObject $data = null, $param = null)
+  protected function initialize ()
   {
     global $session;
-    /** @var UserInterface $data */
-    parent::action_delete ($data, $param);
-    if ($data->id () == $session->user->id)
-      $this->action_logout ();
+    if (!$session->user)
+      throw new HttpException(403);
+    parent::initialize ();
   }
 
   protected function model ()
@@ -92,17 +105,9 @@ class User extends AdminController
       $user->role (get ($settings, 'defaultRole', UserInterface::USER_ROLE_STANDARD));
   }
 
-  protected function initialize ()
-  {
-    global $session;
-    if (!$session->user)
-      throw new HttpException(403);
-    parent::initialize ();
-  }
-
   protected function setupViewModel ()
   {
-    parent::setupViewModel();
+    parent::setupViewModel ();
     /** @var $session Session */
     global $session;
 

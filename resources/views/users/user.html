@@ -12,7 +12,7 @@
     </If>
 
     <Field label="$LOGIN_USERNAME" name="_username">
-      <Input value="{{ !login._username }}" autofocus autocomplete="no"/>
+      <Input value="{{ !login._username }}" autofocus autocomplete="no" readOnly="{{ !login.isNotDev }}"/>
     </Field>
 
     <Field label="$LOGIN_PASSWORD" name="_password">
