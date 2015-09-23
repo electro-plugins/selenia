@@ -128,7 +128,7 @@ On `.env`
 APP_DEFAULT_LANG  = en
 ```
 
-### Usage
+## Usage
 
 This plugin integrates into your application's main menu. The bundled pages will appear automatically on it.
 
@@ -142,6 +142,25 @@ If you want pages on your app to inherit the bundled administration graphical la
 2. include on each of your views, as root tag, one of the bundled layout templates (ex: `<Admin>`).
 
 > See the bundled administration pages' source code for concrete examples.
+
+## Plugin development
+
+If you need to perform modifications on this plugin's assets, you'll need to rebuild it before commiting those changes.
+
+#### Installing the development tools
+
+```sh
+cd private/plugins/selenia-plugins/admin-interface
+npm install
+bower install
+```
+
+#### Rebuilding the plugin
+
+```sh
+cd private/plugins/selenia-plugins/admin-interface
+npm run build
+```
 
 ## License
 

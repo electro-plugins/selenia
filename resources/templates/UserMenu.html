@@ -7,9 +7,9 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <If the="{{ !admin-interface.profile }}" isTrue>
+      <If the="{{ !admin.profile }}" isTrue>
         <li>
-          <a href="{{ !admin-interface.prefix }}/user">
+          <a href="{{ !admin.prefix }}/user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>
