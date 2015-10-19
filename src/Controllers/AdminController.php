@@ -2,7 +2,7 @@
 namespace Selenia\Plugins\AdminInterface\Controllers;
 
 use Selenia\Application;
-use Selenia\Controller;
+use Selenia\Http\Controllers\Controller;
 use Selenia\DataObject;
 use Selenia\Exceptions\ConfigException;
 use Selenia\Exceptions\FatalException;
