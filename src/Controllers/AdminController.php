@@ -2,12 +2,12 @@
 namespace Selenia\Plugins\AdminInterface\Controllers;
 
 use Selenia\Application;
-use Selenia\Http\Controllers\Controller;
 use Selenia\DataObject;
-use Selenia\Exceptions\ConfigException;
+use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
-use Selenia\Exceptions\Status;
+use Selenia\Exceptions\FlashType;
+use Selenia\Http\Controllers\Controller;
 use Selenia\Routing\RouteGroup;
 
 class AdminController extends Controller
@@ -20,29 +20,29 @@ class AdminController extends Controller
   protected function initialize ()
   {
     global $session, $application;
-    if (!$session->user && !$application->requireLogin)
-      throw new HttpException(403, $application->debugMode
-        ? '<h3>Access denied: no user is logged-in</h3>Have you forgotten to enable the <code>requireLogin</code> config setting?'
-        : null);
+    if (!isset($session->user) && !$application->requireLogin)
+      throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
+        $application->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
+        ));
     parent::initialize ();
   }
 
   function action_delete (DataObject $data = null, $param = null)
   {
     parent::action_delete ($data, $param);
-    $this->setStatus (Status::INFO, '$ADMIN_MSG_DELETED');
+    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_DELETED');
   }
 
   protected function insertData (DataObject $data, $param = null)
   {
     parent::insertData ($data, $param);
-    $this->setStatus (Status::INFO, '$ADMIN_MSG_SAVED');
+    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
   }
 
   protected function updateData (DataObject $data, $param = null)
   {
     parent::updateData ($data, $param);
-    $this->setStatus (Status::INFO, '$ADMIN_MSG_SAVED');
+    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
   }
 
   /**

@@ -5,11 +5,11 @@ use Selenia\Contracts\UserInterface;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
-use Selenia\Exceptions\ValidationException;
+use Selenia\FlashExceptions\ValidationException;
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Session;
+use Selenia\Sessions\Session;
 
 class User extends AdminController
 {
