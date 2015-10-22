@@ -56,6 +56,15 @@ class AdminModule
         ],
       ])->activeFor ($settings['profile']),
 
+      PageRoute ([
+        'onMenu'     => false,
+        'title'      => '$LOGIN_PROMPT',
+        'URI'        => 'login',
+        'module'     => $module,
+        'view'       => "login.html",
+        'controller' => 'Selenia\Plugins\AdminInterface\Controllers\AdminController',
+      ]),
+
     ];
 
   }
