@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Assembly;
+namespace Selenia\Plugins\AdminInterface;
 
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
@@ -11,7 +11,7 @@ class AdminInterfaceServices implements ServiceProviderInterface
 
   function register (InjectorInterface $injector)
   {
-    ModuleOptions (__DIR__, [
+    ModuleOptions (dirname (__DIR__), [
       'public'    => 'modules/selenia-plugins/admin-interface',
       'lang'      => true,
       'templates' => true,
