@@ -20,7 +20,7 @@ class AdminController extends Controller
   protected function initialize ()
   {
     global $session, $application;
-    if (!isset($session->user) && !$application->requireLogin)
+    if (!isset($session->user) && $application->requireLogin)
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $application->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
