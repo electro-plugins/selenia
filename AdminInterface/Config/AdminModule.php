@@ -62,7 +62,7 @@ class AdminModule
         'URI'        => 'login',
         'module'     => $module,
         'view'       => "login.html",
-        'controller' => 'Selenia\Plugins\AdminInterface\Controllers\AdminController',
+        'autoController' => true,
       ]),
 
     ];
