@@ -108,13 +108,14 @@ class AdminController extends Controller
         else array_unshift ($result, [$page->getTitle (), $link]);
 
         $page = $page->parent;
-      } while (isset($page) && isset($page->parent));
+      } while (isset($page) && isset($page->parent) && isset($page->parent->parent));
 
     return $result;
   }
 
   protected function setupBaseModel ()
   {
+    global $session;
     parent::setupBaseModel ();
     global $application, $model;
     $pageInfo  = $this->activeRoute;
@@ -158,6 +159,7 @@ class AdminController extends Controller
     $this->setViewModel ("URIParams", $this->URIParams);
     $this->setViewModel ("config", $pageInfo->config);
     $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
+    $this->setViewModel ("sessionInfo", $session);
     if (isset($model))
       $this->setViewModel ("modelInfo", [
         'gender'   => $model->gender,
@@ -184,7 +186,7 @@ class AdminController extends Controller
     // Generate datasources for configuration settings groups.
     // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
     foreach ($application->config as $k => $v) {
-      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', $v);
+      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', (array)$v);
     }
   }
 

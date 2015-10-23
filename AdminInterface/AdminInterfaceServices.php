@@ -3,6 +3,7 @@ namespace Selenia\Plugins\AdminInterface;
 
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceConfig;
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 
 class AdminInterfaceServices implements ServiceProviderInterface
@@ -23,27 +24,16 @@ class AdminInterfaceServices implements ServiceProviderInterface
           'loginView'   => 'login.html',
           'translation' => true,
         ],
-        'selenia-plugins/admin-interface' => [
-          'prefix'          => 'admin',
-          'menu'            => true,
-          'users'           => true,
-          'profile'         => true,
-          'editRoles'       => true,
-          'defaultRole'     => 'standard',
-          'activeUsers'     => true,
-          'translations'    => true, // Translations management
-          'allowDeleteSelf' => true,
-          'footer'          => '{{ !application.appName }} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave, Lda</a>. All rights reserved.',
-        ],
+        'selenia-plugins/admin-interface' => new AdminInterfaceConfig,
       ],
     ], function () {
       return [
         'routes' => [
           RouteGroup ([
             'title'  => '$ADMIN_MENU_TITLE',
-            'prefix' => AdminModule::settings ()['prefix'],
+            'prefix' => AdminModule::settings ()->getPrefix (),
             'routes' => AdminModule::routes (),
-          ])->activeFor (AdminModule::settings ()['menu']),
+          ])->activeFor (AdminModule::settings ()->getMenu ()),
         ],
       ];
     });

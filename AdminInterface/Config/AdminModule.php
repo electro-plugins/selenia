@@ -39,7 +39,7 @@ class AdminModule
           ]),
 
         ],
-      ])->activeFor ($settings['users']),
+      ])->activeFor ($settings->getUsers ()),
 
       // This is hidden from the main menu.
 
@@ -54,14 +54,14 @@ class AdminModule
         'config'     => [
           'self' => true // Editing the logged-in user.
         ],
-      ])->activeFor ($settings['profile']),
+      ])->activeFor ($settings->getProfile ()),
 
       PageRoute ([
-        'onMenu'     => false,
-        'title'      => '$LOGIN_PROMPT',
-        'URI'        => 'login',
-        'module'     => $module,
-        'view'       => "login.html",
+        'onMenu'         => false,
+        'title'          => '$LOGIN_PROMPT',
+        'URI'            => 'login',
+        'module'         => $module,
+        'view'           => "login.html",
         'autoController' => true,
       ]),
 
@@ -69,9 +69,12 @@ class AdminModule
 
   }
 
+  /**
+   * @return AdminInterfaceConfig
+   */
   static function settings ()
   {
     global $application;
-    return get ($application->config, 'selenia-plugins/admin-interface', []);
+    return get ($application->config, 'selenia-plugins/admin-interface');
   }
 }
