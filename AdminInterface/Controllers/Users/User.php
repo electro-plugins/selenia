@@ -1,15 +1,17 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
 use PhpKit\WebConsole\WebConsole;
+use Selenia\Application;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
+use Selenia\Http\Redirection;
+use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Sessions\Session;
 
 class User extends AdminController
 {
@@ -17,28 +19,45 @@ class User extends AdminController
   const DUMMY_PASS = 'dummy password';
 
   protected $pageTitle = '$ADMIN_ADMIN_USER';
+  /**
+   * @var Application
+   */
+  private $app;
+  /**
+   * @var Redirection
+   */
+  private $redirection;
+  /**
+   * @var SessionInterface
+   */
+  private $session;
+
+  function __construct (Application $app, SessionInterface $session, Redirection $redirection)
+  {
+    $this->session = $session;
+    $this->app     = $app;
+    $this->redirection = $redirection;
+  }
 
   public function action_delete (DataObject $data = null, $param = null)
   {
-    global $session;
     /** @var UserInterface $data */
     parent::action_delete ($data, $param);
-    if ($data->id () == $session->user->id)
-      $this->action_logout ();
+    if ($data->id () == $this->session->user ()->id()) {
+      $this->session->logout();
+      return $this->redirection->home();
+    }
   }
 
   public function action_submit (DataObject $data = null, $param = null)
   {
-    /** @var $session Session */
-    global $session;
-
     $settings = AdminModule::settings ();
     $username = $_POST['_username'];
     $password = $_POST['_password'];
 
     // If the user active checkbox is not shown, $active is always true.
-    $isSelf     = $data->id () == $session->user->id ();
-    $showActive = !$isSelf && get ($settings, 'activeUsers', true);
+    $isSelf     = $data->id () == $this->session->user ()->id ();
+    $showActive = !$isSelf && $settings->getActiveUsers();
     $active     = get ($_POST, '_active', !$showActive);
 
     $role = get ($_POST, '_role');
@@ -76,25 +95,22 @@ class User extends AdminController
 
   protected function initialize ()
   {
-    global $session;
-    if (!$session->user)
+    if (!$this->session->user ())
       throw new HttpException(403);
     parent::initialize ();
   }
 
   protected function model ()
   {
-    /** @var $session Session */
-    global $session, $application;
     $settings = AdminModule::settings ();
 
     /** @var UserModel $user */
     if (get ($this->activeRoute->config ?: [], 'self')) {
-      $user = $this->dataItem = $session->user;
+      $user = $this->dataItem = $this->session->user ();
       $user->read ();
     }
     else {
-      $user = $this->dataItem = $this->loadRequested (new $application->userModel);
+      $user = $this->dataItem = $this->loadRequested (new $this->app->userModel);
       if (!$user) {
         _log ('<#section|User>', $user, '</#section>');
         WebConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
@@ -102,23 +118,22 @@ class User extends AdminController
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
-      $user->role (get ($settings, 'defaultRole', UserInterface::USER_ROLE_STANDARD));
+      $user->role ($settings->getDefaultRole());
   }
 
   protected function setupViewModel ()
   {
     parent::setupViewModel ();
-    /** @var $session Session */
-    global $session;
 
     $settings = AdminModule::settings ();
 
+    /** @var UserInterface|DataObject $user */
     $user    = $this->dataItem;
-    $isDev   = $session->user->role () == UserInterface::USER_ROLE_DEVELOPER;
-    $isAdmin = $session->user->role () == UserInterface::USER_ROLE_ADMIN;
+    $isDev   = $this->session->user ()->role () == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $this->session->user ()->role () == UserInterface::USER_ROLE_ADMIN;
     // Has it the Standard or Admin roles?
-    $isStandard = $isAdmin || $session->user->role () == UserInterface::USER_ROLE_STANDARD;
-    $isSelf     = $user->id () == $session->user->id ();
+    $isStandard = $isAdmin || $this->session->user ()->role () == UserInterface::USER_ROLE_STANDARD;
+    $isSelf     = $user->id () == $this->session->user ()->id ();
 
     $viewModel = [
       '_username'       => $user->username (),
@@ -130,17 +145,17 @@ class User extends AdminController
       'isDev'           => $isDev,
       'isNotDev'        => !$isDev,
       'isStandard'      => $isStandard,
-      'showRoles'       => $isDev || ($isAdmin && get ($settings, 'editRoles', true)),
+      'showRoles'       => $isDev || ($isAdmin && $settings->getEditRoles()),
       'dev_role'        => UserInterface::USER_ROLE_DEVELOPER,
       'admin_role'      => UserInterface::USER_ROLE_ADMIN,
       'standard_role'   => UserInterface::USER_ROLE_STANDARD,
       'guest_role'      => UserInterface::USER_ROLE_GUEST,
-      'showActive'      => !$isSelf && get ($settings, 'activeUsers', true),
+      'showActive'      => !$isSelf && $settings->getActiveUsers(),
       'canDelete'       => // Will be either true or null.
         (
           !$user->isNew () &&
           // User is not self or delete self is allowed.
-          (!$isSelf || get ($settings, 'allowDeleteSelf', true))
+          (!$isSelf || $settings->getAllowDeleteSelf())
         ) ?: null,
     ];
     $this->setViewModel ('login', $viewModel);
