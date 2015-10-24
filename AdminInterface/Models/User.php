@@ -1,8 +1,8 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Models;
 
-use Selenia\Contracts\UserInterface;
 use Selenia\DataObject;
+use Selenia\Interfaces\UserInterface;
 
 class User extends DataObject implements UserInterface
 {

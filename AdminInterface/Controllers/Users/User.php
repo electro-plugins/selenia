@@ -1,11 +1,11 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
 use PhpKit\WebConsole\WebConsole;
-use Selenia\Contracts\UserInterface;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;

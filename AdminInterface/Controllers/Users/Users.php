@@ -1,7 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
-use Selenia\Contracts\UserInterface;
-use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 
 class Users extends AdminController
