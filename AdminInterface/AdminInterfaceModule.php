@@ -1,19 +1,52 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Config;
+namespace Selenia\Plugins\AdminInterface;
 
-use Selenia\Plugins\AdminInterface\Controllers\Users\User;
+use Selenia\Core\Assembly\Services\ModuleServices;
+use Selenia\Interfaces\ModuleInterface;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceConfig;
+use Selenia\Plugins\AdminInterface\Config\AdminModule;
 use Selenia\Plugins\AdminInterface\Controllers\Users\Users;
+use Selenia\Plugins\AdminInterface\Models\User;
 
-class AdminModule
+class AdminInterfaceModule implements ModuleInterface
 {
-  const ref = __CLASS__;
+  function boot ()
+  {
+  }
+
+  function configure (ModuleServices $module)
+  {
+    $module
+      ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
+      ->provideTranslations ()
+      ->provideTemplates ()
+      ->provideViews ()
+      ->registerPresets ([Config\AdminPresets::ref])
+      ->setDefaultConfig ([
+        'main'                            => [
+          'userModel'   => 'Selenia\Plugins\AdminInterface\Models\User',
+          'loginView'   => 'login.html',
+          'translation' => true,
+        ],
+        'selenia-plugins/admin-interface' => new AdminInterfaceConfig,
+      ])
+      ->onPostConfig (function () use ($module) {
+        $module->registerRoutes ([
+          RouteGroup ([
+            'title'  => '$ADMIN_MENU_TITLE',
+            'prefix' => self::settings ()->getPrefix (),
+            'routes' => self::routes (),
+          ])->activeFor (self::settings ()->getMenu ()),
+        ]);
+      });
+  }
 
   static function routes ()
   {
     global $application;
     $module    = 'selenia-plugins/admin-interface';
     $settings  = self::settings ();
-    $userModel = $application->userModel ?: \Selenia\Plugins\AdminInterface\Models\User::ref ();
+    $userModel = $application->userModel ?: User::ref ();
 
     return [
 
@@ -77,4 +110,5 @@ class AdminModule
     global $application;
     return get ($application->config, 'selenia-plugins/admin-interface');
   }
+
 }
