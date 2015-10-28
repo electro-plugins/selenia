@@ -1,13 +1,12 @@
 <?php
 namespace Selenia\Plugins\AdminInterface;
 
-use Selenia\Assembly\ModuleServices;
-use Selenia\Interfaces\InjectorInterface;
-use Selenia\Interfaces\ServiceProviderInterface;
+use Selenia\Core\Assembly\Services\ModuleServices;
+use Selenia\Interfaces\ModuleInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceConfig;
 use Selenia\Plugins\AdminInterface\Config\AdminModule;
 
-class AdminInterfaceServices implements ServiceProviderInterface
+class AdminInterfaceServices implements ModuleInterface
 {
   function boot ()
   {
@@ -40,7 +39,4 @@ class AdminInterfaceServices implements ServiceProviderInterface
       });
   }
 
-  function register (InjectorInterface $injector)
-  {
-  }
 }
