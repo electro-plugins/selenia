@@ -30,7 +30,7 @@ use Selenia\Traits\ConfigurationTrait;
  * @method boolean getUsers ()
  *
  */
-class AdminInterfaceConfig implements AssignableInterface
+class AdminInterfaceSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 

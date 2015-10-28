@@ -1,7 +1,7 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
-use Selenia\Localization\Locale;
+use Selenia\Localization\Services\Locale;
 use Selenia\Plugins\MatisseWidgets\DataGrid;
 use Selenia\Plugins\MatisseWidgets\Input;
 

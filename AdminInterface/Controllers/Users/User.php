@@ -6,10 +6,10 @@ use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
-use Selenia\Http\Redirection;
+use Selenia\Http\Services\Redirection;
 use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\AdminInterface\Config\AdminModule;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
@@ -51,11 +51,13 @@ class User extends AdminController
 
   public function action_submit (DataObject $data = null, $param = null)
   {
-    $settings = AdminModule::settings ();
+    $settings = AdminInterfaceModule::settings ();
     $username = $_POST['_username'];
     $password = $_POST['_password'];
 
     // If the user active checkbox is not shown, $active is always true.
+
+    /** @var UserModel $data */
     $isSelf     = $data->id () == $this->session->user ()->id ();
     $showActive = !$isSelf && $settings->getActiveUsers();
     $active     = get ($_POST, '_active', !$showActive);
@@ -102,7 +104,7 @@ class User extends AdminController
 
   protected function model ()
   {
-    $settings = AdminModule::settings ();
+    $settings = AdminInterfaceModule::settings ();
 
     /** @var UserModel $user */
     if (get ($this->activeRoute->config ?: [], 'self')) {
@@ -125,7 +127,7 @@ class User extends AdminController
   {
     parent::setupViewModel ();
 
-    $settings = AdminModule::settings ();
+    $settings = AdminInterfaceModule::settings ();
 
     /** @var UserInterface|DataObject $user */
     $user    = $this->dataItem;

@@ -1,52 +1,21 @@
 <?php
-namespace Selenia\Plugins\AdminInterface;
+namespace Selenia\Plugins\AdminInterface\Config;
 
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\ModuleInterface;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceConfig;
-use Selenia\Plugins\AdminInterface\Config\AdminModule;
+use Selenia\Plugins\AdminInterface\Config;
+use Selenia\Plugins\AdminInterface\Controllers\Users\User;
 use Selenia\Plugins\AdminInterface\Controllers\Users\Users;
-use Selenia\Plugins\AdminInterface\Models\User;
+use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
 class AdminInterfaceModule implements ModuleInterface
 {
-  function boot ()
-  {
-  }
-
-  function configure (ModuleServices $module)
-  {
-    $module
-      ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
-      ->provideTranslations ()
-      ->provideTemplates ()
-      ->provideViews ()
-      ->registerPresets ([Config\AdminPresets::ref])
-      ->setDefaultConfig ([
-        'main'                            => [
-          'userModel'   => 'Selenia\Plugins\AdminInterface\Models\User',
-          'loginView'   => 'login.html',
-          'translation' => true,
-        ],
-        'selenia-plugins/admin-interface' => new AdminInterfaceConfig,
-      ])
-      ->onPostConfig (function () use ($module) {
-        $module->registerRoutes ([
-          RouteGroup ([
-            'title'  => '$ADMIN_MENU_TITLE',
-            'prefix' => self::settings ()->getPrefix (),
-            'routes' => self::routes (),
-          ])->activeFor (self::settings ()->getMenu ()),
-        ]);
-      });
-  }
-
   static function routes ()
   {
     global $application;
     $module    = 'selenia-plugins/admin-interface';
     $settings  = self::settings ();
-    $userModel = $application->userModel ?: User::ref ();
+    $userModel = $application->userModel ?: UserModel::ref ();
 
     return [
 
@@ -103,12 +72,43 @@ class AdminInterfaceModule implements ModuleInterface
   }
 
   /**
-   * @return AdminInterfaceConfig
+   * @return AdminInterfaceSettings
    */
   static function settings ()
   {
     global $application;
     return get ($application->config, 'selenia-plugins/admin-interface');
+  }
+
+  function boot ()
+  {
+  }
+
+  function configure (ModuleServices $module)
+  {
+    $module
+      ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
+      ->provideTranslations ()
+      ->provideTemplates ()
+      ->provideViews ()
+      ->registerPresets ([Config\AdminPresets::ref])
+      ->setDefaultConfig ([
+        'main'                            => [
+          'userModel'   => UserModel::ref (),
+          'loginView'   => 'login.html',
+          'translation' => true,
+        ],
+        'selenia-plugins/admin-interface' => new AdminInterfaceSettings,
+      ])
+      ->onPostConfig (function () use ($module) {
+        $module->registerRoutes ([
+          RouteGroup ([
+            'title'  => '$ADMIN_MENU_TITLE',
+            'prefix' => self::settings ()->getPrefix (),
+            'routes' => self::routes (),
+          ])->activeFor (self::settings ()->getMenu ()),
+        ]);
+      });
   }
 
 }

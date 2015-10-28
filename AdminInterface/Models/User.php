@@ -32,8 +32,8 @@ class User extends DataObject implements UserInterface
 
   public function findByName ($username)
   {
-    $this->id = database_get ("SELECT id FROM $this->tableName WHERE username=?", [$username]);
-    return $this->read ();
+    $this->id = database_get ("SELECT id FROM $this->tableName WHERE username=?", [$username]) ?: null;
+    return $this->id ? $this->read () : false;
   }
 
   function verifyPassword ($password)
