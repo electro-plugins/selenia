@@ -27,21 +27,22 @@ class AdminController extends Controller
     parent::initialize ();
   }
 
-  function action_delete (DataObject $data = null, $param = null)
+  function action_delete ($param = null)
   {
-    parent::action_delete ($data, $param);
+    $r = parent::action_delete ($param);
     $this->setStatus (FlashType::INFO, '$ADMIN_MSG_DELETED');
+    return $r;
   }
 
-  protected function insertData (DataObject $data, $param = null)
+  protected function insertData ()
   {
-    parent::insertData ($data, $param);
+    parent::insertData ();
     $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
   }
 
-  protected function updateData (DataObject $data, $param = null)
+  protected function updateData ()
   {
-    parent::updateData ($data, $param);
+    parent::updateData ();
     $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
   }
 
