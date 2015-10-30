@@ -5,8 +5,8 @@ use Selenia\Application;
 use Selenia\DataObject;
 use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
-use Selenia\Exceptions\HttpException;
 use Selenia\Exceptions\FlashType;
+use Selenia\Exceptions\HttpException;
 use Selenia\Http\Controllers\Controller;
 use Selenia\Routing\RouteGroup;
 
@@ -16,6 +16,13 @@ class AdminController extends Controller
   public $mainMenu;
   public $navigationPath;
   public $subnavURI;
+
+  function action_delete ($param = null)
+  {
+    $r = parent::action_delete ($param);
+    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_DELETED');
+    return $r;
+  }
 
   protected function initialize ()
   {
@@ -27,17 +34,83 @@ class AdminController extends Controller
     parent::initialize ();
   }
 
-  function action_delete ($param = null)
-  {
-    $r = parent::action_delete ($param);
-    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_DELETED');
-    return $r;
-  }
-
   protected function insertData ()
   {
     parent::insertData ();
     $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
+  }
+
+  protected function setupBaseViewModel ()
+  {
+    $session = $this->session;
+    parent::setupBaseViewModel ();
+    $application = $this->app;
+    $model       = $this->model;
+    $pageInfo    = $this->activeRoute;
+    $prefix      = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
+    $path        = $this->navigationPath = $this->getNavigationPath ();
+    $pageTitle   = $this->getTitle ();
+    if (isset($path)) {
+      if (!$path || !$path[0][1] || $path[0][1] == '.')
+        $navPath = '';
+      else {
+        $navPath =
+          "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
+        for ($i = 0; $i < count ($path); ++$i)
+          if (isset($path[$i]))
+            $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
+      }
+    }
+    else $navPath = '';
+    $admin = [
+      'pageTitle'  => $pageTitle,
+      'navPath'    => $navPath,
+      'subtitle'   => $pageInfo->getSubtitle (),
+      'titleField' => property ($this->model, 'titleField'),
+      'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->model, 'plural') . '.',
+    ];
+    $this->setViewModel ('admin', $admin);
+    $this->setViewModel ('sitePage', $pageInfo);
+    $URIs = [];
+    if (isset($pageInfo->links)) {
+      foreach ($pageInfo->links as $name => $URI)
+        if ($URI[0] == '/')
+          $URIs[$name] = $application->baseURI . "/$prefix" . $URI;
+        else $URIs[$name] = "$prefix$URI";
+    }
+    $this->setViewModel ("links", $URIs);
+    $this->setViewModel ("URIParams", $this->URIParams);
+    $this->setViewModel ("config", $pageInfo->config);
+    $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
+    $this->setViewModel ("sessionInfo", $session);
+    if (isset($model) && $model instanceof DataObject)
+      $this->setViewModel ("modelInfo", [
+        'gender'   => $model->gender,
+        'singular' => $model->singular,
+        'plural'   => $model->plural,
+      ]);
+    $page = $pageInfo;
+    $ok   = false;
+    while (isset ($page->parent)) {
+      if ($page->parent instanceof RouteGroup && isset($page->parent->parent)) {
+        $this->setViewModel ('subMenu', $page->parent->routes);
+        $this->subnavURI = $page->URI_regexp;
+        if (isset($page->parent->baseSubnavURI)) {
+          if (preg_match ("#{$page->parent->baseSubnavURI}#", $this->URI, $match))
+            $this->baseSubnavURI = $match[0];
+          else throw new ConfigException("No match for baseSubnavURI <b>{$page->parent->baseSubnavURI}</b>.");
+        }
+        $ok = true;
+        break;
+      }
+      $page = $page->parent;
+    };
+    if (!$ok) $this->setViewModel ('subMenu', null);
+    // Generate datasources for configuration settings groups.
+    // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
+    foreach ($application->config as $k => $v) {
+      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', (array)$v);
+    }
   }
 
   protected function updateData ()
@@ -112,83 +185,6 @@ class AdminController extends Controller
       } while (isset($page) && isset($page->parent) && isset($page->parent->parent));
 
     return $result;
-  }
-
-  protected function setupBaseModel ()
-  {
-    global $session;
-    parent::setupBaseModel ();
-    global $application, $model;
-    $pageInfo  = $this->activeRoute;
-    $prefix    = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
-    $path      = $this->navigationPath = $this->getNavigationPath ();
-    $pageTitle = $this->getTitle ();
-    if (isset($path)) {
-      if (!$path || !$path[0][1] || $path[0][1] == '.')
-        $navPath = '';
-      else {
-        $navPath =
-          "<li><a href='$application->homeURI'><i class='$application->homeIcon'></i> &nbsp;$application->homeTitle</a></li>";
-        for ($i = 0; $i < count ($path); ++$i)
-          if (isset($path[$i]))
-            $navPath .= '<li><a href="' . $path[$i][1] . '">' . $path[$i][0] . '</a></li>';
-      }
-    }
-    else $navPath = '';
-    $admin = [
-      'pageTitle'  => $pageTitle,
-      'navPath'    => $navPath,
-      'subtitle'   => $pageInfo->getSubtitle (),
-      'titleField' => property ($this->dataItem, 'titleField'),
-      'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->dataItem, 'plural') . '.',
-    ];
-    $this->setViewModel ('admin', $admin);
-    $this->setViewModel ('sitePage', $pageInfo);
-    if (isset($pageInfo->model)) {
-      $myModel = $model[$pageInfo->model];
-      if (isset($myModel->form))
-        $this->setViewModel ('formConfig', $myModel->form->config);
-    }
-    $URIs = [];
-    if (isset($pageInfo->links)) {
-      foreach ($pageInfo->links as $name => $URI)
-        if ($URI[0] == '/')
-          $URIs[$name] = $application->baseURI . "/$prefix" . $URI;
-        else $URIs[$name] = "$prefix$URI";
-    }
-    $this->setViewModel ("links", $URIs);
-    $this->setViewModel ("URIParams", $this->URIParams);
-    $this->setViewModel ("config", $pageInfo->config);
-    $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
-    $this->setViewModel ("sessionInfo", $session);
-    if (isset($model))
-      $this->setViewModel ("modelInfo", [
-        'gender'   => $model->gender,
-        'singular' => $model->singular,
-        'plural'   => $model->plural,
-      ]);
-    $page = $pageInfo;
-    $ok   = false;
-    while (isset ($page->parent)) {
-      if ($page->parent instanceof RouteGroup && isset($page->parent->parent)) {
-        $this->setViewModel ('subMenu', $page->parent->routes);
-        $this->subnavURI = $page->URI_regexp;
-        if (isset($page->parent->baseSubnavURI)) {
-          if (preg_match ("#{$page->parent->baseSubnavURI}#", $this->URI, $match))
-            $this->baseSubnavURI = $match[0];
-          else throw new ConfigException("No match for baseSubnavURI <b>{$page->parent->baseSubnavURI}</b>.");
-        }
-        $ok = true;
-        break;
-      }
-      $page = $page->parent;
-    };
-    if (!$ok) $this->setViewModel ('subMenu', null);
-    // Generate datasources for configuration settings groups.
-    // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
-    foreach ($application->config as $k => $v) {
-      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', (array)$v);
-    }
   }
 
 }

@@ -18,7 +18,6 @@ class AdminPresets
     $this->locale = $locale;
   }
 
-
   function DataGrid (DataGrid $grid)
   {
     $grid->attrs ()->apply ([

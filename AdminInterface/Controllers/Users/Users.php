@@ -2,12 +2,13 @@
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Models\User;
 
 class Users extends AdminController
 {
-  public function interceptViewDataSet ($dataSourceName, array &$data)
+  public function model ()
   {
-    $data = $this->dataItem->map ($data, function (UserInterface $user) {
+    return (new User())->map((new User)->all (), function (UserInterface $user) {
       return [
         'id'               => $user->id (),
         'active'           => $user->active (),
@@ -19,6 +20,5 @@ class Users extends AdminController
       ];
     });
   }
-
 
 }
