@@ -22,17 +22,17 @@ class User extends AdminController
     parent::action_delete ($param);
     /** @var UserInterface $data */
     $data = $this->model;
-    if ($data->id () == $this->session->user ()->id()) {
-      $this->session->logout();
-      return $this->redirection->home();
+    if ($data->id () == $this->session->user ()->id ()) {
+      $this->session->logout ();
+      return $this->redirection->home ();
     }
   }
 
   public function action_submit ($param = null)
   {
     /** @var UserModel $data */
-    $data = $this->model;
-    $fields = $this->request->getParsedBody();
+    $data     = $this->model;
+    $fields   = $this->request->getParsedBody ();
     $settings = AdminInterfaceModule::settings ();
 
     $username = get ($fields, '_username');
@@ -41,7 +41,7 @@ class User extends AdminController
     // If the user active checkbox is not shown, $active is always true.
 
     $isSelf     = $data->id () == $this->session->user ()->id ();
-    $showActive = !$isSelf && $settings->getActiveUsers();
+    $showActive = !$isSelf && $settings->getActiveUsers ();
     $active     = get ($fields, '_active', !$showActive);
 
     $role = get ($fields, '_role');
@@ -102,7 +102,7 @@ class User extends AdminController
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
-      $user->role ($settings->getDefaultRole());
+      $user->role ($settings->getDefaultRole ());
     return $user;
   }
 
@@ -128,21 +128,21 @@ class User extends AdminController
       'isDev'           => $isDev,
       'isNotDev'        => !$isDev,
       'isStandard'      => $isStandard,
-      'showRoles'       => $isDev || ($isAdmin && $settings->getEditRoles()),
+      'showRoles'       => $isDev || ($isAdmin && $settings->getEditRoles ()),
       'dev_role'        => UserInterface::USER_ROLE_DEVELOPER,
       'admin_role'      => UserInterface::USER_ROLE_ADMIN,
       'standard_role'   => UserInterface::USER_ROLE_STANDARD,
       'guest_role'      => UserInterface::USER_ROLE_GUEST,
-      'showActive'      => !$isSelf && $settings->getActiveUsers(),
+      'showActive'      => !$isSelf && $settings->getActiveUsers (),
       'canDelete'       => // Will be either true or null.
         (
           !$user->isNew () &&
           // User is not self or delete self is allowed.
-          (!$isSelf || $settings->getAllowDeleteSelf())
+          (!$isSelf || $settings->getAllowDeleteSelf ())
         ) ?: null,
     ];
     return [
-      'login' => $viewModel
+      'login' => $viewModel,
     ];
   }
 
