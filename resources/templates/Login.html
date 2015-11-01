@@ -3,9 +3,9 @@
     document.body.className = "login-page";
   </script>
 
-  <input type="hidden" name="_prevPost" value="{{ !controller.prevPost }}"/>
+  <input type="hidden" name="_prevPost" value="{{ .prevPost }}"/>
 
-  {{ !controller.statusMessage }}
+  {{ .statusMessage }}
 
   <div class="login-box">
     <!--
@@ -14,7 +14,7 @@
     </div>
     -->
     <div class="login-box-body">
-      <h1 class="text-info">{{ !application.appName }}</h1>
+      <h1 class="text-info">{{ app.appName }}</h1>
       <h4>$LOGIN_PROMPT</h4>
       <div class="form-group has-feedback">
         <input name="username" type="text" class="form-control" placeholder="$LOGIN_USERNAME" autofocus="yes"/>

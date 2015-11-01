@@ -7,7 +7,7 @@
 
   <If the="{{ @match }}" isSet>
 
-    <If the="{{ !sitePage.URI_regexp }}" matches="{{ @match }}">
+    <If the="{{ sitePage.URI_regexp }}" matches="{{ @match }}">
       <a class="{{ @cssClass }} selected" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
       <Else>
         <a class="{{ @cssClass }}" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
@@ -16,7 +16,7 @@
 
     <Else>
 
-      <If the="{{ !sitePage.URI_regexp }}" matches="{{ @uri }}">
+      <If the="{{ sitePage.URI_regexp }}" matches="{{ @uri }}">
         <a class="{{ @cssClass }} selected" href="{{ @url }}{{ @uri }}">{{ @label }}</a>
         <Else>
           <a class="{{ @cssClass }}" href="{{ @url }}{{ @uri }}">{{ @label }}</a>

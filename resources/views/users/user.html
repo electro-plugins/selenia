@@ -19,8 +19,6 @@
       <Input value="{{ login._password }}" type="password" autocomplete="no"/>
     </Field>
 
-    Hey: {{ %application.config.core-tasks.scaffoldsPath }}
-
     <If is="{{ login.showRoles }}">
       <Field label="$LOGIN_TYPE" name="_role">
         <RadioButton value="{{ login.dev_role }}"

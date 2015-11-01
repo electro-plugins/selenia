@@ -12,9 +12,15 @@ use Selenia\Routing\RouteGroup;
 
 class AdminController extends Controller
 {
+  public $admin;
   public $baseSubnavURI;
+  public $config;
+  public $links;
   public $mainMenu;
+  public $modelInfo;
   public $navigationPath;
+  public $sitePage;
+  public $subMenu;
   public $subnavURI;
 
   function action_delete ($param = null)
@@ -40,10 +46,9 @@ class AdminController extends Controller
     $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
   }
 
-  protected function setupBaseViewModel ()
+  protected function setupModel ()
   {
-    $session = $this->session;
-    parent::setupBaseViewModel ();
+    parent::setupModel();
     $application = $this->app;
     $model       = $this->model;
     $pageInfo    = $this->activeRoute;
@@ -69,8 +74,8 @@ class AdminController extends Controller
       'titleField' => property ($this->model, 'titleField'),
       'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->model, 'plural') . '.',
     ];
-    $this->setViewModel ('admin', $admin);
-    $this->setViewModel ('sitePage', $pageInfo);
+    $this->admin = $admin;
+    $this->sitePage = $pageInfo;
     $URIs = [];
     if (isset($pageInfo->links)) {
       foreach ($pageInfo->links as $name => $URI)
@@ -78,22 +83,20 @@ class AdminController extends Controller
           $URIs[$name] = $application->baseURI . "/$prefix" . $URI;
         else $URIs[$name] = "$prefix$URI";
     }
-    $this->setViewModel ("links", $URIs);
-    $this->setViewModel ("URIParams", $this->URIParams);
-    $this->setViewModel ("config", $pageInfo->config);
-    $this->setViewModel ("URIParams", $pageInfo->getURIParams ());
-    $this->setViewModel ("sessionInfo", $session);
+    $this->links = $URIs;
+    $this->config = $pageInfo->config;
+    $this->URIParams = $pageInfo->getURIParams ();
     if (isset($model) && $model instanceof DataObject)
-      $this->setViewModel ("modelInfo", [
+      $this->modelInfo = [
         'gender'   => $model->gender,
         'singular' => $model->singular,
         'plural'   => $model->plural,
-      ]);
+      ];
     $page = $pageInfo;
     $ok   = false;
     while (isset ($page->parent)) {
       if ($page->parent instanceof RouteGroup && isset($page->parent->parent)) {
-        $this->setViewModel ('subMenu', $page->parent->routes);
+        $this->subMenu = $page->parent->routes;
         $this->subnavURI = $page->URI_regexp;
         if (isset($page->parent->baseSubnavURI)) {
           if (preg_match ("#{$page->parent->baseSubnavURI}#", $this->URI, $match))
@@ -105,7 +108,7 @@ class AdminController extends Controller
       }
       $page = $page->parent;
     };
-    if (!$ok) $this->setViewModel ('subMenu', null);
+    if (!$ok) $this->subMenu = null;
     // Generate datasources for configuration settings groups.
     // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
     foreach ($application->config as $k => $v) {

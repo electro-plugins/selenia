@@ -3,13 +3,13 @@
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
       <i class="fa fa-user fa-fw"></i>
-      {{ !sessionInfo.userRealName }} &nbsp;
+      {{ session.userRealName }} &nbsp;
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <If the="{{ !selenia-plugins-admin-interface-config.profile }}" isTrue>
+      <If the="{{ app.config.selenia-plugins/admin-interface.profile }}" isTrue>
         <li>
-          <a href="{{ !selenia-plugins-admin-interface-config.prefix }}/user">
+          <a href="{{ app.config.selenia-plugins/admin-interface.prefix }}/user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>
