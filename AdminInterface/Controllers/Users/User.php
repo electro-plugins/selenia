@@ -17,6 +17,8 @@ class User extends AdminController
 
   protected $pageTitle = '$ADMIN_ADMIN_USER';
 
+  public $login;
+
   public function action_delete ($param = null)
   {
     parent::action_delete ($param);
@@ -141,9 +143,7 @@ class User extends AdminController
           (!$isSelf || $settings->getAllowDeleteSelf ())
         ) ?: null,
     ];
-    return [
-      'login' => $viewModel,
-    ];
+    $this->login = $viewModel;
   }
 
 }
