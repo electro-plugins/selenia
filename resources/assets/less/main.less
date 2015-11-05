@@ -826,7 +826,7 @@ textarea[readonly].static {
 
 /* hide the native checkbox */
 .Checkbox input {
-  visibility: hidden;
+  opacity: 0;
   position: absolute;
   margin: 0;
   width: 20px;
@@ -834,7 +834,7 @@ textarea[readonly].static {
 }
 
 /* the pseudo checkbox */
-.Checkbox::before {
+.Checkbox i::before {
   content: '';
   position: absolute;
   width: 20px;
@@ -847,8 +847,13 @@ textarea[readonly].static {
   border: 2px solid #AAA;
 }
 
+.Checkbox input:focus + i::before {
+  border-color: #66afe9;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+
 /* the check mark */
-.Checkbox i {
+.Checkbox i::after {
   pointer-events: none;
   opacity: 0;
   content: '';
@@ -872,11 +877,11 @@ textarea[readonly].static {
 //  opacity: 0.3;
 //}
 
-.Checkbox input:checked + i {
+.Checkbox input:checked + i::after {
   opacity: 1;
 }
 
-.Checkbox.disabled input:checked + i {
+.Checkbox.disabled input:checked + i::after {
   opacity: 0.5;
 }
 
