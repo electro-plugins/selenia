@@ -32,23 +32,22 @@ class AdminController extends Controller
 
   protected function initialize ()
   {
-    global $session, $application;
-    if (!isset($session->user) && $application->requireLogin)
+    if (!$this->session->user())
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
-        $application->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
+        $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
     parent::initialize ();
   }
 
-  protected function insertData ()
+  protected function insertData ($model)
   {
-    parent::insertData ();
+    parent::insertData ($model);
     $this->session->flashMessage ('$ADMIN_MSG_SAVED');
   }
 
-  protected function setupModel ()
+  protected function viewModel ()
   {
-    parent::setupModel();
+    parent::viewModel();
     $application = $this->app;
     $model       = $this->model;
     $pageInfo    = $this->activeRoute;
@@ -111,9 +110,9 @@ class AdminController extends Controller
     if (!$ok) $this->subMenu = null;
   }
 
-  protected function updateData ()
+  protected function updateData ($model)
   {
-    parent::updateData ();
+    parent::updateData ($model);
     $this->session->flashMessage ('$ADMIN_MSG_SAVED');
   }
 

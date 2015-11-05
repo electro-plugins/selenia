@@ -1,43 +1,44 @@
+<!--suppress HtmlUnknownTag -->
 <FormPage>
-  <!-- disable browser's autofill and save password prompt -->
+  <!-- disable browser's autofill and password-saving prompt -->
   <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
   <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
 
   <FormLayout>
 
-    <If is="{{ login.showActive }}">
-      <Field name="_active" label="$LOGIN_ACTIVE">
-        <Checkbox checked="{{ login._active }}"/>
+    <If is="{{ show.active }}">
+      <Field name="active" label="$LOGIN_ACTIVE">
+        <Checkbox checked="{{ model.active }}"/>
       </Field>
     </If>
 
-    <Field label="$LOGIN_USERNAME" name="_username">
-      <Input value="{{ login._username }}" autofocus autocomplete="no" readOnly="{{ login.isNotDev }}"/>
+    <Field label="$LOGIN_USERNAME" name="username">
+      <Input value="{{ model.username }}" autofocus autoselect autocomplete="no" readOnly="{{ is.notDev }}"/>
     </Field>
 
-    <Field label="$LOGIN_PASSWORD" name="_password">
-      <Input value="{{ login._password }}" type="password" autocomplete="no"/>
+    <Field label="$LOGIN_PASSWORD" name="password">
+      <Input value="{{ model.password }}" type="password" autocomplete="no"/>
     </Field>
 
-    <If is="{{ login.showRoles }}">
-      <Field label="$LOGIN_TYPE" name="_role">
-        <RadioButton value="{{ login.dev_role }}"
+    <If is="{{ show.roles }}">
+      <Field label="$LOGIN_TYPE" name="role">
+        <RadioButton value="{{ role.dev }}"
                      label="$LOGIN_TYPE_DEV"
-                     testValue="{{ login.dev_role }}"
-                     hidden="{{ login.isNotDev }}"/>
-        <RadioButton value="{{ login.admin_role }}"
+                     testValue="{{ model.role }}"
+                     hidden="{{ is.notDev }}"/>
+        <RadioButton value="{{ role.admin }}"
                      label="$LOGIN_TYPE_ADMIN"
-                     testValue="{{ login._role }}"
-                     hidden="{{ login.isNotAdminOrDev }}"/>
-        <RadioButton value="{{ login.standard_role }}" label="$LOGIN_TYPE_STANDARD" testValue="{{ login._role }}"/>
-        <RadioButton value="{{ login.guest_role }}" label="$LOGIN_TYPE_GUEST" testValue="{{ login._role }}"/>
+                     testValue="{{ model.role }}"
+                     hidden="{{ is.notAdminOrDev }}"/>
+        <RadioButton value="{{ role.standard }}" label="$LOGIN_TYPE_STANDARD" testValue="{{ model.role }}"/>
+        <RadioButton value="{{ role.guest }}" label="$LOGIN_TYPE_GUEST" testValue="{{ model.role }}"/>
       </Field>
     </If>
 
   </FormLayout>
 
   <Actions>
-    <ButtonsSaveDelete key="{{ login.canDelete }}"/>
+    <ButtonsSaveDelete key="{{ canDelete }}"/>
   </Actions>
 
 </FormPage>

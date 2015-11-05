@@ -4,7 +4,6 @@ use PhpKit\WebConsole\WebConsole;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
-use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
@@ -14,14 +13,26 @@ class User extends AdminController
 {
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
-  public    $login;
+
+  public $canDelete;
+  public $is;
+  /**
+   * Data extracted from the User model for editiog on the form.
+   * @var array
+   */
+  public $login;
+  public $role;
+  public $show;
+  /** @var UserInterface|DataObject */
+  public $user;
+
   protected $pageTitle = '$ADMIN_ADMIN_USER';
 
   public function action_delete ($param = null)
   {
+    $this->model = $data = $this->user;
     parent::action_delete ($param);
     /** @var UserInterface $data */
-    $data = $this->model;
     if ($data->id () == $this->session->user ()->id ()) {
       $this->session->logout ();
       return $this->redirection->home ();
@@ -30,27 +41,21 @@ class User extends AdminController
 
   public function action_submit ($param = null)
   {
-    /** @var UserModel $data */
-    $data     = $this->model;
-    $fields   = $this->request->getParsedBody ();
     $settings = AdminInterfaceModule::settings ();
+    $user     = $this->user;
+    $data     = $this->model;
+//    echo "<pre>";var_dump($user);exit;
 
-    $username = get ($fields, '_username');
-    $password = get ($fields, '_password');
+    $username = get ($data, 'username');
+    $password = get ($data, 'password');
+    $role     = get ($data, 'role', false);
 
     // Is the user being saved the logged-in user?
-    $isSelf = $data->id () == $this->session->user ()->id ();
+    $isSelf = $user->id () == $this->session->user ()->id ();
 
     // If the user active checkbox is not shown, $active is always true.
-
     $showActive = !$isSelf && $settings->getActiveUsers ();
-    $active     = get ($fields, '_active', !$showActive);
-
-    $role = get ($fields, '_role');
-
-    /** @var $data UserInterface|DataObject */
-    if (!isset($data))
-      throw new FatalException('Can\'t insert/update NULL DataObject.');
+    $active     = get ($data, 'active', !$showActive);
 
     if ($username == '')
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
@@ -58,36 +63,28 @@ class User extends AdminController
     if ($password == self::DUMMY_PASS) $password = '';
 
     if ($password == '') {
-      if ($data->isNew ())
+      if ($user->isNew ())
         throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_PASSWORD');
       // Do not change the password if the user already exists and the password field was not modified (or left empty)
       // on the form.
     }
-    else $data->password ($password);
+    else $user->password ($password);
 
     // Check if the username has been changed
 
-    if ($username != $data->username ()) {
-      $tmp = clone $data;
+    if ($username != $user->username ()) {
+      $tmp = clone $user;
       if ($tmp->findByName ($username))
         throw new ValidationException(ValidationException::DUPLICATE_RECORD, '$LOGIN_USERNAME');
+      $user->username ($username);
     }
-    $data->username ($username);
 
-    $data->active ($active);
-    if (isset($role))
-      $data->role ($role);
+    $user->active ($active);
+    $user->role ($role);
 
-    if ($data->isNew ())
-      $this->insertData ();
-    else $this->updateData ();
-  }
-
-  protected function initialize ()
-  {
-    if (!$this->session->user ())
-      throw new HttpException(403);
-    parent::initialize ();
+    if ($user->isNew ())
+      $this->insertData ($user);
+    else $this->updateData ($user);
   }
 
   protected function model ()
@@ -110,56 +107,55 @@ class User extends AdminController
     if (!exists ($user->role ()))
       $user->role ($settings->getDefaultRole ());
 
-    return $user;
+    $this->user = $user;
+
+    $login = [
+      'id'       => null,
+      'username' => $user->username (),
+      'password' => strlen ($user->password ()) ? self::DUMMY_PASS : '',
+      'active'   => $user->active (),
+      'role'     => $user->role (),
+    ];
+
+    return $login;
   }
 
   protected function viewModel ()
   {
+    parent::viewModel ();
     $settings = AdminInterfaceModule::settings ();
-
-    /** @var UserInterface|DataObject $user */
-    $user    = $this->model;
-
-    if ($this->request->getMethod () == 'GET') {
-      $old = $this->session->getOldInput ();
-      if (isset($old)) {
-        $user->username ($old['_username']);
-        $user->password (null); // Re-setting it won't work because it will be hashed
-        $user->active (get($old,'_active') == '1');
-        $user->role ($old['_role']);
-      }
-    }
+    $user     = $this->user;
 
     $isDev   = $this->session->user ()->role () == UserInterface::USER_ROLE_DEVELOPER;
     $isAdmin = $this->session->user ()->role () == UserInterface::USER_ROLE_ADMIN;
-    // Has it the Standard or Admin roles?
+    // Has the user the Standard or Admin roles?
     $isStandard = $isAdmin || $this->session->user ()->role () == UserInterface::USER_ROLE_STANDARD;
-    $isSelf     = $user->id () == $this->session->user ()->id ();
+    // Are we editing the logged-in user?
+    $isSelf = $user->id () == $this->session->user ()->id ();
 
-    $viewModel   = [
-      '_username'       => $user->username (),
-      '_password'       => strlen ($user->password ()) ? self::DUMMY_PASS : '',
-      '_active'         => $user->active (),
-      '_role'           => $user->role (),
-      'isAdmin'         => $isAdmin,
-      'isNotAdminOrDev' => !$isAdmin && !$isDev,
-      'isDev'           => $isDev,
-      'isNotDev'        => !$isDev,
-      'isStandard'      => $isStandard,
-      'showRoles'       => $isDev || ($isAdmin && $settings->getEditRoles ()),
-      'dev_role'        => UserInterface::USER_ROLE_DEVELOPER,
-      'admin_role'      => UserInterface::USER_ROLE_ADMIN,
-      'standard_role'   => UserInterface::USER_ROLE_STANDARD,
-      'guest_role'      => UserInterface::USER_ROLE_GUEST,
-      'showActive'      => !$isSelf && $settings->getActiveUsers (),
-      'canDelete'       => // Will be either true or null.
-        (
-          !$user->isNew () &&
-          // User is not self or delete self is allowed.
-          (!$isSelf || $settings->getAllowDeleteSelf ())
-        ) ?: null,
+    $this->is        = [
+      'admin'         => $isAdmin,
+      'notAdminOrDev' => !$isAdmin && !$isDev,
+      'dev'           => $isDev,
+      'notDev'        => !$isDev,
+      'standard'      => $isStandard,
     ];
-    $this->login = $viewModel;
+    $this->role      = [
+      'dev'      => UserInterface::USER_ROLE_DEVELOPER,
+      'admin'    => UserInterface::USER_ROLE_ADMIN,
+      'standard' => UserInterface::USER_ROLE_STANDARD,
+      'guest'    => UserInterface::USER_ROLE_GUEST,
+    ];
+    $this->show      = [
+      'roles'  => $isDev || ($isAdmin && $settings->getEditRoles ()),
+      'active' => !$isSelf && $settings->getActiveUsers (),
+    ];
+    $this->canDelete = // Will be either true or null.
+      (
+        !$user->isNew () &&
+        // User is not self or delete self is allowed.
+        (!$isSelf || $settings->getAllowDeleteSelf ())
+      ) ?: null;
   }
 
 }
