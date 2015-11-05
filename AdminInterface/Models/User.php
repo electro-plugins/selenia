@@ -24,6 +24,10 @@ class User extends DataObject implements UserInterface
   public $role;
   public $active;
 
+  public $gender = '$USER_THE';
+  public $singular = '$USER';
+  public $plural = '$USERS';
+
   public function insert ($insertFiles = true)
   {
     $this->registrationDate = self::now ();

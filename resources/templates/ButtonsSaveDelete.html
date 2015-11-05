@@ -9,7 +9,7 @@
 
     <If the="{{ @key }}" isSet>
       <Button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
-              message="$ADMIN_DELETE_CONFIRM {{ gender }} {{ singular }}?"/>
+              message="$ADMIN_DELETE_CONFIRM {{ model.gender }} {{ model.singular }}?"/>
     </If>
 
     {{ @content }}

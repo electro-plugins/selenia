@@ -26,7 +26,7 @@ class AdminController extends Controller
   function action_delete ($param = null)
   {
     $r = parent::action_delete ($param);
-    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_DELETED');
+    $this->session->flashMessage ('$ADMIN_MSG_DELETED');
     return $r;
   }
 
@@ -43,7 +43,7 @@ class AdminController extends Controller
   protected function insertData ()
   {
     parent::insertData ();
-    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
+    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
   }
 
   protected function setupModel ()
@@ -92,34 +92,29 @@ class AdminController extends Controller
         'singular' => $model->singular,
         'plural'   => $model->plural,
       ];
-    $page = $pageInfo;
+    $route = $pageInfo;
     $ok   = false;
-    while (isset ($page->parent)) {
-      if ($page->parent instanceof RouteGroup && isset($page->parent->parent)) {
-        $this->subMenu = $page->parent->routes;
-        $this->subnavURI = $page->URI_regexp;
-        if (isset($page->parent->baseSubnavURI)) {
-          if (preg_match ("#{$page->parent->baseSubnavURI}#", $this->URI, $match))
+    while (isset ($route->parent)) {
+      if ($route->parent instanceof RouteGroup && isset($route->parent->parent)) {
+        $this->subMenu = $route->parent->routes;
+        $this->subnavURI = $route->URI_regexp;
+        if (isset($route->parent->baseSubnavURI)) {
+          if (preg_match ("#{$route->parent->baseSubnavURI}#", $this->URI, $match))
             $this->baseSubnavURI = $match[0];
-          else throw new ConfigException("No match for baseSubnavURI <b>{$page->parent->baseSubnavURI}</b>.");
+          else throw new ConfigException("No match for baseSubnavURI <b>{$route->parent->baseSubnavURI}</b>.");
         }
         $ok = true;
         break;
       }
-      $page = $page->parent;
+      $route = $route->parent;
     };
     if (!$ok) $this->subMenu = null;
-    // Generate datasources for configuration settings groups.
-    // Ex: 'selenia-plugins/admin-interface' group becames {{ !selenia-plugins-admin-interface-config }} datasource.
-    foreach ($application->config as $k => $v) {
-      $this->setViewModel (preg_replace ('/\W/', '-', $k) . '-config', (array)$v);
-    }
   }
 
   protected function updateData ()
   {
     parent::updateData ();
-    $this->setStatus (FlashType::INFO, '$ADMIN_MSG_SAVED');
+    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
   }
 
   /**
@@ -135,38 +130,38 @@ class AdminController extends Controller
   protected function getNavigationPath ()
   {
     $result = [];
-    $page   = $this->activeRoute;
-    if (isset($page) && isset($page->parent))
+    $route   = $this->activeRoute;
+    if (isset($route) && isset($route->parent))
       do {
-        $URIParams  = $page->getURIParams ();
+        $URIParams  = $route->getURIParams ();
         $defaultURI = '';
-        if ($page instanceof RouteGroup) {
-          if (!empty($page->defaultURI))
-            $defaultURI = $page->defaultURI;
+        if ($route instanceof RouteGroup) {
+          if (!empty($route->defaultURI))
+            $defaultURI = $route->defaultURI;
           else $defaultURI = 'javascript:nop()';
         }
-        $link = $defaultURI ?: $page->evalURI ($URIParams);
+        $link = $defaultURI ?: $route->evalURI ($URIParams);
 
-        if (isset($page->format))
-          switch ($page->format) {
+        if (isset($route->format))
+          switch ($route->format) {
             case 'form':
-              if (isset($page->model)) {
-                list ($dataClass, $modelMethod) = parseMethodRef ($page->getModel ());
+              if (isset($route->model)) {
+                list ($dataClass, $modelMethod) = parseMethodRef ($route->getModel ());
                 /** @var DataObject $data */
                 $data = new $dataClass;
                 if (!isset($data))
-                  throw new ConfigException ("When generating the navigation path on the URI <b>$page->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b>.");
+                  throw new ConfigException ("When generating the navigation path on the URI <b>$route->URI</b>, it was not possible to create an instance of the data class <b>$dataClass</b>.");
                 extend ($data, $URIParams);
-                $presetParams = $page->getPresetParameters ();
+                $presetParams = $route->getPresetParameters ();
                 extend ($data, $presetParams);
               }
-              else $data = $this->model ();
+              else array_unshift ($result, [$route->getTitle(), $link]);//$this->model ();
               if (isset($data)) {
                 if ($data->isNew () && isset($data->gender) && isset($data->singular))
                   array_unshift ($result, ["Nov$data->gender $data->singular", $link]);
                 else {
                   $data->read ();
-                  $subtitle = $page->getSubtitle ();
+                  $subtitle = $route->getSubtitle ();
                   $title    = $data->getTitle (isset($data->singular)
                     ? ucfirst ($data->singular)
                     :
@@ -177,15 +172,15 @@ class AdminController extends Controller
 
               break;
             case 'grid':
-              $subtitle = $page->getSubtitle ();
+              $subtitle = $route->getSubtitle ();
               array_unshift ($result, [$subtitle, $link]);
               break;
           }
 
-        else array_unshift ($result, [$page->getTitle (), $link]);
+        else array_unshift ($result, [$route->getTitle (), $link]);
 
-        $page = $page->parent;
-      } while (isset($page) && isset($page->parent) && isset($page->parent->parent));
+        $route = $route->parent;
+      } while (isset($route) && isset($route->parent) && isset($route->parent->parent));
 
     return $result;
   }

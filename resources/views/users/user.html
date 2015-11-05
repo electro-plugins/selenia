@@ -1,13 +1,13 @@
 <FormPage>
-  <!-- disable autofill -->
-  <input type="password" style="display:none">
-  <input type="hidden" name="id" value="{{ id }}">
+  <!-- disable browser's autofill and save password prompt -->
+  <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
+  <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
 
   <FormLayout>
 
     <If is="{{ login.showActive }}">
       <Field name="_active" label="$LOGIN_ACTIVE">
-        <Checkbox testValue="{{ login._active }}"/>
+        <Checkbox checked="{{ login._active }}"/>
       </Field>
     </If>
 

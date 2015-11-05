@@ -6,7 +6,7 @@
       {{ i|ord }}
     </Column>
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
-      <Checkbox testValue="{{ r.active }}" disabled/>
+      <Checkbox checked="{{ r.active }}" disabled/>
     </Column>
     <Column width="70%" title="$LOGIN_REAL_NAME">
       {{ r.realName }}
