@@ -283,14 +283,23 @@ textarea, select,
   font-weight: bold;
 }
 
-.btn.with-icon {
+.btn.with-icon:not(.icon-right) {
   padding-left: 28px;
+}
+
+.btn.with-icon.icon-right {
+  padding-right: 28px;
 }
 
 .btn i {
   position: absolute;
   left: 10px;
   top: 9px;
+}
+
+.btn.icon-right i {
+  left: auto;
+  right: 16px;
 }
 
 .input-group-btn .btn {
@@ -973,8 +982,11 @@ textarea[readonly].static {
 
   .btn {
     margin: 25px 0 0;
+    padding-right: 32px !important;
+
     i {
-      position: static;
+      top: 40px;
+      right: 52px;
     }
   }
 }

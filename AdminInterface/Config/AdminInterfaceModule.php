@@ -58,15 +58,6 @@ class AdminInterfaceModule implements ModuleInterface
         ],
       ])->activeFor ($settings->getProfile ()),
 
-      PageRoute ([
-        'onMenu'         => false,
-        'title'          => '$LOGIN_PROMPT',
-        'URI'            => 'login',
-        'module'         => $module,
-        'view'           => "login.html",
-        'autoController' => true,
-      ]),
-
     ];
 
   }

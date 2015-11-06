@@ -8,17 +8,21 @@ class Users extends AdminController
 {
   public function model ()
   {
-    return (new User())->map((new User)->all (), function (UserInterface $user) {
-      return [
-        'id'               => $user->id (),
-        'active'           => $user->active (),
-        'realName'         => $user->realName (),
-        'username'         => $user->username (),
-        'registrationDate' => $user->registrationDate (),
-        'lastLogin'        => $user->lastLogin (),
-        'role'             => $user->role ()
-      ];
-    });
+    $role = $this->session->user ()->role ();
+    return array_filter ((new User())->map ((new User)->all (), function (UserInterface $user) use ($role) {
+      // Filter out users of superior level.
+      return $user->role () > $role
+        ? null
+        : [
+          'id'               => $user->id (),
+          'active'           => $user->active (),
+          'realName'         => $user->realName (),
+          'username'         => $user->username (),
+          'registrationDate' => $user->registrationDate (),
+          'lastLogin'        => $user->lastLogin (),
+          'role'             => $user->role (),
+        ];
+    }));
   }
 
 }

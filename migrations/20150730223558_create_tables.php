@@ -22,7 +22,7 @@ class CreateTables extends AbstractMigration
       ->addColumn ('token', 'string', ['limit' => 60])
       ->addColumn ('registrationDate', 'datetime')
       ->addColumn ('lastLogin', 'datetime')
-      ->addColumn ('role', 'string', ['limit' => 10])
+      ->addColumn ('role', 'integer')
       ->addColumn ('active', 'boolean', ['default' => 0])
       ->create ();
     $now = date ('Y-m-d H:i:s');

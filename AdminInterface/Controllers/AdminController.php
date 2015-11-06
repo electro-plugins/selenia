@@ -5,7 +5,6 @@ use Selenia\Application;
 use Selenia\DataObject;
 use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
-use Selenia\Exceptions\FlashType;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Controllers\Controller;
 use Selenia\Routing\RouteGroup;
