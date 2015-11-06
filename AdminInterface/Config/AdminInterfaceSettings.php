@@ -9,6 +9,7 @@ use Selenia\Traits\ConfigurationTrait;
  *
  * @method $this activeUsers (boolean $v)
  * @method $this allowDeleteSelf (boolean $v)
+ * @method $this allowRename (boolean $v)
  * @method $this defaultRole (string $v)
  * @method $this editRoles (boolean $v)
  * @method $this footer (string $v)
@@ -20,6 +21,7 @@ use Selenia\Traits\ConfigurationTrait;
  *
  * @method boolean getActiveUsers ()
  * @method boolean getAllowDeleteSelf ()
+ * @method boolean getAllowRename ()
  * @method string  getDefaultRole ()
  * @method boolean getEditRoles ()
  * @method string  getFooter ()
@@ -36,6 +38,7 @@ class AdminInterfaceSettings implements AssignableInterface
 
   private $activeUsers     = true;
   private $allowDeleteSelf = true;
+  private $allowRename     = true;
   private $defaultRole     = 'standard';
   private $editRoles       = true;
   private $footer          = '{{ !application.appName }} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.';

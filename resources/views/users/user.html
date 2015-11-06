@@ -13,7 +13,7 @@
     </If>
 
     <Field label="$LOGIN_USERNAME" name="username">
-      <Input value="{{ model.username }}" autofocus autoselect autocomplete="no" readOnly="{{ is.notDev }}"/>
+      <Input value="{{ model.username }}" autofocus autoselect autocomplete="no" readOnly="{{ !canRename && !is.dev && !is.admin }}"/>
     </Field>
 
     <Field label="$LOGIN_PASSWORD" name="password">
@@ -25,11 +25,11 @@
         <RadioButton value="{{ role.dev }}"
                      label="$LOGIN_ROLE_3"
                      testValue="{{ model.role }}"
-                     hidden="{{ is.notDev }}"/>
+                     hidden="{{ !is.dev }}"/>
         <RadioButton value="{{ role.admin }}"
                      label="$LOGIN_ROLE_2"
                      testValue="{{ model.role }}"
-                     hidden="{{ is.notAdminOrDev }}"/>
+                     hidden="{{ !is.admin && !is.dev }}"/>
         <RadioButton value="{{ role.standard }}" label="$LOGIN_ROLE_1" testValue="{{ model.role }}"/>
         <RadioButton value="{{ role.guest }}" label="$LOGIN_ROLE_0" testValue="{{ model.role }}"/>
       </Field>

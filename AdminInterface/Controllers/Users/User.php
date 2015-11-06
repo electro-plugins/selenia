@@ -4,17 +4,27 @@ use PhpKit\WebConsole\WebConsole;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
+use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceModule;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
+/**
+ * Notes:
+ * - A user can always edit himself.
+ * - ADMIN and DEV users can always rename themselves, others can rename only if enabled via settings.
+ * - DEV users can always delete everyone.
+ * - ADMIN users can delete others.
+ * - Other users can delete themselves if enabled via settings.
+ */
 class User extends AdminController
 {
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
 
   public $canDelete;
+  public $canRename;
   public $is;
   /**
    * Data extracted from the User model for editiog on the form.
@@ -90,18 +100,26 @@ class User extends AdminController
   protected function model ()
   {
     $settings = AdminInterfaceModule::settings ();
+    $mySelf = $this->session->user ();
 
     /** @var UserModel $user */
     if (get ($this->activeRoute->config ?: [], 'self')) {
-      $user = $this->session->user ();
+      $user = $mySelf;
       $user->read ();
     }
     else {
+      $myRole = $mySelf->role();
       $user = $this->loadRequested (new $this->app->userModel);
       if (!$user) {
         _log ('<#section|User>', $user, '</#section>');
         WebConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
       }
+      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->id() != $user->id())
+        // Can't edit other users.
+        throw new HttpException (403);
+      if ($user->role() > $myRole)
+        // Can't edit a user with a higher role.
+        throw new HttpException (403);
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
@@ -125,20 +143,20 @@ class User extends AdminController
     parent::viewModel ();
     $settings = AdminInterfaceModule::settings ();
     $user     = $this->user;
+    $mySelf = $this->session->user ();
 
-    $isDev   = $this->session->user ()->role () == UserInterface::USER_ROLE_DEVELOPER;
-    $isAdmin = $this->session->user ()->role () == UserInterface::USER_ROLE_ADMIN;
+    $isDev   = $mySelf->role () == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $mySelf->role () == UserInterface::USER_ROLE_ADMIN;
     // Has the user the Standard or Admin roles?
-    $isStandard = $isAdmin || $this->session->user ()->role () == UserInterface::USER_ROLE_STANDARD;
+    $isStandard = $isAdmin || $mySelf->role () == UserInterface::USER_ROLE_STANDARD;
     // Are we editing the logged-in user?
-    $isSelf = $user->id () == $this->session->user ()->id ();
+    $isSelf = $user->id () == $mySelf->id ();
 
     $this->is        = [
-      'admin'         => $isAdmin,
-      'notAdminOrDev' => !$isAdmin && !$isDev,
-      'dev'           => $isDev,
-      'notDev'        => !$isDev,
-      'standard'      => $isStandard,
+      'admin'      => $isAdmin,
+      'dev'        => $isDev,
+      'standard'   => $isStandard,
+      'self'       => $isSelf,
     ];
     $this->role      = [
       'dev'      => UserInterface::USER_ROLE_DEVELOPER,
@@ -154,8 +172,9 @@ class User extends AdminController
       (
         !$user->isNew () &&
         // User is not self or delete self is allowed.
-        (!$isSelf || $settings->getAllowDeleteSelf ())
+        ($isDev || !$isSelf || $settings->getAllowDeleteSelf ())
       ) ?: null;
+    $this->canRename = $settings->getAllowRename();
   }
 
 }
