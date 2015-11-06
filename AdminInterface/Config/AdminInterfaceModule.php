@@ -41,7 +41,7 @@ class AdminInterfaceModule implements ModuleInterface
           ]),
 
         ],
-      ])->activeFor ($settings->getUsers ()),
+      ])->activeFor ($settings->users ()),
 
       // This is hidden from the main menu.
 
@@ -56,7 +56,7 @@ class AdminInterfaceModule implements ModuleInterface
         'config'     => [
           'self' => true // Editing the logged-in user.
         ],
-      ])->activeFor ($settings->getProfile ()),
+      ])->activeFor ($settings->profile ()),
 
     ];
 
@@ -95,9 +95,9 @@ class AdminInterfaceModule implements ModuleInterface
         $module->registerRoutes ([
           RouteGroup ([
             'title'  => '$ADMIN_MENU_TITLE',
-            'prefix' => self::settings ()->getPrefix (),
+            'prefix' => self::settings ()->prefix (),
             'routes' => self::routes (),
-          ])->activeFor (self::settings ()->getMenu ()),
+          ])->activeFor (self::settings ()->menu ()),
         ]);
       });
   }

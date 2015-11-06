@@ -165,16 +165,16 @@ class User extends AdminController
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
     $this->show      = [
-      'roles'  => $isDev || ($isAdmin && $settings->getEditRoles ()),
-      'active' => !$isSelf && $settings->getActiveUsers (),
+      'roles'  => $isDev || ($isAdmin && $settings->editRoles ()),
+      'active' => !$isSelf && $settings->activeUsers (),
     ];
     $this->canDelete = // Will be either true or null.
       (
         !$user->isNew () &&
         // User is not self or delete self is allowed.
-        ($isDev || !$isSelf || $settings->getAllowDeleteSelf ())
+        ($isDev || !$isSelf || $settings->allowDeleteSelf ())
       ) ?: null;
-    $this->canRename = $settings->getAllowRename();
+    $this->canRename = $settings->allowRename();
   }
 
 }

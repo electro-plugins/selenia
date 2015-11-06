@@ -7,30 +7,17 @@ use Selenia\Traits\ConfigurationTrait;
 /**
  * Configuration settings for the AdminInterface module.
  *
- * @method $this activeUsers (boolean $v)
- * @method $this allowDeleteSelf (boolean $v)
- * @method $this allowRename (boolean $v)
- * @method $this defaultRole (string $v)
- * @method $this editRoles (boolean $v)
- * @method $this footer (string $v)
- * @method $this menu (boolean $v)
- * @method $this prefix (string $v)
- * @method $this profile (boolean $v)
- * @method $this translations (boolean $v) Enable translations editor.
- * @method $this users (boolean $v)
- *
- * @method boolean getActiveUsers ()
- * @method boolean getAllowDeleteSelf ()
- * @method boolean getAllowRename ()
- * @method string  getDefaultRole ()
- * @method boolean getEditRoles ()
- * @method string  getFooter ()
- * @method boolean getMenu ()
- * @method string  getPrefix ()
- * @method boolean getProfile ()
- * @method boolean getTranslations ()
- * @method boolean getUsers ()
- *
+ * @method $this|boolean activeUsers (boolean $v = null)
+ * @method $this|boolean allowDeleteSelf (boolean $v = null)
+ * @method $this|boolean allowRename (boolean $v = null)
+ * @method $this|string  defaultRole (string $v = null)
+ * @method $this|boolean editRoles (boolean $v = null)
+ * @method $this|string  footer (string $v = null)
+ * @method $this|boolean menu (boolean $v = null)
+ * @method $this|string  prefix (string $v = null)
+ * @method $this|boolean profile (boolean $v = null)
+ * @method $this|boolean translations (boolean $v = null) Enable translations editor.
+ * @method $this|boolean users (boolean $v = null)
  */
 class AdminInterfaceSettings implements AssignableInterface
 {
