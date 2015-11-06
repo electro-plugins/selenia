@@ -64,7 +64,7 @@ class User extends AdminController
     $isSelf = $user->id () == $this->session->user ()->id ();
 
     // If the user active checkbox is not shown, $active is always true.
-    $showActive = !$isSelf && $settings->getActiveUsers ();
+    $showActive = !$isSelf && $settings->activeUsers ();
     $active     = get ($data, 'active', !$showActive);
 
     if ($username == '')
@@ -95,6 +95,8 @@ class User extends AdminController
     if ($user->isNew ())
       $this->insertData ($user);
     else $this->updateData ($user);
+
+    if ($isSelf) return $this->redirection->to($settings->adminHomeUrl());
   }
 
   protected function model ()
@@ -123,7 +125,7 @@ class User extends AdminController
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
-      $user->role ($settings->getDefaultRole ());
+      $user->role ($settings->defaultRole ());
 
     $this->user = $user;
 

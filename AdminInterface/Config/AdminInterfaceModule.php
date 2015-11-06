@@ -1,6 +1,8 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Selenia\Application;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Plugins\AdminInterface\Config;
@@ -10,12 +12,15 @@ use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
 class AdminInterfaceModule implements ModuleInterface
 {
-  static function routes ()
+  /** @var Application */
+  private $app;
+
+  //TODO: replace "dummy URI" below
+  function routes ()
   {
-    global $application;
     $module    = 'selenia-plugins/admin-interface';
     $settings  = self::settings ();
-    $userModel = $application->userModel ?: UserModel::ref ();
+    $userModel = $this->app->userModel ?: UserModel::ref ();
 
     return [
 
@@ -46,10 +51,9 @@ class AdminInterfaceModule implements ModuleInterface
       // This is hidden from the main menu.
 
       PageRoute ([
-        'onMenu'     => $application->VURI == 'user',
+        'onMenu'     => "dummy VURI" == $settings->prefix() . '/user',
         'title'      => '$LOGIN_PROFILE',
         'URI'        => 'user',
-        'indexURL'   => 'admin',
         'module'     => $module,
         'view'       => "users/user.html",
         'controller' => User::ref (),
@@ -75,8 +79,9 @@ class AdminInterfaceModule implements ModuleInterface
   {
   }
 
-  function configure (ModuleServices $module)
+  function configure (ModuleServices $module, Application $app)
   {
+    $this->app = $app;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
@@ -96,7 +101,8 @@ class AdminInterfaceModule implements ModuleInterface
           RouteGroup ([
             'title'  => '$ADMIN_MENU_TITLE',
             'prefix' => self::settings ()->prefix (),
-            'routes' => self::routes (),
+            'defaultURI' => self::settings ()->adminHomeUrl(),
+            'routes' => $this->routes (),
           ])->activeFor (self::settings ()->menu ()),
         ]);
       });

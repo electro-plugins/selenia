@@ -8,7 +8,7 @@ use Selenia\Plugins\AdminInterface\Models\User;
 /**
  * Notes:
  * - only ADMIN and DEV users can access this page.
- * - ADMIN users cannot see DEV users.
+ * -
  */
 class Users extends AdminController
 {

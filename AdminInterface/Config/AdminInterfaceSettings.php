@@ -7,6 +7,7 @@ use Selenia\Traits\ConfigurationTrait;
 /**
  * Configuration settings for the AdminInterface module.
  *
+ * @method $this|string  adminHomeUrl (string $v = null)
  * @method $this|boolean activeUsers (boolean $v = null)
  * @method $this|boolean allowDeleteSelf (boolean $v = null)
  * @method $this|boolean allowRename (boolean $v = null)
@@ -23,6 +24,7 @@ class AdminInterfaceSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 
+  private $adminHomeUrl    = 'admin/users';
   private $activeUsers     = true;
   private $allowDeleteSelf = true;
   private $allowRename     = true;
