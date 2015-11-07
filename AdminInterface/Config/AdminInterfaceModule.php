@@ -1,7 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Application;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\ModuleInterface;
@@ -9,6 +8,7 @@ use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Controllers\Users\User;
 use Selenia\Plugins\AdminInterface\Controllers\Users\Users;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Selenia\Routing\Route;
 
 class AdminInterfaceModule implements ModuleInterface
 {
@@ -16,55 +16,6 @@ class AdminInterfaceModule implements ModuleInterface
   private $app;
 
   //TODO: replace "dummy URI" below
-  function routes ()
-  {
-    $module    = 'selenia-plugins/admin-interface';
-    $settings  = self::settings ();
-    $userModel = $this->app->userModel ?: UserModel::ref ();
-
-    return [
-
-      PageRoute ([
-        'title'         => '$ADMIN_ADMIN_USERS',
-        'URI'           => 'users',
-        'module'        => $module,
-        'model'         => $userModel,
-        'view'          => "users/users.html",
-        'controller'    => Users::ref (),
-        'autoloadModel' => true,
-        'isIndex'       => true,
-        'format'        => 'grid',
-        'links'         => [
-          'mainForm' => 'users/{{r.id}}',
-        ],
-        'routes'        => [
-          PageRoute ([
-            'URI'        => 'users/{id}',
-            'view'       => "users/user.html",
-            'controller' => User::ref (),
-            'format'     => 'form',
-          ]),
-
-        ],
-      ])->activeFor ($settings->users ()),
-
-      // This is hidden from the main menu.
-
-      PageRoute ([
-        'onMenu'     => "dummy VURI" == $settings->prefix() . '/user',
-        'title'      => '$LOGIN_PROFILE',
-        'URI'        => 'user',
-        'module'     => $module,
-        'view'       => "users/user.html",
-        'controller' => User::ref (),
-        'config'     => [
-          'self' => true // Editing the logged-in user.
-        ],
-      ])->activeFor ($settings->profile ()),
-
-    ];
-
-  }
 
   /**
    * @return AdminInterfaceSettings
@@ -99,13 +50,56 @@ class AdminInterfaceModule implements ModuleInterface
       ->onPostConfig (function () use ($module) {
         $module->registerRoutes ([
           RouteGroup ([
-            'title'  => '$ADMIN_MENU_TITLE',
-            'prefix' => self::settings ()->prefix (),
-            'defaultURI' => self::settings ()->adminHomeUrl(),
-            'routes' => $this->routes (),
+            'title'      => '$ADMIN_MENU_TITLE',
+            'prefix'     => self::settings ()->prefix (),
+            'defaultURI' => self::settings ()->adminHomeUrl (),
+            'routes'     => $this->routes (),
           ])->activeFor (self::settings ()->menu ()),
         ]);
       });
+  }
+
+  function routes ()
+  {
+    $module    = 'selenia-plugins/admin-interface';
+    $settings  = self::settings ();
+    $userModel = $this->app->userModel ?: UserModel::ref ();
+
+    return [
+
+      (new Route)
+        ->for ('users')
+        ->title ('$ADMIN_ADMIN_USERS')
+        ->if ($settings->users ())
+        ->onStop (Users::ref ())
+        ->render ('users/users.html')
+        ->waypoint (Y)
+        ->vars ([
+          'mainForm' => 'users/{{r.id}}',
+        ])
+        ->routes ([
+          (new Route)
+            ->param ('id')
+            ->render ('users/user.html')
+            ->onStop (User::ref ()),
+        ]),
+
+      // This is hidden from the main menu.
+
+      PageRoute ([
+        'onMenu'     => "dummy VURI" == $settings->prefix () . '/user',
+        'title'      => '$LOGIN_PROFILE',
+        'URI'        => 'user',
+        'module'     => $module,
+        'view'       => "users/user.html",
+        'controller' => User::ref (),
+        'config'     => [
+          'self' => true // Editing the logged-in user.
+        ],
+      ])->activeFor ($settings->profile ()),
+
+    ];
+
   }
 
 }
