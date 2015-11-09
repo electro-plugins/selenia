@@ -49,12 +49,11 @@ class AdminInterfaceModule implements ModuleInterface
       ])
       ->onPostConfig (function () use ($module) {
         $module->registerRoutes ([
-          RouteGroup ([
-            'title'      => '$ADMIN_MENU_TITLE',
-            'prefix'     => self::settings ()->prefix (),
-            'defaultURI' => self::settings ()->adminHomeUrl (),
-            'routes'     => $this->routes (),
-          ])->activeFor (self::settings ()->menu ()),
+          self::settings ()->prefix () => (new Location)
+            ->title ('$ADMIN_MENU_TITLE')
+            ->redirectsTo (self::settings ()->adminHomeUrl ())
+            ->menuItem (self::settings ()->menu ())
+            ->next ($this->routes ()),
         ]);
       });
   }
@@ -71,15 +70,16 @@ class AdminInterfaceModule implements ModuleInterface
         ->when ($settings->users ())
         ->title ('$ADMIN_ADMIN_USERS')
         ->controller (Users::ref ())
-        ->renders ('users/users.html')
-        ->waypoint (Y)
+        ->view ('users/users.html')
+        ->waypoint (x)
         ->viewModel ([
           'mainForm' => 'users/{{r.id}}',
         ])
         ->next ([
           ':id' => (new Location)
+            ->menuItem (no)
             ->controller (User::ref ())
-            ->renders ('users/user.html'),
+            ->view ('users/user.html'),
         ]),
 
       // This is hidden from the main menu.
@@ -91,7 +91,7 @@ class AdminInterfaceModule implements ModuleInterface
         ->menuItem (function (Location $location) use ($settings) {
           return $location->path == $settings->prefix () . '/user';
         })
-        ->renders ('users/user.html')
+        ->view ('users/user.html')
         ->config ([
           'self' => true // Editing the logged-in user.
         ]),
