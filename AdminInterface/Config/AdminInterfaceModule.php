@@ -8,7 +8,7 @@ use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Controllers\Users\User;
 use Selenia\Plugins\AdminInterface\Controllers\Users\Users;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Routing\Route;
+use Selenia\Routing\Location;
 
 class AdminInterfaceModule implements ModuleInterface
 {
@@ -67,36 +67,34 @@ class AdminInterfaceModule implements ModuleInterface
 
     return [
 
-      (new Route)
-        ->for ('users')
+      'users' => (new Location)
+        ->when ($settings->users ())
         ->title ('$ADMIN_ADMIN_USERS')
-        ->if ($settings->users ())
-        ->onStop (Users::ref ())
-        ->render ('users/users.html')
+        ->controller (Users::ref ())
+        ->renders ('users/users.html')
         ->waypoint (Y)
-        ->vars ([
+        ->viewModel ([
           'mainForm' => 'users/{{r.id}}',
         ])
-        ->routes ([
-          (new Route)
-            ->param ('id')
-            ->render ('users/user.html')
-            ->onStop (User::ref ()),
+        ->next ([
+          ':id' => (new Location)
+            ->controller (User::ref ())
+            ->renders ('users/user.html'),
         ]),
 
       // This is hidden from the main menu.
 
-      PageRoute ([
-        'onMenu'     => "dummy VURI" == $settings->prefix () . '/user',
-        'title'      => '$LOGIN_PROFILE',
-        'URI'        => 'user',
-        'module'     => $module,
-        'view'       => "users/user.html",
-        'controller' => User::ref (),
-        'config'     => [
+      'user' => (new Location)
+        ->when ($settings->profile ())
+        ->title ('$LOGIN_PROFILE')
+        ->controller (User::ref ())
+        ->menuItem (function (Location $location) use ($settings) {
+          return $location->path == $settings->prefix () . '/user';
+        })
+        ->renders ('users/user.html')
+        ->config ([
           'self' => true // Editing the logged-in user.
-        ],
-      ])->activeFor ($settings->profile ()),
+        ]),
 
     ];
 
