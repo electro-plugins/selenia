@@ -1,6 +1,10 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Controllers\Users;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\RouteInterface;
+use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Controllers\AdminController;
@@ -12,7 +16,7 @@ use Selenia\Routing\Location;
  * - only ADMIN and DEV users can access this page.
  * -
  */
-class UsersController extends AdminController
+class UsersController extends AdminController implements RouterInterface
 {
   static function navigation (AdminInterfaceSettings $settings)
   {
@@ -22,6 +26,14 @@ class UsersController extends AdminController
       ->next ([
         UserController::class
       ]);
+  }
+
+  function __invoke (ServerRequestInterface $request, ResponseInterface $response, RouteInterface $route)
+  {
+    return $route
+      ->whenMatches ([$this, 'run'])
+      ->param ('id', UserController::class)
+      ->next ();
   }
 
   function route (RouterInterface $router)
