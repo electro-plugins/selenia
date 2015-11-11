@@ -1,13 +1,12 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Controllers\Users;
+namespace Selenia\Plugins\AdminInterface\Components\Users;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\RouteInterface;
+use Selenia\Interfaces\RoutableInterface;
 use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
-use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Models\User;
 use Selenia\Routing\Location;
 
@@ -16,7 +15,7 @@ use Selenia\Routing\Location;
  * - only ADMIN and DEV users can access this page.
  * -
  */
-class UsersController extends AdminController implements RouterInterface
+class UsersPage extends AdminPageComponent implements RoutableInterface
 {
   static function navigation (AdminInterfaceSettings $settings)
   {
@@ -24,35 +23,21 @@ class UsersController extends AdminController implements RouterInterface
       ->title ('$ADMIN_ADMIN_USERS')
       ->visible ($settings->users ())
       ->next ([
-        UserController::class
+        UserPage::class,
       ]);
   }
 
-  function __invoke (ServerRequestInterface $request, ResponseInterface $response, RouteInterface $route)
+  /**
+   * @param RouterInterface $router
+   * @return ResponseInterface|false
+   */
+  function __invoke (RouterInterface $router)
   {
-    return $route
-      ->whenMatches ([$this, 'run'])
-      ->param ('id', UserController::class)
-      ->next ();
-  }
-
-  function route (RouterInterface $router)
-  {
-    if ($settings->users ())
-      $router->on (':id', UserController::class);
-
-    return (new Location)
-      ->when ($settings->users ())
-      ->title ('$ADMIN_ADMIN_USERS')
-      ->controller (UsersController::ref ())
-      ->view ('users/users.html')
-      ->waypoint (Y)
-      ->viewModel ([
-        'mainForm' => 'users/{{r.id}}',
-      ])
-      ->next ([
-        ':id' => UserController::routes ($settings),
-      ]);
+    return $this->handle ($router)
+      ?: $router
+        ->next ()
+        ->match (':id', UserPage::class)
+        ?: $router->proceed ();
   }
 
   public function model ()
@@ -76,6 +61,25 @@ class UsersController extends AdminController implements RouterInterface
             'role'             => $user->role (),
           ];
       }));
+  }
+
+  function route (RouterInterface $router)
+  {
+    if ($settings->users ())
+      $router->on (':id', UserPage::class);
+
+    return (new Location)
+      ->when ($settings->users ())
+      ->title ('$ADMIN_ADMIN_USERS')
+      ->controller (UsersPage::ref ())
+      ->view ('users/users.html')
+      ->waypoint (Y)
+      ->viewModel ([
+        'mainForm' => 'users/{{r.id}}',
+      ])
+      ->next ([
+        ':id' => UserPage::routes ($settings),
+      ]);
   }
 
 }

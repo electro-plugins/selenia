@@ -1,10 +1,10 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Controllers\Translations;
+namespace Selenia\Plugins\AdminInterface\Components\Translations;
 use Selenia\Matisse\DataSet;
-use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Models\TranslationData;
 
-class Translations extends AdminController
+class TranslationsPage extends AdminPageComponent
 {
   const ref = __CLASS__;
 

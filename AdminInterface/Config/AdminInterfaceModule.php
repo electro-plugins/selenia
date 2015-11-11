@@ -1,17 +1,20 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
+use Psr\Http\Message\ResponseInterface;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
+use Selenia\Interfaces\RoutableInterface;
+use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
 use Selenia\Plugins\AdminInterface\Config;
-use Selenia\Plugins\AdminInterface\Controllers\Users\UserController;
-use Selenia\Plugins\AdminInterface\Controllers\Users\UsersController;
+use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
+use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Location;
 
-class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface
+class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface, RoutableInterface
 {
   /**
    * @return AdminInterfaceSettings
@@ -20,6 +23,21 @@ class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface
   {
     global $application;
     return get ($application->config, 'selenia-plugins/admin-interface');
+  }
+
+  /**
+   * @param RouterInterface $router
+   * @return ResponseInterface
+   */
+  function __invoke (RouterInterface $router)
+  {
+    return $router->route ()->target ()
+      ? $router->redirection ()->to (self::settings ()->adminHomeUrl ())
+      : $router->dispatch ([
+        'users' => UsersPage::class,
+        'user'  => UserPage::class,
+      ])
+        ?: $router->next ();
   }
 
   function configure (ModuleServices $module, AdminInterfaceSettings $settings)
@@ -44,19 +62,18 @@ class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface
               ->title ('$ADMIN_MENU_TITLE')
               ->visible (self::settings ()->menu ())
               ->next ([
-                'users' => UsersController::class,
-                'user'  => UserController::class
+                'users' => UsersPage::class,
+                'user'  => UserPage::class,
               ]),
           ]);
-        $module->registerRoutes (
-          [
-            self::settings ()->prefix () => (new Location)
-              ->redirectsTo (self::settings ()->adminHomeUrl ())
-              ->next ([
-                'users' => UsersController::routes ($settings),
-                'user'  => UserController::routes ($settings, true), // This is hidden from the main menu.
-              ]),
-          ]);
+        $module->router (function (RouterInterface $router) {
+          return $router->match (self::settings ()->prefix ())
+            ? $router->next ()->dispatch ([
+              'users' => UsersPage::class,
+              'user'  => UserPage::class,
+            ])
+            : $router->proceed ();
+        });
       });
   }
 

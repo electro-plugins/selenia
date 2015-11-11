@@ -1,15 +1,15 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Controllers;
+namespace Selenia\Plugins\AdminInterface\Components;
 
 use Selenia\Application;
 use Selenia\DataObject;
 use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
-use Selenia\Http\Controllers\Controller;
+use Selenia\Http\Components\PageComponent;
 use Selenia\Routing\RouteGroup;
 
-class AdminController extends Controller
+class AdminPageComponent extends PageComponent
 {
   public $admin;
   public $baseSubnavURI;

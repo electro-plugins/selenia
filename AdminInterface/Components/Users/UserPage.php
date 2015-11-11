@@ -1,14 +1,16 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Controllers\Users;
+namespace Selenia\Plugins\AdminInterface\Components\Users;
 use PhpKit\WebConsole\WebConsole;
+use Psr\Http\Message\ResponseInterface;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceModule;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
-use Selenia\Plugins\AdminInterface\Controllers\AdminController;
+use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Location;
 
@@ -20,7 +22,7 @@ use Selenia\Routing\Location;
  * - ADMIN users can delete others.
  * - Other users can delete themselves if enabled via settings.
  */
-class UserController extends AdminController
+class UserPage extends AdminPageComponent
 {
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
@@ -47,13 +49,14 @@ class UserController extends AdminController
       ->visible (N);
   }
 
-  static function routes (AdminInterfaceSettings $settings, $editingSelf = false)
+  function z()
   {
     return $editingSelf
       ? (new Location)
         ->when ($settings->profile ())
+        ->
         ->title ('$LOGIN_PROFILE')
-        ->controller (UserController::ref ())
+        ->controller (UserPage::ref ())
         ->menuItem (
           function (Location $location) use ($settings) {
             return $location->path == $settings->prefix () . '/user';
@@ -63,7 +66,7 @@ class UserController extends AdminController
           'self' => true // Editing the logged-in user.
         ])
       : (new Location)
-        ->controller (UserController::ref ())
+        ->controller (UserPage::ref ())
         ->view ('users/user.html');
   }
 
