@@ -8,11 +8,10 @@ use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\RoutableInterface;
 use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
-use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
 use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
+use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Routing\Location;
 
 class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface, RoutableInterface
 {
@@ -31,7 +30,7 @@ class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface,
    */
   function __invoke (RouterInterface $router)
   {
-    return $router->route ()->target ()
+    return $router->onTarget ('GET')
       ? $router->redirection ()->to (self::settings ()->adminHomeUrl ())
       : $router->dispatch ([
         'users' => UsersPage::class,
@@ -67,12 +66,13 @@ class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface,
               ]),
           ]);
         $module->router (function (RouterInterface $router) {
-          return $router->match (self::settings ()->prefix ())
-            ? $router->next ()->dispatch ([
-              'users' => UsersPage::class,
-              'user'  => UserPage::class,
-            ])
-            : $router->proceed ();
+          return $router->matchPrefix (self::settings ()->prefix (),
+            function (RouterInterface $router) {
+              $router->dispatch ([
+                'users' => UsersPage::class,
+                'user'  => UserPage::class,
+              ]);
+            });
         });
       });
   }

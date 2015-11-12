@@ -5,8 +5,8 @@ use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\RoutableInterface;
 use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User;
 use Selenia\Routing\Location;
 
@@ -33,11 +33,9 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
    */
   function __invoke (RouterInterface $router)
   {
-    return $this->handle ($router)
-      ?: $router
-        ->next ()
-        ->match (':id', UserPage::class)
-        ?: $router->proceed ();
+    return parent::__invoke ($router)
+      ?: $router->next ()
+                ->match ('*', '{id}', UserPage::class);
   }
 
   public function model ()
