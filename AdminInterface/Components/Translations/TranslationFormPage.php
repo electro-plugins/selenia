@@ -6,8 +6,6 @@ use Selenia\Plugins\AdminInterface\Models\TranslationData;
 
 class TranslationFormPage extends AdminPageComponent
 {
-  const ref = __CLASS__;
-
   private $translationData;
 
   protected function processRequest ()

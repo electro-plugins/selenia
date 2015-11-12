@@ -1,7 +1,7 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
-use Psr\Http\Message\ResponseInterface;
+use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
@@ -12,68 +12,49 @@ use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
 use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Selenia\Routing\Navigation;
 
 class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface, RoutableInterface
 {
-  /**
-   * @return AdminInterfaceSettings
-   */
-  static function settings ()
-  {
-    global $application;
-    return get ($application->config, 'selenia-plugins/admin-interface');
-  }
+  /** @var AdminInterfaceSettings */
+  private $settings;
 
-  /**
-   * @param RouterInterface $router
-   * @return ResponseInterface
-   */
   function __invoke (RouterInterface $router)
   {
-    return $router->onTarget ('GET')
-      ? $router->redirection ()->to (self::settings ()->adminHomeUrl ())
-      : $router->dispatch ([
-        'users' => UsersPage::class,
-        'user'  => UserPage::class,
-      ])
-        ?: $router->next ();
+    return $router->matchPrefix ($this->settings->urlPrefix (),
+      function (RouterInterface $router) {
+        $router
+          ->onTarget ('GET')
+          ? $router->redirection ()->to ($this->settings->adminHomeUrl ())
+          : $router
+          ->middleware ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
+          ->dispatch ([
+            'users' => UsersPage::class,
+            'user'  => UserPage::class,
+          ]);
+      });
   }
 
   function configure (ModuleServices $module, AdminInterfaceSettings $settings)
   {
+    $this->settings = $settings;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
       ->provideTemplates ()
       ->provideViews ()
-      ->registerPresets ([Config\AdminPresets::ref])
+      ->registerPresets ([Config\AdminPresets::class])
       ->setDefaultConfig ([
         'main' => [
-          'userModel'   => UserModel::ref (),
+          'userModel'   => UserModel::class,
           'loginView'   => 'login.html',
           'translation' => true,
         ],
       ])
       ->onPostConfig (function () use ($module, $settings) {
-        $module->navigation (
-          [
-            self::settings ()->prefix () => (new Waypoint)
-              ->title ('$ADMIN_MENU_TITLE')
-              ->visible (self::settings ()->menu ())
-              ->next ([
-                'users' => UsersPage::class,
-                'user'  => UserPage::class,
-              ]),
-          ]);
-        $module->router (function (RouterInterface $router) {
-          return $router->matchPrefix (self::settings ()->prefix (),
-            function (RouterInterface $router) {
-              $router->dispatch ([
-                'users' => UsersPage::class,
-                'user'  => UserPage::class,
-              ]);
-            });
-        });
+        $module
+          ->provideNavigation ([$this, 'navigation'])
+          ->registerRouter ($this);
       });
   }
 
@@ -86,4 +67,24 @@ class AdminInterfaceModule implements ModuleInterface, ServiceProviderInterface,
   {
     $injector->share (AdminInterfaceSettings::class);
   }
+
+  private function navigation ()
+  {
+    return [
+      $this->settings->urlPrefix () => (new Navigation)
+        ->title ('$ADMIN_MENU_TITLE')
+        ->visible ($this->settings->showMenu ())
+        ->next ([
+          'users' => (new Navigation)
+            ->title ('$ADMIN_ADMIN_USERS')
+            ->visible ($this->settings->users ())
+            ->next ([
+              'user' => (new Navigation)
+                ->title ('$ADMIN_ADMIN_USER')
+                ->visible (N),
+            ]),
+        ]),
+    ];
+  }
+
 }

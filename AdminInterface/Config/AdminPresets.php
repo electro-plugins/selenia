@@ -7,7 +7,6 @@ use Selenia\Plugins\MatisseWidgets\Input;
 
 class AdminPresets
 {
-  const ref = __CLASS__;
   /**
    * @var Locale
    */

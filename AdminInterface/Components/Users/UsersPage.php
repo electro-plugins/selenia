@@ -17,15 +17,8 @@ use Selenia\Routing\Location;
  */
 class UsersPage extends AdminPageComponent implements RoutableInterface
 {
-  static function navigation (AdminInterfaceSettings $settings)
-  {
-    return (new Navigation)
-      ->title ('$ADMIN_ADMIN_USERS')
-      ->visible ($settings->users ())
-      ->next ([
-        UserPage::class,
-      ]);
-  }
+
+  function getNavigation2 () {}
 
   /**
    * @param RouterInterface $router
@@ -69,7 +62,7 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
     return (new Location)
       ->when ($settings->users ())
       ->title ('$ADMIN_ADMIN_USERS')
-      ->controller (UsersPage::ref ())
+      ->controller (UsersPage::class)
       ->view ('users/users.html')
       ->waypoint (Y)
       ->viewModel ([

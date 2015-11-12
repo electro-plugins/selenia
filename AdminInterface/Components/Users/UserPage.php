@@ -1,18 +1,16 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 use PhpKit\WebConsole\WebConsole;
-use Psr\Http\Message\ResponseInterface;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceModule;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Location;
+use Selenia\Routing\Navigation;
 
 /**
  * Notes:
@@ -41,12 +39,10 @@ class UserPage extends AdminPageComponent
   public $user;
 
   protected $pageTitle = '$ADMIN_ADMIN_USER';
+  private   $settings;
 
-  static function navigation (AdminInterfaceSettings $settings)
-  {
-    return (new Navigation)
-      ->title ('$ADMIN_ADMIN_USER')
-      ->visible (N);
+  function inject (AdminInterfaceSettings $settings) {
+    $this->settings = $settings;
   }
 
   function z()
@@ -56,7 +52,7 @@ class UserPage extends AdminPageComponent
         ->when ($settings->profile ())
         ->
         ->title ('$LOGIN_PROFILE')
-        ->controller (UserPage::ref ())
+        ->controller (UserPage::class)
         ->menuItem (
           function (Location $location) use ($settings) {
             return $location->path == $settings->prefix () . '/user';
@@ -66,7 +62,7 @@ class UserPage extends AdminPageComponent
           'self' => true // Editing the logged-in user.
         ])
       : (new Location)
-        ->controller (UserPage::ref ())
+        ->controller (UserPage::class)
         ->view ('users/user.html');
   }
 
@@ -83,7 +79,6 @@ class UserPage extends AdminPageComponent
 
   public function action_submit ($param = null)
   {
-    $settings = AdminInterfaceModule::settings ();
     $user     = $this->user;
     $data     = $this->model;
 //    echo "<pre>";var_dump($user);exit;
@@ -96,7 +91,7 @@ class UserPage extends AdminPageComponent
     $isSelf = $user->id () == $this->session->user ()->id ();
 
     // If the user active checkbox is not shown, $active is always true.
-    $showActive = !$isSelf && $settings->activeUsers ();
+    $showActive = !$isSelf && $this->settings->activeUsers ();
     $active     = get ($data, 'active', !$showActive);
 
     if ($username == '')
@@ -128,12 +123,11 @@ class UserPage extends AdminPageComponent
       $this->insertData ($user);
     else $this->updateData ($user);
 
-    if ($isSelf) return $this->redirection->to ($settings->adminHomeUrl ());
+    if ($isSelf) return $this->redirection->to ($this->settings->adminHomeUrl ());
   }
 
   protected function model ()
   {
-    $settings = AdminInterfaceModule::settings ();
     $mySelf   = $this->session->user ();
 
     /** @var UserModel $user */
@@ -157,7 +151,7 @@ class UserPage extends AdminPageComponent
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
-      $user->role ($settings->defaultRole ());
+      $user->role ($this->settings->defaultRole ());
 
     $this->user = $user;
 
@@ -175,7 +169,6 @@ class UserPage extends AdminPageComponent
   protected function viewModel ()
   {
     parent::viewModel ();
-    $settings = AdminInterfaceModule::settings ();
     $user     = $this->user;
     $mySelf   = $this->session->user ();
 
@@ -199,16 +192,16 @@ class UserPage extends AdminPageComponent
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
     $this->show      = [
-      'roles'  => $isDev || ($isAdmin && $settings->editRoles ()),
-      'active' => !$isSelf && $settings->activeUsers (),
+      'roles'  => $isDev || ($isAdmin && $this->settings->editRoles ()),
+      'active' => !$isSelf && $this->settings->enableUserDisabling (),
     ];
     $this->canDelete = // Will be either true or null.
       (
         !$user->isNew () &&
         // User is not self or delete self is allowed.
-        ($isDev || !$isSelf || $settings->allowDeleteSelf ())
+        ($isDev || !$isSelf || $this->settings->allowDeleteSelf ())
       ) ?: null;
-    $this->canRename = $settings->allowRename ();
+    $this->canRename = $this->settings->allowRename ();
   }
 
 }

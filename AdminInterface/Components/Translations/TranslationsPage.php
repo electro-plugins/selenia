@@ -6,8 +6,6 @@ use Selenia\Plugins\AdminInterface\Models\TranslationData;
 
 class TranslationsPage extends AdminPageComponent
 {
-  const ref = __CLASS__;
-
   protected function setupViewModel ()
   {
     $model = new TranslationData();
