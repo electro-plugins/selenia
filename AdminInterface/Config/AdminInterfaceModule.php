@@ -32,28 +32,11 @@ class AdminInterfaceModule
           ->middleware ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
           ->dispatch ([
             'users' => UsersPage::class,
-            'user'  => UserPage::class,
+            'user'  => [UserPage::class, [
+              'editingSelf' => true
+            ]],
           ]);
       });
-  }
-
-  function __navigation ()
-  {
-    return [
-      $this->settings->urlPrefix () => (new Navigation)
-        ->title ('$ADMIN_MENU_TITLE')
-        ->visible ($this->settings->showMenu ())
-        ->next ([
-          'users' => (new Navigation)
-            ->title ('$ADMIN_ADMIN_USERS')
-            ->visible ($this->settings->users ())
-            ->next ([
-              '*' => (new Navigation)
-                ->title ('$ADMIN_ADMIN_USER')
-                ->visible (N),
-            ]),
-        ]),
-    ];
   }
 
   function configure (ModuleServices $module, AdminInterfaceSettings $settings)
@@ -77,6 +60,28 @@ class AdminInterfaceModule
           ->provideNavigation ($this)
           ->registerRouter ($this);
       });
+  }
+
+  function getNavigation ()
+  {
+    return [
+      $this->settings->urlPrefix () => (new Navigation)
+        ->title ('$ADMIN_MENU_TITLE')
+        ->visible ($this->settings->showMenu ())
+        ->next ([
+          'users' => (new Navigation)
+            ->title ('$ADMIN_ADMIN_USERS')
+            ->visible ($this->settings->enableUsersManagement ())
+            ->next ([
+              '*' => (new Navigation)
+                ->title ('$ADMIN_ADMIN_USER')
+                ->visible (N),
+            ]),
+          'profile' => (new Navigation)
+            ->title ('$LOGIN_PROFILE')
+            ->visible (N),
+        ]),
+    ];
   }
 
   /**

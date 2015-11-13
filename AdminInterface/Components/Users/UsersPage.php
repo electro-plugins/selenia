@@ -8,7 +8,6 @@ use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User;
-use Selenia\Routing\Location;
 
 /**
  * Notes:
@@ -17,6 +16,13 @@ use Selenia\Routing\Location;
  */
 class UsersPage extends AdminPageComponent implements RoutableInterface
 {
+  /** @var AdminInterfaceSettings */
+  private $settings;
+
+  function inject (AdminInterfaceSettings $settings)
+  {
+    $this->settings = $settings;
+  }
 
   /**
    * @param RouterInterface $router
@@ -24,9 +30,19 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
    */
   function __invoke (RouterInterface $router)
   {
-    return parent::__invoke ($router)
-      ?: $router->next ()
-                ->match ('*', '{id}', UserPage::class);
+    return $this->settings->enableUsersManagement ()
+      ? ($router->onTarget ('*', [
+        [$this, 'run'], [
+          'view'      => 'users/users.html',
+          'viewModel' => [
+            'mainForm' => 'users/{{r.id}}',
+          ],
+        ],
+      ])
+        ?: $router->next ()
+                  ->match ('*', '{id}', UserPage::class)
+      )
+      : false;
   }
 
   public function model ()
@@ -50,25 +66,6 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
             'role'             => $user->role (),
           ];
       }));
-  }
-
-  function route (RouterInterface $router)
-  {
-    if ($settings->users ())
-      $router->on (':id', UserPage::class);
-
-    return (new Location)
-      ->when ($settings->users ())
-      ->title ('$ADMIN_ADMIN_USERS')
-      ->controller (UsersPage::class)
-      ->view ('users/users.html')
-      ->waypoint (Y)
-      ->viewModel ([
-        'mainForm' => 'users/{{r.id}}',
-      ])
-      ->next ([
-        ':id' => UserPage::routes ($settings),
-      ]);
   }
 
 }

@@ -9,8 +9,6 @@ use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Routing\Location;
-use Selenia\Routing\Navigation;
 
 /**
  * Notes:
@@ -27,6 +25,12 @@ class UserPage extends AdminPageComponent
 
   public $canDelete;
   public $canRename;
+  /**
+   * Are we on the profile page?
+   * > Set via router.
+   * @var bool
+   */
+  public $editingSelf = false;
   public $is;
   /**
    * Data extracted from the User model for editiog on the form.
@@ -37,34 +41,10 @@ class UserPage extends AdminPageComponent
   public $show;
   /** @var UserInterface|DataObject */
   public $user;
+  public $view = 'users/user.html';
 
-  protected $pageTitle = '$ADMIN_ADMIN_USER';
-  private   $settings;
-
-  function inject (AdminInterfaceSettings $settings) {
-    $this->settings = $settings;
-  }
-
-  function z()
-  {
-    return $editingSelf
-      ? (new Location)
-        ->when ($settings->profile ())
-        ->
-        ->title ('$LOGIN_PROFILE')
-        ->controller (UserPage::class)
-        ->menuItem (
-          function (Location $location) use ($settings) {
-            return $location->path == $settings->prefix () . '/user';
-          })
-        ->view ('users/user.html')
-        ->config ([
-          'self' => true // Editing the logged-in user.
-        ])
-      : (new Location)
-        ->controller (UserPage::class)
-        ->view ('users/user.html');
-  }
+  /** @var AdminInterfaceSettings */
+  private $settings;
 
   public function action_delete ($param = null)
   {
@@ -79,8 +59,8 @@ class UserPage extends AdminPageComponent
 
   public function action_submit ($param = null)
   {
-    $user     = $this->user;
-    $data     = $this->model;
+    $user = $this->user;
+    $data = $this->model;
 //    echo "<pre>";var_dump($user);exit;
 
     $username = get ($data, 'username');
@@ -91,7 +71,7 @@ class UserPage extends AdminPageComponent
     $isSelf = $user->id () == $this->session->user ()->id ();
 
     // If the user active checkbox is not shown, $active is always true.
-    $showActive = !$isSelf && $this->settings->activeUsers ();
+    $showActive = !$isSelf && $this->settings->enableUsersDisabling ();
     $active     = get ($data, 'active', !$showActive);
 
     if ($username == '')
@@ -128,7 +108,7 @@ class UserPage extends AdminPageComponent
 
   protected function model ()
   {
-    $mySelf   = $this->session->user ();
+    $mySelf = $this->session->user ();
 
     /** @var UserModel $user */
     if (get ($this->activeRoute->config ?: [], 'self')) {
@@ -169,8 +149,8 @@ class UserPage extends AdminPageComponent
   protected function viewModel ()
   {
     parent::viewModel ();
-    $user     = $this->user;
-    $mySelf   = $this->session->user ();
+    $user   = $this->user;
+    $mySelf = $this->session->user ();
 
     $isDev   = $mySelf->role () == UserInterface::USER_ROLE_DEVELOPER;
     $isAdmin = $mySelf->role () == UserInterface::USER_ROLE_ADMIN;
@@ -202,6 +182,11 @@ class UserPage extends AdminPageComponent
         ($isDev || !$isSelf || $this->settings->allowDeleteSelf ())
       ) ?: null;
     $this->canRename = $this->settings->allowRename ();
+  }
+
+  function inject (AdminInterfaceSettings $settings)
+  {
+    $this->settings = $settings;
   }
 
 }
