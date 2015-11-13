@@ -1,14 +1,16 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
+use Selenia\Interfaces\Http\MiddlewareInterface;
+use Selenia\Interfaces\Http\RoutableInterface;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\NavigationProviderInterface;
-use Selenia\Interfaces\RoutableInterface;
-use Selenia\Interfaces\RouterInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
 use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
 use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
@@ -17,28 +19,78 @@ use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Navigation;
 
 class AdminInterfaceModule
-  implements ModuleInterface, ServiceProviderInterface, RoutableInterface, NavigationProviderInterface
+  implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, MiddlewareInterface
 {
   /** @var AdminInterfaceSettings */
   private $settings;
 
-  function __invoke (RouterInterface $router)
+  function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
-    return $router->matchPrefix ($this->settings->urlPrefix (),
-      function (RouterInterface $router) {
-        $router
-          ->on ('GET')
-          ? $router->redirection ()->to ($this->settings->adminHomeUrl ())
-          : $router
-          ->middleware ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
-          ->dispatch ([
+    return $this->router
+      ->set ($request, $response, $next)
+      ->run ([
+        matchPrefix ($this->settings->urlPrefix (), [
+          matchThis ('GET', function () {
+            return $this->redirection->to ($this->settings->adminHomeUrl ());
+          }),
+          $this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null,
+          branch ([
             'users' => UsersPage::class,
-            'user'  => function (UserPage $page) {
-              $page->editingSelf = true;
-              return $page;
-            },
-          ]);
-      });
+            'user'  => make (
+              function (UserPage $page) {
+                $page->editingSelf = true;
+                return $page;
+              }),
+          ]),
+        ]),
+      ]);
+  }
+
+  function __invoke2 (ServerRequestInterface $request, ResponseInterface $response, callable $next)
+  {
+    return $this->router
+      ->set ($request, $response, $next)
+      ->run ([
+        (new MatchPrefixRouter ($this->settings->urlPrefix (), [
+          (new MatchThisRouter ('GET', function () {
+            return $this->redirection->to ($this->settings->adminHomeUrl ());
+          })),
+          $this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null,
+          (new BranchRouter ([
+            'users' => UsersPage::class,
+            'user'  => make (
+              function (UserPage $page) {
+                $page->editingSelf = true;
+                return $page;
+              }),
+          ])),
+        ])),
+      ]);
+  }
+
+  function __invoke3 (ServerRequestInterface $request, ResponseInterface $response, callable $next)
+  {
+    return $this->router
+      ->set ($request, $response, $next)
+      ->matchPrefix ($this->settings->urlPrefix (),
+        function ($request) {
+          return $this->router
+            ->set ($request)
+            ->on ('GET')
+            ? $router->redirection ()->to ($this->settings->adminHomeUrl ())
+            : $this->router
+              ->middleware ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
+              ->dispatch ([
+                'users' => UsersPage::class,
+                'user'  => [
+                  function (UserPage $page) {
+                    $page->editingSelf = true;
+                    return $page;
+                  },
+                ],
+              ])
+              ->go ();
+        })->go ();
   }
 
   function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app)

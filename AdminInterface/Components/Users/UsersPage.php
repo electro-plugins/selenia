@@ -2,8 +2,8 @@
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 use Psr\Http\Message\ResponseInterface;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\RoutableInterface;
-use Selenia\Interfaces\RouterInterface;
+use Selenia\Interfaces\Http\RoutableInterface;
+use Selenia\Interfaces\Http\RouterInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
