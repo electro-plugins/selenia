@@ -18,8 +18,6 @@ use Selenia\Routing\Location;
 class UsersPage extends AdminPageComponent implements RoutableInterface
 {
 
-  function getNavigation2 () {}
-
   /**
    * @param RouterInterface $router
    * @return ResponseInterface|false
