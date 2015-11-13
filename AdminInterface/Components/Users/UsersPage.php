@@ -19,11 +19,6 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
   /** @var AdminInterfaceSettings */
   private $settings;
 
-  function inject (AdminInterfaceSettings $settings)
-  {
-    $this->settings = $settings;
-  }
-
   /**
    * @param RouterInterface $router
    * @return ResponseInterface|false
@@ -31,14 +26,13 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
   function __invoke (RouterInterface $router)
   {
     return $this->settings->enableUsersManagement ()
-      ? ($router->onTarget ('*', [
-        [$this, 'run'], [
-          'view'      => 'users/users.html',
-          'viewModel' => [
-            'mainForm' => 'users/{{r.id}}',
-          ],
-        ],
-      ])
+      ? ($router->on ('*', function () {
+        $this->templateUrl = 'users/users.html';
+        $this->preset ([
+          'mainForm' => 'users/{{r.id}}',
+        ]);
+        return $this;
+      })
         ?: $router->next ()
                   ->match ('*', '{id}', UserPage::class)
       )
@@ -66,6 +60,11 @@ class UsersPage extends AdminPageComponent implements RoutableInterface
             'role'             => $user->role (),
           ];
       }));
+  }
+
+  function inject (AdminInterfaceSettings $settings)
+  {
+    $this->settings = $settings;
   }
 
 }

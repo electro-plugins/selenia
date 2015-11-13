@@ -1,6 +1,7 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Config;
 
+use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\InjectorInterface;
@@ -26,35 +27,30 @@ class AdminInterfaceModule
     return $router->matchPrefix ($this->settings->urlPrefix (),
       function (RouterInterface $router) {
         $router
-          ->onTarget ('GET')
+          ->on ('GET')
           ? $router->redirection ()->to ($this->settings->adminHomeUrl ())
           : $router
           ->middleware ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
           ->dispatch ([
             'users' => UsersPage::class,
-            'user'  => [UserPage::class, [
-              'editingSelf' => true
-            ]],
+            'user'  => function (UserPage $page) {
+              $page->editingSelf = true;
+              return $page;
+            },
           ]);
       });
   }
 
-  function configure (ModuleServices $module, AdminInterfaceSettings $settings)
+  function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app)
   {
     $this->settings = $settings;
+    $app->userModel = UserModel::class;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
       ->provideTemplates ()
       ->provideViews ()
       ->registerPresets ([Config\AdminPresets::class])
-      ->setDefaultConfig ([
-        'main' => [
-          'userModel'   => UserModel::class,
-          'loginView'   => 'login.html',
-          'translation' => true,
-        ],
-      ])
       ->onPostConfig (function () use ($module, $settings) {
         $module
           ->provideNavigation ($this)
@@ -69,11 +65,11 @@ class AdminInterfaceModule
         ->title ('$ADMIN_MENU_TITLE')
         ->visible ($this->settings->showMenu ())
         ->next ([
-          'users' => (new Navigation)
+          'users'   => (new Navigation)
             ->title ('$ADMIN_ADMIN_USERS')
             ->visible ($this->settings->enableUsersManagement ())
             ->next ([
-              '*' => (new Navigation)
+              '{userId}' => (new Navigation)
                 ->title ('$ADMIN_ADMIN_USER')
                 ->visible (N),
             ]),
