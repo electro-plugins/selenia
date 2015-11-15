@@ -7,7 +7,6 @@ use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\Http\MiddlewareInterface;
-use Selenia\Interfaces\Http\RoutableInterface;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\NavigationProviderInterface;
@@ -24,8 +23,47 @@ class AdminInterfaceModule
   /** @var AdminInterfaceSettings */
   private $settings;
 
+
+
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
+    $router = $this->router;
+    $settings = $this->settings;
+    return $router
+      ->for ($request, $response, $next)
+      ->match ([
+        $settings->urlPrefix () => [
+          $settings->requireAuthentication () ? AuthenticationMiddleware::class : null,
+          'GET .' => $this->redirection->to ($settings->adminHomeUrl ()),
+          'users' => UsersPage::class,
+          'user'  => function (UserPage $page) {
+            $page->editingSelf = true;
+            return $page;
+          },
+        ],
+      ]);
+
+    $router = $this->router;
+    return $router
+      ->set ($request, $response, $next)
+      ->matchPrefix ($this->settings->urlPrefix ()) ?
+      (
+      $router
+        ->on ('GET', function () {
+          return $this->redirection->to ($this->settings->adminHomeUrl ());
+        })
+        ?: ($this->settings->requireAuthentication () ? AuthenticationMiddleware::class : null)
+        ?: $router->branch ([
+          'users' => UsersPage::class,
+          'user'  => make (
+            function (UserPage $page) {
+              $page->editingSelf = true;
+              return $page;
+            }),
+        ])
+      ) : false;
+
+
     return $this->router
       ->set ($request, $response, $next)
       ->run ([
