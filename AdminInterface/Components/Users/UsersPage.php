@@ -2,8 +2,7 @@
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 use Psr\Http\Message\ResponseInterface;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\Http\RoutableInterface;
-use Selenia\Interfaces\Http\RouterInterface;
+use Selenia\Interfaces\Http\MiddlewareInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
@@ -14,29 +13,29 @@ use Selenia\Plugins\AdminInterface\Models\User;
  * - only ADMIN and DEV users can access this page.
  * -
  */
-class UsersPage extends AdminPageComponent implements RoutableInterface
+class UsersPage extends AdminPageComponent implements MiddlewareInterface
 {
   /** @var AdminInterfaceSettings */
   private $settings;
 
   /**
-   * @param RouterInterface $router
-   * @return ResponseInterface|false
    */
-  function __invoke (RouterInterface $router)
+  function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
-    return $this->settings->enableUsersManagement ()
-      ? ($router->on ('*', function () {
-        $this->templateUrl = 'users/users.html';
-        $this->preset ([
-          'mainForm' => 'users/{{r.id}}',
-        ]);
-        return $this;
-      })
-        ?: $router->next ()
-                  ->match ('*', '{id}', UserPage::class)
-      )
-      : false;
+    if (!$this->settings->enableUsersManagement ())
+      return $next ();
+    return $this->router
+      ->for ($request, $response, $next)
+      ->route (function () {
+        yield 'GET .' => function () {
+          $this->templateUrl = 'users/users.html';
+          $this->preset ([
+            'mainForm' => 'users/{{r.id}}',
+          ]);
+          return $this;
+        };
+        yield '{id}' => UserPage::class;
+      });
   }
 
   public function model ()
