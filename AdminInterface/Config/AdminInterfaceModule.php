@@ -26,12 +26,36 @@ class AdminInterfaceModule
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
     $router = $this->router;
+    /*return*/
+    $router
+      ->for ($request, $response, $next)
+      ->route ([
+        $this->settings->urlPrefix () => [
+          when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
+          'GET @' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
+          when ($this->settings->enableUsersManagement (), [
+            'users' => [
+              'GET @' => function (UsersPage $page) {
+                $page->templateUrl = 'users/users.html';
+                $page->preset ([
+                  'mainForm' => 'users/{{r.id}}',
+                ]);
+                return $page;
+              },
+              '{id}'  => UserPage::class,
+            ],
+            'user'  => function (UserPage $page) {
+              $page->editingSelf = true;
+              return $page;
+            },
+          ]),
+        ],
+      ]);
     return $router
       ->for ($request, $response, $next)
       ->route (function () {
         yield $this->settings->urlPrefix () => function () {
-          if ($this->settings->requireAuthentication ())
-            yield  AuthenticationMiddleware::class;
+          $this->settings->requireAuthentication () && yield  AuthenticationMiddleware::class;
           yield 'GET @' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); };
           if ($this->settings->enableUsersManagement ())
             yield 'users' => function () {
