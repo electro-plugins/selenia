@@ -12,6 +12,7 @@ use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\NavigationProviderInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
 use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
+use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Navigation;
@@ -25,6 +26,7 @@ class AdminInterfaceModule
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
+    $request->getUri ()->getPath ()
     $router = $this->router;
     /*return*/
     $router
@@ -32,22 +34,26 @@ class AdminInterfaceModule
       ->route ([
         $this->settings->urlPrefix () => [
           when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
-          'GET @' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
+          'GET' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
           when ($this->settings->enableUsersManagement (), [
             'users' => [
-              'GET @' => function (UsersPage $page) {
-                $page->templateUrl = 'users/users.html';
-                $page->preset ([
-                  'mainForm' => 'users/{{r.id}}',
-                ]);
+              'GET' => [
+                '@make' => function (UsersPage $page) {
+                  $page->templateUrl = 'users/users.html';
+                  $page->preset ([
+                    'mainForm' => 'users/{{r.id}}',
+                  ]);
+                  return $page;
+                },
+              ],
+              ':id' => UserPage::class,
+            ],
+            'user'  => [
+              '@make' => function (UserPage $page) {
+                $page->editingSelf = true;
                 return $page;
               },
-              '{id}'  => UserPage::class,
             ],
-            'user'  => function (UserPage $page) {
-              $page->editingSelf = true;
-              return $page;
-            },
           ]),
         ],
       ]);
