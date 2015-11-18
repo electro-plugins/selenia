@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
-use Selenia\Interfaces\Http\MiddlewareInterface;
+use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\NavigationProviderInterface;
@@ -18,7 +18,7 @@ use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 use Selenia\Routing\Navigation;
 
 class AdminInterfaceModule
-  implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, MiddlewareInterface
+  implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
   /** @var AdminInterfaceSettings */
   private $settings;
@@ -30,7 +30,7 @@ class AdminInterfaceModule
     $router = $this->router;
     /*return*/
     $router
-      ->for ($request, $response, $next)
+      ->with ($request, $response, $next)
       ->route ([
 
         $this->settings->urlPrefix () =>

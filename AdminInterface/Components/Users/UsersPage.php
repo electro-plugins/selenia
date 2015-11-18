@@ -2,7 +2,7 @@
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 use Psr\Http\Message\ResponseInterface;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\Http\MiddlewareInterface;
+use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
@@ -13,7 +13,7 @@ use Selenia\Plugins\AdminInterface\Models\User;
  * - only ADMIN and DEV users can access this page.
  * -
  */
-class UsersPage extends AdminPageComponent implements MiddlewareInterface
+class UsersPage extends AdminPageComponent implements RequestHandlerInterface
 {
   /** @var AdminInterfaceSettings */
   private $settings;

@@ -7,7 +7,6 @@ use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
-use Selenia\Routing\RouteGroup;
 
 class AdminPageComponent extends PageComponent
 {
