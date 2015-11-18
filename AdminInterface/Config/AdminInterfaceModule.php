@@ -32,30 +32,34 @@ class AdminInterfaceModule
     $router
       ->for ($request, $response, $next)
       ->route ([
-        $this->settings->urlPrefix () => [
-          when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
-          'GET' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
-          when ($this->settings->enableUsersManagement (), [
-            'users' => [
-              'GET' => [
-                '@make' => function (UsersPage $page) {
-                  $page->templateUrl = 'users/users.html';
-                  $page->preset ([
-                    'mainForm' => 'users/{{r.id}}',
-                  ]);
+
+        $this->settings->urlPrefix () =>
+          [
+            when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
+
+            'GET:' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
+
+            when ($this->settings->enableUsersManagement (),
+              [
+                'users' =>
+                  [
+                    'GET|POST: users/@id' => factory (function (UsersPage $page) {
+                      $page->templateUrl = 'users/users.html';
+                      $page->preset ([
+                        'mainForm' => 'users/{{r.id}}',
+                      ]);
+                      return $page;
+                    }),
+
+                    '@id' => UserPage::class,
+                  ],
+
+                'user' => factory (function (UserPage $page) {
+                  $page->editingSelf = true;
                   return $page;
-                },
-              ],
-              ':id' => UserPage::class,
-            ],
-            'user'  => [
-              '@make' => function (UserPage $page) {
-                $page->editingSelf = true;
-                return $page;
-              },
-            ],
-          ]),
-        ],
+                }),
+              ]),
+          ],
       ]);
     return $router
       ->for ($request, $response, $next)
