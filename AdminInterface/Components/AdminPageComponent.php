@@ -67,7 +67,7 @@ class AdminPageComponent extends PageComponent
     $admin = [
       'pageTitle'  => $pageTitle,
       'navPath'    => $navPath,
-      'subtitle'   => $pageInfo->getSubtitle (),
+//      'subtitle'   => $pageInfo->getSubtitle (),
       'titleField' => property ($this->model, 'titleField'),
       'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->model, 'plural') . '.',
     ];
@@ -81,8 +81,8 @@ class AdminPageComponent extends PageComponent
         else $URIs[$name] = "$prefix$URI";
     }
     $this->links = $URIs;
-    $this->config = $pageInfo->config;
-    $this->URIParams = $pageInfo->getURIParams ();
+//    $this->config = $pageInfo->config;
+//    $this->URIParams = $pageInfo->getURIParams ();
     if (isset($model) && $model instanceof DataObject)
       $this->modelInfo = [
         'gender'   => $model->gender,

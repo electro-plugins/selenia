@@ -41,7 +41,7 @@ class UserPage extends AdminPageComponent
   public $show;
   /** @var UserInterface|DataObject */
   public $user;
-  public $view = 'users/user.html';
+  public $templateUrl = 'users/user.html';
 
   /** @var AdminInterfaceSettings */
   private $settings;
@@ -111,7 +111,7 @@ class UserPage extends AdminPageComponent
     $mySelf = $this->session->user ();
 
     /** @var UserModel $user */
-    if (get ($this->activeRoute->config ?: [], 'self')) {
+    if ($this->editingSelf) {
       $user = $mySelf;
       $user->read ();
     }
@@ -172,8 +172,8 @@ class UserPage extends AdminPageComponent
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
     $this->show      = [
-      'roles'  => $isDev || ($isAdmin && $this->settings->editRoles ()),
-      'active' => !$isSelf && $this->settings->enableUserDisabling (),
+      'roles'  => $isDev || ($isAdmin && $this->settings->allowEditRole()),
+      'active' => !$isSelf && $this->settings->enableUsersDisabling (),
     ];
     $this->canDelete = // Will be either true or null.
       (

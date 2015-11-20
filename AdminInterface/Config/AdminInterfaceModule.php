@@ -6,6 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
+use Selenia\Interfaces\Http\RedirectionInterface;
 use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\Http\RouterInterface;
 use Selenia\Interfaces\InjectorInterface;
@@ -21,6 +22,8 @@ use Selenia\Routing\Navigation;
 class AdminInterfaceModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
+  /** @var RedirectionInterface */
+  private $redirection;
   /** @var RouterInterface */
   private $router;
   /** @var AdminInterfaceSettings */
@@ -40,7 +43,7 @@ class AdminInterfaceModule
               [
                 'users' =>
                   [
-                    'GET|POST: users/@id' => factory (function (UsersPage $page) {
+                    '' => factory (function (UsersPage $page) {
                       $page->templateUrl = 'users/users.html';
                       $page->preset ([
                         'mainForm' => 'users/{{r.id}}',
@@ -62,10 +65,11 @@ class AdminInterfaceModule
   }
 
   function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app,
-                      RouterInterface $router)
+                      RouterInterface $router, RedirectionInterface $redirection)
   {
     $this->settings = $settings;
     $this->router   = $router;
+    $this->redirection   = $redirection;
     $app->userModel = UserModel::class;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')

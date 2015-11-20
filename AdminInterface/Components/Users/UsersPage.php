@@ -1,8 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
-use Psr\Http\Message\ResponseInterface;
 use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
@@ -13,29 +11,14 @@ use Selenia\Plugins\AdminInterface\Models\User;
  * - only ADMIN and DEV users can access this page.
  * -
  */
-class UsersPage extends AdminPageComponent implements RequestHandlerInterface
+class UsersPage extends AdminPageComponent
 {
   /** @var AdminInterfaceSettings */
   private $settings;
 
-  /**
-   */
-  function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
+  function inject (AdminInterfaceSettings $settings)
   {
-    if (!$this->settings->enableUsersManagement ())
-      return $next ();
-    return $this->router
-      ->for ($request, $response, $next)
-      ->route (function () {
-        yield 'GET .' => function () {
-          $this->templateUrl = 'users/users.html';
-          $this->preset ([
-            'mainForm' => 'users/{{r.id}}',
-          ]);
-          return $this;
-        };
-        yield '{id}' => UserPage::class;
-      });
+    $this->settings = $settings;
   }
 
   public function model ()
@@ -59,11 +42,6 @@ class UsersPage extends AdminPageComponent implements RequestHandlerInterface
             'role'             => $user->role (),
           ];
       }));
-  }
-
-  function inject (AdminInterfaceSettings $settings)
-  {
-    $this->settings = $settings;
   }
 
 }
