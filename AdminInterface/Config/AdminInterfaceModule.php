@@ -7,6 +7,7 @@ use Selenia\Application;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\Http\RequestHandlerInterface;
+use Selenia\Interfaces\Http\RouterInterface;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\NavigationProviderInterface;
@@ -20,19 +21,15 @@ use Selenia\Routing\Navigation;
 class AdminInterfaceModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
+  /** @var RouterInterface */
+  private $router;
   /** @var AdminInterfaceSettings */
   private $settings;
 
-
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
-    $request->getUri ()->getPath ()
-    $router = $this->router;
-    /*return*/
-    $router
-      ->with ($request, $response, $next)
-      ->route ([
-
+    $this->router
+      ->set ([
         $this->settings->urlPrefix () =>
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
@@ -60,35 +57,15 @@ class AdminInterfaceModule
                 }),
               ]),
           ],
-      ]);
-    return $router
-      ->for ($request, $response, $next)
-      ->route (function () {
-        yield $this->settings->urlPrefix () => function () {
-          $this->settings->requireAuthentication () && yield  AuthenticationMiddleware::class;
-          yield 'GET @' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); };
-          if ($this->settings->enableUsersManagement ())
-            yield 'users' => function () {
-              yield 'GET @' => function (UsersPage $page) {
-                $page->templateUrl = 'users/users.html';
-                $page->preset ([
-                  'mainForm' => 'users/{{r.id}}',
-                ]);
-                return $page;
-              };
-              yield '{id}' => UserPage::class;
-            };
-          yield 'user' => function (UserPage $page) {
-            $page->editingSelf = true;
-            return $page;
-          };
-        };
-      });
+      ])
+      ->__invoke ($request, $response, $next);
   }
 
-  function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app)
+  function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app,
+                      RouterInterface $router)
   {
     $this->settings = $settings;
+    $this->router   = $router;
     $app->userModel = UserModel::class;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
@@ -125,11 +102,6 @@ class AdminInterfaceModule
     ];
   }
 
-  /**
-   * Registers services on the provided dependency injector.
-   * > **Best practice:** do not use the injector to fetch dependencies here.
-   * @param InjectorInterface $injector
-   */
   function register (InjectorInterface $injector)
   {
     $injector->share (AdminInterfaceSettings::class);
