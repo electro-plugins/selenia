@@ -11,13 +11,13 @@ use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\Http\RouterInterface;
 use Selenia\Interfaces\InjectorInterface;
 use Selenia\Interfaces\ModuleInterface;
-use Selenia\Interfaces\NavigationProviderInterface;
+use Selenia\Interfaces\Navigation\NavigationInterface;
+use Selenia\Interfaces\Navigation\NavigationProviderInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
 use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
 use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\Routing\Navigation;
 
 class AdminInterfaceModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
@@ -84,22 +84,26 @@ class AdminInterfaceModule
       });
   }
 
-  function getNavigation ()
+  function getNavigation (NavigationInterface $navigation)
   {
     return [
-      $this->settings->urlPrefix () => (new Navigation)
+      $this->settings->urlPrefix () => $navigation
+        ->link ()
         ->title ('$ADMIN_MENU_TITLE')
         ->visible ($this->settings->showMenu ())
         ->next ([
-          'users'   => (new Navigation)
+          'users'   => $navigation
+            ->link ()
             ->title ('$ADMIN_ADMIN_USERS')
             ->visible ($this->settings->enableUsersManagement ())
             ->next ([
-              '{userId}' => (new Navigation)
+              '@userId' => $navigation
+                ->link ()
                 ->title ('$ADMIN_ADMIN_USER')
                 ->visible (N),
             ]),
-          'profile' => (new Navigation)
+          'profile' => $navigation
+            ->link ()
             ->title ('$LOGIN_PROFILE')
             ->visible (N),
         ]),
