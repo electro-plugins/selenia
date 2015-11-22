@@ -17,7 +17,7 @@ class TranslationFormPage extends AdminPageComponent
   {
     $this->translationData = new TranslationData();
     $this->translationData->setLanguages ($this->languages);
-    $this->translationData->key = $this->URIParams['key'];
+    $this->translationData->key = $this->request->getAttribute ('@key');
     $this->translationData->read ();
   }
 

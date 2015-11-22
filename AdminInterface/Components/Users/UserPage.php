@@ -1,6 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
-use PhpKit\WebConsole\WebConsole;
+use PhpKit\WebConsole\DebugConsole\DebugConsole;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
@@ -120,7 +120,7 @@ class UserPage extends AdminPageComponent
       $user   = $this->loadRequested (new $this->app->userModel);
       if (!$user) {
         _log ('<#section|User>', $user, '</#section>');
-        WebConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
+        DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
       }
       if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->id () != $user->id ())
         // Can't edit other users.

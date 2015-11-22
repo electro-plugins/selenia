@@ -48,8 +48,8 @@ class AdminPageComponent extends PageComponent
     parent::viewModel();
     $application = $this->app;
     $model       = $this->model;
-    $pageInfo    = $this->activeRoute;
-    $prefix      = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
+//    $pageInfo    = $this->activeRoute;
+//    $prefix      = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
     $path        = $this->navigationPath = $this->getNavigationPath ();
     $pageTitle   = $this->getTitle ();
     if (isset($path)) {
@@ -73,39 +73,29 @@ class AdminPageComponent extends PageComponent
     ];
     $this->admin = $admin;
     $this->sitePage = $pageInfo;
-    $URIs = [];
-    if (isset($pageInfo->links)) {
-      foreach ($pageInfo->links as $name => $URI)
-        if ($URI[0] == '/')
-          $URIs[$name] = $application->baseURI . "/$prefix" . $URI;
-        else $URIs[$name] = "$prefix$URI";
-    }
-    $this->links = $URIs;
-//    $this->config = $pageInfo->config;
-//    $this->URIParams = $pageInfo->getURIParams ();
     if (isset($model) && $model instanceof DataObject)
       $this->modelInfo = [
         'gender'   => $model->gender,
         'singular' => $model->singular,
         'plural'   => $model->plural,
       ];
-    $route = $pageInfo;
-    $ok   = false;
-    while (isset ($route->parent)) {
-      if ($route->parent instanceof RouteGroup && isset($route->parent->parent)) {
-        $this->subMenu = $route->parent->routes;
-        $this->subnavURI = $route->URI_regexp;
-        if (isset($route->parent->baseSubnavURI)) {
-          if (preg_match ("#{$route->parent->baseSubnavURI}#", $this->URI, $match))
-            $this->baseSubnavURI = $match[0];
-          else throw new ConfigException("No match for baseSubnavURI <b>{$route->parent->baseSubnavURI}</b>.");
-        }
-        $ok = true;
-        break;
-      }
-      $route = $route->parent;
-    };
-    if (!$ok) $this->subMenu = null;
+//    $route = $pageInfo;
+//    $ok   = false;
+//    while (isset ($route->parent)) {
+//      if ($route->parent instanceof RouteGroup && isset($route->parent->parent)) {
+//        $this->subMenu = $route->parent->routes;
+//        $this->subnavURI = $route->URI_regexp;
+//        if (isset($route->parent->baseSubnavURI)) {
+//          if (preg_match ("#{$route->parent->baseSubnavURI}#", $this->URI, $match))
+//            $this->baseSubnavURI = $match[0];
+//          else throw new ConfigException("No match for baseSubnavURI <b>{$route->parent->baseSubnavURI}</b>.");
+//        }
+//        $ok = true;
+//        break;
+//      }
+//      $route = $route->parent;
+//    };
+//    if (!$ok) $this->subMenu = null;
   }
 
   protected function updateData ($model)
@@ -126,6 +116,8 @@ class AdminPageComponent extends PageComponent
    */
   protected function getNavigationPath ()
   {
+    return;
+
     $result = [];
     $route   = $this->activeRoute;
     if (isset($route) && isset($route->parent))
