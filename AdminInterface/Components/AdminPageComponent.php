@@ -72,7 +72,7 @@ class AdminPageComponent extends PageComponent
       'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->model, 'plural') . '.',
     ];
     $this->admin = $admin;
-    $this->sitePage = $pageInfo;
+//    $this->sitePage = $pageInfo;
     if (isset($model) && $model instanceof DataObject)
       $this->modelInfo = [
         'gender'   => $model->gender,
