@@ -46,6 +46,7 @@ class AdminPageComponent extends PageComponent
   protected function viewModel ()
   {
     parent::viewModel();
+    return;
     $application = $this->app;
     $model       = $this->model;
 //    $pageInfo    = $this->activeRoute;
