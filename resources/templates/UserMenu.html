@@ -7,9 +7,9 @@
       <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-      <If the="{{ app.config.selenia-plugins/admin-interface.profile }}" isTrue>
+      <If the="{{ adminSettings.enableProfile }}" isTrue>
         <li>
-          <a href="{{ app.config.selenia-plugins/admin-interface.prefix }}/user">
+          <a href="{{ adminSettings.urlPrefix }}/user">
             <i class="fa fa-user fa-fw"></i>
             $LOGIN_PROFILE
           </a>

@@ -43,9 +43,6 @@ class UserPage extends AdminPageComponent
   public $user;
   public $templateUrl = 'users/user.html';
 
-  /** @var AdminInterfaceSettings */
-  private $settings;
-
   public function action_delete ($param = null)
   {
     $this->model = $data = $this->user;
@@ -71,7 +68,7 @@ class UserPage extends AdminPageComponent
     $isSelf = $user->id () == $this->session->user ()->id ();
 
     // If the user active checkbox is not shown, $active is always true.
-    $showActive = !$isSelf && $this->settings->enableUsersDisabling ();
+    $showActive = !$isSelf && $this->adminSettings->enableUsersDisabling ();
     $active     = get ($data, 'active', !$showActive);
 
     if ($username == '')
@@ -103,7 +100,7 @@ class UserPage extends AdminPageComponent
       $this->insertData ($user);
     else $this->updateData ($user);
 
-    if ($isSelf) return $this->redirection->to ($this->settings->adminHomeUrl ());
+    if ($isSelf) return $this->redirection->to ($this->adminSettings->adminHomeUrl ());
   }
 
   protected function model ()
@@ -131,7 +128,7 @@ class UserPage extends AdminPageComponent
     }
     // Set a default role for a new user.
     if (!exists ($user->role ()))
-      $user->role ($this->settings->defaultRole ());
+      $user->role ($this->adminSettings->defaultRole ());
 
     $this->user = $user;
 
@@ -172,21 +169,16 @@ class UserPage extends AdminPageComponent
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
     $this->show      = [
-      'roles'  => $isDev || ($isAdmin && $this->settings->allowEditRole()),
-      'active' => !$isSelf && $this->settings->enableUsersDisabling (),
+      'roles'  => $isDev || ($isAdmin && $this->adminSettings->allowEditRole()),
+      'active' => !$isSelf && $this->adminSettings->enableUsersDisabling (),
     ];
     $this->canDelete = // Will be either true or null.
       (
         !$user->isNew () &&
         // User is not self or delete self is allowed.
-        ($isDev || !$isSelf || $this->settings->allowDeleteSelf ())
+        ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
-    $this->canRename = $this->settings->allowRename ();
-  }
-
-  function inject (AdminInterfaceSettings $settings)
-  {
-    $this->settings = $settings;
+    $this->canRename = $this->adminSettings->allowRename ();
   }
 
 }

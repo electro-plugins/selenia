@@ -7,10 +7,13 @@ use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 
 class AdminPageComponent extends PageComponent
 {
   public $admin;
+  /** @var AdminInterfaceSettings */
+  public $adminSettings;
   public $baseSubnavURI;
   public $config;
   public $links;
@@ -30,7 +33,7 @@ class AdminPageComponent extends PageComponent
 
   protected function initialize ()
   {
-    if (!$this->session->user())
+    if (!$this->session->user ())
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
@@ -43,16 +46,22 @@ class AdminPageComponent extends PageComponent
     $this->session->flashMessage ('$ADMIN_MSG_SAVED');
   }
 
+  protected function updateData ($model)
+  {
+    parent::updateData ($model);
+    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
+  }
+
   protected function viewModel ()
   {
-    parent::viewModel();
+    parent::viewModel ();
     return;
     $application = $this->app;
     $model       = $this->model;
 //    $pageInfo    = $this->activeRoute;
 //    $prefix      = empty($pageInfo->inheritedPrefix) ? '' : "$pageInfo->inheritedPrefix/";
-    $path        = $this->navigationPath = $this->getNavigationPath ();
-    $pageTitle   = $this->getTitle ();
+    $path      = $this->navigationPath = $this->getNavigationPath ();
+    $pageTitle = $this->getTitle ();
     if (isset($path)) {
       if (!$path || !$path[0][1] || $path[0][1] == '.')
         $navPath = '';
@@ -65,10 +74,10 @@ class AdminPageComponent extends PageComponent
       }
     }
     else $navPath = '';
-    $admin = [
+    $admin       = [
       'pageTitle'  => $pageTitle,
       'navPath'    => $navPath,
-//      'subtitle'   => $pageInfo->getSubtitle (),
+      //      'subtitle'   => $pageInfo->getSubtitle (),
       'titleField' => property ($this->model, 'titleField'),
       'noItems'    => '$ADMIN_NO_ITEMS ' - property ($this->model, 'plural') . '.',
     ];
@@ -99,10 +108,9 @@ class AdminPageComponent extends PageComponent
 //    if (!$ok) $this->subMenu = null;
   }
 
-  protected function updateData ($model)
+  function inject (AdminInterfaceSettings $settings)
   {
-    parent::updateData ($model);
-    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
+    $this->adminSettings = $settings;
   }
 
   /**
@@ -120,7 +128,7 @@ class AdminPageComponent extends PageComponent
     return;
 
     $result = [];
-    $route   = $this->activeRoute;
+    $route  = $this->activeRoute;
     if (isset($route) && isset($route->parent))
       do {
         $URIParams  = $route->getURIParams ();
@@ -145,7 +153,7 @@ class AdminPageComponent extends PageComponent
                 $presetParams = $route->getPresetParameters ();
                 extend ($data, $presetParams);
               }
-              else array_unshift ($result, [$route->getTitle(), $link]);//$this->model ();
+              else array_unshift ($result, [$route->getTitle (), $link]);//$this->model ();
               if (isset($data)) {
                 if ($data->isNew () && isset($data->gender) && isset($data->singular))
                   array_unshift ($result, ["Nov$data->gender $data->singular", $link]);

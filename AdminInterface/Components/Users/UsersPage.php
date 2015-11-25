@@ -3,7 +3,6 @@ namespace Selenia\Plugins\AdminInterface\Components\Users;
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User;
 
 /**
@@ -13,14 +12,6 @@ use Selenia\Plugins\AdminInterface\Models\User;
  */
 class UsersPage extends AdminPageComponent
 {
-  /** @var AdminInterfaceSettings */
-  private $settings;
-
-  function inject (AdminInterfaceSettings $settings)
-  {
-    $this->settings = $settings;
-  }
-
   public function model ()
   {
     $myRole = $this->session->user ()->role ();
