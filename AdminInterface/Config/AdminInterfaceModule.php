@@ -31,6 +31,8 @@ class AdminInterfaceModule
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
+    $this->redirection->setRequest ($request);
+
     return $this->router
       ->set ([
         $this->settings->urlPrefix () =>
@@ -77,11 +79,8 @@ class AdminInterfaceModule
       ->provideTemplates ()
       ->provideViews ()
       ->registerPresets ([Config\AdminPresets::class])
-      ->onPostConfig (function () use ($module, $settings) {
-        $module
-          ->provideNavigation ($this)
-          ->registerRouter ($this);
-      });
+      ->registerRouter ($this)
+      ->provideNavigation ($this);
   }
 
   function getNavigation (NavigationInterface $navigation)
