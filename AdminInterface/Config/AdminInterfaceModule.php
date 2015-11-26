@@ -69,10 +69,10 @@ class AdminInterfaceModule
   function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app,
                       RouterInterface $router, RedirectionInterface $redirection)
   {
-    $this->settings = $settings;
-    $this->router   = $router;
-    $this->redirection   = $redirection;
-    $app->userModel = UserModel::class;
+    $this->settings    = $settings;
+    $this->router      = $router;
+    $this->redirection = $redirection;
+    $app->userModel    = UserModel::class;
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
@@ -98,6 +98,7 @@ class AdminInterfaceModule
             ->next ([
               '@userId' => $navigation
                 ->link ()
+                ->id ('userForm')
                 ->title ('$ADMIN_ADMIN_USER')
                 ->visible (N),
             ]),
