@@ -87,15 +87,15 @@ class AdminInterfaceModule
   {
     return [
       $this->settings->urlPrefix () => $navigation
-        ->link ()
+        ->group ()
         ->title ('$ADMIN_MENU_TITLE')
         ->visible ($this->settings->showMenu ())
-        ->next ([
+        ->links ([
           'users'   => $navigation
             ->link ()
             ->title ('$ADMIN_ADMIN_USERS')
             ->visible ($this->settings->enableUsersManagement ())
-            ->next ([
+            ->links ([
               '@userId' => $navigation
                 ->link ()
                 ->id ('userForm')
