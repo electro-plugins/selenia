@@ -83,9 +83,9 @@ class AdminInterfaceModule
       ->provideNavigation ($this);
   }
 
-  function getNavigation (NavigationInterface $navigation)
+  function defineNavigation (NavigationInterface $navigation)
   {
-    return [
+    $navigation->add([
       $this->settings->urlPrefix () => $navigation
         ->group ()
         ->title ('$ADMIN_MENU_TITLE')
@@ -107,7 +107,7 @@ class AdminInterfaceModule
             ->title ('$LOGIN_PROFILE')
             ->visible (N),
         ]),
-    ];
+    ]);
   }
 
   function register (InjectorInterface $injector)
