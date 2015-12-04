@@ -85,9 +85,10 @@ class AdminInterfaceModule
 
   function defineNavigation (NavigationInterface $navigation)
   {
-    $navigation->add([
+    $navigation->add ([
       $this->settings->urlPrefix () => $navigation
         ->group ()
+        ->id ('admin')
         ->title ('$ADMIN_MENU_TITLE')
         ->visible ($this->settings->showMenu ())
         ->links ([
