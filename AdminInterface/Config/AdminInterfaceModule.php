@@ -97,7 +97,7 @@ class AdminInterfaceModule
             ->title ('$ADMIN_ADMIN_USERS')
             ->visible ($this->settings->enableUsersManagement ())
             ->links ([
-              '@userId' => $navigation
+              '@id' => $navigation
                 ->link ()
                 ->id ('userForm')
                 ->title ('$ADMIN_ADMIN_USER')

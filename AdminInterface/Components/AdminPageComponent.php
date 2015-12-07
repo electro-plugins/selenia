@@ -7,6 +7,7 @@ use Selenia\Exceptions\Fatal\ConfigException;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
+use Selenia\Interfaces\Navigation\NavigationInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 
 class AdminPageComponent extends PageComponent
@@ -23,6 +24,8 @@ class AdminPageComponent extends PageComponent
   public $sitePage;
   public $subMenu;
   public $subnavURI;
+  /** @var NavigationInterface */
+  private $navigation;
 
   function action_delete ($param = null)
   {
@@ -55,6 +58,9 @@ class AdminPageComponent extends PageComponent
   protected function viewModel ()
   {
     parent::viewModel ();
+    $this->navigation->request ($this->request);
+    $this->mainMenu = $this->navigation->getMenu ();
+
     return;
     $application = $this->app;
     $model       = $this->model;
@@ -108,9 +114,10 @@ class AdminPageComponent extends PageComponent
 //    if (!$ok) $this->subMenu = null;
   }
 
-  function inject (AdminInterfaceSettings $settings)
+  function inject (AdminInterfaceSettings $settings, NavigationInterface $navigation)
   {
     $this->adminSettings = $settings;
+    $this->navigation    = $navigation;
   }
 
   /**
