@@ -35,26 +35,23 @@ class AdminInterfaceModule
 
     return $this->router
       ->set ([
-        $this->settings->urlPrefix () =>
+        $this->settings->urlPrefix () . '...' =>
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
 
-            'GET:' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
+            'GET .' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
 
             when ($this->settings->enableUsersManagement (),
               [
-                'users' =>
-                  [
-                    '' => factory (function (UsersPage $page) {
-                      $page->templateUrl = 'users/users.html';
-                      $page->preset ([
-                        'mainForm' => 'users/{{r.id}}',
-                      ]);
-                      return $page;
-                    }),
+                'users' => factory (function (UsersPage $page) {
+                  $page->templateUrl = 'users/users.html';
+                  $page->preset ([
+                    'mainForm' => 'users/{{r.id}}',
+                  ]);
+                  return $page;
+                }),
 
-                    '@id' => UserPage::class,
-                  ],
+                'users/@id' => UserPage::class,
 
                 'user' => factory (function (UserPage $page) {
                   $page->editingSelf = true;
@@ -101,7 +98,7 @@ class AdminInterfaceModule
                 ->link ()
                 ->id ('userForm')
                 ->title ('$ADMIN_ADMIN_USER')
-                ->visible (N),
+                ->visibleIfUnavailable (Y),
             ]),
           'profile' => $navigation
             ->link ()
