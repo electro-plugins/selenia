@@ -53,7 +53,7 @@ class AdminInterfaceModule
 
                 'users/@id' => UserPage::class,
 
-                'user' => factory (function (UserPage $page) {
+                'profile' => factory (function (UserPage $page) {
                   $page->editingSelf = true;
                   return $page;
                 }),
@@ -102,6 +102,7 @@ class AdminInterfaceModule
             ]),
           'profile' => $navigation
             ->link ()
+            ->id ('profile')
             ->title ('$LOGIN_PROFILE')
             ->visible (N),
         ]),
