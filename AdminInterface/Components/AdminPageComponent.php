@@ -24,8 +24,9 @@ class AdminPageComponent extends PageComponent
   public $sitePage;
   public $subMenu;
   public $subnavURI;
+  
   /** @var NavigationInterface */
-  private $navigation;
+  protected $navigation;
 
   function action_delete ($param = null)
   {
