@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <GridPage>
 
-  <DataGrid data="{{ model }}" as="i:r" onClickGoTo="{{ links.mainForm }}">
+  <DataGrid data="{{ model }}" as="i:r" onClickGoTo="{{ navigation.userForm }}{{ r.id }}">
     <Column width="40" type="row-selector">
       {{ i|ord }}
     </Column>
@@ -26,7 +26,7 @@
   </DataGrid>
 
   <Actions>
-    <ButtonNew url="{{ links.mainForm }}"/>
+    <ButtonNew url="{{ navigation.userForm }}"/>
   </Actions>
 
 </GridPage>
