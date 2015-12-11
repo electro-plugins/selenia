@@ -6,8 +6,7 @@
 $ (function ()
 {
   $ ('#side-menu').metisMenu ({
-    toggle:        true, // true to close other group when opening new group
-    doubleTapToGo: false
+    toggle:        true // true to close other group when opening new group
   });
 
   // Loads the correct sidebar on window load,
@@ -17,12 +16,16 @@ $ (function ()
   $ (window).bind ("load resize", function ()
   {
     //topOffset = 50;
-    width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+    var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
     if (width < 768) {
       $ ('div.navbar-collapse').addClass ('collapse');
+      $ ('#side-menu').data().mm.options.doubleTapToGo = true;
+      //$ ('body').removeClass ('desktop').addClass ('mobile');
       //topOffset = 100; // 2-row-menu
     } else {
       $ ('div.navbar-collapse').removeClass ('collapse');
+      //$ ('body').removeClass ('mobile').addClass('desktop');
+      $ ('#side-menu').data().mm.options.doubleTapToGo = false;
     }
 
     //height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;

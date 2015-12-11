@@ -83,7 +83,8 @@
       var self = $(this);
       var $parent = self.parent('li');
       var $list = $parent.children('ul');
-      //e.preventDefault(); //PATCHED
+      console.log($this.options.doubleTapToGo);
+      if ($this.options.doubleTapToGo) e.preventDefault(); //PATCHED
 
       if ($parent.hasClass('active')) {
         $this.hide($list);

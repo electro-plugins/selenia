@@ -7,9 +7,9 @@
 @default-sidebar-color: #F8F8F8;
 
 #theme() when (@theme = default) {
-  .background { background: #D2D6DE; #gradient.left-sidebar (@default-sidebar-color, @sidebar-width, white, @maxWidth) }
-  //.main-background { background: #FFF }
-  .sidebar { background: #F8F8F8 }
+  .background { background: #D2D6DE; }
+  .main-background { background: #FFF; border-left: 1px solid darken(@gray-lightest, 6%); }
+  .sidebar { background: #F8F8F8; border-right: 1px solid darken(@gray-lightest, 3%); }
   .top-bar { background: #444 }
   .top-bar-text { color: #DDD }
   .hover { color: #fff; background-color: #2B6280 }
