@@ -116,7 +116,7 @@ class UserPage extends AdminPageComponent
       $myRole = $mySelf->role ();
       $user   = $this->loadRequested (new $this->app->userModel);
       if (!$user) {
-        _log ('<#section|User>', $user, '</#section>');
+        inspect ('<#section|User>', $user, '</#section>');
         DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
       }
       if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->id () != $user->id ())

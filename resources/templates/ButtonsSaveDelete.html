@@ -1,6 +1,7 @@
 <Template name="ButtonsSaveDelete" defaultParam="content">
   <Param name="key" type="identifier"/>
   <Param name="content" type="source"/>
+  <Param name="model" type="text" default="model"/>
   <Param name="barClass" type="text" default="col-sm-12 col-md-11 col-lg-9"/>
 
   <ActionBar class="{{ @barClass }}">
@@ -9,7 +10,7 @@
 
     <If the="{{ @key }}" isSet>
       <Button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
-              message="$ADMIN_DELETE_CONFIRM {{ model.gender }} {{ model.singular }}?"/>
+              message="$ADMIN_DELETE_CONFIRM {{ {{@model}}.gender }} {{ {{@model}}.singular }}?"/>
     </If>
 
     {{ @content }}
