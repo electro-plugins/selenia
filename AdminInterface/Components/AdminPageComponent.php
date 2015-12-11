@@ -18,7 +18,6 @@ class AdminPageComponent extends PageComponent
   public $baseSubnavURI;
   public $config;
   public $links;
-  public $mainMenu;
   public $modelInfo;
   public $navigationPath;
   public $sitePage;
@@ -60,7 +59,6 @@ class AdminPageComponent extends PageComponent
   {
     parent::viewModel ();
     $this->navigation->request ($this->request);
-    $this->mainMenu = $this->navigation->getMenu ();
 
     return;
     $application = $this->app;

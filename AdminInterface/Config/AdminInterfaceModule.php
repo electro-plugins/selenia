@@ -86,6 +86,7 @@ class AdminInterfaceModule
       $this->settings->urlPrefix () => $navigation
         ->group ()
         ->id ('admin')
+        ->icon ('fa fa-cog')
         ->title ('$ADMIN_MENU_TITLE')
         ->visible ($this->settings->showMenu ())
         ->links ([

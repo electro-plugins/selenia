@@ -22,6 +22,8 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
+@maxWidth:1398px; // 1400-2px to fix chrome bug
+
 @import "sb-admin-2.less";
 @import "mixins.less";
 @import "themes.less";
@@ -35,8 +37,12 @@ body {
   #theme.background;
 }
 
+body, html {
+  height: 100%;
+}
+
 #wrapper {
-  max-width: 1400px;
+  max-width: @maxWidth;
 }
 
 #page-wrapper {
@@ -56,12 +62,21 @@ body {
   background: transparent;
   padding: 0 0 10px 0;
   margin-top: -10px;
-}
-
-.breadcrumb a {
-  font-weight: 100;
-  font-size: 13px;
-  color: #999;
+  &>li {
+    font-size: 0; //prevent interference from white space
+    &+li:before {
+      font-size: 13px;
+      padding: 0 2px;
+    }
+  }
+  a {
+    font-weight: 100;
+    font-size: 13px;
+    color: #999;
+    i {
+      margin-right: 5px;
+    }
+  }
 }
 
 /*--------------------------------------------------------------------
@@ -226,6 +241,9 @@ textarea, select,
 
   li {
     border: none;
+    &.current a {
+      #theme.main-menu-current-item;
+    }
   }
 
   a {
@@ -235,7 +253,6 @@ textarea, select,
       background-color: transparent;
     }
     &.active {
-      margin: -1px 0;
       #theme.main-menu-selected-item;
     }
     i {
@@ -246,9 +263,9 @@ textarea, select,
     }
   }
 
-  .sub > .active {
-    font-weight: 100
-  }
+  //.sub > .active {
+  //  font-weight: 100
+  //}
 
   .header {
     border-bottom: 1px solid #DDD;
@@ -474,6 +491,10 @@ textarea, select,
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+.form-control {
+  background-color: transparent;
 }
 
 form label {

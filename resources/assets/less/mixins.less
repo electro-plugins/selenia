@@ -7,11 +7,11 @@
 }
 
 #gradient {
-  .left-sidebar(@bar-color; @width) {
+  .left-sidebar(@bar-color; @width; @bk-color; @max-width) {
     @color-stop: @width + 5px;
-    background-image:  -webkit-linear-gradient(left, @bar-color, @bar-color @color-stop, transparent @color-stop);
-    background-image:  -o-linear-gradient(left, @bar-color, @bar-color @color-stop, transparent @color-stop);
-    background-image:  linear-gradient(to right, @bar-color, @bar-color @color-stop, transparent @color-stop);
+    background-image:  -webkit-linear-gradient(left, @bar-color, @bar-color @color-stop, @bk-color @color-stop, @bk-color @max-width, transparent @max-width);
+    background-image:  -o-linear-gradient(left, @bar-color, @bar-color @color-stop, @bk-color @color-stop, @bk-color @max-width, transparent @max-width);
+    background-image:  linear-gradient(to right, @bar-color, @bar-color @color-stop, @bk-color @color-stop, @bk-color @max-width, transparent @max-width);
     background-repeat: no-repeat;
   }
 }

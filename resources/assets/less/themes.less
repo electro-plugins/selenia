@@ -7,15 +7,16 @@
 @default-sidebar-color: #F8F8F8;
 
 #theme() when (@theme = default) {
-  .background { background: #D2D6DE; #gradient.left-sidebar (@default-sidebar-color, @sidebar-width) }
-  .main-background { background: #FFF }
+  .background { background: #D2D6DE; #gradient.left-sidebar (@default-sidebar-color, @sidebar-width, white, @maxWidth) }
+  //.main-background { background: #FFF }
   .sidebar { background: #F8F8F8 }
   .top-bar { background: #444 }
   .top-bar-text { color: #DDD }
   .hover { color: #fff; background-color: #2B6280 }
   .main-menu-item { color: #666; font-weight: 100 }
   .main-menu-hover-item { color: #FFF; background: #2B6280 }
-  .main-menu-selected-item { color: #74A5C1; font-weight: bold; background: #F8F8F8 }
+  .main-menu-selected-item { color: #74A5C1; background: #F8F8F8 }
+  .main-menu-current-item { font-weight: bold; }
   .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
 }
 
@@ -26,13 +27,14 @@
 @alternate-sidebar-color: #FFF;
 
 #theme() when (@theme = alternate) {
-  .background { background: #D2D6DE; #gradient.left-sidebar (@alternate-sidebar-color, @sidebar-width) }
+  .background { background: #D2D6DE; #gradient.left-sidebar (@alternate-sidebar-color, @sidebar-width, white, @maxWidth) }
   .main-background { background: #EEEEF0}
   .top-bar { background: #444 }
   .top-bar-text { color: #DDD }
   .main-menu-item { color: #666; font-weight: 100 }
   .main-menu-hover-item { color: #FFF; background: #2B6280 }
   .main-menu-selected-item { background: #FCFCFC; border: 1px solid; border-color: #E7E7E7 #FFF; color: #C00 }
+  .main-menu-current-item { }
   .main-menu-header-item { color: #74A5C1 !important; font-size: 17px; font-weight: 100; }
 }
 
