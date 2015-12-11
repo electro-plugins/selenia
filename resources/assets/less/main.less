@@ -63,7 +63,7 @@ body::before {
   #theme.sidebar;
 }
 
-@media(max-width:768px) {
+@media(max-width:767px) {
   body::before, .sidebar-nav {
     display: none;
   }
@@ -430,12 +430,17 @@ textarea, select,
   display: none;
   .clearfix();
 
-  table {
-    table-layout: fixed;
+  table { // NOTE: table-layout: fixed; breaks datatables-responsive
+
   }
 
-  tbody th {
+  .rh {
     text-align: right;
+    font-weight: bold;
+  }
+
+  .field {
+    text-align: center;
   }
 
   //label.Checkbox {
@@ -448,12 +453,23 @@ textarea, select,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    &.child {
+      background: #Fcfcfd;
+      .dtr-title {
+        min-width: 120px !important;
+        padding-right: 10px;
+      }
+    }
   }
 
   tbody td,
-  tbody th {
+  .rh {
     border-top: none;
     border-bottom: 1px solid #F2F2F2 !important;
+  }
+
+  td[data-nck], .rh {
+    cursor: default;
   }
 
   .ta-center {
@@ -480,11 +496,11 @@ textarea, select,
     }
   }
 
-  .table-hover th {
+  .table-hover .rh {
     cursor: default;
   }
 
-  .table-hover td:not([data-nck]) {
+  .table-hover .rh:not([data-nck]) {
     cursor: pointer;
   }
 
@@ -515,6 +531,38 @@ textarea, select,
     }
   }
 
+}
+
+// Extracted from the dataTables stylesheet:
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+  cursor: pointer;
+  *cursor: hand;
+}
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+table.dataTable thead .sorting {
+  background-image: url(~'@{lib-path}/datatables/media/images/sort_both.png');
+}
+table.dataTable thead .sorting_asc {
+  background-image: url(~'@{lib-path}/datatables/media/images/sort_asc.png');
+}
+table.dataTable thead .sorting_desc {
+  background-image: url(~'@{lib-path}/datatables/media/images/sort_desc.png');
+}
+table.dataTable thead .sorting_asc_disabled {
+  background-image: url(~'@{lib-path}/datatables/media/images/sort_asc_disabled.png');
+}
+table.dataTable thead .sorting_desc_disabled {
+  background-image: url(~'@{lib-path}/datatables/media/images/sort_desc_disabled.png');
 }
 
 /*--------------------------------------------------------------------
@@ -967,7 +1015,7 @@ textarea[readonly].static {
   .chosen-search {
     &::before {
       #layer;
-      background: url(../../../../lib/chosen/chosen-sprite.png) no-repeat -34px -24px;
+      background: url(~'@{lib-path}/chosen/chosen-sprite.png') no-repeat -34px -24px;
       right: 15px;
       top: 15px;
       width: 13px;

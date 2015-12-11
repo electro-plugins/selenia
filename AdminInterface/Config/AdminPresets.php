@@ -23,6 +23,12 @@ class AdminPresets
       'lang'               => $this->locale->name,
       'pageLength'         => "mem.get ('prefs.rowsPerPage', 10)",
       'lengthChangeScript' => "mem.set ('prefs.rowsPerPage', len)",
+      'responsive'         => '{
+    details: {
+      display: $.fn.dataTable.Responsive.display.childRow,
+      type: "inline"
+    }
+  }',
     ]);
   }
 
