@@ -29,7 +29,7 @@
       "require": {
         "bootstrap": "~3.3.4",
         "chosen": "~1.4.2",
-        "font-awesome": "~4.52.0"
+        "font-awesome": "~4.5.0"
       }
     }
   },
