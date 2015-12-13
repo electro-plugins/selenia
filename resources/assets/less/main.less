@@ -453,13 +453,6 @@ textarea, select,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    &.child {
-      background: #Fcfcfd;
-      .dtr-title {
-        min-width: 120px !important;
-        padding-right: 10px;
-      }
-    }
   }
 
   tbody td,
@@ -564,6 +557,66 @@ table.dataTable thead .sorting_asc_disabled {
 table.dataTable thead .sorting_desc_disabled {
   background-image: url(~'@{lib-path}/datatables/media/images/sort_desc_disabled.png');
 }
+
+// Remove dataTables.bootstrap styling
+
+table.dataTable thead {
+  .sorting:after, .sorting_asc:after, .sorting_desc:after {
+    content: none;
+  }
+}
+
+/*
+ * Control feature layout
+ */
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  *zoom: 1;
+  zoom: 1;
+}
+.dataTables_wrapper .dataTables_length {
+  float: left;
+}
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: right;
+}
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 0.5em;
+}
+.dataTables_wrapper .dataTables_info {
+  clear: both;
+  float: left;
+  padding-top: 0.755em;
+}
+.dataTables_wrapper .dataTables_paginate {
+  float: right;
+  text-align: right;
+  padding-top: 0.25em;
+}
+
+// DataTables Responsive adjust.
+
+.DataGrid td.child {
+  background: #FFF;
+  padding: 0 !important;
+  ul {
+    display: block !important;
+    li {
+      padding: 0 !important;
+      border-bottom: 1px solid #f1f1f1;
+      .dtr-title {
+        padding: 5px 10px 5px 0;
+        min-width: 120px !important;
+        border-right: 1px solid #f1f1f1;
+        background: #f7fafc;
+      }
+      .dtr-data { padding: 5px 0 5px 10px }
+    }
+  }
+}
+
 
 /*--------------------------------------------------------------------
    FORMS
