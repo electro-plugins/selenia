@@ -75,11 +75,22 @@ body::before {
   }
 }
 
-#wrapper {
-}
-
 #page-wrapper {
   min-height: 0;
+}
+
+.navbar-header {
+  float: left;
+}
+
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.navbar-top-links {
+  float: right;
 }
 
 /*--------------------------------------------------------------------
@@ -263,6 +274,7 @@ textarea, select,
 */
 .navbar-default.sidebar {
   width: @sidebar-width;
+  clear: both;
 }
 
 #side-menu {
