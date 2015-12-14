@@ -81,6 +81,7 @@ body::before {
 
 #page-wrapper {
   min-height: 0;
+  padding: 0 15px;
 }
 
 .navbar-header {
@@ -281,6 +282,15 @@ textarea, select,
   clear: both;
 }
 
+@media(min-width:768px) and (max-width: 1024px) {
+  .navbar-default.sidebar, body:before {
+    width: @sidebar-reduced-width;
+  }
+  #page-wrapper {
+    margin-left: @sidebar-reduced-width;
+  }
+}
+
 #side-menu {
   padding: 5px 5px 0;
 
@@ -380,7 +390,7 @@ textarea, select,
 --------------------------------------------------------------------*/
 
 .action-bar {
-  margin-top: 15px;
+  margin: 15px 0 0 0;
   padding-top: 10px;
   border-top: 1px solid #f0f0f0;
 }
@@ -511,10 +521,6 @@ textarea, select,
 
   .table-hover .rh:not([data-nck]) {
     cursor: pointer;
-  }
-
-  .dataTables_wrapper .row {
-    padding: 0 10px;
   }
 
   .box-body {
