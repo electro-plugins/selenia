@@ -104,6 +104,18 @@ var tpl = (function ()
   }
 }) ();
 
+/**
+ * Event handler that posts a checkbox toggle via XHR.
+ * @param ev
+ * @param id
+ * @param action
+ */
+function check(ev,id,action) {
+  action = action || 'check';
+  ev.stopPropagation();
+  $.post(location.href, { _action: action, id: id });
+}
+
 /*--------------------------------------------------------------------
  INIT.
  --------------------------------------------------------------------*/

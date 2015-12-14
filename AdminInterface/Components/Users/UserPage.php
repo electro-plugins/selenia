@@ -7,7 +7,6 @@ use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
 /**

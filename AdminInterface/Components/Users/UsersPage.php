@@ -1,5 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
+
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
@@ -12,6 +13,13 @@ use Selenia\Plugins\AdminInterface\Models\User;
  */
 class UsersPage extends AdminPageComponent
 {
+  function inject ()
+  {
+    return function ($debugMode) {
+      inspect ("Debug", $debugMode);
+    };
+  }
+
   public function model ()
   {
     $myRole = $this->session->user ()->role ();
