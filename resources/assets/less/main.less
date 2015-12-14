@@ -162,12 +162,12 @@ textarea, select,
 }
 
 #status {
-  position: fixed;
+  position: absolute;
   z-index: 9999;
   top: 1px;
   left: 0;
   right: 0;
-  width: 600px;
+  max-width: 600px;
   height: 48px;
   line-height: 47px;
   margin: 0 auto;
@@ -629,6 +629,24 @@ table.dataTable thead {
   }
 }
 
+table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+  text-align: center;
+  color: #666;
+  background: #FFF;
+  margin-right: 12px;
+  margin-left: -25px;
+  top: -1px;
+  line-height: 17px;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
+  background: #FFF;
+}
 
 /*--------------------------------------------------------------------
    FORMS
@@ -1153,8 +1171,9 @@ textarea[readonly].static {
     padding-right: 32px !important;
 
     i {
-      top: 40px;
-      right: 52px;
+      position: static;
+      float: right;
+      padding-top: 3px;
     }
   }
 }
@@ -1171,7 +1190,12 @@ body.login-page {
     top: 0;
     left: 0;
     width: 100%;
+    max-width: 1398px;
     height: 100%;
+  }
+
+  &::before {
+    display: none;
   }
 }
 .login-box {
