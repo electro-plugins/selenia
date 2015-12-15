@@ -2,6 +2,7 @@
 namespace Selenia\Plugins\AdminInterface\Config;
 
 use Selenia\Interfaces\AssignableInterface;
+use Selenia\Interfaces\UserInterface;
 use Selenia\Traits\ConfigurationTrait;
 
 /**
@@ -29,12 +30,13 @@ class AdminInterfaceSettings implements AssignableInterface
   private $allowDeleteSelf       = true;
   private $allowEditRole         = true;
   private $allowRename           = true;
-  private $defaultRole           = 'standard';
+  private $defaultRole           = UserInterface::USER_ROLE_ADMIN;
   private $enableProfile         = true;
   private $enableTranslations    = true;
   private $enableUsersDisabling  = true;
   private $enableUsersManagement = true;
-  private $footer                = '{{ app.appName }} &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.';
+  private $footer                = '<b>{{ app.appName }}</b> &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
+                                   '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
   private $showMenu              = true;
   private $urlPrefix             = 'admin';
