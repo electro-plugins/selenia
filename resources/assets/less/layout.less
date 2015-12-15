@@ -24,7 +24,7 @@ body {
   #theme.main-background;
 }
 
-body::before {
+body.admin-interface::before {
   content:  '';
   display: block;
   position: fixed;
@@ -36,7 +36,7 @@ body::before {
 }
 
 @media(max-width:767px) {
-  body::before, .sidebar-nav {
+  body.admin-interface::before, .sidebar-nav {
     display: none;
   }
   .sidebar-nav.collapsing, .sidebar-nav.in {
@@ -45,18 +45,22 @@ body::before {
   div.navbar-default.sidebar {
     width: auto;
   }
-  #status {
-    position: relative !important;
-    margin: -2px -15px -25px !important;
-  }
 }
 
 #wrapper, form {
   height: 100%;
+  width: 100%;
+}
+
+@media(min-width:768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 @sidebar-width;
+    padding: 0 30px;
+  }
 }
 
 #page-wrapper {
-  min-height: 0;
   height: ~"calc(100% - @{topbar-height})";
   padding: 0 15px;
   & > .container-fluid {
@@ -92,7 +96,7 @@ body::before {
 }
 
 @media(min-width:768px) and (max-width: 1024px) {
-  .navbar-default.sidebar, body:before {
+  .navbar-default.sidebar, body.admin-interface::before {
     width: @sidebar-reduced-width;
   }
   #page-wrapper {
