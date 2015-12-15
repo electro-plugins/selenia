@@ -13,13 +13,6 @@ use Selenia\Plugins\AdminInterface\Models\User;
  */
 class UsersPage extends AdminPageComponent
 {
-  function inject ()
-  {
-    return function ($debugMode) {
-      inspect ("Debug", $debugMode);
-    };
-  }
-
   public function model ()
   {
     $myRole = $this->session->user ()->role ();

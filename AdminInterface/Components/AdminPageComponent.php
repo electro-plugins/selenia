@@ -33,7 +33,6 @@ class AdminPageComponent extends PageComponent
   function inject ()
   {
     return function (AdminInterfaceSettings $settings) {
-      inspect ("Admin Settings", $settings);
       $this->adminSettings = $settings;
     };
   }
