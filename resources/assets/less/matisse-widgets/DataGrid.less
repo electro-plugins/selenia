@@ -1,0 +1,205 @@
+.DataGrid {
+  display: none;
+  .clearfix();
+
+  table { // NOTE: table-layout: fixed; breaks datatables-responsive
+
+  }
+
+  .rh {
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .field {
+    text-align: center;
+  }
+
+  //label.Checkbox {
+  //  margin-bottom: 0;
+  //  text-align: center;
+  //  display: block;
+  //}
+
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  tbody td,
+  .rh {
+    border-top: none;
+    border-bottom: 1px solid #F2F2F2 !important;
+  }
+
+  td[data-nck], .rh {
+    cursor: default;
+  }
+
+  .ta-center {
+    text-align: center;
+  }
+
+  .ta-right {
+    text-align: right;
+  }
+
+  .table-striped > tbody > tr:nth-child(2n+1) {
+    background-color: #F7FAFC;
+  }
+
+  .table-clickable tbody > tr:active {
+    background-color: #2B6280 !important;
+    color: #FFF;
+
+    .Checkbox::before {
+      border-color: #FFF;
+    }
+    i {
+      border-color: #FFF;
+    }
+  }
+
+  .table-hover .rh {
+    cursor: default;
+  }
+
+  .table-hover .rh:not([data-nck]) {
+    cursor: pointer;
+  }
+
+  .box-body {
+    padding: 10px 0;
+  }
+
+  .dataTables_info {
+    padding: 9px;
+  }
+
+  .table-clickable {
+    cursor: pointer;
+  }
+
+  .dataTables_paginate {
+    display: inline-block;
+    float: right;
+  }
+
+  .pagination .disabled {
+    &.next, &.previous {
+      display: none;
+    }
+  }
+
+}
+
+// Extracted from the dataTables stylesheet:
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+  cursor: pointer;
+  *cursor: hand;
+}
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+table.dataTable thead .sorting {
+  background-image: url(~'@{public-path}/i/datatables/sort_both.png');
+}
+table.dataTable thead .sorting_asc {
+  background-image: url(~'@{public-path}/i/datatables/sort_asc.png');
+}
+table.dataTable thead .sorting_desc {
+  background-image: url(~'@{public-path}/i/datatables/sort_desc.png');
+}
+table.dataTable thead .sorting_asc_disabled {
+  background-image: url(~'@{public-path}/i/datatables/sort_asc_disabled.png');
+}
+table.dataTable thead .sorting_desc_disabled {
+  background-image: url(~'@{public-path}/i/datatables/sort_desc_disabled.png');
+}
+
+// Remove dataTables.bootstrap styling
+
+table.dataTable thead {
+  .sorting:after, .sorting_asc:after, .sorting_desc:after {
+    content: none;
+  }
+}
+
+/*
+ * Control feature layout
+ */
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  *zoom: 1;
+  zoom: 1;
+}
+.dataTables_wrapper .dataTables_length {
+  float: left;
+}
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: right;
+}
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 0.5em;
+}
+.dataTables_wrapper .dataTables_info {
+  clear: both;
+  float: left;
+  padding-top: 0.755em;
+}
+.dataTables_wrapper .dataTables_paginate {
+  float: right;
+  text-align: right;
+  padding-top: 0.25em;
+}
+
+// DataTables Responsive adjust.
+
+.DataGrid td.child {
+  background: #FFF;
+  padding: 0 !important;
+  ul {
+    display: block !important;
+    li {
+      padding: 0 !important;
+      border-bottom: 1px solid #f1f1f1;
+      .dtr-title {
+        padding: 5px 10px 5px 0;
+        min-width: 120px !important;
+        border-right: 1px solid #f1f1f1;
+        background: #f7fafc;
+      }
+      .dtr-data { padding: 5px 0 5px 10px }
+    }
+  }
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+  text-align: center;
+  color: #666;
+  background: #FFF;
+  margin-right: 12px;
+  margin-left: -25px;
+  top: -1px;
+  line-height: 17px;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
+  background: #FFF;
+}

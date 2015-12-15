@@ -1,0 +1,90 @@
+.FileUpload {
+  border-radius: 0;
+  position: relative;
+  padding: 0;
+
+  &.with-file .custom-input {
+    display: none;
+  }
+
+  .custom-input::before {
+    content:  'Browse...';
+    display:  block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fcfcfc;
+    padding: 6px 0 0 12px;
+    color: #999;
+  }
+  .custom-input[data-file]::before {
+    content: attr(data-file);
+    color: #555;
+  }
+
+  .custom-input::after {
+    content: '\f15b';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: FontAwesome;
+    font-size: 14px;
+    border-left: 1px solid #ccc;
+    padding: 6px 11px 0;
+    color: #777;
+    background: #fcfcfc;
+    bottom: 0;
+    width: 36px;
+  }
+
+  input[type=file] {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    display: block;
+    cursor: pointer;
+  }
+
+  input[type=text] {
+    display:  none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  &.with-file input[type=text] {
+    display: block;
+  }
+
+  input + button {
+    display:  none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0;
+    border-style: none none none solid;
+    height: 100%;
+    width: 36px;
+    background-color: #fcfcfc;
+    color: #777;
+    font-weight: normal;
+    z-index: 2;
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+  &.with-file input + button {
+    display: block;
+  }
+
+}

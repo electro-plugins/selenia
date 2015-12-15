@@ -1,0 +1,63 @@
+.chosen-container-single {
+  .chosen-single {
+    height: 34px;
+    border-radius: 0;
+    background: #FCFCFC;
+    border-color: #CCC;
+    line-height: 33px;
+    box-shadow: none;
+    /* arrow */
+    div b {
+      background-position: -2px 7px !important;
+    }
+  }
+  .chosen-search {
+    &::before {
+      #layer;
+      background: url(~'@{lib-path}/chosen/chosen-sprite.png') no-repeat -34px -24px;
+      right: 15px;
+      top: 15px;
+      width: 13px;
+      height: 13px;
+    }
+    input[type=text] {
+      height: 34px;
+      border-color: #CCC;
+      background: transparent;
+    }
+  }
+}
+
+.chosen-container-active {
+  .chosen-single {
+    border-color: #66AFE9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+  }
+  &.chosen-with-drop {
+    .chosen-single {
+      background: #FFF;
+      border-color: #CCC;
+      box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+      /* arrow */
+      div b {
+        background-position: -2px 7px !important;
+      }
+    }
+    .chosen-drop {
+      border-radius: 0;
+      border-color: #CCC;
+    }
+  }
+}
+
+.chosen-container {
+  width: 100%;
+
+  .chosen-results {
+    max-height: 250px;
+
+    li.highlighted {
+      background: #2B6280;
+    }
+  }
+}

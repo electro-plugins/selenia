@@ -1,0 +1,37 @@
+.Redactor.form-control {
+  height: auto;
+  border: none;
+  padding: 0;
+}
+
+.Redactor textarea {
+  border: 1px solid #000;
+}
+
+.Redactor {
+  &.longText, &.mediumText, &.shortText {
+    height: auto !important;
+  }
+
+}
+
+.Redactor .redactor_editor {
+  padding: 7px 8px;
+
+  div, p, ul, ol, table, dl, blockquote, pre {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 14px !important;
+  }
+}
+
+.longText .redactor-editor {
+  .longText;
+}
+
+.mediumText .redactor-editor {
+  .mediumText;
+}
+
+.shortText .redactor-editor {
+  .shortText;
+}

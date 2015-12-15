@@ -1,0 +1,42 @@
+/*--------------------------------------------------------------------
+   TOP BAR
+--------------------------------------------------------------------*/
+
+.navbar-static-top {
+  #theme.top-bar;
+  position: relative;
+
+  a:hover {
+    background-color: #555 !important;
+  }
+  a, .navbar-brand {
+    #theme.top-bar-text;
+    padding: 15px 20px;
+  }
+  .dropdown.open {
+    a {
+      background-color: #FFF;
+      color: #333;
+    }
+    a:hover {
+      #theme .hover !important;
+    }
+    .dropdown-toggle {
+      border: 1px solid #D8D8D8;
+      border-bottom: none;
+      height: 49px;
+      z-index: 1001;
+      padding: 14px;
+
+      &:hover {
+        background-color: #FFF !important;
+        color: #333 !important;
+      }
+    }
+    .dropdown-menu {
+      border-radius: 0;
+      margin-top: -1px;
+    }
+  }
+}
+
