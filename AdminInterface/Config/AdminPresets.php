@@ -2,8 +2,8 @@
 namespace Selenia\Plugins\AdminInterface\Config;
 
 use Selenia\Localization\Services\Locale;
-use Selenia\Plugins\MatisseWidgets\DataGrid;
-use Selenia\Plugins\MatisseWidgets\Input;
+use Selenia\Plugins\MatisseComponents\DataGrid;
+use Selenia\Plugins\MatisseComponents\Input;
 
 class AdminPresets
 {

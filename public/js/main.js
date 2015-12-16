@@ -15,17 +15,19 @@ $ (function ()
 
   $ (window).bind ("load resize", function ()
   {
+    var sideMenu = $ ('#side-menu');
+    if (!sideMenu.length) return;
     //topOffset = 50;
     var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
     if (width < 768) {
       $ ('div.navbar-collapse').addClass ('collapse');
-      $ ('#side-menu').data().mm.options.doubleTapToGo = true;
+      sideMenu.data().mm.options.doubleTapToGo = true;
       //$ ('body').removeClass ('desktop').addClass ('mobile');
       //topOffset = 100; // 2-row-menu
     } else {
       $ ('div.navbar-collapse').removeClass ('collapse');
       //$ ('body').removeClass ('mobile').addClass('desktop');
-      $ ('#side-menu').data().mm.options.doubleTapToGo = false;
+      sideMenu.data().mm.options.doubleTapToGo = false;
     }
 
     //height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
