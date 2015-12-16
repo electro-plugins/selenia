@@ -72,7 +72,7 @@ body.admin-interface::before {
 
 .navbar-header {
   float: left;
-  width: @sidebar-width;
+  width: @sidebar-width - 1;
   background: #444;
   &:hover {
     background-color: #555 !important;
@@ -91,12 +91,15 @@ body.admin-interface::before {
 }
 
 .navbar-default.sidebar {
-  width: @sidebar-width;
+  width: @sidebar-width - 2;
   clear: both;
 }
 
 @media(min-width:768px) and (max-width: 1024px) {
-  .navbar-default.sidebar, body.admin-interface::before {
+  .navbar-default.sidebar {
+    width: @sidebar-reduced-width - 2;
+  }
+  body.admin-interface::before {
     width: @sidebar-reduced-width;
   }
   #page-wrapper {
