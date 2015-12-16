@@ -2,91 +2,55 @@
   <Param name="content" type="source"/>
 
   <BaseAdmin>
-
     <Body class="admin-interface"/>
-
     <div id="wrapper">
 
-      <!-- Navigation -->
       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ app.homeURI }}">{{ app.appName }}</a>
         </div>
-        <!-- /.navbar-header -->
-
-        <ul class="nav navbar-top-links navbar-right">
-
-          <!--<li>-->
-            <!--<a href="">$HOME</a>-->
-          <!--</li>-->
-          <UserMenu/>
-
+        <!-- Links at left -->
+        <ul class="nav navbar-top-links navbar-left">
+          <Repeat for="{{ topMenu }}" as="i">
+            <li>
+              <a href="{{ i.href }}">{{ i.label }}</a>
+            </li>
+          </Repeat>
         </ul>
-        <!-- /.navbar-top-links -->
-
+        <!-- Links at right -->
+        <ul class="nav navbar-top-links navbar-right">
+          <UserMenu/>
+        </ul>
         <div class="navbar-default sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
-
             <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{{ navigation.admin }}">
               <Header>
-
-                <li class="sidebar-search">
-                  <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Procurar...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">
-                        <i class="fa fa-search"></i>&nbsp;&nbsp;
-                      </button>
-                    </span>
-                  </div>
-                </li>
-
+                <SideBarSearch/>
               </Header>
             </MainMenu>
-
           </div>
-          <!-- /.sidebar-collapse -->
         </div>
-        <!-- /.navbar-static-side -->
       </nav>
 
-      <!-- =============================================== -->
-
-      <!-- Page Content -->
       <div id="page-wrapper">
-
         {!! statusMessage !!}
-
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-
               <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
               <NavigationPath navigation="{{ navigation }}"/>
-
             </div>
-            <!-- /.col-lg-12 -->
           </div>
-          <!-- /.row -->
           {{ @content }}
-
         </div>
-        <!-- /.container-fluid -->
-
         <footer>{!! adminSettings.footer !!}</footer>
-
       </div>
-      <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
-
   </BaseAdmin>
 
 </Template>
