@@ -73,7 +73,7 @@ class AdminInterfaceModule
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
-      ->provideTemplates ()
+      ->provideMacros ()
       ->provideViews ()
       ->registerPresets ([Config\AdminPresets::class])
       ->registerRouter ($this)
