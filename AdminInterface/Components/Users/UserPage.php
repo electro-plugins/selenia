@@ -126,7 +126,6 @@ class UserPage extends AdminPageComponent
         throw new HttpException (403);
     }
     // Set a default role for a new user.
-    inspect ($this->adminSettings->defaultRole ());
     if (!exists ($user->role ()))
       $user->role ($this->adminSettings->defaultRole ());
 
