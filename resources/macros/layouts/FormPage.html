@@ -2,11 +2,11 @@
   <Param name="content" type="content"/>
   <Param name="actions" type="content"/>
 
-  <Admin>
+  <Block name="top-tools">
+    <LanguageSelector/>
+  </Block>
 
-    <Block name="top-tools">
-      <LanguageSelector/>
-    </Block>
+  <Admin>
 
     <article class="form-page">
       {{ @content }} {{ @actions }}
