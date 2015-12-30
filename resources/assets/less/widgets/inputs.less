@@ -1,7 +1,20 @@
-/* Remove yellow background for autocompleted inputs in Chrome */
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px white inset;
+// Remove yellow background for autocompleted inputs in Chrome
+// Specificity is increased via [type] to override the next rule.
+input[type]:-webkit-autofill,
+input[type]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  transition: background-color 600s ease-in-out 0s;
+}
+
+// Remove default bootstrap round corners for input elements, borders and box shadow.
+input[type=text], input[type=search], input[type=password], input[type=number],
+textarea,
+.input-group-btn button, .input-group-addon {
+  border-radius: 0 !important;
+
+  border-style: none none solid;
+  box-shadow: none !important;
+  border-bottom-color: #EEE;
 }
 
 textarea[readonly].static {
@@ -20,13 +33,3 @@ input[type=radio] {
   & + span { margin-left: 10px }
 }
 
-// Remove default bootstrap round corners for input elements.
-input[type=text], input[type=search], input[type=password], input[type=number],
-textarea,
-.input-group-btn button, .input-group-addon {
-  border-radius: 0 !important;
-
-  border-style: none none solid;
-  box-shadow: none !important;
-  border-bottom-color: #EEE;
-}
