@@ -1,0 +1,20 @@
+<Macro name="LanguageSelector">
+  <Param name="container" type="string" default="article"/>
+
+  <ul class="LanguageSelector nav nav-pills bar">
+    <Link id="btn-en" wrapper="li" script="setLang('en')" label="EN"/>
+    <Link id="btn-pt" wrapper="li" script="setLang('pt')" label="PT" active/>
+    <li class="disabled"><a href="javascript:nop()">$LANGUAGE:</a></li>
+  </ul>
+
+  <Script name="LanguageSelector">
+    $('{{ @container }}').attr ('lang', '{{ session.getLang }}');
+
+    function setLang (lang) {
+      $('.LanguageSelector li').removeClass('active');
+      $('#btn-' + lang).addClass('active');
+      $('{{ @container }}').attr ('lang', lang);
+    }
+  </Script>
+
+</Macro>

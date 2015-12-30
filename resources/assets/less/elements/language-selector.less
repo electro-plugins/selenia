@@ -1,0 +1,36 @@
+/*--------------------------------------------------------------------
+     LANGUAGE SELECTOR
+--------------------------------------------------------------------*/
+
+.LanguageSelector {
+  border-bottom: 1px solid #eee;
+  padding: 5px;
+  margin: 0 0 -5px 0;
+  position: absolute;
+  top: 29px;
+  right: 0;
+
+  a {
+    color: #078e96;
+    text-align: center;
+  }
+  li {
+    float: right;
+  }
+  li.disabled {
+    font-weight: bold;
+  }
+  li.disabled a {
+    cursor: default !important;
+    padding-right: 12px;
+  }
+  .active a {
+    background: #56b2b9 !important;
+    color: #fff;
+  }
+  li:not(.disabled):not(.active) a:hover {
+    //background: #1f585f;
+    //color: #fff;
+  }
+}
+
