@@ -25,7 +25,7 @@
         <ul class="nav navbar-top-links navbar-right">
           <UserMenu/>
         </ul>
-        <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
             <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{{ navigation.admin }}">
               <Header>
@@ -38,14 +38,15 @@
 
       <div id="page-wrapper">
         {!! statusMessage !!}
+        <div class="page-header-bar">
+          <Block yield="top-tools"/>
+          <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
+          <NavigationPath navigation="{{ navigation }}"/>
+        </div>
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12">
-              <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
-              <NavigationPath navigation="{{ navigation }}"/>
-            </div>
+          <div class="page-content">
+            {{ @content }}
           </div>
-          {{ @content }}
         </div>
         <footer>{!! adminSettings.footer !!}</footer>
       </div>

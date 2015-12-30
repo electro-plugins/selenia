@@ -4,11 +4,12 @@
 
   <Admin>
 
-    <LanguageSelector/>
+    <Block name="top-tools">
+      <LanguageSelector/>
+    </Block>
 
     <article class="form-page">
-      {{ @content }}
-      {{ @actions }}
+      {{ @content }} {{ @actions }}
     </article>
 
   </Admin>

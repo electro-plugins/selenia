@@ -93,6 +93,7 @@ class AdminInterfaceModule
           'users'   => $navigation
             ->link ()
             ->title ('$ADMIN_ADMIN_USERS')
+            ->icon ('fa fa-user')
             ->visible ($this->settings->enableUsersManagement ())
             ->links ([
               '@id' => $navigation
