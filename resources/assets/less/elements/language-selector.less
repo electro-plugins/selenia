@@ -3,30 +3,36 @@
 --------------------------------------------------------------------*/
 
 .LanguageSelector {
-  border-bottom: 1px solid #eee;
   padding: 5px;
   margin: 0 0 -5px 0;
   position: absolute;
-  top: 29px;
-  right: 0;
+  top: 36px;
+  right: 25px;
 
   a {
-    color: #078e96;
+    color: #0087BE;
     text-align: center;
   }
   li {
     float: right;
   }
+  li > a {
+    padding: 8px 15px;
+  }
   li.disabled {
-    font-weight: bold;
+    color: #999;
+    font-weight: 100;
   }
   li.disabled a {
     cursor: default !important;
     padding-right: 12px;
   }
   .active a {
-    background: #56b2b9 !important;
-    color: #fff;
+    //background: #56b2b9 !important;
+    background: transparent !important;
+    border-bottom: 2px solid #2e4453;
+    color: #2e4453 !important;
+    border-radius: 0;
   }
   li:not(.disabled):not(.active) a:hover {
     //background: #1f585f;

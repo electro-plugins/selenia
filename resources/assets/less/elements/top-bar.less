@@ -6,20 +6,18 @@
   #theme.top-bar;
   position: relative;
 
-  a:hover {
-    background-color: #555 !important;
+  a:hover, a:focus {
+    #theme .top-bar-hover !important;
   }
+  li
   a, .navbar-brand {
     #theme.top-bar-text;
     padding: 15px 20px;
   }
   .dropdown.open {
-    a {
-      background-color: #FFF;
-      color: #333;
-    }
-    a:hover {
-      #theme .hover !important;
+    a:not(:hover) {
+      background-color: #FFF !important;
+      color: #333 !important;
     }
     .dropdown-toggle {
       border: 1px solid #D8D8D8;
