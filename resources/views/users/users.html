@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <GridPage>
 
-  <DataGrid class="dt-responsive" data="{{ model }}" as="i:r" onClickGoTo="{{ navigation.userForm }}{{ r.id }}">
+  <DataGrid data="{{ model }}" as="i:r" onClickGoTo="{{ navigation.userForm }}{{ r.id }}">
     <Column width="40" type="row-selector">
       {{ i|ord }}
     </Column>

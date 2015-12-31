@@ -35,10 +35,13 @@ class CreateTables extends AbstractMigration
       ->table ('images', ['id' => false, 'primary_key' => ['id']])
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('ext', 'string', ['limit' => 4])
+      ->addColumn ('from', 'string', ['limit' => 45])
       ->addColumn ('key', 'string', ['limit' => 30])
       ->addColumn ('caption', 'string', ['limit' => 255])
-      ->addColumn ('gallery', 'integer')
+      ->addColumn ('gallery', 'integer') //TODO: drop this
       ->addColumn ('sort', 'integer')
+      ->addIndex('key')
+      ->addIndex('sort')
       ->create ();
 
     $this
@@ -46,6 +49,25 @@ class CreateTables extends AbstractMigration
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('ext', 'string', ['limit' => 4])
       ->addColumn ('name', 'string', ['limit' => 255])
+      ->addColumn ('from', 'string', ['limit' => 45])
+      ->create ();
+
+    $this
+      ->table ('strings', ['id' => false, 'primary_key' => ['id', 'lang']])
+      ->addColumn ('id', 'string', ['limit' => 13])
+      ->addColumn ('lang', 'string', ['limit' => 5])
+      ->addColumn ('from', 'string', ['limit' => 45])
+      ->addColumn ('text', 'string', ['limit' => 255])
+      ->addIndex('from')
+      ->create ();
+
+    $this
+      ->table ('texts', ['id' => false, 'primary_key' => ['id', 'lang']])
+      ->addColumn ('id', 'string', ['limit' => 13])
+      ->addColumn ('lang', 'string', ['limit' => 5])
+      ->addColumn ('from', 'string', ['limit' => 45])
+      ->addColumn ('text', 'text')
+      ->addIndex('from')
       ->create ();
 
   }
