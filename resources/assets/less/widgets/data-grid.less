@@ -1,0 +1,31 @@
+.DataGrid {
+
+  .table-bordered {
+    & > tbody td,
+    & > .rh {
+      #theme.table-borders;
+    }
+  }
+
+  .table > thead > tr {
+    #theme.table-head;
+
+    & > th {
+      #theme.table-header;
+    }
+  }
+
+  .table-striped > tbody > tr:nth-child(2n+1) {
+    #theme.table-stripe;
+  }
+
+  .dataTables_wrapper .row {
+    margin-top: -20px;
+  }
+  
+  .dataTables_wrapper .row:nth-of-type(2) {
+    margin-left: -30px;
+    margin-right: -30px;
+  }
+
+}
