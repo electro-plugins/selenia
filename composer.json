@@ -22,7 +22,8 @@
   "require": {
     "php": ">=5.4.0",
     "selenia/installers": "^1.0.0",
-    "selenia-plugins/matisse-components": "dev-master"
+    "selenia-plugins/matisse-components": "dev-master",
+    "selenia-plugins/login": "dev-master"
   },
   "extra": {
     "bower": {
