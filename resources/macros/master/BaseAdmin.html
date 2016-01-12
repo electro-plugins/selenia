@@ -21,10 +21,20 @@
   <Script src="modules/selenia-plugins/admin-interface/js/metisMenu.js"/>
   <Script src="lib/chosen/chosen.jquery.min.js"/>
   <Script src="modules/selenia-plugins/admin-interface/js/main.js"/>
-  <Head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </Head>
 
-  {{ @content }}
+  <!DOCTYPE HTML>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>{{ pageTitle }}</title>
+      <base href="{{ app.baseURI }}/">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="shortcut icon" href="{{ app.favicon }}">
+      <Include styles/>
+    </head>
+
+    {{ @content }}
+    <Include scripts/>
+  </html>
 
 </Macro>
