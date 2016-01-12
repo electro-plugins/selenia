@@ -17,11 +17,13 @@
             </div>
             <!-- Links at left -->
             <ul class="nav navbar-top-links navbar-left">
-              <Repeat for="{{ topMenu }}" as="i">
+              <Repeat for="{{ topMenu }}" as="link">
                 <li>
-                  <a href="{{ i.href }}">{{ i.label }}</a>
+                  <LinkDropdown label="{{ link.title }}" icon="{{ link.icon }}" items="{{ link.links }}"/>
                 </li>
               </Repeat>
+              <li>
+              </li>
             </ul>
             <!-- Links at right -->
             <ul class="nav navbar-top-links navbar-right">
