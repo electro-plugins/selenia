@@ -28,7 +28,7 @@ class CreateTables extends AbstractMigration
     $now = date ('Y-m-d H:i:s');
     $this->execute ("
       INSERT INTO users (username, registrationDate, role, active)
-      VALUES ('admin', '$now', 'developer', 1);
+      VALUES ('admin', '$now', 2, 1);
 ");
 
     $this
