@@ -6,6 +6,17 @@
   #theme.top-bar;
   position: relative;
 
+  .navbar-toggle {
+    border: none;
+    &:hover, &:focus {
+      background: #0087BE;
+      color: #FFF;
+    }
+    .icon-bar {
+      background-color: #EEE;
+    }
+  }
+
   a:hover, a:focus {
     #theme .top-bar-hover !important;
   }
@@ -16,8 +27,11 @@
   .navbar-brand {
     #theme.top-bar-text !important;
     padding: 15px 20px;
+    &:focus {
+      background: transparent!important;
+    }
   }
-  .dropdown.open {
+  .dropdown.open, .navbar-top-links .active {
     a:not(:hover) {
       background-color: #FFF !important;
       color: #333 !important;

@@ -35,11 +35,9 @@ class AdminInterfaceModule
 
     return $this->router
       ->set ([
-        $this->settings->urlPrefix () . '...' =>
+        $this->settings->urlPrefix () . '/settings...' =>
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
-
-            'GET .' => function () { return $this->redirection->to ($this->settings->adminHomeUrl ()); },
 
             when ($this->settings->enableUsersManagement (),
               [
@@ -86,27 +84,34 @@ class AdminInterfaceModule
       $this->settings->urlPrefix () => $navigation
         ->group ()
         ->id ('admin')
-        ->icon ('fa fa-cog')
         ->title ('$ADMIN_MENU_TITLE')
-        ->visible ($this->settings->showMenu ())
         ->links ([
-          'users'   => $navigation
-            ->link ()
-            ->title ('$ADMIN_ADMIN_USERS')
-            ->icon ('fa fa-user')
-            ->visible ($this->settings->enableUsersManagement ())
+          'settings' => $navigation
+            ->group ()
+            ->id ('settings')
+            ->icon ('fa fa-cog')
+            ->title ('$ADMIN_SETTINGS')
+            ->visible ($this->settings->showMenu ())
             ->links ([
-              '@id' => $navigation
+              'users'   => $navigation
                 ->link ()
-                ->id ('userForm')
-                ->title ('$ADMIN_ADMIN_USER')
-                ->visibleIfUnavailable (Y),
+                ->title ('$ADMIN_ADMIN_USERS')
+                ->icon ('fa fa-user')
+                ->visible ($this->settings->enableUsersManagement ())
+                ->links ([
+                  '@id' => $navigation
+                    ->link ()
+                    ->id ('userForm')
+                    ->title ('$ADMIN_ADMIN_USER')
+                    ->visibleIfUnavailable (Y),
+                ]),
+              'profile' => $navigation
+                ->link ()
+                ->id ('profile')
+                ->title ('$LOGIN_PROFILE')
+                ->icon ('fa fa-user')
+                ->visible (N),
             ]),
-          'profile' => $navigation
-            ->link ()
-            ->id ('profile')
-            ->title ('$LOGIN_PROFILE')
-            ->visible (N),
         ]),
     ]);
   }

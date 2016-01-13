@@ -8,7 +8,8 @@ use Selenia\Traits\ConfigurationTrait;
 /**
  * Configuration settings for the AdminInterface module.
  *
- * @method $this|string  adminHomeUrl (string $v = null) The relative URL to redirect to when loading the `prefix` URL
+ * @method $this|int     sideMenuOffset (int $v = null) The offs. on the active nav. trail from where to begin the menu
+ * @method $this|string  topMenuTarget (string $v = null) The target navigation id for generatibg the top menu
  * @method $this|boolean allowDeleteSelf (boolean $v = null) Allow a user to delete him(her)self?
  * @method $this|boolean allowEditRole (boolean $v = null) Allow users to edit their role?
  * @method $this|boolean allowRename (boolean $v = null) Allow users to change their usernames?
@@ -26,7 +27,8 @@ class AdminInterfaceSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 
-  private $adminHomeUrl          = 'admin/users';
+  private $sideMenuOffset        = 1;
+  private $topMenuTarget         = 'admin';
   private $allowDeleteSelf       = true;
   private $allowEditRole         = true;
   private $allowRename           = true;

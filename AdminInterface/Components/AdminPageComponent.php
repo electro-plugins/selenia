@@ -4,6 +4,7 @@ namespace Selenia\Plugins\AdminInterface\Components;
 use Selenia\Application;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
+use Selenia\Interfaces\Navigation\NavigationLinkInterface;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 
 class AdminPageComponent extends PageComponent
@@ -12,6 +13,10 @@ class AdminPageComponent extends PageComponent
   public $admin;
   /** @var AdminInterfaceSettings */
   public $adminSettings;
+  /** @var NavigationLinkInterface */
+  public $sideMenu;
+  /** @var NavigationLinkInterface */
+  public $topMenu;
 
   function action_delete ($param = null)
   {
@@ -26,6 +31,10 @@ class AdminPageComponent extends PageComponent
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
+    $settings = $this->adminSettings;
+    $target              = $settings->topMenuTarget ();
+    $this->topMenu       = exists ($target) ? $this->navigation [$target] : $this->navigation;
+    $this->sideMenu      = $this->navigation->getCurrentTrail ($settings->sideMenuOffset ());
 
     parent::initialize ();
   }
