@@ -32,10 +32,10 @@ class AdminInterfaceModule
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
     $this->redirection->setRequest ($request);
-
+    $base = strJoin ($this->settings->urlPrefix (), 'settings...', '/');
     return $this->router
       ->set ([
-        $this->settings->urlPrefix () . '/settings...' =>
+        $base =>
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
 
@@ -74,8 +74,11 @@ class AdminInterfaceModule
       ->provideMacros ()
       ->provideViews ()
       ->registerPresets ([Config\AdminPresets::class])
-      ->registerRouter ($this)
-      ->provideNavigation ($this);
+      ->onPostConfig (function () use ($module) {
+        $module
+          ->registerRouter ($this)
+          ->provideNavigation ($this);
+      });
   }
 
   function defineNavigation (NavigationInterface $navigation)
@@ -83,27 +86,27 @@ class AdminInterfaceModule
     $navigation->add ([
       $this->settings->urlPrefix () => $navigation
         ->group ()
-        ->id ('admin')
-        ->title ('$ADMIN_MENU_TITLE')
+        ->id ('app_home')
+        ->title ('$APP_HOME')
         ->links ([
           'settings' => $navigation
             ->group ()
             ->id ('settings')
             ->icon ('fa fa-cog')
-            ->title ('$ADMIN_SETTINGS')
+            ->title ('$APP_SETTINGS')
             ->visible ($this->settings->showMenu ())
             ->links ([
               'users'   => $navigation
                 ->link ()
-                ->title ('$ADMIN_ADMIN_USERS')
+                ->title ('$APP_SETTINGS_USERS')
                 ->icon ('fa fa-user')
                 ->visible ($this->settings->enableUsersManagement ())
                 ->links ([
                   '@id' => $navigation
                     ->link ()
                     ->id ('userForm')
-                    ->title ('$ADMIN_ADMIN_USER')
-                    ->visibleIfUnavailable (Y),
+                    ->title ('$APP_SETTINGS_USER')
+                    ->visible (N),
                 ]),
               'profile' => $navigation
                 ->link ()

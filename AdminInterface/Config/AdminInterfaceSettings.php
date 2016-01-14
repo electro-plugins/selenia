@@ -21,14 +21,14 @@ use Selenia\Traits\ConfigurationTrait;
  * @method $this|string  footer (string $v = null) Sets the footer text displayed on all pages.
  * @method $this|boolean requireAuthentication (boolean $v = null) Enable the authentication middleware for all routes?
  * @method $this|boolean showMenu (boolean $v = null) Display an item for the admin area on the main menu?
- * @method $this|string  urlPrefix (string $v = null) Relative URL that prefixes all URLs to the admin area
+ * @method $this|string  urlPrefix (string $v = null) Relative URL that prefixes all URLs to your app (ex: 'admin')
  */
 class AdminInterfaceSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 
   private $sideMenuOffset        = 1;
-  private $topMenuTarget         = 'admin';
+  private $topMenuTarget         = 'app_home';
   private $allowDeleteSelf       = true;
   private $allowEditRole         = true;
   private $allowRename           = true;
@@ -41,6 +41,6 @@ class AdminInterfaceSettings implements AssignableInterface
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
   private $showMenu              = true;
-  private $urlPrefix             = 'admin';
+  private $urlPrefix             = '';
 
 }
