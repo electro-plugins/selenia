@@ -25,7 +25,7 @@ body {
 }
 
 body.admin-interface::before {
-  content:  '';
+  content: '';
   display: block;
   position: fixed;
   left: 0;
@@ -45,7 +45,7 @@ body.admin-interface::before {
   position: relative;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 @sidebar-width;
@@ -78,33 +78,33 @@ body.admin-interface::before {
   margin-right: 5px;
 }
 
-.navbar-top-links {
-  float: right;
-}
-
 .navbar-default .sidebar {
   clear: both;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
   .sidebar {
     z-index: 1;
     position: absolute;
     margin-top: 51px;
   }
-
-  .navbar-top-links .dropdown-messages,
-  .navbar-top-links .dropdown-tasks,
-  .navbar-top-links .dropdown-alerts {
-    margin-left: auto;
-  }
 }
-@media(min-width:1024px) {
+
+//--------------------------
+// DESKTOP
+//--------------------------
+
+@media (min-width: 1024px) {
   .sidebar {
     width: @sidebar-width - 1;
   }
 }
-@media(min-width:768px) and (max-width: 1024px) {
+
+//--------------------------
+// TABLET
+//--------------------------
+
+@media (min-width: 768px) and (max-width: 1024px) {
   .navbar-default {
     .sidebar {
       width: @sidebar-reduced-width - 1;
@@ -113,28 +113,56 @@ body.admin-interface::before {
       width: @sidebar-reduced-width;
     }
   }
+
   body.admin-interface::before {
     width: @sidebar-reduced-width;
   }
+
   #page-wrapper {
     margin-left: @sidebar-reduced-width;
   }
 }
 
-@media(max-width:767px) {
+//--------------------------
+// MOBILE
+//--------------------------
+
+@media (max-width: 767px) {
   body.admin-interface::before, .sidebar-nav {
     display: none;
   }
+
   .sidebar-nav.collapsing, .sidebar-nav.in {
     display: block;
-  }
-  .navbar-default .sidebar {
     #theme.sidebar;
-    margin-bottom: -1px;
     border-bottom: 1px solid;
+    border-top: none;
     border-right: none;
   }
+
+  .navbar-default {
+    .navbar-header {
+      width: 100%;
+    }
+  }
 }
+
+// FROM BOOTSTRAP
+
+.navbar-left {
+  float: left;
+}
+
+.navbar-right {
+  float: right;
+  margin-right: -@navbar-padding-horizontal;
+
+  ~ .navbar-right {
+    margin-right: 0;
+  }
+}
+
+// END FROM BOOTSTRAP
 
 .grid-page {
   // nothing yet
