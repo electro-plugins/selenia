@@ -7,14 +7,23 @@ input[type]:-webkit-autofill:focus {
 }
 
 // Remove default bootstrap round corners for input elements, borders and box shadow.
-input[type=text], input[type=search], input[type=password], input[type=number],
-textarea, select,
-.input-group-btn button, .input-group-addon {
+input[type=text],
+input[type=search],
+input[type=password],
+input[type=number],
+textarea,
+select,
+.input-group-btn button,
+.input-group-addon {
   border-radius: 0 !important;
 
   border-style: none none solid !important;
   box-shadow: none !important;
-  border-bottom-color: #EEE !important;
+  border-bottom-color: #DDD !important;
+
+  &:focus {
+    border-bottom-color: #66afe9 !important;
+  }
 }
 
 textarea[readonly].static {
