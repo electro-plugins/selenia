@@ -34,7 +34,7 @@ class AdminPageComponent extends PageComponent
     $settings = $this->adminSettings;
     $target              = $settings->topMenuTarget ();
     $this->topMenu       = exists ($target) ? $this->navigation [$target] : $this->navigation;
-    $this->sideMenu      = $this->navigation->getCurrentTrail ($settings->sideMenuOffset ());
+    $this->sideMenu      = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
     parent::initialize ();
   }
