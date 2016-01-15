@@ -1,5 +1,4 @@
-<Macro name="BaseAdmin" defaultParam="content">
-  <Param name="content" type="content"/>
+<AssetsGroup prepend>
   <Style src="lib/bootstrap/dist/css/bootstrap.min.css"/>
 
   <Style src="lib/datatables.net-bs/css/dataTables.bootstrap.min.css"/>
@@ -21,20 +20,19 @@
   <Script src="modules/selenia-plugins/admin-interface/js/metisMenu.js"/>
   <Script src="lib/chosen/chosen.jquery.min.js"/>
   <Script src="modules/selenia-plugins/admin-interface/js/main.js"/>
+</AssetsGroup>
 
-  <!DOCTYPE HTML>
-  <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>{{ pageTitle }}</title>
-      <base href="{{ app.baseURI }}/">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" href="{{ app.favicon }}">
-      <Include styles/>
-    </head>
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ pageTitle }}</title>
+    <base href="{{ app.baseURI }}/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ app.favicon }}">
+    <Include styles/>
+  </head>
 
-    {{ @content }}
-    <Include scripts/>
-  </html>
-
-</Macro>
+  {!! #master !!}
+  <Include scripts/>
+</html>
