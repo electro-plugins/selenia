@@ -1,5 +1,5 @@
-.chosen-container-single {
-  .chosen-single {
+.chosen-container {
+  .chosen-single, .chosen-choices {
     height: 34px;
     border-radius: 0;
     background: #FCFCFC;
@@ -24,6 +24,30 @@
       height: 34px;
       border-color: #CCC;
       background: transparent;
+    }
+  }
+  .chosen-choices li.search-choice {
+    background: #e4e4e4;
+    border: none;
+    line-height: 25px;
+    padding: 1px 33px 0 10px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+
+    .search-choice-close {
+      top: 8px;
+      right: 9px;
+
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        top: 7px;
+        background: #d9534f;
+        border-radius: 7px;
+        border: 2px solid #ffb4b3;
+        width: 13px;
+        height: 13px;
+      }
     }
   }
 }
