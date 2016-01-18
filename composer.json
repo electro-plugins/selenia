@@ -20,17 +20,17 @@
   ],
   "homepage": "https://github.com/selenia-plugins/admin-interface",
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=5.6.0",
     "selenia/installers": "^1.0.0",
     "selenia-plugins/matisse-components": "dev-master",
-    "selenia-plugins/login": "dev-master"
+    "selenia-plugins/login": "dev-master",
+    "illuminate/database": "^5.2.7"
   },
   "extra": {
     "bower": {
       "require": {
         "bootstrap": "^3.3.6",
-        "font-awesome": "^4.5.0",
-        "chosen": "~1.4.2"
+        "font-awesome": "^4.5.0"
       }
     }
   },

@@ -4,6 +4,7 @@ namespace Selenia\Plugins\AdminInterface\Config;
 use Selenia\Localization\Services\Locale;
 use Selenia\Plugins\MatisseComponents\DataGrid;
 use Selenia\Plugins\MatisseComponents\Input;
+use Selenia\Plugins\MatisseComponents\Select;
 
 class AdminPresets
 {
@@ -36,6 +37,13 @@ class AdminPresets
   {
     $input->props->apply ([
       'lang' => $this->locale->name,
+    ]);
+  }
+
+  function Select (Select $sel)
+  {
+    $sel->props->apply ([
+      'emptyLabel' => '$COMPONENT_SELECT_EMPTY_LABEL',
     ]);
   }
 
