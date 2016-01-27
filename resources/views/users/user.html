@@ -1,8 +1,8 @@
 <FormPage>
 
   <!-- disable browser's autofill and password-saving prompt -->
-  <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
-  <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
+  <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;"/>
+  <input type="password" name="password_fake" id="password_fake" value="" style="display:none;"/>
 
   <FormLayout>
 
@@ -13,19 +13,21 @@
     </If>
 
     <Field label="$LOGIN_USERNAME" name="username">
-      <Input value="{{ model.username }}" autofocus autoselect autocomplete="no" readOnly="{{ !canRename && !is.dev && !is.admin }}"/>
+      <Input required maxLength="30"
+             value="{{ model.username }}"
+             autofocus
+             autoselect
+             autocomplete="no"
+             readOnly="{{ !canRename && !is.dev && !is.admin }}"/>
     </Field>
 
     <Field label="$LOGIN_PASSWORD" name="password">
-      <Input value="{{ model.password }}" type="password" autocomplete="no"/>
+      <Input required minLength="6" value="{{ model.password }}" type="password" autocomplete="no"/>
     </Field>
 
     <If is="{{ show.roles }}">
       <Field label="$LOGIN_ROLE" name="role">
-        <RadioButton value="{{ role.dev }}"
-                     label="$LOGIN_ROLE_3"
-                     testValue="{{ model.role }}"
-                     hidden="{{ !is.dev }}"/>
+        <RadioButton value="{{ role.dev }}" label="$LOGIN_ROLE_3" testValue="{{ model.role }}" hidden="{{ !is.dev }}"/>
         <RadioButton value="{{ role.admin }}"
                      label="$LOGIN_ROLE_2"
                      testValue="{{ model.role }}"
