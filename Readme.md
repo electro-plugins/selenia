@@ -83,11 +83,7 @@ and select `selenia-plugins/admin-interface` from the displayed list, or type
 selenia module:install-plugin selenia-plugins/admin-interface
 ```
 
-or type
-
-```shell
-composer require selenia-plugins/admin-interface
-```
+> For correct operation, do not install this package directly with Composer.
 
 ### Required configuration settings
 
