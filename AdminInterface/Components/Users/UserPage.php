@@ -99,7 +99,7 @@ class UserPage extends AdminPageComponent
       $this->insertData ($user);
     else $this->updateData ($user);
 
-    if ($isSelf) return $this->redirection->to ($this->adminSettings->adminHomeUrl ());
+    if ($isSelf) return $this->redirection->to ($this->session->previousUrl());
   }
 
   protected function model ()
@@ -154,6 +154,9 @@ class UserPage extends AdminPageComponent
     $isStandard = $isAdmin || $mySelf->role () == UserInterface::USER_ROLE_STANDARD;
     // Are we editing the logged-in user?
     $isSelf = $user->id () == $mySelf->id ();
+
+    if ($isSelf)
+      $this->session->setPreviousUrl($this->request->getHeaderLine('Referer'));
 
     $this->is        = [
       'admin'    => $isAdmin,

@@ -21,7 +21,7 @@ class AdminPageComponent extends PageComponent
   function action_delete ($param = null)
   {
     $r = parent::action_delete ($param);
-    $this->session->flashMessage ('$ADMIN_MSG_DELETED');
+    $this->session->flashMessage ('$APP_MSG_DELETED');
     return $r;
   }
 
@@ -49,13 +49,13 @@ class AdminPageComponent extends PageComponent
   protected function insertData ($model)
   {
     parent::insertData ($model);
-    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
+    $this->session->flashMessage ('$APP_MSG_SAVED');
   }
 
   protected function updateData ($model)
   {
     parent::updateData ($model);
-    $this->session->flashMessage ('$ADMIN_MSG_SAVED');
+    $this->session->flashMessage ('$APP_MSG_SAVED');
   }
 
 }

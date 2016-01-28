@@ -19,9 +19,9 @@ class CreateTables extends AbstractMigration
       ->addColumn ('username', 'string', ['limit' => 30])
       ->addIndex (['username'], ['unique' => true])
       ->addColumn ('password', 'string', ['limit' => 60])
-      ->addColumn ('token', 'string', ['limit' => 60])
+      ->addColumn ('token', 'string', ['limit' => 60, 'null' => true])
       ->addColumn ('registrationDate', 'datetime')
-      ->addColumn ('lastLogin', 'datetime')
+      ->addColumn ('lastLogin', 'datetime', ['null' => true])
       ->addColumn ('role', 'integer')
       ->addColumn ('active', 'boolean', ['default' => 0])
       ->create ();
@@ -35,13 +35,13 @@ class CreateTables extends AbstractMigration
       ->table ('images', ['id' => false, 'primary_key' => ['id']])
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('ext', 'string', ['limit' => 4])
-      ->addColumn ('from', 'string', ['limit' => 45])
-      ->addColumn ('key', 'string', ['limit' => 30])
-      ->addColumn ('caption', 'string', ['limit' => 255])
-      ->addColumn ('gallery', 'integer') //TODO: drop this
-      ->addColumn ('sort', 'integer')
-      ->addIndex('key')
-      ->addIndex('sort')
+      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
+      ->addColumn ('key', 'string', ['limit' => 30, 'null' => true])
+      ->addColumn ('caption', 'string', ['limit' => 255, 'null' => true])
+      ->addColumn ('gallery', 'integer', ['null' => true])//TODO: drop this
+      ->addColumn ('sort', 'integer', ['default' => 0])
+      ->addIndex ('key')
+      ->addIndex ('sort')
       ->create ();
 
     $this
@@ -49,26 +49,26 @@ class CreateTables extends AbstractMigration
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('ext', 'string', ['limit' => 4])
       ->addColumn ('name', 'string', ['limit' => 255])
-      ->addColumn ('from', 'string', ['limit' => 45])
+      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
       ->create ();
-
+/*
     $this
       ->table ('strings', ['id' => false, 'primary_key' => ['id', 'lang']])
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('lang', 'string', ['limit' => 5])
-      ->addColumn ('from', 'string', ['limit' => 45])
+      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
       ->addColumn ('text', 'string', ['limit' => 255])
-      ->addIndex('from')
+      ->addIndex ('from')
       ->create ();
 
     $this
       ->table ('texts', ['id' => false, 'primary_key' => ['id', 'lang']])
       ->addColumn ('id', 'string', ['limit' => 13])
       ->addColumn ('lang', 'string', ['limit' => 5])
-      ->addColumn ('from', 'string', ['limit' => 45])
+      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
       ->addColumn ('text', 'text')
-      ->addIndex('from')
+      ->addIndex ('from')
       ->create ();
-
+*/
   }
 }
