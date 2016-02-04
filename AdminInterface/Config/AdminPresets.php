@@ -21,7 +21,7 @@ class AdminPresets
   function DataGrid (DataGrid $grid)
   {
     $grid->props->apply ([
-      'lang'               => $this->locale->name,
+      'lang'               => $this->locale->locale (),
       'pageLength'         => "mem.get ('prefs.rowsPerPage', 10)",
       'lengthChangeScript' => "mem.set ('prefs.rowsPerPage', len)",
       'responsive'         => '{
@@ -36,7 +36,7 @@ class AdminPresets
   function Input (Input $input)
   {
     $input->props->apply ([
-      'lang' => $this->locale->name,
+      'lang' => $this->locale->locale (),
     ]);
   }
 
