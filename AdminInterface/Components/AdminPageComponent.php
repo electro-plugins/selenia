@@ -1,7 +1,10 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components;
 
+use PhpKit\ConnectionInterface;
+use PhpKit\ExtPDO;
 use Selenia\Application;
+use Selenia\DataObject;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\Navigation\NavigationLinkInterface;
@@ -17,6 +20,10 @@ class AdminPageComponent extends PageComponent
   public $sideMenu;
   /** @var NavigationLinkInterface */
   public $topMenu;
+  /** @var ExtPDO */
+  protected $pdo;
+  /** @var ConnectionInterface */
+  protected $connection;
 
   function action_delete ($param = null)
   {
@@ -39,10 +46,21 @@ class AdminPageComponent extends PageComponent
     parent::initialize ();
   }
 
+  /**
+   * @param string $class
+   * @return DataObject
+   */
+  function createModel ($class)
+  {
+    return new $class ($this->connection);
+  }
+
   function inject ()
   {
-    return function (AdminInterfaceSettings $settings) {
+    return function (AdminInterfaceSettings $settings, ConnectionInterface $con) {
       $this->adminSettings = $settings;
+      $this->connection = $con;
+      $this->pdo = $con->getPdo();
     };
   }
 

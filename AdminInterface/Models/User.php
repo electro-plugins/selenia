@@ -18,6 +18,7 @@ class User extends DataObject implements UserInterface
   public $id;
   public $username;
   public $password;
+  public $realName;
   public $token;
   public $registrationDate;
   public $lastLogin;
@@ -36,8 +37,10 @@ class User extends DataObject implements UserInterface
 
   public function findByName ($username)
   {
-    $this->id = database_get ("SELECT id FROM $this->tableName WHERE username=?", [$username]) ?: null;
-    return $this->id ? $this->read () : false;
+    $this->id = $this->pdo->get ("SELECT id FROM $this->tableName WHERE username=?", [$username]) ?: null;
+    $r = $this->id ? $this->read () : false;
+    $this->realName = ucfirst ($this->username);
+    return $r;
   }
 
   function verifyPassword ($password)
@@ -58,9 +61,11 @@ class User extends DataObject implements UserInterface
     return $this->id;
   }
 
-  function realName ()
+  function realName ($set = null)
   {
-    return ucfirst ($this->username);
+    if (isset($set))
+      return $this->realName = $set;
+    return $this->realName;
   }
 
   function username ($set = null)
@@ -114,7 +119,7 @@ class User extends DataObject implements UserInterface
 
   function onLogin ()
   {
-    $this->lastLogin = self::now ();
+    $this->lastLogin = date ('Y-m-d H:i:s');
     $this->update ();
   }
 }

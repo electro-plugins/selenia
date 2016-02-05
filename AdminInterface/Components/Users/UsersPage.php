@@ -19,7 +19,8 @@ class UsersPage extends AdminPageComponent
     if ($myRole < UserInterface::USER_ROLE_ADMIN)
       // Can't view other users.
       throw new HttpException (403);
-    return array_filter ((new User())->map ((new User)->all (),
+    $user = $this->createModel(User::class);
+    return array_filter ($user->map ($user->all (),
       function (UserInterface $user) use ($myRole) {
         // Filter out users of superior level.
         return $user->role () > $myRole

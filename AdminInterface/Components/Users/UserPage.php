@@ -113,7 +113,7 @@ class UserPage extends AdminPageComponent
     }
     else {
       $myRole = $mySelf->role ();
-      $user   = $this->loadRequested (new $this->app->userModel);
+      $user   = $this->loadRequested ($this->app->createUser());
       if (!$user) {
         inspect ('<#section|User>', $user, '</#section>');
         DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
