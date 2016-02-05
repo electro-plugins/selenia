@@ -2,18 +2,27 @@
   <Param name="container" type="string" default="article"/>
 
   <ul class="LanguageSelector nav nav-pills bar">
-    <Link id="btn-en" wrapper="li" script="setLang('en')" label="EN"/>
-    <Link id="btn-pt" wrapper="li" script="setLang('pt')" label="PT" active/>
+    <Repeat for="{{ locale.getAvailableExt }}" as="i:loc">
+      <Link id="btn-{{ loc.name }}"
+            wrapper="li"
+            script="setLang('{{ loc.name }}')"
+            label="{{ loc.label }}"
+            active="{{ !i }}"/>
+    </Repeat>
     <li class="disabled"><a href="javascript:nop()">$LANGUAGE</a></li>
   </ul>
 
   <Script name="LanguageSelector">
-    $('{{ @container }}').attr ('lang', '{{ session.getLang }}');
-
+    console.log ('Lang: {{ locale.available.0 }}');
+    $ ('{{ @container }}')
+      .attr ('lang', '{{ locale.available.0 }}')
+      .find ('[lang]:first-of-type').show ();
     function setLang (lang) {
-      $('.LanguageSelector li').removeClass('active');
-      $('#btn-' + lang).addClass('active');
-      $('{{ @container }}').attr ('lang', lang);
+      $ ('.LanguageSelector li').removeClass ('active');
+      $ ('#btn-' + lang).addClass ('active');
+      var c = $ ('{{ @container }}').attr ('lang', lang);
+      c.find ('[lang]').hide ();
+      c.find ('[lang="' + lang + '"]').show ();
     }
   </Script>
 

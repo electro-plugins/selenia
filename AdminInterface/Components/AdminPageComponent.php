@@ -8,6 +8,7 @@ use Selenia\DataObject;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\Navigation\NavigationLinkInterface;
+use Selenia\Localization\Services\Locale;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 
 class AdminPageComponent extends PageComponent
@@ -16,14 +17,16 @@ class AdminPageComponent extends PageComponent
   public $admin;
   /** @var AdminInterfaceSettings */
   public $adminSettings;
+  /** @var Locale */
+  public $locale;
   /** @var NavigationLinkInterface */
   public $sideMenu;
   /** @var NavigationLinkInterface */
   public $topMenu;
-  /** @var ExtPDO */
-  protected $pdo;
   /** @var ConnectionInterface */
   protected $connection;
+  /** @var ExtPDO */
+  protected $pdo;
 
   function action_delete ($param = null)
   {
@@ -38,29 +41,21 @@ class AdminPageComponent extends PageComponent
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
-    $settings = $this->adminSettings;
-    $target              = $settings->topMenuTarget ();
-    $this->topMenu       = exists ($target) ? $this->navigation [$target] : $this->navigation;
-    $this->sideMenu      = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
+    $settings       = $this->adminSettings;
+    $target         = $settings->topMenuTarget ();
+    $this->topMenu  = exists ($target) ? $this->navigation [$target] : $this->navigation;
+    $this->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
     parent::initialize ();
   }
 
-  /**
-   * @param string $class
-   * @return DataObject
-   */
-  function createModel ($class)
-  {
-    return new $class ($this->connection);
-  }
-
   function inject ()
   {
-    return function (AdminInterfaceSettings $settings, ConnectionInterface $con) {
+    return function (AdminInterfaceSettings $settings, ConnectionInterface $con, Locale $locale) {
       $this->adminSettings = $settings;
-      $this->connection = $con;
-      $this->pdo = $con->getPdo();
+      $this->connection    = $con;
+      $this->pdo           = $con->getPdo ();
+      $this->locale        = $locale;
     };
   }
 
@@ -74,6 +69,15 @@ class AdminPageComponent extends PageComponent
   {
     parent::updateData ($model);
     $this->session->flashMessage ('$APP_MSG_SAVED');
+  }
+
+  /**
+   * @param string $class
+   * @return DataObject
+   */
+  function createModel ($class)
+  {
+    return new $class ($this->connection);
   }
 
 }

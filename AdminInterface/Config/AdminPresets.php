@@ -3,6 +3,7 @@ namespace Selenia\Plugins\AdminInterface\Config;
 
 use Selenia\Localization\Services\Locale;
 use Selenia\Plugins\MatisseComponents\DataGrid;
+use Selenia\Plugins\MatisseComponents\Field;
 use Selenia\Plugins\MatisseComponents\Input;
 use Selenia\Plugins\MatisseComponents\Select;
 
@@ -37,6 +38,13 @@ class AdminPresets
   {
     $input->props->apply ([
       'lang' => $this->locale->locale (),
+    ]);
+  }
+
+  function Field (Field $field)
+  {
+    $field->props->apply ([
+      'languages' => $this->locale->available (),
     ]);
   }
 

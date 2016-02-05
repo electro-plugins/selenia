@@ -1,5 +1,6 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
+
 use PhpKit\WebConsole\DebugConsole\DebugConsole;
 use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
@@ -27,20 +28,22 @@ class UserPage extends AdminPageComponent
   /**
    * Are we on the profile page?
    * > Set via router.
+   *
    * @var bool
    */
   public $editingSelf = false;
   public $is;
   /**
    * Data extracted from the User model for editiog on the form.
+   *
    * @var array
    */
   public $login;
   public $role;
   public $show;
+  public $templateUrl = 'users/user.html';
   /** @var UserInterface|DataObject */
   public $user;
-  public $templateUrl = 'users/user.html';
 
   public function action_delete ($param = null)
   {
@@ -99,7 +102,7 @@ class UserPage extends AdminPageComponent
       $this->insertData ($user);
     else $this->updateData ($user);
 
-    if ($isSelf) return $this->redirection->to ($this->session->previousUrl());
+    if ($isSelf) return $this->redirection->to ($this->session->previousUrl ());
   }
 
   protected function model ()
@@ -108,12 +111,14 @@ class UserPage extends AdminPageComponent
 
     /** @var UserModel $user */
     if ($this->editingSelf) {
-      $user = $mySelf;
+      $user = $this->app->createUser ();
+      $user->setPrimaryKeyValue ($mySelf->id ());
       $user->read ();
     }
     else {
       $myRole = $mySelf->role ();
-      $user   = $this->loadRequested ($this->app->createUser());
+      $user = $this->app->createUser ();
+      $user   = $this->loadRequested ($user);
       if (!$user) {
         inspect ('<#section|User>', $user, '</#section>');
         DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
@@ -156,7 +161,7 @@ class UserPage extends AdminPageComponent
     $isSelf = $user->id () == $mySelf->id ();
 
     if ($isSelf)
-      $this->session->setPreviousUrl($this->request->getHeaderLine('Referer'));
+      $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
 
     $this->is        = [
       'admin'    => $isAdmin,
@@ -171,7 +176,7 @@ class UserPage extends AdminPageComponent
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
     $this->show      = [
-      'roles'  => $isDev || ($isAdmin && $this->adminSettings->allowEditRole()),
+      'roles'  => $isDev || ($isAdmin && $this->adminSettings->allowEditRole ()),
       'active' => !$isSelf && $this->adminSettings->enableUsersDisabling (),
     ];
     $this->canDelete = // Will be either true or null.
