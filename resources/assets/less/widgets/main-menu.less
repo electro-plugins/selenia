@@ -9,14 +9,15 @@
 
   li {
     border: none;
-    &.current a:not(.disabled), &.current a:hover {
-      #theme.main-menu-current-item !important;
+
+    &.current a {
+      #theme.main-menu-current-item;
     }
   }
 
   a {
+    padding-left: 40px;
     #theme.main-menu-item;
-    padding-left: 33px;
 
     &:focus {
       background-color: transparent;
@@ -24,12 +25,13 @@
     &.active {
       #theme.main-menu-selected-item;
     }
-    &:hover {
-      #theme.main-menu-hover-item !important;
+    &:hover, &.active:hover {
+      #theme.main-menu-hover-item;
     }
     i {
-      margin-right: 6px;
-      margin-left: -23px;
+      margin-left: -26px;
+      position: absolute;
+      margin-top: 3px;
     }
   }
 

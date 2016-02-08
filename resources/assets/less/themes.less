@@ -5,58 +5,62 @@
 //-----------------------------
 
 @def-color1: #2a2f43;
-@def-color2: #424b66;
-@def-color3: #4B5477;
-@def-color4: #535d84;
-@def-color5: #6f7db0;
-@def-color6: #a1a5b3;
+@def-color2: #333952;
+@def-color3: #424b66;
+@def-color4: #4B5477;
+@def-color5: #535d84;
+@def-color6: #6f7db0;
+@def-color7: #a1a5b3;
 
 #theme() when (@theme = default) {
-  .background { background: @def-color6; }
+  .background { background: @def-color7; }
   .main-background { background: #fff; border-right: 2px solid hsla(240,8%,60%,1) }
   .page-header-bar {
-    background: @def-color4;
+    background: @def-color5;
     color: #FFF
   }
   .content-background {
   }
-  .hover { color: #FFF; background-color: @def-color5; }
+  .hover { color: #FFF; background-color: @def-color6; }
   .form-label {
     font-weight: 700;
     color: #000;
   }
-  .sidebar { background: @def-color2; border:none; }
-  .top-bar { background: @def-color5; border: none; }
+  .sidebar { background: @def-color3; border:none; }
+  .top-bar { background: @def-color6; border: none; }
   .top-bar-menu { background-color: #FFF; color: #333 }
-  .top-bar-selected { background-color: @def-color4 !important; color: #FFF !important }
+  .top-bar-selected { background-color: @def-color5 !important; color: #FFF !important }
   .top-bar-text { color: #FFF }
   .top-bar-disabled-text { color: #acd7e6; }
   .top-bar-hover { #theme.hover; }
-  .navbar-header { background-color: @def-color1; border-bottom: 1px solid @def-color1; }
-  .main-menu-item { color: #EEE; font-weight: 100; }
+  .navbar-header { background-color: @def-color2; border-bottom: 1px solid @def-color1; }
+  .main-menu-item { color: #DDD; font-weight: 100; }
   .main-menu-hover-item { #theme.hover; }
-  .main-menu-selected-item { color: #74A5C1 }
-  .main-menu-disabled-item { color: #bec6cc }
-  .main-menu-current-item { color: #fff; }
+  .main-menu-selected-item { color: #FFF; }
+  .main-menu-disabled-item { color: darken(@def-color7, 10%); }
+  .main-menu-current-item { color: #fff; background-color: lighten(@def-color3, 3%); }
   .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
-  .table-head { border-color: #e6ecf0;}
-  .table-header-color { background-color: #f0f4f7 !important;}
-  .table-dark-border-color { border-color: #dadfe3 !important;}
-  .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: #dadfe3;}
-  .table-stripe { background-color: #fcfdfe; }
-  .table-borders { border-color: #ebeff2 !important; }
+  .table-head { border-color: #5E6378;}
+  .table-header-color { background-color: #5E6378; color:#FFF; }
+  .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: @def-color1; }
+  .table-responsive-header { border-color: #E0E6EB !important; background-color: #F4F7FB !important; }
+  .table-stripe { background-color: #F4F7FB; }
+  .table-borders { border-color: #E0E6EB !important; }
   .table-row-active { #theme.hover !important; }
-  .action-bar { background-color: @def-color3; }
-  .tab { background-color: @def-color3; color: @def-color6; border: none }
+  .action-bar { background-color: @def-color4; }
+  .tab { background-color: @def-color4; color: @def-color7; border: none }
   .tab-hover { #theme.hover; }
   .tab-selected { background-color: #FFF; color: #333; border: none; }
+  .admin-bar { background-color: @def-color1; }
+  .admin-icon { color: darken(@def-color7, 10%); }
+  .admin-selected-icon { background-color: @def-color2; color: #DDD; }
 }
 
 .btn-default {
-  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+  .button-variant(@btn-default-color; #E5EAEE; #E5EAEE);
 }
 .btn-primary {
-  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+  .button-variant(@btn-primary-color; #383E59; #383E59);
 }
 // Success appears as green
 .btn-success {
@@ -64,11 +68,11 @@
 }
 // Info appears as blue-green
 .btn-info {
-  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+  .button-variant(@btn-info-color; #5ACFDD; #5ACFDD);
 }
 // Warning appears as orange
 .btn-warning {
-  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+  .button-variant(@btn-warning-color; #FBB600; #FBB600);
 }
 // Danger and error appear as red
 .btn-danger {
@@ -107,7 +111,7 @@
   .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
   .table-head { border-color: #e6ecf0;}
   .table-header-color { background-color: #f0f4f7 !important;}
-  .table-dark-border-color { border-color: #dadfe3 !important;}
+  .table-responsive-header { border-color: #dadfe3 !important;}
   .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: #dadfe3;}
   .table-stripe { background-color: #fcfdfe; }
   .table-borders { border-color: #ebeff2 !important; }

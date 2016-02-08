@@ -9,24 +9,26 @@
   .navbar-toggle {
     border: none;
     &:hover, &:focus {
-      background: #0087BE;
-      color: #FFF;
+      #theme.action-bar;
     }
     .icon-bar {
-      background-color: #EEE;
+      #theme.top-bar;
     }
   }
 
   a:hover, a:focus {
     #theme .top-bar-hover !important;
   }
-  li
-  a {
-    padding: 10px 20px;
+  li a {
+    padding: 8px 20px; // Spacing of menu links
   }
   .navbar-brand {
-    #theme.top-bar-text !important;
     padding: 15px 20px;
+    float: none;
+    display: block;
+    text-align: center;
+    #theme.top-bar-text !important;
+
     &:focus {
       background: transparent !important;
     }

@@ -1,0 +1,62 @@
+/*--------------------------------------------------------------------
+   ADMINISTRATION ICON BAR
+--------------------------------------------------------------------*/
+
+.admin {
+
+  body {
+    margin-left: @admin-bar-width;
+
+    &:before {
+      margin-left: @admin-bar-width;
+    }
+
+    &:after {
+      #theme.admin-bar;
+      content:  '';
+      display:  block;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: @admin-bar-width;
+    }
+  }
+
+  .admin-bar {
+    position: absolute;
+    margin-left: -@admin-bar-width;
+    top: @topbar-height;
+    width: @admin-bar-width;
+    z-index: 1;
+
+    & > a {
+      display: block;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      #theme.admin-icon;
+
+      &.active {
+        #theme.admin-selected-icon;
+      }
+
+      &:hover {
+        color: #FFF;
+        text-decoration: none;
+      }
+
+      i {
+        line-height: 47px;
+        font-size: 26px;
+        display: block;
+      }
+      span {
+        line-height: 20px;
+        font-size: 12px;
+        display: block;
+      }
+    }
+  }
+
+}
