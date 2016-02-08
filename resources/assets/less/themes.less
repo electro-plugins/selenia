@@ -6,31 +6,33 @@
 
 @def-color1: #2a2f43;
 @def-color2: #424b66;
-@def-color3: #535d84;
-@def-color4: #6f7db0;
+@def-color3: #4B5477;
+@def-color4: #535d84;
+@def-color5: #6f7db0;
+@def-color6: #a1a5b3;
 
 #theme() when (@theme = default) {
-  .background { background: hsla(240,8%,67%,1); }
+  .background { background: @def-color6; }
   .main-background { background: #fff; border-right: 2px solid hsla(240,8%,60%,1) }
   .page-header-bar {
-    background: @def-color3;
+    background: @def-color4;
     color: #FFF
   }
   .content-background {
   }
-  .hover { color: #FFF; background-color: @def-color4; }
+  .hover { color: #FFF; background-color: @def-color5; }
   .form-label {
     font-weight: 700;
     color: #000;
   }
-  .sidebar { background: @def-color1; border:none; }
-  .top-bar { background: @def-color4; border: none; }
+  .sidebar { background: @def-color2; border:none; }
+  .top-bar { background: @def-color5; border: none; }
   .top-bar-menu { background-color: #FFF; color: #333 }
-  .top-bar-selected { background-color: @def-color3 !important; color: #FFF !important }
+  .top-bar-selected { background-color: @def-color4 !important; color: #FFF !important }
   .top-bar-text { color: #FFF }
   .top-bar-disabled-text { color: #acd7e6; }
   .top-bar-hover { #theme.hover; }
-  .navbar-header { background-color: #424b66; border-bottom: 1px solid }
+  .navbar-header { background-color: @def-color1; border-bottom: 1px solid @def-color1; }
   .main-menu-item { color: #EEE; font-weight: 100; }
   .main-menu-hover-item { #theme.hover; }
   .main-menu-selected-item { color: #74A5C1 }
@@ -44,8 +46,8 @@
   .table-stripe { background-color: #fcfdfe; }
   .table-borders { border-color: #ebeff2 !important; }
   .table-row-active { #theme.hover !important; }
-  .tabs-bar { background-color: @def-color3; }
-  .tab { background-color: @def-color2; color: #a1a5b3; border: none }
+  .action-bar { background-color: @def-color3; }
+  .tab { background-color: @def-color3; color: @def-color6; border: none }
   .tab-hover { #theme.hover; }
   .tab-selected { background-color: #FFF; color: #333; border: none; }
 }
