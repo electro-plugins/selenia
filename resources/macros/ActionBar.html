@@ -1,10 +1,10 @@
 <Macro name="ActionBar" defaultParam="content">
   <Param name="content" type="content"/>
-  <Param name="class" type="string" default="col-sm-12 col-md-11 col-lg-9"/>
-  <Param name="align" type="string" enum="left,center,right" default="right"/>
+  <Param name="extra" type="content"/>
 
-  <div class="action-bar row {{ @align }}">
-    <div class="{{ @class }}">{{ @content }}</div>
+  <div class="action-bar">
+    <div class="extra">{{ @extra }}</div>
+    {{ @content }}
   </div>
 
 </Macro>

@@ -1,14 +1,7 @@
 <Macro name="ButtonNew" defaultParam="content">
   <Param name="url" type="string"/>
   <Param name="label" type="string" default="$BUTTON_CREATE"/>
-  <Param name="content" type="content"/>
-  <Param name="barClass" type="string"/>
 
-  <ActionBar class="{{ @barClass }}">
-
-    <Button icon="glyphicon glyphicon-plus-sign" class="btn-success ActionNew" label="{{ @label }}" url="{{ @url }}"/>
-    {{ @content }}
-
-  </ActionBar>
+  <Button icon="glyphicon glyphicon-plus-sign" class="btn-success ActionNew" label="{{ @label }}" url="{{ @url }}"/>
 
 </Macro>

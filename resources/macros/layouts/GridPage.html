@@ -4,10 +4,13 @@
 
   <Content of="main">
 
-    <article class="grid-page">
-      {{ @content }}
 
-      {{ @actions }}
+    <article class="grid-page">
+      <ActionBar>
+        {{ @actions }}
+      </ActionBar>
+
+      {{ @content }}
     </article>
 
   </Content>

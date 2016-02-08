@@ -4,9 +4,27 @@
 
 .page-header-bar {
   position: relative;
-  margin: 0 -15px;
   padding: 0 30px;
+  min-height: 105px;
   #theme.page-header-bar;
+
+  .LanguageSelector {
+    a {
+      color: #CCC;
+      font-size: 12px;
+    }
+    li.disabled a {
+      color: #99a4cc !important;
+      font-weight: bold;
+      font-size: 14px;
+      padding-top: 5px;
+    }
+    .active a {
+      border-bottom: 2px solid #6f7db0;
+      color: #FFF !important;
+    }
+  }
+
 }
 
 .page-header {
@@ -31,7 +49,7 @@
   a {
     font-weight: 100;
     font-size: 13px;
-    color: #999;
+    color: #CCC;
     i {
       margin-right: 5px;
     }

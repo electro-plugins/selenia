@@ -6,9 +6,12 @@
   background-color: transparent;
 }
 
-form label {
-  font-weight: 300;
-  color: #999;
+label {
+  font-weight: normal;
+}
+
+.control-label {
+  #theme.form-label;
 }
 
 label.static {
@@ -36,7 +39,7 @@ label.static {
     right: 0;
     margin: 0;
     padding: 5px 15px;
-    background-color: #F8F8FF;
+    background-color: #f3f6f8;
   }
 }
 
@@ -44,13 +47,16 @@ label.static {
   padding: 10px 0;
 }
 
-.form-group .input-group {
-  padding-right: 15px;
-  padding-left: 15px;
-}
+.form-group {
 
-.form-group label {
-  .unselectable;
+  .input-group {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  label {
+    .unselectable;
+  }
 }
 
 .longText {
@@ -67,4 +73,32 @@ label.static {
 
 .veryShortText {
   //height: 72px !important;
+}
+
+.form-page {
+  margin: 45px 30px 0;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 100;
+    border-bottom: 1px solid #e8e8e8;
+    padding-left: 30px;
+    line-height: 53px;
+    margin: 0-15px 30px;
+    background: #fafbfc;
+    border-top: 1px solid #e8e8e8;  }
+
+  h4 {
+    font-weight: 700;
+    color: #999;
+    //border-bottom: 1px solid #e8e8e8;
+    line-height: 1;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 18px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
 }

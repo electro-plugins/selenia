@@ -4,18 +4,91 @@
 // Default Theme
 //-----------------------------
 
+@def-color1: #2a2f43;
+@def-color2: #424b66;
+@def-color3: #535d84;
+@def-color4: #6f7db0;
+
 #theme() when (@theme = default) {
+  .background { background: hsla(240,8%,67%,1); }
+  .main-background { background: #fff; border-right: 2px solid hsla(240,8%,60%,1) }
+  .page-header-bar {
+    background: @def-color3;
+    color: #FFF
+  }
+  .content-background {
+  }
+  .hover { color: #FFF; background-color: @def-color4; }
+  .form-label {
+    font-weight: 700;
+    color: #000;
+  }
+  .sidebar { background: @def-color1; border:none; }
+  .top-bar { background: @def-color4; border: none; }
+  .top-bar-menu { background-color: #FFF; color: #333 }
+  .top-bar-selected { background-color: @def-color3 !important; color: #FFF !important }
+  .top-bar-text { color: #FFF }
+  .top-bar-disabled-text { color: #acd7e6; }
+  .top-bar-hover { #theme.hover; }
+  .navbar-header { background-color: #424b66; border-bottom: 1px solid }
+  .main-menu-item { color: #EEE; font-weight: 100; }
+  .main-menu-hover-item { #theme.hover; }
+  .main-menu-selected-item { color: #74A5C1 }
+  .main-menu-disabled-item { color: #bec6cc }
+  .main-menu-current-item { color: #fff; }
+  .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
+  .table-head { border-color: #e6ecf0;}
+  .table-header-color { background-color: #f0f4f7 !important;}
+  .table-dark-border-color { border-color: #dadfe3 !important;}
+  .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: #dadfe3;}
+  .table-stripe { background-color: #fcfdfe; }
+  .table-borders { border-color: #ebeff2 !important; }
+  .table-row-active { #theme.hover !important; }
+  .tabs-bar { background-color: @def-color3; }
+  .tab { background-color: @def-color2; color: #a1a5b3; border: none }
+  .tab-hover { #theme.hover; }
+  .tab-selected { background-color: #FFF; color: #333; border: none; }
+}
+
+.btn-default {
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+.btn-primary {
+  .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+// Success appears as green
+.btn-success {
+  .button-variant(@btn-success-color; #239e75; #239e75);
+}
+// Info appears as blue-green
+.btn-info {
+  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+}
+// Warning appears as orange
+.btn-warning {
+  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+}
+// Danger and error appear as red
+.btn-danger {
+  .button-variant(@btn-danger-color; #be0a0e; #be0a0e);
+}
+
+
+//-----------------------------
+// Alternate Theme
+//-----------------------------
+
+#theme() when (@theme = alternate) {
   .background { background: #D2D6DE; }
   .main-background { background: #F3F6F8; }
+  .page-header-bar {
+    background: #F8FAFB;
+  }
   .content-background {
     background: #FFF;
     padding: 30px 15px 15px;
-    margin-top: 30px;
-    border: 1px solid #E0E0E0;
-  }
-  .page-header-bar {
-    background: #FFF;
-    border-bottom: 1px solid #E0E0E0;
+    //margin-top: 25px;
+    margin: -1px -30px;
   }
   .sidebar { background: #E9EFF3; border:none; border-right: 1px solid; border-color: #D7E1E8 !important; }
   .top-bar { background: #0087BE; border: none; }
@@ -36,32 +109,5 @@
   .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: #dadfe3;}
   .table-stripe { background-color: #fcfdfe; }
   .table-borders { border-color: #ebeff2 !important; }
-}
-
-//-----------------------------
-// Alternate Theme
-//-----------------------------
-
-#theme() when (@theme = alternate) {
-  .background { background: #D2D6DE; }
-  .main-background { background: #FFF; }
-  .content-background { }
-  .sidebar { background: #f8f8f8; border-right: 1px solid #DDD; }
-  .top-bar { background: linear-gradient(to bottom, #656565, #444444); }
-  .top-bar-text { color: #FFF }
-  .top-bar-disabled-text { color: #CCC }
-  .top-bar-hover { color: #fff; background-color: #2B6280 }
-  .hover { color: #33BBE3; }
-  .main-menu-item { color: #666; font-weight: 100 }
-  .main-menu-hover-item { color: #FFF; background: #2B6280 }
-  .main-menu-selected-item { color: #74A5C1; background: #F8F8F8 }
-  .main-menu-current-item { font-weight: bold; }
-  .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
-  .table-head {}
-  .table-header-color {}
-  .table-dark-border-color {}
-  .table-header {}
-  .table-stripe {}
-  .table-borders {}
 }
 

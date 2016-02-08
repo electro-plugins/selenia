@@ -1,20 +1,17 @@
 <Macro name="ButtonsSaveDelete" defaultParam="content">
   <Param name="key" type="id"/>
-  <Param name="content" type="content"/>
   <Param name="model" type="data"/>
-  <Param name="barClass" type="string" />
+  <Param name="saveLabel" type="string" default="$BUTTON_SAVE"/>
+  <Param name="deleteLabel" type="string" default="$BUTTON_DELETE"/>
 
-  <ActionBar class="{{ @barClass }}">
+  <Button class="btn-success ActionSave" type="submit" action="submit" label="{{ @saveLabel }}"/>
 
-    <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-
-    <If the="{{ @key }}" isSet>
-      <Button label="$BUTTON_DELETE" class="btn-danger" action="delete" confirm
-              message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"/>
-    </If>
-
-    {{ @content }}
-
-  </ActionBar>
+  <If the="{{ @key }}" isSet>
+    <Button label="{{ @deleteLabel }}"
+            class="btn-danger"
+            action="delete"
+            confirm
+            message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"/>
+  </If>
 
 </Macro>

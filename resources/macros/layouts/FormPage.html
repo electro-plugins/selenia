@@ -1,14 +1,42 @@
 <Macro name="FormPage" defaultParam="content">
   <Param name="content" type="content"/>
+  <Param name="withTabs" type="bool"/>
   <Param name="actions" type="content"/>
 
   <Content of="main">
 
-    <article class="form-page">
-      {{ @content }}
+    <If is="{{ @withTabs }}">
 
-      {{ @actions }}
-    </article>
+      <ActionBar>
+        {{ @actions }}
+
+        <Extra>
+          <ul class="nav nav-tabs main-tabs">
+            <li role="presentation" class="active"><a href="#main" data-toggle="tab">Conteúdo</a></li>
+            {!! #tabs !!}
+          </ul>
+        </Extra>
+      </ActionBar>
+
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="main">
+          <article class="form-page">
+            {{ @content }}
+          </article>
+        </div>
+        {!! #tabPanels !!}
+      </div>
+
+      <Else>
+        <ActionBar>
+          {{ @actions }}
+        </ActionBar>
+
+        <article class="form-page">
+          {{ @content }}
+        </article>
+      </Else>
+    </If>
 
   </Content>
 

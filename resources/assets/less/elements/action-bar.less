@@ -3,37 +3,59 @@
 --------------------------------------------------------------------*/
 
 .action-bar {
-  margin: 15px -15px -15px;
-  padding: 10px 15px;
-  border-top: 1px solid #e8e8e8;
-  //border-top: 1px solid #e0e0e0;
-  background-color: #fafbfc;
+  background-color: #424B66;
+
+  &:after {
+    clear: both;
+    display: block;
+    content: '';
+  }
+
+  button {
+    width: 100px;
+    position: relative;
+    float: right;
+    margin: 0;
+    border-radius: 0;
+    line-height: 37px;
+    min-width: 120px;
+  }
+
+  .extra {
+    float: left;
+
+    .main-tabs {
+      margin: 0;
+
+      a {
+        padding: 12px 5px;
+      }
+    }
+  }
+
+  .btn.with-icon {
+    i {
+      top: 16px;
+      font-size: 17px;
+    }
+    &:not(.icon-right) {
+      padding-left: 41px;
+      i {
+        left: 16px;
+      }
+    }
+    &.icon-right {
+      padding-right: 43px;
+    }
+
+  }
+
 }
 
-.action-bar:after {
-  clear: both;
-  display: block;
-  content: '';
-}
-
-.action-bar.right button {
-  float: right;
-  margin-left: 15px;
-}
-
-.action-bar.center {
-  text-align: center;
-}
-
-.action-bar button {
-  width: 100px;
-  position: relative;
-}
-
-.action-bar .btn-group button {
-  float: left;
-}
-
-.form-page .action-bar {
-  margin-top: 30px;
+.grid-page .action-bar {
+  margin-top: -66px;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  left: 0;
 }

@@ -1,23 +1,15 @@
 <Macro name="ButtonSubmit" defaultParam="content">
   <Param name="label" type="string" default="$BUTTON_SAVE"/>
-  <Param name="content" type="content"/>
   <Param name="autoDisable" type="bool"/>
-  <Param name="barClass" type="string"/>
 
-  <ActionBar class="{{ @barClass }}">
-
-    <If the="{{ @autoDisable }}" isTrue>
-      <Button id="submitBtn"
-              class="btn btn-primary ActionSave"
-              label="{{ @label }}"
-              script="Button_disable('submitBtn');doAction('submit')"/>
-      <Else>
-        <Button class="btn-primary ActionSave" label="{{ @label }}" action="submit"/>
-      </Else>
-    </If>
-
-    {{ @content }}
-
-  </ActionBar>
+  <If the="{{ @autoDisable }}" isTrue>
+    <Button id="submitBtn"
+            class="btn btn-primary ActionSave"
+            label="{{ @label }}"
+            script="Button_disable('submitBtn');doAction('submit')"/>
+    <Else>
+      <Button class="btn-primary ActionSave" label="{{ @label }}" action="submit"/>
+    </Else>
+  </If>
 
 </Macro>

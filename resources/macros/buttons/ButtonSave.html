@@ -1,12 +1,6 @@
-<Macro name="ButtonSave" defaultParam="content">
-  <Param name="content" type="content"/>
-  <Param name="barClass" type="string"/>
+<Macro name="ButtonSave">
+  <Param name="label" type="string" default="$BUTTON_SAVE"/>
 
-  <ActionBar class="{{ @barClass }}">
-
-    <Button class="btn-primary ActionSave" type="submit" action="submit" label="$BUTTON_SAVE"/>
-    {{ @content }}
-
-  </ActionBar>
+  <Button class="btn-primary ActionSave" type="submit" action="submit" label="{{ @label }}"/>
 
 </Macro>

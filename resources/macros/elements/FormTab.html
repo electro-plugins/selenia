@@ -1,0 +1,18 @@
+<Macro name="FormTab" defaultParam="content">
+  <Param name="title" type="string"/>
+  <Param name="id" type="id"/>
+  <Param name="content" type="content"/>
+
+  <Content appendTo="tabs">
+    <li role="presentation"><a href="#{{ @id }}" data-toggle="tab">{{ @title }}</a></li>
+  </Content>
+
+  <Content appendTo="tabPanels">
+    <div role="tabpanel" class="tab-pane" id="{{ @id }}">
+      <article class="form-page">
+        {{ @content }}
+      </article>
+    </div>
+  </Content>
+
+</Macro>

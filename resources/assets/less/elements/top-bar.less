@@ -28,25 +28,23 @@
     #theme.top-bar-text !important;
     padding: 15px 20px;
     &:focus {
-      background: transparent!important;
+      background: transparent !important;
     }
   }
   .dropdown.open, .navbar-top-links .active {
     a:not(:hover) {
-      background-color: #FFF !important;
+      #theme.top-bar-menu;
+    }
+    a[aria-expanded=true] {
+      background: #FFF !important;
       color: #333 !important;
     }
     .dropdown-toggle {
-      border: 1px solid #D8D8D8;
+      #theme.top-bar-selected;
       border-bottom: none;
       height: 49px;
       z-index: 1001;
       padding: 14px;
-
-      &:hover {
-        background-color: #FFF !important;
-        color: #333 !important;
-      }
     }
     .dropdown-menu {
       border-radius: 0;
@@ -95,4 +93,5 @@
   .dropdown-menu li a div {
     white-space: normal;
   }
+
 }

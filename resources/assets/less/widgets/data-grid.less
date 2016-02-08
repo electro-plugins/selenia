@@ -19,18 +19,14 @@
     #theme.table-stripe;
   }
 
-  .dataTables_wrapper .row:first-of-type {
-    margin-top: -20px;
-  }
-
-  .dataTables_wrapper .row:nth-of-type(2) {
-    margin-left: -30px;
-    margin-right: -30px;
-  }
-
   td.child .dtr-title {
     #theme.table-borders;
     #theme.table-dark-border-color
   }
 
+  .table-clickable tbody>tr:active {
+    #theme.table-row-active;
+
+    td { border-color: transparent !important }
+  }
 }
