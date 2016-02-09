@@ -8,6 +8,7 @@ use Selenia\DataObject;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\Navigation\NavigationLinkInterface;
+use Selenia\Interfaces\UserInterface;
 use Selenia\Localization\Services\Locale;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 
@@ -17,6 +18,8 @@ class AdminPageComponent extends PageComponent
   public $admin;
   /** @var AdminInterfaceSettings */
   public $adminSettings;
+  /** @var bool */
+  public $devMode;
   /** @var Locale */
   public $locale;
   /** @var NavigationLinkInterface */
@@ -37,10 +40,12 @@ class AdminPageComponent extends PageComponent
 
   protected function initialize ()
   {
-    if (!$this->session->user ())
+    $user = $this->session->user ();
+    if (!$user)
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
+    $this->devMode  = $user->role () == UserInterface::USER_ROLE_DEVELOPER;
     $settings       = $this->adminSettings;
     $target         = $settings->topMenuTarget ();
     $this->topMenu  = exists ($target) ? $this->navigation [$target] : $this->navigation;

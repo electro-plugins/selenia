@@ -3,31 +3,30 @@
  --------------------------------------------------------------------*/
 
 
-$ (function ()
-{
-  $ ('#side-menu').metisMenu ({
-    toggle:        true // true to close other group when opening new group
-  });
+$ (function () {
+  if ($.fn.metisMenu)
+    $ ('#side-menu').metisMenu ({
+      toggle: true // true to close other group when opening new group
+    });
 
   // Loads the correct sidebar on window load,
   // Collapses the sidebar on window resize.
   // Sets the min-height of #page-wrapper to window size
 
-  $ (window).bind ("load resize", function ()
-  {
+  $ (window).bind ("load resize", function () {
     var sideMenu = $ ('#side-menu');
     if (!sideMenu.length) return;
     //topOffset = 50;
     var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
     if (width < 768) {
       $ ('div.navbar-collapse').addClass ('collapse');
-      sideMenu.data().mm.options.doubleTapToGo = true;
+      sideMenu.data ().mm.options.doubleTapToGo = true;
       //$ ('body').removeClass ('desktop').addClass ('mobile');
       //topOffset = 100; // 2-row-menu
     } else {
       $ ('div.navbar-collapse').removeClass ('collapse');
       //$ ('body').removeClass ('mobile').addClass('desktop');
-      sideMenu.data().mm.options.doubleTapToGo = false;
+      sideMenu.data ().mm.options.doubleTapToGo = false;
     }
 
     //height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
@@ -53,8 +52,7 @@ $ (function ()
  JQUERY EXTENSIONS
  --------------------------------------------------------------------*/
 
-$.fn.bindInputToSetting = function (key)
-{
+$.fn.bindInputToSetting = function (key) {
   var e = $ (this);
   switch (e.attr ('type')) {
     case 'checkbox':
@@ -75,10 +73,8 @@ $.browser = {};
  MISC
  --------------------------------------------------------------------*/
 
-function bindInputsToSettings (map)
-{
-  Object.keys (map).forEach (function (k)
-  {
+function bindInputsToSettings (map) {
+  Object.keys (map).forEach (function (k) {
     $ (k).bindInputToSetting (map[k]);
   });
 }
@@ -91,16 +87,13 @@ function bindInputsToSettings (map)
  * Embedded expressions can be any valid javascript expressions, referencing any javascript variable in scope.
  * @type {function(string):string}
  */
-var tpl = (function ()
-{
+var tpl = (function () {
   var last, cache;
 
-  return function (str)
-  {
+  return function (str) {
     if (str == last) return cache;
     last = str;
-    return cache = "'" + str.replace (/\$\{(.*?)}/g, function (m, exp)
-      {
+    return cache = "'" + str.replace (/\$\{(.*?)}/g, function (m, exp) {
         return "'+(" + exp + ")+'"
       }) + "'";
   }
@@ -112,10 +105,10 @@ var tpl = (function ()
  * @param id
  * @param action
  */
-function check(ev,id,action) {
+function check (ev, id, action) {
   action = action || 'check';
-  ev.stopPropagation();
-  $.post(location.href, { _action: action, id: id });
+  ev.stopPropagation ();
+  $.post (location.href, { _action: action, id: id });
 }
 
 /*--------------------------------------------------------------------
@@ -125,74 +118,66 @@ function check(ev,id,action) {
 var mem = {
   listeners: {},
 
-  init: function ()
-        {
-          $ (window).on ('storage', function (ev)
-          {
-            this.onChange (ev.key, this.get (ev.key));
-          }.bind (this));
-        },
+  init: function () {
+    $ (window).on ('storage', function (ev) {
+      this.onChange (ev.key, this.get (ev.key));
+    }.bind (this));
+  },
 
-  onChange: function (key, val)
-            {
-              var list = this.listeners[key];
-              if (list && list.length)
-                list.forEach (function (l) { l (val) });
-            },
+  onChange: function (key, val) {
+    var list = this.listeners[key];
+    if (list && list.length)
+      list.forEach (function (l) { l (val) });
+  },
 
-  get: function (key, defaultVal)
-       {
-         var v = localStorage[key];
-         if (v === undefined)
-           return defaultVal !== undefined ? this.set (key, defaultVal) : null;
-         return JSON.parse (v);
-       },
+  get: function (key, defaultVal) {
+    var v = localStorage[key];
+    if (v === undefined)
+      return defaultVal !== undefined ? this.set (key, defaultVal) : null;
+    return JSON.parse (v);
+  },
 
-  set: function (key, val)
-       {
-         var g = key.lastIndexOf ('.');
-         if (g >= 0) {
-           var group = key.substr (0, g);
-           var k = key.substr (g + 1);
-           var keys = JSON.parse (localStorage[group] || '{}');
-           if (!keys[k]) {
-             keys[k] = 1;
-             localStorage[group] = JSON.stringify (keys);
-           }
-         }
-         var s = JSON.stringify (val);
-         if (localStorage[key] != s) {
-           localStorage[key] = s;
-           this.onChange (key, val);
-         }
-         return val;
-       },
+  set: function (key, val) {
+    var g = key.lastIndexOf ('.');
+    if (g >= 0) {
+      var group = key.substr (0, g);
+      var k     = key.substr (g + 1);
+      var keys  = JSON.parse (localStorage[group] || '{}');
+      if (!keys[k]) {
+        keys[k]             = 1;
+        localStorage[group] = JSON.stringify (keys);
+      }
+    }
+    var s = JSON.stringify (val);
+    if (localStorage[key] != s) {
+      localStorage[key] = s;
+      this.onChange (key, val);
+    }
+    return val;
+  },
 
-  getGroup: function (group)
-            {
-              var keys = this.get (group, {});
-              var o = {};
-              for (var k in keys)
-                if (keys.hasOwnProperty (k))
-                  o[k] = JSON.parse (localStorage[group + '.' + k] || '{}');
-              return o;
-            },
+  getGroup: function (group) {
+    var keys = this.get (group, {});
+    var o    = {};
+    for (var k in keys)
+      if (keys.hasOwnProperty (k))
+        o[k] = JSON.parse (localStorage[group + '.' + k] || '{}');
+    return o;
+  },
 
-  setGroup: function (group, obj)
-            {
-              var keys = JSON.parse (localStorage[group] || '{}');
-              for (var k in obj)
-                if (obj.hasOwnProperty (k)) {
-                  localStorage[group + '.' + k] = JSON.stringify (obj[k]);
-                  keys[k] = 1;
-                }
-              localStorage[group] = JSON.stringify (keys);
-            },
+  setGroup: function (group, obj) {
+    var keys = JSON.parse (localStorage[group] || '{}');
+    for (var k in obj)
+      if (obj.hasOwnProperty (k)) {
+        localStorage[group + '.' + k] = JSON.stringify (obj[k]);
+        keys[k]                       = 1;
+      }
+    localStorage[group] = JSON.stringify (keys);
+  },
 
-  listen: function (key, handler)
-          {
-            (this.listeners [key] = (this.listeners [key] || [])).push (handler);
-          }
+  listen: function (key, handler) {
+    (this.listeners [key] = (this.listeners [key] || [])).push (handler);
+  }
 };
 
 /*--------------------------------------------------------------------
