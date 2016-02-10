@@ -1,10 +1,10 @@
 <Macro name="FormLayout" defaultParam="content">
   <Param name="content" type="content"/>
-  <Param name="formClass" type="string" default=""/>
-  <Param name="fieldClass" type="string"/>
-  <Param name="labelClass" type="string" default="col-sm-10 col-md-9 col-lg-7"/>
+  <Param name="formClass" type="string"/>
+  <Param name="fieldClass" type="string" default="form-group col-sm-10 col-md-9 col-lg-7"/>
+  <Param name="labelClass" type="string" default=""/>
   <Param name="controlClass" type="string" default="form-control"/>
-  <Param name="groupClass" type="string" default="form-group col-sm-10 col-md-9 col-lg-7"/>
+  <Param name="groupClass" type="string"/>
 
   <div class="row form-layout">
     <div class="{{ @formClass }}">

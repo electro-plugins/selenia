@@ -3,12 +3,19 @@
   <Param name="id" type="id"/>
   <Param name="content" type="content"/>
 
+  <Script name="tabPanels">
+    $ ('.action-bar a[data-toggle=tab]').on ('shown.bs.tab', function (e) {
+      var page = $ ($ (e.target).attr ('href'));
+      page.find ('.form-control:first').focus ();
+    });
+  </Script>
+
   <Content appendTo="tabs">
     <li role="presentation"><a href="#{{ @id }}" data-toggle="tab">{{ @title }}</a></li>
   </Content>
 
   <Content appendTo="tabPanels">
-    <div role="tabpanel" class="tab-pane" id="{{ @id }}">
+    <div role="tabpanel" class="tab-pane fade" id="{{ @id }}">
       <article class="form-page">
         {{ @content }}
       </article>

@@ -52,6 +52,7 @@ class AdminPresets
   {
     $sel->props->apply ([
       'emptyLabel' => '$COMPONENT_SELECT_EMPTY_LABEL',
+      'noResultsText' => '$COMPONENT_SELECT_NO_RESULTS',
     ]);
   }
 

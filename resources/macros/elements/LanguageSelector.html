@@ -5,7 +5,7 @@
     <Repeat for="{{ locale.getAvailableExt }}" as="i:loc">
       <Link id="btn-{{ loc.name }}"
             wrapper="li"
-            script="setLang('{{ loc.name }}')"
+            script="setLang(event,'{{ loc.name }}')"
             label="{{ loc.label }}"
             active="{{ !i }}"/>
     </Repeat>
@@ -13,16 +13,23 @@
   </ul>
 
   <Script name="LanguageSelector">
-    console.log ('Lang: {{ locale.available.0 }}');
+    var prevFocus = $ ();
+    $ ('body').focusout (function (ev) {
+      prevFocus = $ (ev.target);
+    });
+//    console.log ('Lang: {{ locale.available.0 }}');
     $ ('{{ @container }}')
       .attr ('lang', '{{ locale.available.0 }}')
       .find ('[lang]:first-of-type').show ();
-    function setLang (lang) {
+    function setLang (ev, lang) {
       $ ('.LanguageSelector li').removeClass ('active');
       $ ('#btn-' + lang).addClass ('active');
       var c = $ ('{{ @container }}').attr ('lang', lang);
       c.find ('[lang]').hide ();
       c.find ('[lang="' + lang + '"]').show ();
+      if (prevFocus.attr ('lang'))
+        prevFocus.parent ().find ('[lang="' + lang + '"]').focus ();
+      else prevFocus.focus ();
     }
   </Script>
 
