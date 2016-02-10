@@ -1,12 +1,12 @@
-<Macro name="FormLayout" defaultParam="content">
+<Macro name="HFormLayout" defaultParam="content">
   <Param name="content" type="content"/>
-  <Param name="formClass" type="string" default=""/>
-  <Param name="fieldClass" type="string"/>
-  <Param name="labelClass" type="string" default="col-sm-10 col-md-9 col-lg-7"/>
+  <Param name="formClass" type="string" default="form-horizontal"/>
+  <Param name="fieldClass" type="string" default="form-group"/>
+  <Param name="labelClass" type="string" default="control-label col-sm-2"/>
   <Param name="controlClass" type="string" default="form-control"/>
   <Param name="groupClass" type="string" default="form-group col-sm-10 col-md-9 col-lg-7"/>
 
-  <div class="row form-layout">
+  <div class="row h-form-layout">
     <div class="{{ @formClass }}">
       <Apply where="Field">
         <Set class="{{ @fieldClass }}"

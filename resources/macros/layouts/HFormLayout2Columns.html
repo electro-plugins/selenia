@@ -1,14 +1,14 @@
-<Macro name="FormLayout2Columns">
+<Macro name="HFormLayout2Columns">
   <Param name="column1" type="content"/>
   <Param name="column2" type="content"/>
   <Param name="columnClass" type="string" default="col-sm-12 col-lg-6"/>
-  <Param name="formClass" type="string"/>
-  <Param name="fieldClass" type="string"/>
-  <Param name="labelClass" type="string"/>
+  <Param name="formClass" type="string" default="form-horizontal"/>
+  <Param name="fieldClass" type="string" default="form-group"/>
+  <Param name="labelClass" type="string" default="control-label col-md-3"/>
   <Param name="controlClass" type="string" default="form-control"/>
-  <Param name="groupClass" type="string" default="form-group"/>
+  <Param name="groupClass" type="string" default="col-md-9"/>
 
-  <div class="row form-layout-2-columns">
+  <div class="row h-form-layout-2-columns">
     <div class="{{ @columnClass }}">
       <div class="{{ @formClass }}">
         <Apply where="Field">

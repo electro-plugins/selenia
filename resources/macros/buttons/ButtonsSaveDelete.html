@@ -4,14 +4,15 @@
   <Param name="saveLabel" type="string" default="$BUTTON_SAVE"/>
   <Param name="deleteLabel" type="string" default="$BUTTON_DELETE"/>
 
-  <Button class="btn-success ActionSave" type="submit" action="submit" label="{{ @saveLabel }}"/>
+  <Button class="btn-primary ActionSave" type="submit" action="submit" label="{{ @saveLabel }}" icon="fa fa-check-circle"/>
 
   <If the="{{ @key }}" isSet>
     <Button label="{{ @deleteLabel }}"
             class="btn-danger"
             action="delete"
             confirm
-            message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"/>
+            message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"
+            icon="fa fa-times-circle"/>
   </If>
 
 </Macro>
