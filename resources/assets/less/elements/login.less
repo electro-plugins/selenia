@@ -4,29 +4,82 @@
 
 .login-box-body {
   display: inline-block;
-  border: 1px solid #DDD;
   max-width: 400px;
   width: 100%;
-  padding: 30px 45px;
-  background: #FFF;
+  padding: 20px 45px;
+  background: #333952;
+  border: 2px solid #535d84;
+  color: #abaec7;
+  text-align: left;
 
   h1 {
-    color: #666;
-    font-weight: 300;
+    color: #c2ceff;
+    font-weight: 100;
+    font-size: 24px;
     text-align: center;
-    margin: 30px 0;
+    margin: 5px 0 15px 0;
+  }
+
+  h3 {
+    color: #919bc3;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 100;
+    margin: -5px 0 20px;
   }
 
   h4 {
-    color: #666;
-    margin: 0 0 25px;
+    color: #7f87a3;
+    margin: 0 0 18px;
     font-size: 16px;
-    font-weight: 300;
+    text-align: center;
+    font-weight: 100;
+  }
+
+  .remember {
+    color: #7f87a3;
+    float: right;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  input[type=text], input[type=password] {
+    background-color: hsla(234,20%,80%,1);
+    border: none;
+  }
+
+  // Override autofilled inputs' colors on Chrome
+  input[type]:-webkit-autofill, input[type]:-webkit-autofill:focus {
+    box-shadow: 0 0 0 1000px hsla(234,20%,80%,1) inset!important;
+  }
+
+  input[type=checkbox]:focus + label {
+    outline: 1px dotted #888;
+  }
+
+  .form-control-feedback {
+    color: #7f87a3;
+  }
+
+  label[for=remember] {
+    margin-top: 7px;
   }
 
   .btn {
-    margin: 15px 0 0;
     padding-right: 18px !important;
+    background-color: #424b66;
+    border: 1px solid #2A2F43;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: #535d84;
+    }
+    &:active {
+      background-color: #4B5477;
+    }
 
     i {
       position: static;
@@ -42,7 +95,7 @@
 body.login-page {
   max-width: none;
   margin-left: 0 !important;
-  #theme.background;
+  #theme.login-background;
 
   form {
     display: table;
