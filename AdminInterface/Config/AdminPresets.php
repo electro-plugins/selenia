@@ -6,6 +6,7 @@ use Selenia\Plugins\MatisseComponents\DataGrid;
 use Selenia\Plugins\MatisseComponents\Field;
 use Selenia\Plugins\MatisseComponents\Input;
 use Selenia\Plugins\MatisseComponents\Select;
+use Selenia\Plugins\MatisseComponents\Switch_;
 
 class AdminPresets
 {
@@ -53,6 +54,14 @@ class AdminPresets
     $sel->props->apply ([
       'emptyLabel' => '$COMPONENT_SELECT_EMPTY_LABEL',
       'noResultsText' => '$COMPONENT_SELECT_NO_RESULTS',
+    ]);
+  }
+
+  function Switch_ (Switch_ $sw)
+  {
+    $sw->props->apply ([
+      'labelOn' => '$COMPONENT_SWITCH_LABEL_ON',
+      'labelOff' => '$COMPONENT_SWITCH_LABEL_OFF',
     ]);
   }
 
