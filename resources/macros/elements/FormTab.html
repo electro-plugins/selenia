@@ -4,10 +4,12 @@
   <Param name="content" type="content"/>
 
   <Script name="tabPanels">
-    $ ('.action-bar a[data-toggle=tab]').on ('shown.bs.tab', function (e) {
+    // Autofocus first tab input.
+    $ ('.main-tabs a[data-toggle=tab]').on ('shown.bs.tab', function (e) {
       var page = $ ($ (e.target).attr ('href'));
       page.find ('.form-control:first').focus ();
     });
+    $ ('.main-tabs li:first-of-type a').tab ('show');
   </Script>
 
   <Content appendTo="tabs">
