@@ -30,15 +30,16 @@
 .page-header {
   font-weight: 100;
   font-size: 28px;
-  margin: 0 0 5px 0;
+  margin: 0; /* DO NOT set a margin here, or it WILL interfere with the container's layout! */
   padding-top: 20px;
+  padding-bottom: 10px;
   border-bottom: none;
 }
 
 .breadcrumb {
   background: transparent;
-  padding: 0 0 15px 0;
-  margin: 0 0 5px;
+  padding: 0;
+  margin: 0; /* DO NOT set a margin here, or it WILL interfere with the container's layout! */
   &>li {
     font-size: 0; //prevent interference from white space
     &+li:before {

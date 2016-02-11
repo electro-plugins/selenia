@@ -65,7 +65,7 @@ class User extends DataObject implements UserInterface
   {
     if (isset($set))
       return $this->realName = $set;
-    return $this->realName;
+    return $this->realName ?: ucfirst($this->username);
   }
 
   function username ($set = null)
