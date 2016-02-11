@@ -35,13 +35,6 @@ class AdminPresets
     ]);
   }
 
-  function Input (Input $input)
-  {
-    $input->props->apply ([
-      'lang' => $this->locale->locale (),
-    ]);
-  }
-
   function Field (Field $field)
   {
     $field->props->apply ([
@@ -49,10 +42,17 @@ class AdminPresets
     ]);
   }
 
+  function Input (Input $input)
+  {
+    $input->props->apply ([
+      'lang' => $this->locale->locale (),
+    ]);
+  }
+
   function Select (Select $sel)
   {
     $sel->props->apply ([
-      'emptyLabel' => '$COMPONENT_SELECT_EMPTY_LABEL',
+      'emptyLabel'    => '$COMPONENT_SELECT_EMPTY_LABEL',
       'noResultsText' => '$COMPONENT_SELECT_NO_RESULTS',
     ]);
   }
@@ -60,8 +60,9 @@ class AdminPresets
   function Switch_ (Switch_ $sw)
   {
     $sw->props->apply ([
-      'labelOn' => '$COMPONENT_SWITCH_LABEL_ON',
+      'labelOn'  => '$COMPONENT_SWITCH_LABEL_ON',
       'labelOff' => '$COMPONENT_SWITCH_LABEL_OFF',
+      'color'    => 'purple',
     ]);
   }
 
