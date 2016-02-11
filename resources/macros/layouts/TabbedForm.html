@@ -1,6 +1,13 @@
-<Macro name="TabbedForm" defaultParam="content">
-  <Param name="content" type="content"/>
+<Macro name="TabbedForm" defaultParam="tabs">
+  <Param name="tabs" type="content"/>
   <Param name="actions" type="content"/>
+  <Param name="multilingual" type="bool"/>
+
+  <If is="{{ @multilingual }}">
+    <ShowLanguageSelector/>
+  </If>
+
+  {{ @tabs }}
 
   <Content of="main">
 
