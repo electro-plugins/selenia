@@ -12,6 +12,15 @@
 @def-color6: #6f7db0;
 @def-color7: #a1a5b3;
 
+@brand-primary: darken(#333952, 0%); // Original: #428bca
+@brand-success: darken(#239e75, 5%); // Original: #5cb85c
+@brand-info:    darken(#5bc0de, 10%); // Original: #5bc0de
+@brand-warning: darken(#f0ad4e, 10%); // Original: #f0ad4e
+@brand-danger:  darken(#d9534f, 20%); // Original: #d9534f
+@btn-default-color: #d1d5e6;
+@btn-default-text: #666;
+@btn-border-darken: 0%;
+
 #theme() when (@theme = default) {
   .background { background: @def-color7; }
   .login-background { background: @def-color4; }
@@ -25,7 +34,7 @@
   .hover { color: #FFF; background-color: @def-color6; }
   .form-label {
     font-weight: 700;
-    color: #666;
+    color: #333;
   }
   .sidebar { background: @def-color3; border:none; }
   .top-bar { background: @def-color2; border: none; }
@@ -58,30 +67,6 @@
   .admin-icon { color: darken(@def-color7, 10%); }
   .admin-selected-icon { background-color: @def-color2; color: #DDD; }
 }
-
-.btn-default {
-  .button-variant(@btn-default-color; #E5EAEE; #E5EAEE);
-}
-.btn-primary {
-  .button-variant(@btn-primary-color; #383E59; #383E59);
-}
-// Success appears as green
-.btn-success {
-  .button-variant(@btn-success-color; #239e75; #239e75);
-}
-// Info appears as blue-green
-.btn-info {
-  .button-variant(@btn-info-color; #5ACFDD; #5ACFDD);
-}
-// Warning appears as orange
-.btn-warning {
-  .button-variant(@btn-warning-color; #FBB600; #FBB600);
-}
-// Danger and error appear as red
-.btn-danger {
-  .button-variant(@btn-danger-color; #be0a0e; #be0a0e);
-}
-
 
 //-----------------------------
 // Alternate Theme
@@ -118,5 +103,29 @@
   .table-header {  #theme.table-header-color; #theme.table-head; border-bottom-color: #dadfe3;}
   .table-stripe { background-color: #fcfdfe; }
   .table-borders { border-color: #ebeff2 !important; }
+}
+
+.btn-default {
+  .button-variant(@btn-default-color; @btn-default-color; darken(@btn-default-color,@btn-border-darken));
+  color: @btn-default-text !important;
+}
+.btn-primary {
+  .button-variant(@btn-primary-color; @brand-primary; darken(@brand-primary,@btn-border-darken));
+}
+// Success appears as green
+.btn-success {
+  .button-variant(@btn-success-color; @brand-success; darken(@brand-success,@btn-border-darken));
+}
+// Info appears as blue-green
+.btn-info {
+  .button-variant(@btn-info-color; @brand-info; darken(@brand-info,@btn-border-darken));
+}
+// Warning appears as orange
+.btn-warning {
+  .button-variant(@btn-warning-color; @brand-warning; darken(@brand-warning,@btn-border-darken));
+}
+// Danger and error appear as red
+.btn-danger {
+  .button-variant(@btn-danger-color; @brand-danger; darken(@brand-danger,@btn-border-darken));
 }
 

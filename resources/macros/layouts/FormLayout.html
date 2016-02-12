@@ -1,23 +1,70 @@
-<Macro name="FormLayout" defaultParam="content">
-  <Param name="content" type="content"/>
+<Macro name="FormLayout" defaultParam="column1">
+  <Param name="layout" type="string" enum="H,V" default="H"/>
+  <Param name="column1" type="content"/>
+  <Param name="column2" type="content"/>
+  <Param name="columnClass" type="string" default="col-sm-12 col-lg-6"/>
+  <Param name="fieldWidths" type="string"/>
   <Param name="formClass" type="string"/>
-  <Param name="fieldClass" type="string" default="form-group col-sm-10 col-md-9 col-lg-7"/>
+  <Param name="fieldClass" type="string" default="form-group"/>
   <Param name="labelClass" type="string"/>
   <Param name="controlClass" type="string" default="form-control"/>
   <Param name="groupClass" type="string"/>
 
-  <div class="row form-layout">
-    <div class="{{ @formClass }}">
-      <Apply where="Field">
-        <Set class="{{ @fieldClass }}"
-             labelClass="{{ @labelClass }}"
-             controlClass="{{ @controlClass }}"
-             groupClass="{{ @groupClass }}"/>
+  <If the="{{ @layout }}" is="V" atParsingTime>
+    <MacroParam name="fieldWidths" default="col-md-12 col-lg-10 col-lg-offset-1"/>
+  </If>
 
-        {{ @content }}
+  <If the="{{ @layout }}" is="H" atParsingTime>
+    <MacroParam name="formClass" default="form-horizontal"/>
+    <MacroParam name="labelClass" default="control-label col-sm-2"/>
+    <MacroParam name="groupClass" default="col-sm-10"/>
+  </If>
 
-      </Apply>
+  <If the="{{ @column2 }}" not isSet atParsingTime>
+
+    <div class="row form-layout form-layout-1-col form-layout-{{ @layout }}">
+      <div class="{{ @formClass }}">
+        <Apply where="Field">
+          <Set class="{{ @fieldClass }} {{ @fieldWidths }}"
+               labelClass="{{ @labelClass }}"
+               controlClass="{{ @controlClass }}"
+               groupClass="{{ @groupClass }}"/>
+
+          {{ @column1 }} {{ @column2 }}
+
+        </Apply>
+      </div>
     </div>
-  </div>
+
+    <Else>
+
+      <div class="row form-layout form-layout-2-cols form-layout-{{ @layout }}">
+        <div class="{{ @columnClass }}">
+          <div class="{{ @formClass }}">
+            <Apply where="Field">
+              <Set class="{{ @fieldClass }}"
+                   labelClass="{{ @labelClass }}"
+                   controlClass="{{ @controlClass }}"
+                   groupClass="{{ @groupClass }}"/>
+              {{ @column1 }}
+            </Apply>
+          </div>
+        </div>
+        <div class="{{ @columnClass }}">
+          <div class="{{ @formClass }}">
+            <Apply where="Field">
+              <Set class="{{ @fieldClass }}"
+                   labelClass="{{ @labelClass }}"
+                   controlClass="{{ @controlClass }}"
+                   groupClass="{{ @groupClass }}"/>
+              {{ @column2 }}
+            </Apply>
+          </div>
+        </div>
+      </div>
+
+    </Else>
+
+  </If>
 
 </Macro>

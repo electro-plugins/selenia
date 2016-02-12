@@ -4,7 +4,7 @@
   <Param name="saveLabel" type="string" default="$BUTTON_SAVE"/>
   <Param name="deleteLabel" type="string" default="$BUTTON_DELETE"/>
 
-  <Button class="btn-primary ActionSave" type="submit" action="submit" label="{{ @saveLabel }}" icon="fa fa-check-circle"/>
+  <ButtonSave label="{{ @saveLabel }}"/>
 
   <If the="{{ @key }}" isSet>
     <Button label="{{ @deleteLabel }}"
@@ -12,7 +12,7 @@
             action="delete"
             confirm
             message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"
-            icon="fa fa-times-circle"/>
+            icon="fa fa-times"/>
   </If>
 
 </Macro>
