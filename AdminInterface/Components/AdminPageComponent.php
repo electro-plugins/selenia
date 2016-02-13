@@ -54,6 +54,13 @@ class AdminPageComponent extends PageComponent
     parent::initialize ();
   }
 
+  protected function loadRequestedRecord ($table, $param = 'id')
+  {
+    $id = $this->request->getAttribute ("@$param");
+    if (!$id) return [];
+    return $this->pdo->query("SELECT * FROM $table WHERE id=?", [$id])->fetch();
+  }
+
   function inject ()
   {
     return function (AdminInterfaceSettings $settings, ConnectionInterface $con, Locale $locale) {

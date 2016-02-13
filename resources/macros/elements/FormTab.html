@@ -2,6 +2,7 @@
   <Param name="title" type="string"/>
   <Param name="id" type="id"/>
   <Param name="content" type="content"/>
+  <Param name="class" type="string" default="form-page"/>
 
   <Script name="tabPanels">
     // Autofocus first tab input.
@@ -18,7 +19,7 @@
 
   <Content appendTo="tabPanels">
     <div role="tabpanel" class="tab-pane" id="{{ @id }}">
-      <article class="form-page">
+      <article class="{{ @class }}">
         {{ @content }}
       </article>
     </div>
