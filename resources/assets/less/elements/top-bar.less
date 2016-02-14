@@ -10,7 +10,7 @@
     border: none;
     padding: 7px 9px;
 
-    &:hover, &:focus {
+    &:hover {
       #theme.menu-button-active;
     }
     i {
@@ -18,11 +18,12 @@
     }
   }
 
-  a:hover, a:focus {
+  a:hover {
     #theme .top-bar-hover !important;
   }
-  li a {
-    padding: 8px 20px; // Spacing of menu links
+  a:focus {
+    outline: 1px dotted rgba(255,255,255,0.5);
+    outline-offset: -5px;
   }
   .navbar-brand {
     padding: 15px 20px;
@@ -45,23 +46,26 @@
     }
     .dropdown-toggle {
       #theme.top-bar-selected;
-      border-bottom: none;
-      height: 49px;
       z-index: 1001;
-      padding: 14px;
     }
     .dropdown-menu {
+      border: none;
       border-radius: 0;
       margin-top: -1px;
+      padding: 0;
+      outline: 1px solid rgba(0,0,0,0.1);
+      background-color: #F8F8F8;
     }
   }
 }
 
 .navbar-top-links {
   margin-right: 0;
+  font-size: 0;
 
   a {
     #theme.top-bar-text;
+    font-size: 14px;
   }
 
   a i {
@@ -73,8 +77,8 @@
   }
 
   li a {
-    padding: 15px;
-    min-height: 50px;
+    padding: 0 20px; // Spacing of menu links
+    line-height: @topbar-height;
   }
 
   li.disabled a {
@@ -90,12 +94,51 @@
   }
 
   .dropdown-menu li a {
-    padding: 7px 20px;
-    min-height: 0;
+    background-color: #f8f8f8;
+    line-height: @menu-item-height;
+    padding: 0 40px 0 9px;
+    margin-left: 30px;
+    border-left: 1px solid #e0e0e0;
+
+    i {
+      margin: 0 14px 0 -31px;
+      color: #555;
+    }
+
+    &:hover {
+      margin-left: 0 !important;
+      padding-left: 40px !important;
+      border-left: 0;
+
+      i {
+        color: #FFF;
+      }
+    }
+    &:focus {
+      outline-color: rgba(0,0,0,0.5);
+    }
   }
 
   .dropdown-menu li a div {
     white-space: normal;
+  }
+
+  .dropdown-menu .divider {
+    height: 11px;
+    margin: 0 0 0 30px;
+    border-left: 1px solid #ddd;
+    background: #FFF;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-top: 5px;
+      height: 1px;
+      background-color: #e5e5e5;
+    }
   }
 
 }

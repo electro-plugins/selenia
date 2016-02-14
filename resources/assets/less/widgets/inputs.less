@@ -56,7 +56,28 @@ input[type=radio] {
   }
 }
 
-input[lang], textarea[lang] {
-  border-color: #e6be8a;
-}
+//--------------------------------
+// Field wrapper component styles
+//--------------------------------
 
+input[lang] + .input-group-btn,
+textarea[lang] + .input-group-btn
+{
+  vertical-align: top;
+
+  ul {
+    top: auto;
+    margin-top: -1px;
+    border-radius: 0;
+    min-width: 80px;
+
+    a i {
+      margin-right: 10px;
+      color: #555;
+    }
+
+    a:hover {
+      #theme .top-bar-hover;
+    }
+  }
+}

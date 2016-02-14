@@ -35,10 +35,11 @@ class AdminPresets
     ]);
   }
 
-  function Field (Field $field)
+  function Field (Field $field, array $props = null)
   {
     $field->props->apply ([
-      'languages' => $this->locale->available (),
+      'languages' => $this->locale->getAvailableExt(),
+      'lang' => $this->locale->locale()
     ]);
   }
 

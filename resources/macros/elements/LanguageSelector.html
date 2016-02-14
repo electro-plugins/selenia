@@ -5,7 +5,7 @@
     <Repeat for="{{ locale.getAvailableExt }}" as="i:loc">
       <Link id="btn-{{ loc.name }}"
             wrapper="li"
-            script="setLang(event,'{{ loc.name }}')"
+            script="setLang('{{ loc.name }}')"
             label="{{ loc.label }}"
             active="{{ !i }}"/>
     </Repeat>
@@ -15,21 +15,45 @@
   <Script name="LanguageSelector">
     var prevFocus = $ ();
     $ ('body').focusout (function (ev) {
-      prevFocus = $ (ev.target);
+      var e = $ (ev.target);
+      if (ev.target.tagName == 'INPUT' || ev.target.tagName == 'TEXTAREA')
+        prevFocus = $ (ev.target);
+      else prevFocus = null;
     });
-//    console.log ('Lang: {{ locale.available.0 }}');
-    $ ('{{ @container }}')
-      .attr ('lang', '{{ locale.available.0 }}')
-      .find ('[lang]:first-of-type').show ();
-    function setLang (ev, lang) {
+
+    setLang ('{{ locale.locale }}');
+
+    function i18n_show(e) {
+      e.css ({ position: 'relative', top: 'auto' });
+    }
+
+    function i18n_hide(e) {
+      e.css ({ position: '', top: '' });
+    }
+
+    function setLang (lang, menuLink) {
       $ ('.LanguageSelector li').removeClass ('active');
       $ ('#btn-' + lang).addClass ('active');
-      var c = $ ('{{ @container }}').attr ('lang', lang);
-      c.find ('[lang]').hide ();
-      c.find ('[lang="' + lang + '"]').show ();
-      if (prevFocus.attr ('lang'))
-        prevFocus.parent ().find ('[lang="' + lang + '"]').focus ();
-      else prevFocus.focus ();
+      var c = $ ('{{ @container }}')
+        .attr ('lang', lang); //not currently used
+
+      i18n_hide (c.find ('[lang]'));
+      i18n_show (c.find ('[lang="' + lang + '"]'));
+
+      if (menuLink)
+        $ (menuLink).parents ('div').first ().find ('[lang=' + lang + ']').focus ();
+
+      else {
+        // Restore the focus to the previously focused element.
+        if (prevFocus.attr ('lang'))
+          prevFocus.parent ().find ('[lang="' + lang + '"]').focus ();
+        else prevFocus.focus ();
+      }
+
+      // Update labels on language selectors of mulilingual form input fields.
+      $ ('input[lang] + .input-group-btn button .lang')
+        .add ('textarea[lang] + .input-group-btn button .lang')
+        .html (lang.substr (-2));
     }
   </Script>
 
