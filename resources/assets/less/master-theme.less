@@ -1,0 +1,151 @@
+//-----------------------------
+// Palette Generator
+//-----------------------------
+
+@alt-color1: hsl(@hue,@sat2,21% * @mult2);
+@alt-color2: hsl(@hue,@sat2,26% * @mult2);
+
+@theme-color1: hsl(@hue,@sat,26% * @mult);
+@theme-color2: hsl(@hue,@sat,38% * @mult);
+@theme-color3: hsl(@hue,@sat,42% * @mult);
+@theme-color4: hsl(@hue,@sat,56% * @mult);
+@theme-color5: hsl(@hue,@sat,76% * @mult);
+@theme-backdrop: hsl(@hue,10%,70%);
+
+@theme-hilight: contrast(@theme-color4, @theme-color1, @theme-color4);
+@theme-text-hilight: contrast(@theme-hilight, #333, #FFF);
+
+// Semantic colors.
+@brand-primary: darken(@theme-color2, 10%); // Original: #428bca
+@brand-primary-color: contrast(@brand-primary, #333, #FFF);
+
+// Button colors.
+@btn-default-color: hsl(@hue, 30%, 92%);
+@btn-default-border: hsl(@hue, 0%, 82%);
+@btn-default-text: contrast(@btn-default-color, #666, #CCC);
+@btn-border-darken: 0%;
+
+//-----------------------------
+// The Theme
+//-----------------------------
+
+#theme() {
+  .hover {
+    color: @theme-text-hilight !important; background-color: @theme-hilight !important;
+  }
+  .form-label {
+    font-weight: 700;
+    color: #333;
+  }
+
+  .background { background: @theme-backdrop; }
+  .login-background { background: @theme-color2; }
+  // Main background, behind the .content-background.
+  .main-background { background: @main-background; border-right: 2px solid darken(@theme-backdrop, 5%) };
+
+  // Large bar befpre main content.
+  .page-header-bar {
+    background: @theme-color3;
+    color: contrast(@theme-color3, #333, #FFF);
+  }
+  .page-header-text2 { color: contrast(@theme-color3, @theme-color1, @theme-color5) }
+  .page-header-text2H { color: contrast(@theme-color3, darken(@theme-color1,10%),lighten(@theme-color5,10%)) }
+  .page-header-disabled-text { color: contrast(@theme-color3, @theme-color2, @theme-color4); }
+  .page-header-selected-text {
+    border-bottom: 2px solid contrast(@theme-color3,#FFF,@theme-color1);
+    color: contrast(@theme-color3,#FFF,@theme-color1) !important;
+  }
+
+    // Central content area.
+  .content-background {
+  }
+
+  .top-bar { background: @theme-color1; border: none; }
+  .top-bar-menu { background-color: #FFF; color: #333 }
+  .top-bar-selected { background-color: @theme-color3 !important; color: contrast(@theme-color3, #333, #FFF) !important }
+  .top-bar-text { color: contrast(@theme-color1, #333, #FFF); }
+  .top-bar-disabled-text { color: #888; }
+  .top-bar-hover { #theme.hover; }
+
+  // The topmost bar, includes the brand text.
+  // It is partially hidden by .top-bar.
+  .navbar-header { background-color: @theme-color2; color: #FFF; }
+
+  .sidebar {
+    background: @alt-color2;
+    border: none;
+    box-shadow: inset 0 0 28px rgba(0,0,0,0.2);
+  }
+  .main-menu-item { color: @theme-text-color2; font-weight: 700; }
+  .main-menu-hover-item {
+    background-color: @theme-color3;
+    color: contrast(@theme-color3, #333, #FFF, 70%) !important;
+  }
+  .main-menu-active-item { color: @theme-text-selected2; }
+  .main-menu-disabled-item { color: darken(@theme-backdrop, 10%); }
+  .main-menu-current-item {
+    color: @theme-text-selected2;
+    background-color: lighten(@alt-color2, 4%);
+    border-left: 5px solid contrast(@alt-color2,@theme-color1,@theme-color4);
+    padding-left: 40px - 5px;
+  }
+  .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }
+
+  .table-head { border: 1px solid #555;}
+  .table-header {
+    background-color: #555;
+    color: #FFF;
+    #theme.table-head;
+  }
+  .table-responsive-header { border-color: #E0E6EB !important; background-color: #F4F7FB !important; }
+  .table-stripe { background-color: hsla(210,9%,97%,1); }
+  .table-borders { border-color: hsla(210,9%,87%,1) !important; }
+  .table-row-active { #theme.hover !important; }
+
+  // Action bar and its tabs.
+  .action-bar {
+    background-color: @theme-color2;
+    border-bottom: @tabs-border-style;
+  }
+  .tab {
+    background-color: @theme-color2;
+    border: @tabs-border-style !important;
+    border-bottom: none !important;
+    color: contrast(@theme-color3, lighten(@theme-color2, 40%), darken(@theme-color3, 40%));
+  }
+  .tab-hover { #theme.hover; }
+  .tab-selected {
+    background-color: @main-background;
+    color: contrast(@main-background, #333, #FFF);
+    font-weight: 700;
+  }
+
+  .admin-bar { background-color: hsl(@hue, 0%, 20%); }
+  .admin-icon { color: hsl(@hue, 9%, 60%); }
+  .admin-selected-icon { background-color: hsl(@hue, 9%, 30%); color: #EEE; }
+  .admin-hover-icon { color: #EEE; }
+}
+
+.btn-default {
+  .button-variant(@btn-default-color; @btn-default-color; @btn-default-border);
+  color: @btn-default-text !important;
+}
+.btn-primary {
+  .button-variant(@brand-primary-color; @brand-primary; darken(@brand-primary,@btn-border-darken));
+}
+// Success appears as green
+.btn-success {
+  .button-variant(@btn-success-color; @brand-success; darken(@brand-success,@btn-border-darken));
+}
+// Info appears as blue-green
+.btn-info {
+  .button-variant(@btn-info-color; @brand-info; darken(@brand-info,@btn-border-darken));
+}
+// Warning appears as orange
+.btn-warning {
+  .button-variant(@btn-warning-color; @brand-warning; darken(@brand-warning,@btn-border-darken));
+}
+// Danger and error appear as red
+.btn-danger {
+  .button-variant(@btn-danger-color; @brand-danger; darken(@brand-danger,@btn-border-darken));
+}

@@ -19,15 +19,25 @@ body {
   #theme.main-background;
 }
 
-body.admin-interface::before {
-  content: '';
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: @sidebar-width;
-  #theme.sidebar;
+.sidebar {
+  display: none;
+}
+
+body.with-sidebar {
+  &::before {
+    content: '';
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: @sidebar-width;
+    #theme.sidebar;
+  }
+
+  .sidebar {
+    display: block;
+  }
 }
 
 #wrapper, form {
@@ -40,13 +50,6 @@ body.admin-interface::before {
   position: relative;
 }
 
-@media (min-width: 768px) {
-  #page-wrapper {
-    position: inherit;
-    margin: 0 0 0 @sidebar-width;
-  }
-}
-
 #page-wrapper {
   & > .container-fluid {
     padding: 0;
@@ -56,10 +59,6 @@ body.admin-interface::before {
 .navbar-header {
   float: left;
   width: @sidebar-width;
-  #theme.navbar-header;
-  .navbar-brand:hover {
-    background-color: transparent !important;
-  }
 }
 
 .navbar-toggle {
@@ -72,11 +71,23 @@ body.admin-interface::before {
   clear: both;
 }
 
+//--------------------------
+// LARGE DESKTOP
+//--------------------------
+
 @media (min-width: 768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 @sidebar-width;
+  }
+
   .sidebar {
     z-index: 1;
     position: absolute;
-    margin-top: @topbar-height;
+    top: 100%; /* places it at the bottom of the containing navbar */
+  }
+  body:not(.with-sidebar) .navbar-header {
+    width: @sidebar-reduced-width;
   }
 }
 
@@ -104,7 +115,7 @@ body.admin-interface::before {
     }
   }
 
-  body.admin-interface::before {
+  body.with-sidebar::before {
     width: @sidebar-reduced-width;
   }
 
@@ -118,22 +129,37 @@ body.admin-interface::before {
 //--------------------------
 
 @media (max-width: 767px) {
-  body.admin-interface::before, .sidebar-nav {
+  body.with-sidebar::before, .sidebar-nav {
     display: none;
   }
 
   .sidebar-nav.collapsing, .sidebar-nav.in {
     display: block;
     #theme.sidebar;
-    border-bottom: 1px solid;
-    border-top: none;
-    border-right: none;
+    border-width: 1px;
+    border-style: solid none;
   }
 
   .navbar-default {
     .navbar-header {
       width: 100%;
     }
+  }
+}
+
+//--------------------------
+
+body:not(.with-sidebar) {
+  #page-wrapper {
+    margin-left: 0;
+  }
+  .navbar-default {
+    .navbar-toggle {
+      display: none;
+    }
+  }
+  &.centered:not(.dev-mode) {
+    margin: 0 auto;
   }
 }
 
@@ -155,5 +181,5 @@ body.admin-interface::before {
 // END FROM BOOTSTRAP
 
 .grid-page {
-  padding: 15px 15px 0;
+  //padding: 15px 15px 0;
 }

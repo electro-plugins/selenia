@@ -1,6 +1,8 @@
 #side-menu {
   margin-top: 15px;
+  margin-bottom: 15px;
   padding-right: 15px;
+  //padding-left: 15px;
 
   a.disabled {
     #theme.main-menu-disabled-item;
@@ -16,28 +18,24 @@
   }
 
   a {
-    padding-left: 40px;
+    padding: 0 15px 0 40px;
+    line-height: 28px;
     #theme.main-menu-item;
 
     &:focus {
       background-color: transparent;
     }
     &.active {
-      #theme.main-menu-selected-item;
+      #theme.main-menu-active-item;
     }
     &:hover, &.active:hover {
       #theme.main-menu-hover-item;
     }
     i {
       margin-left: -26px;
-      position: absolute;
-      margin-top: 3px;
+      width: 22px;
     }
   }
-
-  //.sub > .active {
-  //  font-weight: 100
-  //}
 
   .header {
     border-bottom: 1px solid #DDD;
@@ -57,7 +55,6 @@
 
     i {
       font-size: 13px;
-      vertical-align: 1px;
     }
 
   }
@@ -68,6 +65,7 @@
   .sidebar-nav.navbar-collapse {
     padding-left: 0;
     padding-right: 0;
+    box-shadow: none; /*override Bootstrap*/
   }
 
   .arrow {

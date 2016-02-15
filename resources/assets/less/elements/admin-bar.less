@@ -2,6 +2,8 @@
    ADMINISTRATION ICON BAR
 --------------------------------------------------------------------*/
 
+.admin-bar { display:none }
+
 body.dev-mode {
 
   margin-left: @admin-bar-width;
@@ -22,6 +24,7 @@ body.dev-mode {
   }
 
   .admin-bar {
+    display: block;
     position: absolute;
     margin-left: -@admin-bar-width;
     top: @topbar-height;
@@ -40,8 +43,8 @@ body.dev-mode {
       }
 
       &:hover {
-        color: #FFF;
         text-decoration: none;
+        #theme.admin-hover-icon;
       }
 
       i {

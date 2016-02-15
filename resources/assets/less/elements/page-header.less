@@ -10,21 +10,19 @@
 
   .LanguageSelector {
     a {
-      color: #CCC;
+      #theme.page-header-text2;
       font-size: 12px;
     }
     li.disabled a {
-      color: #99a4cc !important;
+      #theme.page-header-disabled-text;
       font-weight: bold;
       font-size: 14px;
       padding-top: 5px;
     }
     .active a {
-      border-bottom: 2px solid #6f7db0;
-      color: #FFF !important;
+      #theme.page-header-selected-text;
     }
   }
-
 }
 
 .page-header {
@@ -50,7 +48,11 @@
   a {
     font-weight: 100;
     font-size: 13px;
-    color: #CCC;
+    #theme.page-header-text2;
+    &:hover {
+      text-decoration: none;
+      #theme.page-header-text2H;
+    }
     i {
       margin-right: 5px;
     }

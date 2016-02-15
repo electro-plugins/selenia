@@ -1,29 +1,29 @@
-@import 'variables';
-@import '@{bootstrap-path}/variables';
-@import 'mixins';
+//------------------------------------
+// Default stylesheet for this module
+//------------------------------------
 
-@import 'fonts/Roboto';
-@import 'themes';
+// Create a file like this on your project that imports your desired theme, followed by master.less.
 
-@import 'layout';
-@import 'forms';
+// Uncomment only one of the following lines to select the theme you want.
 
-@import 'elements/action-bar';
-@import 'elements/page-header';
-@import 'elements/footer';
-@import 'elements/login';
-@import 'elements/sidebar-search';
-@import 'elements/top-bar';
-@import 'elements/main-tabs';
-@import 'elements/language-selector';
-@import 'elements/admin-bar';
+//@import 'themes/blue';
+@import 'themes/bluish';
+//@import 'themes/brown';
+//@import 'themes/dark-grey';
+//@import 'themes/green';
+//@import 'themes/grey';
+//@import 'themes/light-blue';
+//@import 'themes/purple';
+//@import 'themes/teal';
+//@import 'themes/white';
 
-@import 'widgets/buttons';
-@import 'widgets/data-grid';
-@import 'widgets/inputs';
-@import 'widgets/links';
-@import 'widgets/main-menu';
-@import 'widgets/pagination';
-@import 'widgets/redactor';
-@import 'widgets/selects';
-@import 'widgets/status';
+// This is required, do not comment or remove.
+@import 'master';
+
+//--------------------------------------
+// Note: important classes for the BODY
+//--------------------------------------
+
+// .with-sidebar = enables the left sidebar.
+// .dev-mode = enabled an additional left sidebar to display big icons.
+// .centered = centers the body content; can't be combined with .with-siderbar or .dev-mode

@@ -8,10 +8,55 @@
   }
 
   .table > thead > tr {
-    #theme.table-head;
+    #theme.table-head; // Apply borders to up and right sides.
 
     & > th {
       #theme.table-header;
+    }
+  }
+
+  & > div > .row:first-child {
+    margin: 0;
+    background-color: hsla(208, 9%, 56%, 1);
+    color: #fff;
+    padding: 3px;
+
+    .dataTables_length {
+      label {
+        margin: 0;
+        color: hsla(210,9%,85%,1);
+      }
+      select {
+        color: #FFF;
+        border: none;
+        width: 59px
+      }
+    }
+    .dataTables_filter {
+      margin-right: -15px;
+      label {
+        margin: 0;
+        color: hsla(210,9%,85%,1);
+      }
+      input {
+        color: #FFF;
+        background-color: hsla(207,9%,50%,1);
+        border: 1px solid hsla(207,9%,45%,1);
+        padding: 0 10px 1px;
+        font-size: 14px;
+      }
+    }
+  }
+  .table {
+    margin: 0 !important;
+    tbody td {
+      vertical-align: middle;
+      line-height: 10px;
+      border-color: #DDD;
+      border-left: none !important;
+      border-right: none !important;
+      font-weight: 400;
+      color: #666;
     }
   }
 
@@ -27,9 +72,11 @@
     border: none !important;
   }
 
-  .table-clickable tbody>tr:active {
+  .table-clickable tbody > tr:active {
     #theme.table-row-active;
 
-    td { border-color: transparent !important }
+    td {
+      border-color: transparent !important
+    }
   }
 }

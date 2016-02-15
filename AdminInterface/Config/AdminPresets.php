@@ -38,8 +38,8 @@ class AdminPresets
   function Field (Field $field, array $props = null)
   {
     $field->props->apply ([
-      'languages' => $this->locale->getAvailableExt(),
-      'lang' => $this->locale->locale()
+      'languages' => $this->locale->getAvailableExt (),
+      'lang'      => $this->locale->locale (),
     ]);
   }
 
@@ -63,7 +63,7 @@ class AdminPresets
     $sw->props->apply ([
       'labelOn'  => '$COMPONENT_SWITCH_LABEL_ON',
       'labelOff' => '$COMPONENT_SWITCH_LABEL_OFF',
-      'color'    => 'purple',
+//      'color'    => 'black',
     ]);
   }
 

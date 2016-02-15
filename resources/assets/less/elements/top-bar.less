@@ -10,11 +10,11 @@
     border: none;
     padding: 7px 9px;
 
-    &:hover {
-      #theme.menu-button-active;
-    }
     i {
-      #theme.menu-button;
+      //#theme.menu-button;
+    }
+    &:hover, &:focus {
+      //#theme.menu-button-active;
     }
   }
 
@@ -25,12 +25,19 @@
     outline: 1px dotted rgba(255,255,255,0.5);
     outline-offset: -5px;
   }
+  .navbar-header {
+    #theme.navbar-header;
+    .navbar-brand:hover {
+      background-color: transparent !important;
+      color: inherit !important;
+    }
+  }
   .navbar-brand {
     padding: 15px 20px;
     float: none;
     display: block;
     text-align: center;
-    #theme.top-bar-text !important;
+    color: inherit;
 
     &:focus {
       background: transparent !important;
@@ -96,22 +103,24 @@
   .dropdown-menu li a {
     background-color: #f8f8f8;
     line-height: @menu-item-height;
-    padding: 0 40px 0 9px;
     margin-left: 30px;
     border-left: 1px solid #e0e0e0;
+    padding: 0 40px 0 10px;
 
     i {
-      margin: 0 14px 0 -31px;
       color: #555;
+      margin: 0 5px 0 -40px;
+      width: 31px;
+      text-align: center;
     }
 
     &:hover {
       margin-left: 0 !important;
-      padding-left: 40px !important;
+      padding-left: 41px !important;
       border-left: 0;
 
       i {
-        color: #FFF;
+        color: @theme-text-hilight;
       }
     }
     &:focus {
