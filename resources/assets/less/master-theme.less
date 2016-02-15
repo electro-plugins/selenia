@@ -69,7 +69,12 @@
 
   // The topmost bar, includes the brand text.
   // It is partially hidden by .top-bar.
-  .navbar-header { background-color: @theme-color2; color: #FFF; }
+  .navbar-header {
+    background-color: darken(@theme-color4,5%);
+    color: contrast(@theme-color4, #333, #FFF);
+    border-bottom: 1px solid #444;
+    margin-bottom: -1px;
+  }
 
   .sidebar {
     background: @alt-color2;
