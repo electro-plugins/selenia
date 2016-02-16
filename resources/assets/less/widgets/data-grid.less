@@ -15,44 +15,81 @@
     }
   }
 
+  .dataTables_wrapper > .row {
+    margin: 0;
+    & > div {
+      padding: 0;
+    }
+  }
+
   & > div > .row:first-child {
     margin: 0;
-    background-color: hsla(208, 9%, 56%, 1);
+    background-color: hsl(208, 9%, 56%);
     color: #fff;
     padding: 3px;
+    line-height: 31px;
+  }
 
-    .dataTables_length {
-      label {
-        margin: 0;
-        color: hsla(210,9%,85%,1);
-      }
-      select {
-        color: #FFF;
-        border: none;
-        width: 59px
-      }
+  .dataTables_length {
+    label {
+      margin: 0;
+      color: hsl(210, 9%, 85%);
     }
-    .dataTables_filter {
-      margin-right: -15px;
-      label {
-        margin: 0;
-        color: hsla(210,9%,85%,1);
-      }
-      input {
-        color: #FFF;
-        background-color: hsla(207,9%,50%,1);
-        border: 1px solid hsla(207,9%,45%,1);
-        padding: 0 10px 1px;
-        font-size: 14px;
+    select {
+      color: #FFF;
+      border: none;
+      width: 60px !important;
+      text-align: right;
+      text-align-last: right; //for Chrome
+    }
+  }
+  .dataTables_filter {
+    label {
+      margin: 0;
+      color: hsl(210, 9%, 85%);
+    }
+    input {
+      color: #FFF;
+      background-color: hsl(207, 9%, 50%);
+      border: 1px solid hsl(207, 9%, 45%);
+      padding: 0 10px;
+      font-size: 14px;
+      top: -1px;
+      position: relative;
+      margin: 0 1px;
+    }
+  }
+
+  & > div > .row:last-child {
+    background-color: hsl(208, 20%, 94%);
+    border-bottom: 1px solid hsl(210, 5%, 87%);
+    border-top: 1px solid hsl(210, 5%, 80%);
+    margin-top: -1px;
+    position: relative;
+  }
+
+  .dataTables_info {
+    padding-bottom: 8px;
+  }
+
+  .dataTables_paginate {
+    padding: 0;
+
+    ul {
+      margin: 1px 3px 0 !important;
+
+      a {
+        border-radius: 0;
       }
     }
   }
+
   .table {
     margin: 0 !important;
     tbody td {
       vertical-align: middle;
-      padding: 10px 8px 8px;
-      line-height: 17px;
+      padding: 0 8px;
+      line-height: 36px;
       border-left: none !important;
       border-right: none !important;
       font-weight: 400;

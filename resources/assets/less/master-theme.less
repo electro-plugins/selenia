@@ -30,8 +30,15 @@
 //-----------------------------
 
 #theme() {
+  .focus {
+    outline: 1px dotted #888;
+    outline-offset: -5px;
+  }
   .hover {
-    color: @theme-text-hilight !important; background-color: @theme-hilight !important;
+    color: @theme-text-hilight !important;
+    background-color: @theme-hilight !important;
+    border-color: @theme-hilight !important;
+    outline-color: @theme-text-hilight !important;
   }
   .form-label {
     font-weight: 700;
@@ -70,13 +77,15 @@
   // The topmost bar, includes the brand text.
   // It is partially hidden by .top-bar.
   .navbar-header {
-    color: contrast(@theme-color1, #333, #FFF);
+    color: @theme-text-color2;
+    background-color: @alt-color2;
+    border-right: 2px solid #D2D4D5;
   }
 
   .sidebar {
     background: @alt-color2;
-    border: none;
-    box-shadow: inset 0 0 28px rgba(0,0,0,0.2);
+    border-right: 2px solid #D2D4D5;
+    //box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
   }
   .main-menu-item { color: @theme-text-color2; font-weight: 700; }
   .main-menu-hover-item {
@@ -87,9 +96,9 @@
   .main-menu-disabled-item { color: darken(@theme-backdrop, 10%); }
   .main-menu-current-item {
     color: @theme-text-selected2;
-    background-color: lighten(@alt-color2, 4%);
-    outline: 1px solid hsla(210,8%,85%,1);
-    border-left: 5px solid contrast(@alt-color2,@theme-color1,@theme-color4);
+    //background-color: lighten(@alt-color2, 4%);
+    //outline: 1px solid hsla(210,8%,85%,1);
+    border-left: 5px solid @theme-color4;
     padding-left: 40px - 5px;
   }
   .main-menu-header-item { color: #666 !important; font-size: 17px; font-weight: 100; }

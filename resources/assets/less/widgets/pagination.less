@@ -1,8 +1,22 @@
-.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
-  background-color: #2B6280;
-}
+.pagination {
+  & > .active > a,
+  & > .active > span,
+  & > li > a:hover,
+  & > li > span:hover {
+    #theme.hover;
+  }
+  & > li > a:focus,
+  & > li > span:focus {
+    #theme.focus;
+  }
 
-.pagination > li > a, .pagination > li > span {
-  color: #2B6280;
+  & > li > a,
+  & > li > span,
+  & > li > a:focus,
+  & > li > span:focus {
+    color: @theme-color4;
+    background-color:  #FFF;
+  }
+
 }
 
