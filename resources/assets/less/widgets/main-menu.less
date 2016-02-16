@@ -1,13 +1,6 @@
 #side-menu {
   margin-top: 15px;
   margin-bottom: 15px;
-  padding-right: 15px;
-  //padding-left: 15px;
-
-  a.disabled {
-    #theme.main-menu-disabled-item;
-    pointer-events: none;
-  }
 
   li {
     border: none;
@@ -18,7 +11,7 @@
   }
 
   a {
-    padding: 0 15px 0 40px;
+    padding: 0 5px 0 38px;
     line-height: 28px;
     #theme.main-menu-item;
 
@@ -31,19 +24,23 @@
     &:hover, &.active:hover {
       #theme.main-menu-hover-item;
     }
+    &.disabled {
+      #theme.main-menu-disabled-item;
+      pointer-events: none;
+    }
     i {
-      margin-left: -26px;
-      width: 22px;
+      margin: 0 10px 0 -24px;
+      width: 16px;
+      position: absolute;
+      top: 7px;
     }
   }
 
   .header {
-    border-bottom: 1px solid #DDD;
-    margin: 10px 15px 5px 15px;
+    margin: 0 0 6px 0;
+    border: none !important;
 
-    a {
-      padding: 10px 0 5px 0;
-      background: transparent !important;
+    > a {
       #theme.main-menu-header-item;
 
       &.active, &:hover {
@@ -51,10 +48,13 @@
         margin: 0;
         #theme.main-menu-header-item;
       }
-    }
 
-    i {
-      font-size: 13px;
+      i {
+        margin: 0 10px 0 -26px;
+        font-size: 13px;
+        width: 16px;
+        text-align: center;
+      }
     }
 
   }
@@ -70,14 +70,18 @@
 
   .arrow {
     float: right;
+    font-size: 10px;
+    padding: 9px 15px 0 0;
   }
 
   .fa.arrow:before {
-    content: "\f104";
+    //content: "\f104";
+    content: "\f067";
   }
 
   .active > a > .fa.arrow:before {
-    content: "\f107";
+    //content: "\f107";
+    content: "\f068";
   }
 
   .nav-second-level li,

@@ -27,18 +27,24 @@
   }
 
   li a:focus {
-    outline: 1px dotted #ccc;
-    outline-offset: -10px;
     #theme.tab;
   }
 
   &>li.active a {
-    margin-bottom: -1px;
-    border-bottom: 1px solid transparent !important;
     #theme.tab-selected;
+    &::before {
+      #layer();
+      border-bottom: @tabs-border-style;
+      border-bottom-color: @main-background;
+      border-bottom-width: 2px;
+      width: 100%;
+      top: 100%;
+      left: 0;
+    }
   }
 
   &>li.active a:hover {
     #theme.tab-selected !important;
+    //#theme.tab-selected-hover !important;
   }
 }
