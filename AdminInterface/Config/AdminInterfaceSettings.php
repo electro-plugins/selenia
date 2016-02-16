@@ -28,7 +28,7 @@ class AdminInterfaceSettings implements AssignableInterface
   use ConfigurationTrait;
 
   private $sideMenuOffset        = 1;
-  private $topMenuTarget         = 'app_home';
+  private $topMenuTarget         = '';
   private $allowDeleteSelf       = true;
   private $allowEditRole         = true;
   private $allowRename           = true;
@@ -40,7 +40,7 @@ class AdminInterfaceSettings implements AssignableInterface
   private $footer                = '<b>{{ app.appName }}</b> &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
-  private $showMenu              = true;
+  private $showMenu              = false;
   private $urlPrefix             = '';
 
 }

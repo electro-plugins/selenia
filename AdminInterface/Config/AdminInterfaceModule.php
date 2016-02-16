@@ -93,13 +93,20 @@ class AdminInterfaceModule
             ->group ()
             ->id ('settings')
             ->icon ('fa fa-cog')
-            ->title ('$APP_SETTINGS')
-            ->visible ($this->settings->showMenu ())
+            ->title ('$APP_USER_MENU')
+            ->visible (N)
             ->links ([
+              'profile' => $navigation
+                ->link ()
+                ->id ('profile')
+                ->title ('$LOGIN_PROFILE')
+                ->icon ('fa fa-user')
+                ->visible (Y),
               'users'   => $navigation
                 ->link ()
+                ->id ('users')
                 ->title ('$APP_SETTINGS_USERS')
-                ->icon ('fa fa-user')
+                ->icon ('fa fa-users')
                 ->visible ($this->settings->enableUsersManagement ())
                 ->links ([
                   '@id' => $navigation
@@ -108,12 +115,6 @@ class AdminInterfaceModule
                     ->title ('$APP_SETTINGS_USER')
                     ->visible (N),
                 ]),
-              'profile' => $navigation
-                ->link ()
-                ->id ('profile')
-                ->title ('$LOGIN_PROFILE')
-                ->icon ('fa fa-user')
-                ->visible (N),
             ]),
         ]),
     ]);
