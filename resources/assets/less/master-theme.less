@@ -10,7 +10,7 @@
 @theme-color3: hsl(@hue,@sat,42% * @mult);
 @theme-color4: hsl(@hue,@sat,56% * @mult);
 @theme-color5: hsl(@hue,@sat,76% * @mult);
-@theme-backdrop: hsl(@hue,10%,70%);
+@theme-backdrop: hsl(@hue,3%,35%);//hsl(@hue,10%,70%);
 
 @theme-hilight: contrast(@theme-color4, @theme-color1, @theme-color4);
 @theme-text-hilight: contrast(@theme-hilight, #333, #FFF);
@@ -29,6 +29,8 @@
 @btn-default-border: hsl(@hue, 0%, 82%);
 @btn-default-text: contrast(@btn-default-color, #666, #EEE);
 @btn-border-darken: 0%;
+
+@sidebar-border-width: 1px;
 
 //-----------------------------
 // The Theme
@@ -51,7 +53,11 @@
   .background { background: @theme-backdrop; }
   .login-background { background: @theme-color2; }
   // Main background, behind the .content-background.
-  .main-background { background: @main-background; border-right: 2px solid darken(@theme-backdrop, 5%) };
+  .main-background {
+    background: @main-background;
+    border-right: 1px solid darken(@theme-backdrop, 5%)
+  }
+;
 
   // Large bar befpre main content.
   .page-header-bar {
@@ -80,15 +86,19 @@
   // The topmost bar, includes the brand text.
   // It is partially hidden by .top-bar.
   .navbar-header {
-    color: @theme-text-color2;
-    background-color: @alt-color2;
-    border-right: 2px solid #D2D4D5;
+    color: #FFF;
+    background-color: @theme-color4;
+    border-bottom: @sidebar-border-width solid @theme-backdrop;
+    height: @topbar-height;
   }
 
   .sidebar {
     background: @alt-color2;
-    border-right: 2px solid #D2D4D5;
+  }
+  .sidebar-border {
+    //border-right: 2px solid #D2D4D5;
     //box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    border-right: @sidebar-border-width solid @theme-backdrop;
   }
   .main-menu-item { color: @theme-text-color2; font-weight: 700; }
   .main-menu-hover-item {

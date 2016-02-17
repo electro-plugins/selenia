@@ -54,19 +54,23 @@
       border: 1px solid hsl(207, 9%, 45%);
       padding: 0 10px;
       font-size: 14px;
-      top: -1px;
-      position: relative;
-      margin: 0 1px;
+      margin-top: -1px;
+      height: 31px;
     }
   }
   .dataTables_buttons {
+    .dt-buttons { vertical-align: top }
     .btn {
       border-radius: 0;
-      border-color: #aaa;
-      border: none;
+      border: 1px solid rgba(0,0,0,0.3);
       width: 102px;
       position: relative;
       margin-left: 3px;
+      line-height: 17px;
+
+      i {
+        top: 8px;
+      }
     }
     .btn-default {
       background: rgba(0,0,0,0.2);

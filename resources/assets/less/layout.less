@@ -24,6 +24,7 @@ body {
 }
 
 body.with-sidebar {
+
   &::before {
     content: '';
     display: block;
@@ -33,10 +34,14 @@ body.with-sidebar {
     bottom: 0;
     width: @sidebar-width;
     #theme.sidebar;
+    #theme.sidebar-border;
   }
 
   .sidebar {
     display: block;
+  }
+  .navbar-header {
+    #theme.sidebar-border;
   }
 }
 
@@ -72,7 +77,7 @@ body.with-sidebar {
 }
 
 //--------------------------
-// LARGE DESKTOP
+// NOT MOBILE
 //--------------------------
 
 @media (min-width: 768px) {
@@ -85,6 +90,7 @@ body.with-sidebar {
     z-index: 1;
     position: absolute;
     top: 100%; /* places it at the bottom of the containing navbar */
+    margin-top: 5px;
   }
 
   body:not(.with-sidebar) .navbar-header {
