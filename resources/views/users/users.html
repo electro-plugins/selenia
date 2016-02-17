@@ -22,10 +22,11 @@
     <Column width="110" title="$LOGIN_ROLE">
       $LOGIN_ROLE_{{ r.role }}
     </Column>
-  </DataGrid>
 
-  <Actions>
-    <ButtonNew url="{{ navigation.userForm }}"/>
-  </Actions>
+    <Actions>
+      <ButtonDelete/>
+      <ButtonNew url="{{ navigation.userForm }}"/>
+    </Actions>
+  </DataGrid>
 
 </GridPage>
