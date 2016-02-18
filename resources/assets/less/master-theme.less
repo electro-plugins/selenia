@@ -10,7 +10,8 @@
 @theme-color3: hsl(@hue,@sat,42% * @mult);
 @theme-color4: hsl(@hue,@sat,56% * @mult);
 @theme-color5: hsl(@hue,@sat,76% * @mult);
-@theme-backdrop: hsl(@hue,3%,35%);//hsl(@hue,10%,70%);
+@theme-color6: hsl(@hue,16%,85% * @mult);
+@theme-backdrop: hsl(@hue,10%,70%);//hsl(@hue,3%,35%);
 
 @theme-hilight: contrast(@theme-color4, @theme-color1, @theme-color4);
 @theme-text-hilight: contrast(@theme-hilight, #333, #FFF);
@@ -31,7 +32,7 @@
 @btn-border-darken: 0%;
 
 @sidebar-border-width: 1px;
-@header-color: hsl(@hue,23%, 56% * @mult);
+@header-color: hsl(@hue,16%, 56% * @mult);
 @header-text-color: contrast(@header-color, #666, #EEE);
 
 //-----------------------------
@@ -118,16 +119,24 @@
   }
   .main-menu-header-item { font-size: 15px; }
 
-  .table-head { border: 1px solid #555;}
+  .table-head {
+    border: none;
+    border-bottom: 1px solid darken(@theme-color6,20%);
+  }
   .table-header {
-    background-color: #555;
-    color: #FFF;
+    background-color: @theme-color6;
+    color: contrast(@theme-color6,@theme-color1,#EEE);
     #theme.table-head;
   }
   .table-responsive-header { border-color: #E0E6EB !important; background-color: #F4F7FB !important; }
   .table-stripe { background-color: hsla(210,9%,97%,1); }
   .table-borders { border-color: hsla(210,9%,91%,1) !important; }
   .table-row-active { #theme.hover !important; }
+  .table-footer {
+    background-color: hsl(@hue, 20%, 94%);
+    border-top: 1px solid hsl(@hue, 5%, 80%);
+    border-bottom: 1px solid hsl(@hue, 5%, 80%);
+  }
 
   // Action bar and its tabs.
   .action-bar {
