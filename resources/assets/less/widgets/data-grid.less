@@ -24,8 +24,8 @@
 
   & > div > .row:first-child {
     margin: 0;
-    background-color: hsl(208, 9%, 56%);
-    color: #fff;
+    background-color: @header-color;
+    color: @header-text-color;
     padding: 3px;
     line-height: 31px;
   }
@@ -50,8 +50,8 @@
     }
     input {
       color: #FFF;
-      background-color: hsl(207, 9%, 50%);
-      border: 1px solid hsl(207, 9%, 45%);
+      background-color: darken(@header-color,10%);
+      border: 1px solid darken(@header-color,20%);
       padding: 0 10px;
       font-size: 14px;
       margin-top: -1px;

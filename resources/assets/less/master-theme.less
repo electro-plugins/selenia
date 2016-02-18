@@ -31,6 +31,8 @@
 @btn-border-darken: 0%;
 
 @sidebar-border-width: 1px;
+@header-color: hsl(@hue,23%, 56% * @mult);
+@header-text-color: contrast(@header-color, #666, #EEE);
 
 //-----------------------------
 // The Theme
@@ -129,7 +131,7 @@
 
   // Action bar and its tabs.
   .action-bar {
-    background-color: @theme-color2;
+    background-color: @theme-color3;
     border-bottom: @tabs-border-style;
   }
   .tab {
