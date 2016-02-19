@@ -5,7 +5,7 @@
     <Repeat for="{{ locale.getAvailableExt }}" as="i:loc">
       <Link id="btn-{{ loc.name }}"
             wrapper="li"
-            script="setLang('{{ loc.name }}')"
+            script="selenia.setLang('{{ loc.name }}')"
             label="{{ loc.label }}"
             active="{{ !i }}"/>
     </Repeat>
@@ -13,48 +13,10 @@
   </ul>
 
   <Script name="LanguageSelector">
-    var prevFocus = $ ();
-    $ ('body').focusout (function (ev) {
-      var e = $ (ev.target);
-      if (ev.target.tagName == 'INPUT' || ev.target.tagName == 'TEXTAREA')
-        prevFocus = $ (ev.target);
-      else prevFocus = null;
-    });
-
-    setLang ('{{ locale.locale }}');
-
-    function i18n_show(e) {
-      e.css ({ position: 'relative', top: 'auto' });
-    }
-
-    function i18n_hide(e) {
-      e.css ({ position: '', top: '' });
-    }
-
-    function setLang (lang, menuLink) {
+    selenia.on ('languageChanged', function (lang) {
       $ ('.LanguageSelector li').removeClass ('active');
       $ ('#btn-' + lang).addClass ('active');
-      var c = $ ('{{ @container }}')
-        .attr ('lang', lang); //not currently used
-
-      i18n_hide (c.find ('[lang]'));
-      i18n_show (c.find ('[lang="' + lang + '"]'));
-
-      if (menuLink)
-        $ (menuLink).parents ('div').first ().find ('[lang=' + lang + ']').focus ();
-
-      else {
-        // Restore the focus to the previously focused element.
-        if (prevFocus.attr ('lang'))
-          prevFocus.parent ().find ('[lang="' + lang + '"]').focus ();
-        else prevFocus.focus ();
-      }
-
-      // Update labels on language selectors of mulilingual form input fields.
-      $ ('input[lang] + .input-group-btn button .lang')
-        .add ('textarea[lang] + .input-group-btn button .lang')
-        .html (lang.substr (-2));
-    }
+    }).setLang ('{{ locale.locale }}');
   </Script>
 
 </Macro>
