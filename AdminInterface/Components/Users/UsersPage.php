@@ -1,10 +1,11 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 
+use PDO;
+use Selenia\DataObject;
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
-use Selenia\Plugins\AdminInterface\Models\User;
 
 /**
  * Notes:
@@ -20,9 +21,12 @@ class UsersPage extends AdminPageComponent
       // Can't view other users.
       throw new HttpException (403);
 
-    $user = $this->createModel(User::class);
-    return array_filter ($user->map ($user->all (),
-      function (UserInterface $user) use ($myRole) {
+    $users = $this->pdo->query ("SELECT * FROM users ORDER BY username")->fetchAll ();
+    return array_filter ( //remove nulls
+      map ($users, function (array $u) use ($myRole) {
+        /** @var UserInterface|DataObject $user */
+        $user = $this->createModel($this->app->userModel);
+        $user->loadFrom($u);
         // Filter out users of superior level.
         return $user->role () > $myRole
           ? null
