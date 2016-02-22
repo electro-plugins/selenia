@@ -24,7 +24,8 @@
     "selenia/installers": "^1.0.0",
     "selenia-plugins/matisse-components": "dev-master",
     "selenia-plugins/login": "dev-master",
-    "selenia-plugins/illuminate-database": "dev-master"
+    "selenia-plugins/illuminate-database": "dev-master",
+    "league/glide": "^1.0"
   },
   "extra": {
     "bower": {
