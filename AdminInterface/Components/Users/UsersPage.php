@@ -21,7 +21,7 @@ class UsersPage extends AdminPageComponent
       // Can't view other users.
       throw new HttpException (403);
 
-    $users = $this->pdo->query ("SELECT * FROM users ORDER BY username")->fetchAll ();
+    $users = $this->sql->query ("SELECT * FROM users ORDER BY username")->fetchAll ();
     return array_filter ( //remove nulls
       map ($users, function (array $u) use ($myRole) {
         /** @var UserInterface|DataObject $user */

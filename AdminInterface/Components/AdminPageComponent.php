@@ -39,7 +39,7 @@ class AdminPageComponent extends PageComponent
   /** @var DatabaseAPI */
   protected $db;
   /** @var ExtPDO */
-  protected $pdo;
+  protected $sql;
 
   function action_delete ($param = null)
   {
@@ -51,6 +51,19 @@ class AdminPageComponent extends PageComponent
       $this->model->delete ();
     else return;
     $this->session->flashMessage ('$APP_MSG_DELETED');
+  }
+
+  function action_submit ($param = null)
+  {
+    $data = $this->model;
+    if (isset($data)) {
+      if ($data instanceof Model) {
+        if ($data->save ())
+          $this->session->flashMessage ('$APP_MSG_SAVED');
+        return;
+      }
+    }
+    parent::action_submit ();
   }
 
   protected function initialize ()
@@ -78,23 +91,9 @@ class AdminPageComponent extends PageComponent
       $this->adminSettings = $settings;
       $this->connection    = $con;
       $this->db            = $db;
-      $this->pdo           = $db->connection ()->getPdo ();
+      $this->sql           = $con->getPdo ();
       $this->locale        = $locale;
     };
-  }
-
-  protected function insertData ($model)
-  {
-    if ($model instanceof Model)
-      $model->save ();
-    $this->session->flashMessage ('$APP_MSG_SAVED');
-  }
-
-  protected function updateData ($model)
-  {
-    if ($model instanceof Model)
-      $model->save ();
-    $this->session->flashMessage ('$APP_MSG_SAVED');
   }
 
   /**
@@ -117,10 +116,8 @@ class AdminPageComponent extends PageComponent
    */
   protected function loadRequested ($class, $param = 'id')
   {
-    $id    = $this->request->getAttribute ("@$param");
-    $model = new $class;
+    $id = $this->request->getAttribute ("@$param");
     if (!$id) return new $class;
-    0/0;
     return $class::findOrFail ($id);
   }
 
@@ -129,7 +126,7 @@ class AdminPageComponent extends PageComponent
   {
     $id = $this->request->getAttribute ("@$param");
     if (!$id) return [];
-    return $this->pdo->query ("SELECT * FROM $table WHERE id=?", [$id])->fetch ();
+    return $this->sql->query ("SELECT * FROM $table WHERE id=?", [$id])->fetch ();
   }
 
 
