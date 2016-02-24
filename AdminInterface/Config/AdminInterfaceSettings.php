@@ -37,7 +37,7 @@ class AdminInterfaceSettings implements AssignableInterface
   private $enableTranslations    = true;
   private $enableUsersDisabling  = true;
   private $enableUsersManagement = true;
-  private $footer                = '<b>{{ app.appName }}</b> &nbsp;-&nbsp; Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
+  private $footer                = 'Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
   private $showMenu              = false;

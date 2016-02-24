@@ -14,45 +14,46 @@ class CreateTables extends AbstractMigration
    */
   public function change ()
   {
-    $this
-      ->table ('users')
-      ->addColumn ('username', 'string', ['limit' => 30])
-      ->addIndex (['username'], ['unique' => true])
-      ->addColumn ('password', 'string', ['limit' => 60])
-      ->addColumn ('realName', 'string', ['limit' => 30])
-      ->addColumn ('token', 'string', ['limit' => 60, 'null' => true])
-      ->addColumn ('created_at', 'datetime')
-      ->addColumn ('updated_at', 'datetime')
-      ->addColumn ('lastLogin', 'datetime', ['null' => true])
-      ->addColumn ('role', 'integer')
-      ->addColumn ('active', 'boolean', ['default' => 0])
-      ->create ();
-    $now = date ('Y-m-d H:i:s');
-    $this->execute ("
+    if (!$this->table ('users')->exists ()) {
+      $this
+        ->table ('users')
+        ->addColumn ('username', 'string', ['limit' => 30])
+        ->addIndex (['username'], ['unique' => true])
+        ->addColumn ('password', 'string', ['limit' => 60])
+        ->addColumn ('realName', 'string', ['limit' => 30])
+        ->addColumn ('token', 'string', ['limit' => 60, 'null' => true])
+        ->addColumn ('created_at', 'datetime')
+        ->addColumn ('updated_at', 'datetime')
+        ->addColumn ('lastLogin', 'datetime', ['null' => true])
+        ->addColumn ('role', 'integer')
+        ->addColumn ('active', 'boolean', ['default' => 0])
+        ->create ();
+      $now = date ('Y-m-d H:i:s');
+      $this->execute ("
       INSERT INTO users (username, created_at, role, active)
       VALUES ('admin', '$now', 2, 1);
 ");
+    }
 
-    $this
-      ->table ('images', ['id' => false, 'primary_key' => ['id']])
-      ->addColumn ('id', 'string', ['limit' => 13])
-      ->addColumn ('ext', 'string', ['limit' => 4])
-      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
-      ->addColumn ('key', 'string', ['limit' => 30, 'null' => true])
-      ->addColumn ('caption', 'string', ['limit' => 255, 'null' => true])
-      ->addColumn ('gallery', 'integer', ['null' => true])//TODO: drop this
-      ->addColumn ('sort', 'integer', ['default' => 0])
-      ->addIndex ('key')
-      ->addIndex ('sort')
-      ->create ();
-
-    $this
-      ->table ('files', ['id' => false, 'primary_key' => ['id']])
-      ->addColumn ('id', 'string', ['limit' => 13])
-      ->addColumn ('ext', 'string', ['limit' => 4])
-      ->addColumn ('name', 'string', ['limit' => 255])
-      ->addColumn ('from', 'string', ['limit' => 45, 'null' => true])
-      ->create ();
+    if (!$this->table ('files')->exists ()) {
+      $this
+        ->table ('files', ['id' => false, 'primary_key' => ['id']])
+        ->addColumn ('id', 'string', ['limit' => 13])
+        ->addColumn ('name', 'string', ['limit' => 64])
+        ->addColumn ('ext', 'string', ['limit' => 4])
+        ->addColumn ('owner_type', 'string', ['limit' => 45])
+        ->addColumn ('owner_id', 'integer')
+        ->addColumn ('created_at', 'datetime')
+        ->addColumn ('updated_at', 'datetime')
+        ->addColumn ('image', 'boolean')
+        ->addColumn ('path', 'string', ['limit' => 1024])
+        ->addColumn ('metadata', 'string', ['limit' => 1024, 'null' => true])
+        ->addColumn ('sort', 'integer', ['default' => 0])
+        ->addIndex (['owner_type', 'owner_id'])
+        ->addIndex ('image')
+        ->addIndex ('sort')
+        ->create ();
+    }
 /*
     $this
       ->table ('strings', ['id' => false, 'primary_key' => ['id', 'lang']])
@@ -71,6 +72,6 @@ class CreateTables extends AbstractMigration
       ->addColumn ('text', 'text')
       ->addIndex ('from')
       ->create ();
-*/
+    */
   }
 }
