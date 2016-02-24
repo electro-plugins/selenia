@@ -84,7 +84,15 @@ class AdminPageComponent extends PageComponent
     parent::initialize ();
   }
 
-  function inject ()
+  protected function mergeIntoModel (& $model, array $data = null)
+  {
+    if (!$data) return;
+    if (!$model instanceof Model)
+      parent::mergeIntoModel($model, $data);
+    else $model->forceFill(array_normalizeEmptyValues ($data)); //TODO: use fill() instead
+  }
+
+    function inject ()
   {
     return function (AdminInterfaceSettings $settings, ConnectionInterface $con, Locale $locale, DatabaseAPI $db) {
       $this->adminSettings = $settings;
