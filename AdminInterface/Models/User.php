@@ -7,15 +7,15 @@ use Selenia\Plugins\IlluminateDatabase\BaseModel;
 
 class User extends BaseModel implements UserInterface
 {
-  public $gender   = '$USER_THE';
-  public $plural   = '$USERS';
-  public $singular = '$USER';
+  public $gender     = '$USER_THE';
+  public $plural     = '$USERS';
+  public $singular   = '$USER';
+  public $timestamps = true;
 
-  protected $casts      = [
+  protected $casts = [
     'active' => 'boolean',
   ];
-  protected $dates      = ['registrationDate', 'lastLogin'];
-  protected $timestamps = true;
+  protected $dates = ['registrationDate', 'lastLogin'];
 
   function activeField ($set = null)
   {
@@ -30,6 +30,7 @@ class User extends BaseModel implements UserInterface
     $user = static::find ($id);
     if ($user) {
       $this->forceFill ($user->getAttributes ());
+      $this->exists = true;
       return true;
     }
     return false;
@@ -41,6 +42,7 @@ class User extends BaseModel implements UserInterface
     $user = static::where ('username', $username)->first ();
     if ($user) {
       $this->forceFill ($user->getAttributes ());
+      $this->exists = true;
       return true;
     }
     return false;
