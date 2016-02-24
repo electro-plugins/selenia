@@ -73,14 +73,13 @@ class AdminPageComponent extends PageComponent
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
-    $this->devMode = $user->role () == UserInterface::USER_ROLE_DEVELOPER;
+    $this->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
     $settings      = $this->adminSettings;
     if ($settings->showMenu ()) {
       $target        = $settings->topMenuTarget ();
       $this->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
     }
     $this->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
-    inspect ($this->navigation->getCurrentTrail ());
 
     parent::initialize ();
   }

@@ -19,15 +19,17 @@ class CreateTables extends AbstractMigration
       ->addColumn ('username', 'string', ['limit' => 30])
       ->addIndex (['username'], ['unique' => true])
       ->addColumn ('password', 'string', ['limit' => 60])
+      ->addColumn ('realName', 'string', ['limit' => 30])
       ->addColumn ('token', 'string', ['limit' => 60, 'null' => true])
-      ->addColumn ('registrationDate', 'datetime')
+      ->addColumn ('created_at', 'datetime')
+      ->addColumn ('updated_at', 'datetime')
       ->addColumn ('lastLogin', 'datetime', ['null' => true])
       ->addColumn ('role', 'integer')
       ->addColumn ('active', 'boolean', ['default' => 0])
       ->create ();
     $now = date ('Y-m-d H:i:s');
     $this->execute ("
-      INSERT INTO users (username, registrationDate, role, active)
+      INSERT INTO users (username, created_at, role, active)
       VALUES ('admin', '$now', 2, 1);
 ");
 

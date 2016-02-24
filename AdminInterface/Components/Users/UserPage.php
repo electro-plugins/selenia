@@ -1,8 +1,8 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Users;
 
+use Illuminate\Database\Eloquent\Model;
 use PhpKit\WebConsole\DebugConsole\DebugConsole;
-use Selenia\DataObject;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
@@ -42,15 +42,17 @@ class UserPage extends AdminPageComponent
   public $role;
   public $show;
   public $templateUrl = 'users/user.html';
-  /** @var UserInterface|DataObject */
+  /** @var UserInterface|Model */
   public $user;
+
+  protected $autoRedirectUp = true;
 
   public function action_delete ($param = null)
   {
     $this->model = $data = $this->user;
     parent::action_delete ($param);
     /** @var UserInterface $data */
-    if ($data->id () == $this->session->user ()->id ()) {
+    if ($data->idField () == $this->session->user ()->idField ()) {
       $this->session->logout ();
       return $this->redirection->home ();
     }
@@ -67,7 +69,7 @@ class UserPage extends AdminPageComponent
     $role     = get ($data, 'role', false);
 
     // Is the user being saved the logged-in user?
-    $isSelf = $user->id () == $this->session->user ()->id ();
+    $isSelf = $user->idField () == $this->session->user ()->idField ();
 
     // If the user active checkbox is not shown, $active is always true.
     $showActive = !$isSelf && $this->adminSettings->enableUsersDisabling ();
@@ -79,28 +81,27 @@ class UserPage extends AdminPageComponent
     if ($password == self::DUMMY_PASS) $password = '';
 
     if ($password == '') {
-      if ($user->isNew ())
+      if (!$user->exists)
         throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_PASSWORD');
       // Do not change the password if the user already exists and the password field was not modified (or left empty)
       // on the form.
     }
-    else $user->password ($password);
+    else $user->passwordField ($password);
 
     // Check if the username has been changed
 
-    if ($username != $user->username ()) {
+    if ($username != $user->usernameField ()) {
       $tmp = clone $user;
       if ($tmp->findByName ($username))
         throw new ValidationException(ValidationException::DUPLICATE_RECORD, '$LOGIN_USERNAME');
-      $user->username ($username);
+      $user->usernameField ($username);
     }
 
-    $user->active ($active);
-    $user->role ($role);
+    $user->activeField ($active);
+    $user->roleField ($role);
 
-    if ($user->isNew ())
-      $this->insertData ($user);
-    else $this->updateData ($user);
+    if ($user->save ())
+      $this->session->flashMessage ('$APP_MSG_SAVED');
 
     if ($isSelf) return $this->redirection->to ($this->session->previousUrl ());
   }
@@ -110,38 +111,35 @@ class UserPage extends AdminPageComponent
     $mySelf = $this->session->user ();
 
     /** @var UserModel $user */
-    if ($this->editingSelf) {
-      $user = $this->app->createUser ();
-      $user->setPrimaryKeyValue ($mySelf->id ());
-      $user->read ();
-    }
+    if ($this->editingSelf)
+      $user = $this->app->createUser ($mySelf->idField ());
     else {
-      $myRole = $mySelf->role ();
-      $user = $this->app->createUser ();
-      $user   = $this->loadRequested ($user);
+      $myRole = $mySelf->roleField ();
+//      $user = $this->app->createUser ();
+      $user = $this->loadRequested ($this->app->userModel);
       if (!$user) {
         inspect ('<#section|User>', $user, '</#section>');
         DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
       }
-      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->id () != $user->id ())
+      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->idField () != $user->idField ())
         // Can't edit other users.
         throw new HttpException (403);
-      if ($user->role () > $myRole)
+      if ($user->roleField () > $myRole)
         // Can't edit a user with a higher role.
         throw new HttpException (403);
     }
     // Set a default role for a new user.
-    if (!exists ($user->role ()))
-      $user->role ($this->adminSettings->defaultRole ());
+    if (!exists ($user->roleField ()))
+      $user->roleField ($this->adminSettings->defaultRole ());
 
     $this->user = $user;
 
     $login = [
       'id'       => null,
-      'username' => $user->username (),
-      'password' => strlen ($user->password ()) ? self::DUMMY_PASS : '',
-      'active'   => $user->active (),
-      'role'     => $user->role (),
+      'username' => $user->usernameField (),
+      'password' => strlen ($user->passwordField ()) ? self::DUMMY_PASS : '',
+      'active'   => $user->activeField (),
+      'role'     => $user->roleField (),
     ];
 
     return $login;
@@ -153,12 +151,12 @@ class UserPage extends AdminPageComponent
     $user   = $this->user;
     $mySelf = $this->session->user ();
 
-    $isDev   = $mySelf->role () == UserInterface::USER_ROLE_DEVELOPER;
-    $isAdmin = $mySelf->role () == UserInterface::USER_ROLE_ADMIN;
+    $isDev   = $mySelf->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $mySelf->roleField () == UserInterface::USER_ROLE_ADMIN;
     // Has the user the Standard or Admin roles?
-    $isStandard = $isAdmin || $mySelf->role () == UserInterface::USER_ROLE_STANDARD;
+    $isStandard = $isAdmin || $mySelf->roleField () == UserInterface::USER_ROLE_STANDARD;
     // Are we editing the logged-in user?
-    $isSelf = $user->id () == $mySelf->id ();
+    $isSelf = $user->idField () == $mySelf->idField ();
 
     if ($isSelf)
       $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
@@ -181,7 +179,7 @@ class UserPage extends AdminPageComponent
     ];
     $this->canDelete = // Will be either true or null.
       (
-        !$user->isNew () &&
+        $user->exists &&
         // User is not self or delete self is allowed.
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;

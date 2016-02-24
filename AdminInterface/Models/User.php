@@ -1,125 +1,122 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Models;
 
-use Selenia\DataObject;
+use Carbon\Carbon;
 use Selenia\Interfaces\UserInterface;
+use Selenia\Plugins\IlluminateDatabase\BaseModel;
 
-class User extends DataObject implements UserInterface
+class User extends BaseModel implements UserInterface
 {
-  public $fieldNames       = ['id', 'username', 'password', 'token', 'registrationDate', 'lastLogin', 'role', 'active'];
-  public $primaryKeyName   = 'id';
-  public $tableName        = 'users';
-  public $primarySortField = 'username';
-  public $filterFields     = ['role', 'active'];
-  public $orderBy          = 'username';
-  public $dateTimeFields   = ['registrationDate', 'lastLogin'];
-  public $booleanFields    = ['active'];
-
-  public $id;
-  public $username;
-  public $password;
-  public $realName;
-  public $token;
-  public $registrationDate;
-  public $lastLogin;
-  public $role;
-  public $active;
-
-  public $gender = '$USER_THE';
+  public $gender   = '$USER_THE';
+  public $plural   = '$USERS';
   public $singular = '$USER';
-  public $plural = '$USERS';
 
-  public function insert ($insertFiles = true)
-  {
-    $this->registrationDate = self::now ();
-    parent::insert ($insertFiles);
-  }
+  protected $casts      = [
+    'active' => 'boolean',
+  ];
+  protected $dates      = ['registrationDate', 'lastLogin'];
+  protected $timestamps = true;
 
-  public function findByName ($username)
-  {
-    $this->id = $this->pdo->get ("SELECT id FROM $this->tableName WHERE username=?", [$username]) ?: null;
-    $r = $this->id ? $this->read () : false;
-    $this->realName = ucfirst ($this->username);
-    return $r;
-  }
-
-  function verifyPassword ($password)
-  {
-    if ($password == $this->password) {
-      // Migrate plain text password to hashed version.
-      $this->password ($password);
-      $this->update ();
-      return true;
-    }
-    return password_verify ($password, $this->password);
-  }
-
-  function id ($set = null)
-  {
-    if (isset($set))
-      $this->id = $set;
-    return $this->id;
-  }
-
-  function realName ($set = null)
-  {
-    if (isset($set))
-      return $this->realName = $set;
-    return $this->realName ?: ucfirst($this->username);
-  }
-
-  function username ($set = null)
-  {
-    if (isset($set))
-      $this->username = $set;
-    return $this->username;
-  }
-
-  function password ($set = null)
-  {
-    if (isset($set))
-      $this->password = password_hash ($set, PASSWORD_BCRYPT);
-    return $this->password;
-  }
-
-  function token ($set = null)
-  {
-    if (isset($set))
-      $this->token = $set;
-    return $this->token;
-  }
-
-  function registrationDate ($set = null)
-  {
-    if (isset($set))
-      $this->registrationDate = $set;
-    return $this->registrationDate;
-  }
-
-  function lastLogin ($set = null)
-  {
-    if (isset($set))
-      $this->lastLogin = $set;
-    return $this->lastLogin;
-  }
-
-  function role ($set = null)
-  {
-    if (isset($set))
-      $this->role = $set;
-    return $this->role;
-  }
-
-  function active ($set = null)
+  function activeField ($set = null)
   {
     if (isset($set))
       $this->active = $set;
     return $this->active;
   }
 
+  public function findById ($id)
+  {
+    /** @var static $user */
+    $user = static::find ($id);
+    if ($user) {
+      $this->forceFill ($user->getAttributes ());
+      return true;
+    }
+    return false;
+  }
+
+  public function findByName ($username)
+  {
+    /** @var static $user */
+    $user = static::where ('username', $username)->first ();
+    if ($user) {
+      $this->forceFill ($user->getAttributes ());
+      return true;
+    }
+    return false;
+  }
+
+  function idField ($set = null)
+  {
+    if (isset($set))
+      $this->id = $set;
+    return $this->id;
+  }
+
+  function lastLoginField ($set = null)
+  {
+    if (isset($set))
+      $this->lastLogin = $set;
+    return $this->lastLogin;
+  }
+
   function onLogin ()
   {
-    $this->lastLogin = date ('Y-m-d H:i:s');
-    $this->update ();
+    $this->lastLogin = Carbon::now ();
+    $this->save ();
   }
+
+  function passwordField ($set = null)
+  {
+    if (isset($set))
+      $this->password = password_hash ($set, PASSWORD_BCRYPT);
+    return $this->password;
+  }
+
+  function realNameField ($set = null)
+  {
+    if (isset($set))
+      return $this->realName = $set;
+    return $this->realName ?: ucfirst ($this->usernameField ());
+  }
+
+  function registrationDateField ($set = null)
+  {
+    if (isset($set))
+      $this->created_at = $set;
+    return $this->created_at;
+  }
+
+  function roleField ($set = null)
+  {
+    if (isset($set))
+      $this->role = $set;
+    return $this->role;
+  }
+
+  function tokenField ($set = null)
+  {
+    if (isset($set))
+      $this->token = $set;
+    return $this->token;
+  }
+
+  function usernameField ($set = null)
+  {
+    if (isset($set))
+      $this->username = $set;
+    return $this->username;
+  }
+
+  function verifyPassword ($password)
+  {
+    if ($password == $this->password) {
+      // Migrate plain text password to hashed version.
+      $this->passwordField ($password);
+      $this->save ();
+      return true;
+    }
+    return password_verify ($password, $this->password);
+  }
+
 }
