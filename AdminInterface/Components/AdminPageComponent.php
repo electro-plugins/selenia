@@ -6,8 +6,6 @@ use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
 use Selenia\Application;
 use Selenia\DataObject;
-use Selenia\Exceptions\FlashMessageException;
-use Selenia\Exceptions\FlashType;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\Navigation\NavigationLinkInterface;
@@ -43,25 +41,29 @@ class AdminPageComponent extends PageComponent
 
   function action_delete ($param = null)
   {
-    if (!isset($this->model))
-      throw new FlashMessageException('Can\'t delete a NULL model.', FlashType::ERROR);
-    if (isset($param))
-      $this->model->query ()->findOrFail ($param)->delete ();
-    elseif (!is_null ($this->model->getKey ()))
-      $this->model->delete ();
-    else return;
-    $this->session->flashMessage ('$APP_MSG_DELETED');
+    $model = $this->model;
+    if (isset($model) && $model instanceof Model) {
+      // Delete multiple records.
+      if (isset($param))
+        $model->query ()->findOrFail ($param)->delete ();
+      // Delete the current record.
+      elseif (!is_null ($model->getKey ()))
+        $model->delete ();
+      // Nothing to do.
+      else return;
+      $this->session->flashMessage ('$APP_MSG_DELETED');
+      return;
+    }
+    parent::action_delete ();
   }
 
   function action_submit ($param = null)
   {
-    $data = $this->model;
-    if (isset($data)) {
-      if ($data instanceof Model) {
-        if ($data->save ())
-          $this->session->flashMessage ('$APP_MSG_SAVED');
-        return;
-      }
+    $model = $this->model;
+    if (isset($model) && $model instanceof Model) {
+      if ($model->save ())
+        $this->session->flashMessage ('$APP_MSG_SAVED');
+      return;
     }
     parent::action_submit ();
   }
@@ -84,15 +86,7 @@ class AdminPageComponent extends PageComponent
     parent::initialize ();
   }
 
-  protected function mergeIntoModel (& $model, array $data = null)
-  {
-    if (!$data) return;
-    if (!$model instanceof Model)
-      parent::mergeIntoModel($model, $data);
-    else $model->forceFill(array_normalizeEmptyValues ($data)); //TODO: use fill() instead
-  }
-
-    function inject ()
+  function inject ()
   {
     return function (AdminInterfaceSettings $settings, ConnectionInterface $con, Locale $locale, DatabaseAPI $db) {
       $this->adminSettings = $settings;
@@ -101,6 +95,14 @@ class AdminPageComponent extends PageComponent
       $this->sql           = $con->getPdo ();
       $this->locale        = $locale;
     };
+  }
+
+  protected function mergeIntoModel (& $model, array $data = null)
+  {
+    if (!$data) return;
+    if (!$model instanceof Model)
+      parent::mergeIntoModel ($model, $data);
+    else $model->forceFill (array_normalizeEmptyValues ($data)); //TODO: use fill() instead
   }
 
   /**

@@ -5,54 +5,55 @@
       <AdminBar/>
     </If>
 
-    <form method="post" onsubmit="return selenia.onSubmit()">
-      <input type="hidden" name="_action" value="submit">
-      <div id="wrapper">
+    <div id="wrapper">
 
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 
-          <!-- Top bar -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="{{ app.homeURI }}">{{ app.appName }}</a>
-          </div>
-          <!-- Main Menu -->
-          <div class="sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-              <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{{ sideMenu }}" excludeRoot/>
-            </div>
-          </div>
-          <!-- Links at left -->
-          <ul class="nav navbar-top-links navbar-left">
-            <Link wrapper="li" currentUrl="{{ navigation.currentLink }}" href="admin/cms" icon="fa fa-home" label="Conteúdos"/>
-            <MenuBar navigation="{{ topMenu }}" withDropdowns/>
-          </ul>
-          <!-- Links at right -->
-          <ul class="nav navbar-top-links navbar-right">
-            <UserMenu/>
-          </ul>
-
-        </nav>
-
-        <div id="page-wrapper">
-          {!! statusMessage !!}
-          <div class="page-header-bar">
-            {!! #topTools !!}
-            <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
-            <NavigationPath navigation="{{ navigation }}"/>
-          </div>
-          <div class="container-fluid">
-            <div class="page-content">
-              {!! #main !!}
-            </div>
-          </div>
-          <footer>{!! adminSettings.footer !!}</footer>
+        <!-- Top bar -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand" href="{{ app.homeURI }}">{{ app.appName }}</a>
         </div>
+        <!-- Main Menu -->
+        <div class="sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{{ sideMenu }}" excludeRoot/>
+          </div>
+        </div>
+        <!-- Links at left -->
+        <ul class="nav navbar-top-links navbar-left">
+          <Link wrapper="li"
+                currentUrl="{{ navigation.currentLink }}"
+                href="admin/cms"
+                icon="fa fa-home"
+                label="Conteúdos"/>
+          <MenuBar navigation="{{ topMenu }}" withDropdowns/>
+        </ul>
+        <!-- Links at right -->
+        <ul class="nav navbar-top-links navbar-right">
+          <UserMenu/>
+        </ul>
 
+      </nav>
+
+      <div id="page-wrapper">
+        {!! statusMessage !!}
+        <div class="page-header-bar">
+          {!! #topTools !!}
+          <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
+          <NavigationPath navigation="{{ navigation }}"/>
+        </div>
+        <div class="container-fluid">
+          <div class="page-content">
+            {!! #main !!}
+          </div>
+        </div>
+        <footer>{!! adminSettings.footer !!}</footer>
       </div>
-    </form>
+
+    </div>
     <Include scripts/>
   </body>
 </Content>

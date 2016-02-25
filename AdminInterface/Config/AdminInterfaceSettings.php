@@ -27,8 +27,6 @@ class AdminInterfaceSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 
-  private $sideMenuOffset        = 1;
-  private $topMenuTarget         = '';
   private $allowDeleteSelf       = true;
   private $allowEditRole         = true;
   private $allowRename           = true;
@@ -41,6 +39,17 @@ class AdminInterfaceSettings implements AssignableInterface
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
   private $showMenu              = false;
+  private $sideMenuOffset        = 1;
+  private $topMenuTarget         = '';
   private $urlPrefix             = '';
+
+  /**
+   * @return string Gets a route pattern suitable for defining a routing group for routes whose URL begins with
+   * {@see urlPrefix}.
+   */
+  public function getBaseURLPattern ()
+  {
+    return $this->urlPrefix === '' ? '*' : "$this->urlPrefix...";
+  }
 
 }
