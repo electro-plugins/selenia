@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
 use Selenia\Application;
-use Selenia\DataObject;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\Navigation\NavigationLinkInterface;
@@ -103,15 +102,6 @@ class AdminPageComponent extends PageComponent
     if (!$model instanceof Model)
       parent::mergeIntoModel ($model, $data);
     else $model->forceFill (array_normalizeEmptyValues ($data)); //TODO: use fill() instead
-  }
-
-  /**
-   * @param string $class
-   * @return DataObject
-   */
-  function createModel ($class)
-  {
-    return new $class ($this->connection);
   }
 
   /**
