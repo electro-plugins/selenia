@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Users;
+namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
 
 use Illuminate\Database\Eloquent\Model;
 use PhpKit\WebConsole\DebugConsole\DebugConsole;
@@ -8,6 +8,7 @@ use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
+use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
 /**
@@ -22,6 +23,9 @@ class UserPage extends AdminPageComponent
 {
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
+
+  /** @var AdminInterfaceSettings */
+  public $adminSettings;
 
   public $canDelete;
   public $canRename;
@@ -184,6 +188,13 @@ class UserPage extends AdminPageComponent
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
     $this->canRename = $this->adminSettings->allowRename ();
+  }
+
+  function inject ()
+  {
+    return function (AdminInterfaceSettings $settings) {
+      $this->adminSettings = $settings;
+    };
   }
 
 }

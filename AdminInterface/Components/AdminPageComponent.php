@@ -4,35 +4,20 @@ namespace Selenia\Plugins\AdminInterface\Components;
 use Illuminate\Database\Eloquent\Model;
 use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
-use Selenia\Application;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
-use Selenia\Interfaces\Navigation\NavigationLinkInterface;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Localization\Services\Locale;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
 
 class AdminPageComponent extends PageComponent
 {
-  /** @var Application */
-  public $admin;
-  /** @var AdminInterfaceSettings */
-  public $adminSettings;
-  /** @var bool */
-  public $devMode;
-  /** @var Locale */
-  public $locale;
   /**
+   * The page's data model.
+   *
+   * Overriden here to re-declare its type.
+   *
    * @var Model
    */
   public $model;
-  /** @var NavigationLinkInterface */
-  public $sideMenu;
-  /** @var NavigationLinkInterface */
-  public $topMenu;
-  /** @var ConnectionInterface */
-  protected $connection;
   /** @var DatabaseAPI */
   protected $db;
   /** @var ExtPDO */
@@ -74,25 +59,14 @@ class AdminPageComponent extends PageComponent
       throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
         $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
         ));
-    $this->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
-    $settings      = $this->adminSettings;
-    if ($settings->showMenu ()) {
-      $target        = $settings->topMenuTarget ();
-      $this->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
-    }
-    $this->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
-
     parent::initialize ();
   }
 
   function inject ()
   {
-    return function (AdminInterfaceSettings $settings, ConnectionInterface $con, Locale $locale, DatabaseAPI $db) {
-      $this->adminSettings = $settings;
-      $this->connection    = $con;
-      $this->db            = $db;
-      $this->sql           = $con->getPdo ();
-      $this->locale        = $locale;
+    return function (ConnectionInterface $con, DatabaseAPI $db) {
+      $this->db  = $db;
+      $this->sql = $con->getPdo ();
     };
   }
 

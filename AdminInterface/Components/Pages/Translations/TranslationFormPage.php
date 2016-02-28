@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Translations;
+namespace Selenia\Plugins\AdminInterface\Components\Pages\Translations;
 use Selenia\Matisse\DataRecord;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Models\TranslationData;

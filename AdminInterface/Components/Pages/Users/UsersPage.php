@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Users;
+namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
 
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;

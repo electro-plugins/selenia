@@ -14,8 +14,9 @@ use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\Navigation\NavigationInterface;
 use Selenia\Interfaces\Navigation\NavigationProviderInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
-use Selenia\Plugins\AdminInterface\Components\Users\UserPage;
-use Selenia\Plugins\AdminInterface\Components\Users\UsersPage;
+use Selenia\Plugins\AdminInterface\Components\Pages\Users\UserPage;
+use Selenia\Plugins\AdminInterface\Components\Pages\Users\UsersPage;
+use Selenia\Plugins\AdminInterface\Components\Widgets\LanguageSelector;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
@@ -74,6 +75,9 @@ class AdminInterfaceModule
       ->provideMacros ()
       ->provideViews ()
       ->registerPresets ([Config\AdminPresets::class])
+      ->registerComponents ([
+        'LanguageSelector' => LanguageSelector::class,
+      ])
       ->onPostConfig (function () use ($module) {
         $module
           ->registerRouter ($this)
@@ -92,7 +96,7 @@ class AdminInterfaceModule
           'settings' => $navigation
             ->group ()
             ->id ('settings')
-            ->icon ('fa fa-cog')
+            ->icon ('fa fa-user')
             ->title ('$APP_USER_MENU')
             ->visible (N)
             ->links ([
@@ -101,7 +105,7 @@ class AdminInterfaceModule
                 ->id ('profile')
                 ->title ('$LOGIN_PROFILE')
                 ->icon ('fa fa-user')
-                ->visible (Y),
+                ->visible ($this->settings->enableProfile ()),
               'users'   => $navigation
                 ->link ()
                 ->id ('users')
@@ -115,6 +119,12 @@ class AdminInterfaceModule
                     ->title ('$APP_SETTINGS_USER')
                     ->visible (N),
                 ]),
+              '-'       => $navigation->divider (),
+              ''        => $navigation
+                ->link ()
+                ->url ('javascript:selenia.doAction("logout")')
+                ->title ('$LOGOUT')
+                ->icon ('fa fa-sign-out'),
             ]),
         ]),
     ]);
