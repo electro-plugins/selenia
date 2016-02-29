@@ -1,6 +1,7 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
 
+use Selenia\Authentication\Config\AuthenticationSettings;
 use Selenia\Exceptions\HttpException;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
@@ -12,6 +13,16 @@ use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
  */
 class UsersPage extends AdminPageComponent
 {
+  /** @var string */
+  private $userModel;
+
+  function inject ()
+  {
+    return function (AuthenticationSettings $settings) {
+      $this->userModel = $settings->userModel ();
+    };
+  }
+
   public function model ()
   {
     $myRole = $this->session->user ()->roleField ();
@@ -19,7 +30,7 @@ class UsersPage extends AdminPageComponent
       // Can't view other users.
       throw new HttpException (403);
 
-    $class = $this->app->userModel;
+    $class = $this->userModel;
     $users = $class::orderBy ('username')->get (); //TODO: order by custom username column
     return filter ($users, function (UserInterface $user) use ($myRole) {
       return $user->roleField () <= $myRole;

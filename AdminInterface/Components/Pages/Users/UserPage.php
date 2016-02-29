@@ -2,7 +2,6 @@
 namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
 
 use Illuminate\Database\Eloquent\Model;
-use PhpKit\WebConsole\DebugConsole\DebugConsole;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
@@ -110,20 +109,33 @@ class UserPage extends AdminPageComponent
     if ($isSelf) return $this->redirection->to ($this->session->previousUrl ());
   }
 
+  function inject ()
+  {
+    return function (AdminInterfaceSettings $settings, UserInterface $user) {
+      $this->adminSettings = $settings;
+      $this->user          = $user;
+    };
+  }
+
   protected function model ()
   {
     $mySelf = $this->session->user ();
+    $user   = $this->user;
 
     /** @var UserModel $user */
-    if ($this->editingSelf)
-      $user = $this->app->createUser ($mySelf->idField ());
+    if ($this->editingSelf) {
+      $id = $mySelf->idField ();
+      $f  = $user->findById ($id);
+      if (!$f)
+        throw new FatalException ("User $id not found");
+    }
     else {
       $myRole = $mySelf->roleField ();
-//      $user = $this->app->createUser ();
-      $user = $this->loadRequested ($this->app->userModel);
-      if (!$user) {
-        inspect ('<#section|User>', $user, '</#section>');
-        DebugConsole::throwErrorWithLog (new FatalException("Cant't find the user."));
+      $id     = $this->request->getAttribute ("@id");
+      if ($id) {
+        $f = $user->findById ($id);
+        if (!$f)
+          throw new FatalException ("User $id not found");
       }
       if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->idField () != $user->idField ())
         // Can't edit other users.
@@ -135,8 +147,6 @@ class UserPage extends AdminPageComponent
     // Set a default role for a new user.
     if (!exists ($user->roleField ()))
       $user->roleField ($this->adminSettings->defaultRole ());
-
-    $this->user = $user;
 
     $login = [
       'id'       => null,
@@ -188,13 +198,6 @@ class UserPage extends AdminPageComponent
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
     $this->canRename = $this->adminSettings->allowRename ();
-  }
-
-  function inject ()
-  {
-    return function (AdminInterfaceSettings $settings) {
-      $this->adminSettings = $settings;
-    };
   }
 
 }

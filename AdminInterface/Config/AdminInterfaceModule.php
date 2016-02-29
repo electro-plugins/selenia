@@ -3,7 +3,7 @@ namespace Selenia\Plugins\AdminInterface\Config;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Selenia\Application;
+use Selenia\Authentication\Config\AuthenticationSettings;
 use Selenia\Authentication\Middleware\AuthenticationMiddleware;
 use Selenia\Core\Assembly\Services\ModuleServices;
 use Selenia\Interfaces\Http\RedirectionInterface;
@@ -63,13 +63,13 @@ class AdminInterfaceModule
       ->__invoke ($request, $response, $next);
   }
 
-  function configure (ModuleServices $module, AdminInterfaceSettings $settings, Application $app,
-                      RouterInterface $router, RedirectionInterface $redirection)
+  function configure (ModuleServices $module, AdminInterfaceSettings $settings, RouterInterface $router,
+                      RedirectionInterface $redirection, AuthenticationSettings $authSettings)
   {
     $this->settings    = $settings;
     $this->router      = $router;
     $this->redirection = $redirection;
-    $app->userModel    = UserModel::class;
+    $authSettings->userModel (UserModel::class);
     $module
       ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
       ->provideTranslations ()
