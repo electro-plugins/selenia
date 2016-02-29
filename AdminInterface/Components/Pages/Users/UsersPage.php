@@ -3,6 +3,7 @@ namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
 
 use Selenia\Authentication\Config\AuthenticationSettings;
 use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 
@@ -15,11 +16,14 @@ class UsersPage extends AdminPageComponent
 {
   /** @var string */
   private $userModel;
+  /** @var SessionInterface */
+  public $session;
 
   function inject ()
   {
-    return function (AuthenticationSettings $settings) {
+    return function (AuthenticationSettings $settings, SessionInterface $session) {
       $this->userModel = $settings->userModel ();
+      $this->session = $session;
     };
   }
 

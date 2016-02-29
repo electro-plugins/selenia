@@ -6,6 +6,7 @@ use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
 use Selenia\Exceptions\HttpException;
 use Selenia\Http\Components\PageComponent;
+use Selenia\Interfaces\SessionInterface;
 use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
 
 class AdminPageComponent extends PageComponent
@@ -18,6 +19,8 @@ class AdminPageComponent extends PageComponent
    * @var Model
    */
   public $model;
+  /** @var SessionInterface */
+  public $session;
   /** @var DatabaseAPI */
   protected $db;
   /** @var ExtPDO */
@@ -56,17 +59,16 @@ class AdminPageComponent extends PageComponent
   {
     $user = $this->session->user ();
     if (!$user)
-      throw new HttpException(403, 'Access denied', 'No user is logged-in' . (
-        $this->app->debugMode ? '<br><br>Have you forgotten to setup an authentication middleware?' : ''
-        ));
+      throw new HttpException(403, 'Access denied', 'No user is logged-in');
     parent::initialize ();
   }
 
   function inject ()
   {
-    return function (ConnectionInterface $con, DatabaseAPI $db) {
-      $this->db  = $db;
-      $this->sql = $con->getPdo ();
+    return function (ConnectionInterface $con, DatabaseAPI $db, SessionInterface $session) {
+      $this->db      = $db;
+      $this->sql     = $con->getPdo ();
+      $this->session = $session;
     };
   }
 

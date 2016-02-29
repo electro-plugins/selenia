@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Selenia\Exceptions\FatalException;
 use Selenia\Exceptions\Flash\ValidationException;
 use Selenia\Exceptions\HttpException;
+use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
@@ -43,11 +44,12 @@ class UserPage extends AdminPageComponent
    */
   public $login;
   public $role;
+  /** @var SessionInterface */
+  public $session;
   public $show;
   public $templateUrl = 'users/user.html';
   /** @var UserInterface|Model */
   public $user;
-
   protected $autoRedirectUp = true;
 
   public function action_delete ($param = null)
@@ -111,9 +113,10 @@ class UserPage extends AdminPageComponent
 
   function inject ()
   {
-    return function (AdminInterfaceSettings $settings, UserInterface $user) {
+    return function (AdminInterfaceSettings $settings, UserInterface $user, SessionInterface $session) {
       $this->adminSettings = $settings;
       $this->user          = $user;
+      $this->session       = $session;
     };
   }
 
