@@ -10,6 +10,7 @@ use Selenia\Interfaces\Http\RedirectionInterface;
 use Selenia\Interfaces\Http\RequestHandlerInterface;
 use Selenia\Interfaces\Http\RouterInterface;
 use Selenia\Interfaces\InjectorInterface;
+use Selenia\Interfaces\ModelManagerInterface;
 use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\Navigation\NavigationInterface;
 use Selenia\Interfaces\Navigation\NavigationProviderInterface;
@@ -20,6 +21,7 @@ use Selenia\Plugins\AdminInterface\Components\Pages\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Components\Widgets\LanguageSelector;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Selenia\Plugins\AdminInterface\Services\ModelManager;
 
 class AdminInterfaceModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
@@ -134,7 +136,9 @@ class AdminInterfaceModule
 
   function register (InjectorInterface $injector)
   {
-    $injector->share (AdminInterfaceSettings::class);
+    $injector
+      ->share (AdminInterfaceSettings::class)
+      ->alias (ModelManagerInterface::class, ModelManager::class);
   }
 
 }

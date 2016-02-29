@@ -46,13 +46,12 @@ class AdminPageComponent extends PageComponent
 
   function action_submit ($param = null)
   {
-    $model = $this->model;
-    if (isset($model) && $model instanceof Model) {
-      if ($model->save ())
-        $this->session->flashMessage ('$APP_MSG_SAVED');
-      return;
-    }
-    parent::action_submit ();
+    $model = $this->modelManager->getModel ();;
+    if (!isset($model) || !$model instanceof Model)
+      parent::action_submit ();
+
+    $this->saveModel ();
+    $this->session->flashMessage ('$APP_MSG_SAVED');
   }
 
   protected function initialize ()
@@ -104,5 +103,16 @@ class AdminPageComponent extends PageComponent
     return $this->sql->query ("SELECT * FROM $table WHERE id=?", [$id])->fetch ();
   }
 
+  /**
+   * Save the model on the database.
+   *
+   * Override if you need to customize the saving process.
+   *
+   * @throws \Exception
+   */
+  protected function saveModel ()
+  {
+    $this->modelManager->saveModel ();
+  }
 
 }
