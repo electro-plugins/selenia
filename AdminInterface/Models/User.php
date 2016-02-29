@@ -29,7 +29,7 @@ class User extends BaseModel implements UserInterface
     /** @var static $user */
     $user = static::find ($id);
     if ($user) {
-      $this->forceFill ($user->getAttributes ());
+      $this->forceFill ($user->getAttributes ())->syncOriginal ();
       $this->exists = true;
       return true;
     }
@@ -41,7 +41,7 @@ class User extends BaseModel implements UserInterface
     /** @var static $user */
     $user = static::where ('username', $username)->first ();
     if ($user) {
-      $this->forceFill ($user->getAttributes ());
+      $this->forceFill ($user->getAttributes ())->syncOriginal ();
       $this->exists = true;
       return true;
     }
