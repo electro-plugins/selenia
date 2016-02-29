@@ -14,6 +14,7 @@ use Selenia\Interfaces\ModuleInterface;
 use Selenia\Interfaces\Navigation\NavigationInterface;
 use Selenia\Interfaces\Navigation\NavigationProviderInterface;
 use Selenia\Interfaces\ServiceProviderInterface;
+use Selenia\Plugins\AdminInterface\Components;
 use Selenia\Plugins\AdminInterface\Components\Pages\Users\UserPage;
 use Selenia\Plugins\AdminInterface\Components\Pages\Users\UsersPage;
 use Selenia\Plugins\AdminInterface\Components\Widgets\LanguageSelector;
@@ -78,10 +79,11 @@ class AdminInterfaceModule
       ->registerComponents ([
         'LanguageSelector' => LanguageSelector::class,
       ])
+      ->registerControllersNamespace (Components::class)
       ->onPostConfig (function () use ($module) {
         $module
           ->registerRouter ($this)
-          ->provideNavigation ($this);
+          ->registerNavigation ($this);
       });
   }
 
