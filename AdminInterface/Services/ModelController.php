@@ -1,11 +1,12 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Services;
 
-use Selenia\Database\Services\ModelManager as OriginalManager;
+use Illuminate\Database\Eloquent\Model;
+use Selenia\Database\Services\ModelController as OriginalConroller;
 use Selenia\Interfaces\SessionInterface;
 use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
 
-class ModelManager extends OriginalManager
+class ModelController extends OriginalConroller
 {
   /**
    * @var DatabaseAPI
@@ -20,6 +21,9 @@ class ModelManager extends OriginalManager
 
   function saveModel ()
   {
+    if (!$this->model instanceof Model)
+      return parent::saveModel ();
+
     $this->db->connection ()->beginTransaction ();
     try {
       $this->runPipeline ($this->preSavePipeline);

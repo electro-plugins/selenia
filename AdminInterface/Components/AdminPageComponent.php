@@ -46,7 +46,7 @@ class AdminPageComponent extends PageComponent
 
   function action_submit ($param = null)
   {
-    $model = $this->modelManager->getModel ();;
+    $model = $this->modelController->getModel ();;
     if (!isset($model) || !$model instanceof Model)
       parent::action_submit ();
 
@@ -112,7 +112,7 @@ class AdminPageComponent extends PageComponent
    */
   protected function saveModel ()
   {
-    $this->modelManager->saveModel ();
+    $this->modelController->saveModel ();
   }
 
 }
