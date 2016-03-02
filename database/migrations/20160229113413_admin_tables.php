@@ -60,8 +60,8 @@ class AdminTables extends Migration
         $t->morphs ('owner');
         $t->string ('group', 16)->nullable ();
         $t->boolean ('image')->default (false);
-        $t->string ('path', 1024);
-        $t->json ('metadata')->nullable ();
+        $t->string ('path', 40);
+        $t->string ('metadata', 1024)->nullable ();
         $t->integer ('sort')->default (0);
 
         $t->primary ('id');
