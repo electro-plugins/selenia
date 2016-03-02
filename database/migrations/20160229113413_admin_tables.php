@@ -29,16 +29,16 @@ class AdminTables extends Migration
     $schema = $this->db->schema ();
 
     if (!$schema->hasTable ('users')) {
-      $schema->create ('users', function (Blueprint $table) {
-        $table->increments ('id');
-        $table->timestamps ();
-        $table->timestamp ('lastLogin')->nullable ();
-        $table->string ('username', 30)->unique ();
-        $table->string ('password', 60);
-        $table->string ('realName', 30);
-        $table->tinyInteger ('role');
-        $table->boolean ('active')->default (false);
-        $table->rememberToken ();
+      $schema->create ('users', function (Blueprint $t) {
+        $t->increments ('id');
+        $t->timestamps ();
+        $t->timestamp ('lastLogin')->nullable ();
+        $t->string ('username', 30)->unique ();
+        $t->string ('password', 60);
+        $t->string ('realName', 30);
+        $t->tinyInteger ('role');
+        $t->boolean ('active')->default (false);
+        $t->rememberToken ();
       });
       $now = Carbon::now ();
       $this->db->table ('users')->insert ([
@@ -52,21 +52,22 @@ class AdminTables extends Migration
     else $this->output->writeln (" == Table <info>users</info> already exists. Skipped.");
 
     if (!$schema->hasTable ('files'))
-      $schema->create ('files', function (Blueprint $table) {
-        $table->uuid ('id');
-        $table->timestamps ();
-        $table->string ('name', 64);
-        $table->string ('ext', 4);
-        $table->morphs ('owner');
-        $table->boolean ('image')->default (false);
-        $table->string ('path', 1024);
-        $table->json ('metadata')->nullable ();
-        $table->integer ('sort')->default (0);
+      $schema->create ('files', function (Blueprint $t) {
+        $t->uuid ('id');
+        $t->timestamps ();
+        $t->string ('name', 64);
+        $t->string ('ext', 4);
+        $t->morphs ('owner');
+        $t->string ('group', 16)->nullable ();
+        $t->boolean ('image')->default (false);
+        $t->string ('path', 1024);
+        $t->json ('metadata')->nullable ();
+        $t->integer ('sort')->default (0);
 
-        $table->primary ('id');
-        $table->index ('owner_type');
-        $table->index ('image');
-        $table->index ('sort');
+        $t->primary ('id');
+        $t->index ('owner_type');
+        $t->index ('image');
+        $t->index ('sort');
       });
 
   }
