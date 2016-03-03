@@ -57,17 +57,16 @@ class AdminTables extends Migration
         $t->timestamps ();
         $t->string ('name', 64);
         $t->string ('ext', 4);
+        $t->string ('mime', 129);
         $t->morphs ('owner');
         $t->string ('group', 16)->nullable ();
         $t->boolean ('image')->default (false);
         $t->string ('path', 40);
         $t->string ('metadata', 1024)->nullable ();
-        $t->integer ('sort')->default (0);
 
         $t->primary ('id');
         $t->index ('owner_type');
         $t->index ('image');
-        $t->index ('sort');
       });
 
   }
