@@ -46,10 +46,6 @@ class AdminPageComponent extends PageComponent
 
   function action_submit ($param = null)
   {
-    $model = $this->modelController->getModel ();;
-    if (!isset($model) || !$model instanceof Model)
-      parent::action_submit ();
-
     $this->saveModel ();
     $this->session->flashMessage ('$APP_MSG_SAVED');
   }
