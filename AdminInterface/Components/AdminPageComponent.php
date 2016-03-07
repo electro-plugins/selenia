@@ -67,13 +67,6 @@ class AdminPageComponent extends PageComponent
     };
   }
 
-  protected function loadRequestedRecord ($table, $param = 'id')
-  {
-    $id = $this->request->getAttribute ("@$param");
-    if (!$id) return [];
-    return $this->sql->query ("SELECT * FROM $table WHERE id=?", [$id])->fetch ();
-  }
-
   /**
    * Save the model on the database.
    *
