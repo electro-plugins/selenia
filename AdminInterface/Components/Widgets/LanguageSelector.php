@@ -11,23 +11,15 @@ class LanguageSelector extends CompositeComponent
   public $template = <<<'HTML'
 
     <ul class="LanguageSelector nav nav-pills bar">
-      <Repeat for="{{ locale.getAvailableExt }}" as="i:loc">
-        <Link id="btn-{{ loc.name }}"
-              wrapper="li"
-              script="selenia.setLang('{{ loc.name }}')"
-              label="{{ loc.label }}"
-              active="{{ !i }}"/>
+      <Repeat for={{locale.getAvailableExt}} as=i:loc>
+        <Link id=btn-{{loc.name}}
+              wrapper= li
+              script=  selenia.setLang('{{loc.name}}')
+              label=   {{loc.label}}
+              active=  {{!i}}/>
       </Repeat>
-      <li class="disabled"><a href="javascript:nop()">$LANGUAGE</a></li>
+      <li class=disabled><a href=javascript:nop()>$LANGUAGE</a></li>
     </ul>
-
-    <Script name="LanguageSelector">
-      selenia.on ('languageChanged', function (lang) {
-        $ ('.LanguageSelector li').removeClass ('active');
-        $ ('#btn-' + lang).addClass ('active');
-      }).setLang ('{{ locale.locale }}');
-    </Script>
-
 HTML;
 
   public function __construct (Locale $locale)
@@ -35,5 +27,18 @@ HTML;
     parent::__construct ();
     $this->locale = $locale;
   }
+
+  protected function init ()
+  {
+    parent::init ();
+    $this->context->addInlineScript (<<<JS
+      selenia.on ('languageChanged', function (lang) {
+        $ ('.LanguageSelector li').removeClass ('active');
+        $ ('#btn-' + lang).addClass ('active');
+      }).setLang ('{$this->locale->locale ()}');
+JS
+      , 'initLanguageSelector');
+  }
+
 
 }

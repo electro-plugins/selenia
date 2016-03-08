@@ -1,15 +1,15 @@
-<Macro name="TabbedForm" defaultParam="tabs">
-  <Param name="tabs" type="content"/>
-  <Param name="actions" type="content"/>
-  <Param name="multilingual" type="bool"/>
+<Macro name=TabbedForm defaultParam=tabs>
+  <Param name=tabs type=content/>
+  <Param name=actions type=content/>
+  <Param name=multilingual type=bool/>
 
-  <If is="{{ @multilingual }}">
+  <If is={{@multilingual}}>
     <ShowLanguageSelector/>
   </If>
 
   {{ @tabs }}
 
-  <Content of="main">
+  <Content of=main>
 
     <ActionBar>
       {{ @actions }}
@@ -21,11 +21,11 @@
       </Extra>
     </ActionBar>
 
-    <div class="tab-content">
+    <div class=tab-content>
       {!! #tabPanels !!}
     </div>
 
   </Content>
 
-  <Include view="layouts/main.html"/>
+  <Include view=layouts/main.html/>
 </Macro>

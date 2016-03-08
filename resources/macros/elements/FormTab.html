@@ -1,25 +1,26 @@
-<Macro name="FormTab" defaultParam="content">
-  <Param name="title" type="string"/>
-  <Param name="id" type="id"/>
-  <Param name="content" type="content"/>
-  <Param name="class" type="string" default="form-page"/>
+<Macro name=FormTab defaultParam=content>
+  <Param name=title type=string/>
+  <Param name=id type=id/>
+  <Param name=content type=content/>
+  <Param name=class type=string default=form-page/>
 
-  <Script name="tabPanels">
+  <Script name=tabPanels>
     // Autofocus first tab input.
     $ ('.main-tabs a[data-toggle=tab]').on ('shown.bs.tab', function (e) {
       var page = $ ($ (e.target).attr ('href'));
       page.find ('.form-control:visible').first ().focus ();
+      selenia.topic ('tabChanged').send (page);
     });
     $ ('.main-tabs li:first-of-type a').tab ('show');
   </Script>
 
-  <Content appendTo="tabs">
-    <li class="{{ @class }}-tab" role="presentation"><a href="#{{ @id }}" data-toggle="tab">{{ @title }}</a></li>
+  <Content appendTo=tabs>
+    <li class={{@class}}-tab role=presentation><a href="#{{@id}}" data-toggle=tab>{{ @title }}</a></li>
   </Content>
 
-  <Content appendTo="tabPanels">
-    <div role="tabpanel" class="tab-pane" id="{{ @id }}">
-      <article class="{{ @class }}">
+  <Content appendTo=tabPanels>
+    <div role=tabpanel class=tab-pane id={{@id}}>
+      <article class={{@class}}>
         {{ @content }}
       </article>
     </div>
