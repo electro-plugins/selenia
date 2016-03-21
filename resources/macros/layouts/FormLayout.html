@@ -10,25 +10,25 @@
   <Param name="controlClass" type="string" default="form-control"/>
   <Param name="groupClass" type="string"/>
 
-  <If the="{@layout}" is="V" atParsingTime>
+  <If the={@layout} is="V" atParsingTime>
     <MacroParam name="fieldWidths" default="col-md-12 col-lg-10 col-lg-offset-1"/>
   </If>
 
-  <If the="{@layout}" is="H" atParsingTime>
+  <If the={@layout} is="H" atParsingTime>
     <MacroParam name="formClass" default="form-horizontal"/>
     <MacroParam name="labelClass" default="control-label col-sm-2"/>
     <MacroParam name="groupClass" default="col-sm-10"/>
   </If>
 
-  <If the="{@column2}" not isSet atParsingTime>
+  <If the={@column2} not isSet atParsingTime>
 
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
-      <div class="{@formClass}">
+      <div class={@formClass}>
         <Apply where="Field">
           <Set class="{@fieldClass} {@fieldWidths}"
-               labelClass="{@labelClass}"
-               controlClass="{@controlClass}"
-               groupClass="{@groupClass}"/>
+               labelClass={@labelClass}
+               controlClass={@controlClass}
+               groupClass={@groupClass}/>
 
           {@column1} {@column2}
 
@@ -39,24 +39,24 @@
     <Else>
 
       <div class="row form-layout form-layout-2-cols form-layout-{@layout}">
-        <div class="{@columnClass}">
-          <div class="{@formClass}">
+        <div class={@columnClass}>
+          <div class={@formClass}>
             <Apply where="Field">
-              <Set class="{@fieldClass}"
-                   labelClass="{@labelClass}"
-                   controlClass="{@controlClass}"
-                   groupClass="{@groupClass}"/>
+              <Set class={@fieldClass}
+                   labelClass={@labelClass}
+                   controlClass={@controlClass}
+                   groupClass={@groupClass}/>
               {@column1}
             </Apply>
           </div>
         </div>
-        <div class="{@columnClass}">
-          <div class="{@formClass}">
+        <div class={@columnClass}>
+          <div class={@formClass}>
             <Apply where="Field">
-              <Set class="{@fieldClass}"
-                   labelClass="{@labelClass}"
-                   controlClass="{@controlClass}"
-                   groupClass="{@groupClass}"/>
+              <Set class={@fieldClass}
+                   labelClass={@labelClass}
+                   controlClass={@controlClass}
+                   groupClass={@groupClass}/>
               {@column2}
             </Apply>
           </div>

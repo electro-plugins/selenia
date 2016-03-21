@@ -1,11 +1,11 @@
 <GridPage>
 
-  <DataGrid data="{model}" as="i:r" onClickGoTo="{navigation.userForm}{r.idField}">
+  <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm}{r.idField}>
     <Column width="40" type="row-selector">
       {i|ord}
     </Column>
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
-      <Checkbox checked="{r.activeField}" disabled/>
+      <Checkbox checked={r.activeField} disabled/>
     </Column>
     <Column width="70%" title="$LOGIN_REAL_NAME">
       {r.realNameField}
@@ -25,7 +25,7 @@
 
     <Actions>
       <ButtonDelete/>
-      <ButtonNew url="{navigation.userForm}"/>
+      <ButtonNew url={navigation.userForm}/>
     </Actions>
   </DataGrid>
 

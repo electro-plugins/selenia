@@ -6,15 +6,15 @@
 
   <FormLayout layout="H">
 
-    <If is="{show.active}">
+    <If is={show.active}>
       <Field name="active" label="$LOGIN_ACTIVE">
-        <Switch checked="{model.active}"/>
+        <Switch checked={model.active}/>
       </Field>
     </If>
 
     <Field label="$LOGIN_USERNAME" name="username">
       <Input required maxLength="30"
-             value="{model.username}"
+             value={model.username}
              autofocus
              autoselect
              autocomplete="no"
@@ -22,25 +22,25 @@
     </Field>
 
     <Field label="$LOGIN_PASSWORD" name="password">
-      <Input required minLength="6" value="{model.password}" type="password" autocomplete="no"/>
+      <Input required minLength="6" value={model.password} type="password" autocomplete="no"/>
     </Field>
 
-    <If is="{show.roles}">
+    <If is={show.roles}>
       <Field label="$LOGIN_ROLE" name="role">
-        <RadioButton value="{role.dev}" label="$LOGIN_ROLE_3" testValue="{model.role}" hidden="{!is.dev}"/>
-        <RadioButton value="{role.admin}"
+        <RadioButton value={role.dev} label="$LOGIN_ROLE_3" testValue={model.role} hidden={!is.dev}/>
+        <RadioButton value={role.admin}
                      label="$LOGIN_ROLE_2"
-                     testValue="{model.role}"
+                     testValue={model.role}
                      hidden="{!is.admin && !is.dev}"/>
-        <RadioButton value="{role.standard}" label="$LOGIN_ROLE_1" testValue="{model.role}"/>
-        <RadioButton value="{role.guest}" label="$LOGIN_ROLE_0" testValue="{model.role}"/>
+        <RadioButton value={role.standard} label="$LOGIN_ROLE_1" testValue={model.role}/>
+        <RadioButton value={role.guest} label="$LOGIN_ROLE_0" testValue={model.role}/>
       </Field>
     </If>
 
   </FormLayout>
 
   <Actions>
-    <ButtonsSaveDelete key="{canDelete}" model="{user}"/>
+    <ButtonsSaveDelete key={canDelete} model={user}/>
   </Actions>
 
 </FormPage>
