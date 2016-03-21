@@ -15,13 +15,13 @@
   </Script>
 
   <Content appendTo=tabs>
-    <li class={{@class}}-tab role=presentation><a href="#{{@id}}" data-toggle=tab>{{ @title }}</a></li>
+    <li class={@class}-tab role=presentation><a href="#{@id}" data-toggle=tab>{@title}</a></li>
   </Content>
 
   <Content appendTo=tabPanels>
-    <div role=tabpanel class=tab-pane id={{@id}}>
-      <article class={{@class}}>
-        {{ @content }}
+    <div role=tabpanel class=tab-pane id={@id}>
+      <article class={@class}>
+        {@content}
       </article>
     </div>
   </Content>

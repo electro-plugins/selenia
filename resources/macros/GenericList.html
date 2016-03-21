@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Macro name="GenericList">
-    <Param name="onClick" type="string" default="{{ links.mainForm }}"/>
-    <Param name="titleLabel" type="string" default="{{ labels.title }}"/>
-    <Param name="titleContent" type="string" default="{{ title }}"/>
+    <Param name="onClick" type="string" default="{links.mainForm}"/>
+    <Param name="titleLabel" type="string" default="{labels.title}"/>
+    <Param name="titleContent" type="string" default="{title}"/>
 
     <fieldset class="mainPanel">
       <div class="fieldset">
-        <DataGrid data="{{ #model }}" onClickGoTo="{{ @onClick }}">
-          <Column width="40" type="row-selector">{{ #ord }}</Column>
-          <Column width="100%" title="{{ @titleLabel }}">{{ @titleContent }}</Column>
+        <DataGrid data="{#model}" onClickGoTo="{@onClick}">
+          <Column width="40" type="row-selector">{#ord}</Column>
+          <Column width="100%" title="{@titleLabel}">{@titleContent}</Column>
         </DataGrid>
 
-        <ButtonNew url="{{ @onClick }}"/>
+        <ButtonNew url="{@onClick}"/>
       </div>
     </fieldset>
 

@@ -1,7 +1,7 @@
 <Content of="master">
-  <body class="with-sidebar {{ devMode|then(dev-mode) }}">
+  <body class="with-sidebar {devMode|then(dev-mode)}">
 
-    <If is="{{ devMode }}">
+    <If is="{devMode}">
       <AdminBar/>
     </If>
 
@@ -14,26 +14,26 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
           </button>
-          <a class="navbar-brand" href="{{ app.homeURI }}">{{ app.appName }}</a>
+          <a class="navbar-brand" href="{app.homeURI}">{app.appName}</a>
         </div>
         <!-- Main Menu -->
         <div class="sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
-            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{{ sideMenu }}" excludeRoot/>
+            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu="{sideMenu}" excludeRoot/>
           </div>
         </div>
         <!-- Links at left -->
         <ul class="nav navbar-top-links navbar-left">
           <Link wrapper="li"
-                currentUrl="{{ navigation.currentLink }}"
+                currentUrl="{navigation.currentLink}"
                 href="admin/cms"
                 icon="fa fa-home"
                 label="Conteúdos"/>
-          <MenuBar navigation="{{ topMenu }}" withDropdowns/>
+          <MenuBar navigation="{topMenu}" withDropdowns/>
         </ul>
         <!-- Links at right -->
         <ul class="nav navbar-top-links navbar-right">
-          <LinkDropdown link="{{ navigation.settings }}" title="{{ session.user.realName }}"/>
+          <LinkDropdown link="{navigation.settings}" title="{session.user.realName}"/>
         </ul>
 
       </nav>
@@ -42,8 +42,8 @@
         {!! statusMessage !!}
         <div class="page-header-bar">
           {!! #topTools !!}
-          <h1 class="page-header">{{ navigation.currentLink.title }}</h1>
-          <NavigationPath navigation="{{ navigation }}"/>
+          <h1 class="page-header">{navigation.currentLink.title}</h1>
+          <NavigationPath navigation="{navigation}"/>
         </div>
         <div class="container-fluid">
           <div class="page-content">

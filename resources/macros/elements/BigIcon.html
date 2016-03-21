@@ -4,9 +4,9 @@
   <Param name="active" type="bool"/>
   <Param name="href" type="string" default="javascript:void(0)"/>
 
-  <a class="<If is="{{ @active }}">active</If>" href="{{ @href }}">
-    <i class="{{ @icon }}"></i>
-    <span>{{ @title }}</span>
+  <a class="<If is="{@active}">active</If>" href="{@href}">
+    <i class="{@icon}"></i>
+    <span>{@title}</span>
   </a>
 
 </Macro>

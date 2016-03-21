@@ -4,14 +4,14 @@
   <Param name="saveLabel" type="string" default="$BUTTON_SAVE"/>
   <Param name="deleteLabel" type="string" default="$BUTTON_DELETE"/>
 
-  <ButtonSave label="{{ @saveLabel }}"/>
+  <ButtonSave label="{@saveLabel}"/>
 
-  <If the="{{ @key }}" isSet>
-    <Button label="{{ @deleteLabel }}"
+  <If the="{@key}" isSet>
+    <Button label="{@deleteLabel}"
             class="btn-danger"
             action="delete"
             confirm
-            message="$APP_DELETE_CONFIRM {{ @model.gender }} {{ @model.singular }}?"
+            message="$APP_DELETE_CONFIRM {@model.gender} {@model.singular}?"
             icon="fa fa-times"/>
   </If>
 

@@ -2,13 +2,13 @@
   <Param name="label" type="string" default="$BUTTON_SAVE"/>
   <Param name="autoDisable" type="bool"/>
 
-  <If the="{{ @autoDisable }}" isTrue>
+  <If the="{@autoDisable}" isTrue>
     <Button id="submitBtn"
             class="btn btn-primary ActionSave"
-            label="{{ @label }}"
+            label="{@label}"
             script="selenia.doAction('submit')"/>
     <Else>
-      <Button class="btn-primary ActionSave" label="{{ @label }}" action="submit"/>
+      <Button class="btn-primary ActionSave" label="{@label}" action="submit"/>
     </Else>
   </If>
 

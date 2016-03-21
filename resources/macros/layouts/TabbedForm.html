@@ -3,16 +3,16 @@
   <Param name=actions type=content/>
   <Param name=multilingual type=bool/>
 
-  <If is={{@multilingual}}>
+  <If is={@multilingual}>
     <ShowLanguageSelector/>
   </If>
 
-  {{ @tabs }}
+  {@tabs}
 
   <Content of=main>
 
     <ActionBar>
-      {{ @actions }}
+      {@actions}
 
       <Extra>
         <ul class="nav nav-tabs main-tabs">

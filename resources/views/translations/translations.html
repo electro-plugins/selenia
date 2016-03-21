@@ -2,24 +2,24 @@
   <PageContent>
     <fieldset class="mainPanel">
       <div class="fieldset">
-        <DataGrid data="{{ !translations }}" onClickGoTo="translations/{{ key }}">
+        <DataGrid data="{!translations}" onClickGoTo="translations/{key}">
           <Column width="40" type="row-selector">
-            {{ #ord }}
+            {#ord}
           </Column>
           <Column width="150" title="Chave">
-            {{ key }}
+            {key}
           </Column>
           <Column width="50%" title="Português">
-            {{ text_pt }}
+            {text_pt}
           </Column>
           <Column width="50%" title="Inglês">
-            {{ text_en }}
+            {text_en}
           </Column>
           <NoData>
             Não existem traduções.
           </NoData>
         </DataGrid>
-        <ButtonNew label="Nova chave" url="translations/{{ key }}"/>
+        <ButtonNew label="Nova chave" url="translations/{key}"/>
       </div>
     </fieldset>
   </PageContent>

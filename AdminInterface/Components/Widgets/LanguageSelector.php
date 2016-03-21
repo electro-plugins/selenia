@@ -11,12 +11,12 @@ class LanguageSelector extends CompositeComponent
   public $template = <<<'HTML'
 
     <ul class="LanguageSelector nav nav-pills bar">
-      <Repeat for={{locale.getAvailableExt}} as=i:loc>
-        <Link id=btn-{{loc.name}}
+      <Repeat for={locale.getAvailableExt} as=i:loc>
+        <Link id=btn-{loc.name}
               wrapper= li
-              script=  selenia.setLang('{{loc.name}}')
-              label=   {{loc.label}}
-              active=  {{!i}}/>
+              script=  selenia.setLang('{loc.name}')
+              label=   {loc.label}
+              active=  {!i}/>
       </Repeat>
       <li class=disabled><a href=javascript:nop()>$LANGUAGE</a></li>
     </ul>
