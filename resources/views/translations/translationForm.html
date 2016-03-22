@@ -7,7 +7,7 @@
         <tr>
           <td>
             <label for="key" class="form">Chave:</label>
-            <If the={!translation.key} isSet>
+            <If {!translation.key}>
               <Static name="key" value={!translation.key} label={!translation.key}/>
               <Else>
                 <Input name="key" value={!translation.key} focus="yes"/>

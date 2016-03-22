@@ -6,7 +6,7 @@
 
   <FormLayout layout="H">
 
-    <If is={show.active}>
+    <If {show.active}>
       <Field name="active" label="$LOGIN_ACTIVE">
         <Switch checked={model.active}/>
       </Field>
@@ -25,7 +25,7 @@
       <Input required minLength="6" value={model.password} type="password" autocomplete="no"/>
     </Field>
 
-    <If is={show.roles}>
+    <If {show.roles}>
       <Field label="$LOGIN_ROLE" name="role">
         <RadioButton value={role.dev} label="$LOGIN_ROLE_3" testValue={model.role} hidden={!is.dev}/>
         <RadioButton value={role.admin}
