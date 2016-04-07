@@ -41,18 +41,18 @@
       </nav>
 
       <div id="page-wrapper">
-        {!! statusMessage !!}
+        {statusMessage|*}
         <div class="page-header-bar">
-          {!! #topTools !!}
+          {#topTools|*}
           <h1 class="page-header">{navigation.currentLink.title}</h1>
           <NavigationPath navigation={navigation}/>
         </div>
         <div class="container-fluid">
           <div class="page-content">
-            {!! #main !!}
+            {#main|*}
           </div>
         </div>
-        <footer>{!! adminSettings.footer !!}</footer>
+        <footer>{adminSettings.footer|*}</footer>
       </div>
 
     </div>
