@@ -87,10 +87,11 @@ class AdminInterfaceModule
   function defineNavigation (NavigationInterface $navigation)
   {
     $navigation->add ([
-      $this->settings->urlPrefix () => $navigation
+       $navigation
         ->group ()
         ->id ('app_home')
         ->title ('$APP_HOME')
+         ->url($this->settings->urlPrefix ())
         ->links ([
           'settings' => $navigation
             ->group ()
