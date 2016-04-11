@@ -44,7 +44,8 @@ class AdminInterfaceModule
             when ($this->settings->enableUsersManagement (),
               [
                 'users' => factory (function (UsersPage $page) {
-                  $page->templateUrl = 'users/users.html';
+                  // This is done here just to show off this possibility
+                  $page->templateUrl = 'adminInterface/users/users.html';
                   return $page;
                 }),
 
@@ -76,7 +77,7 @@ class AdminInterfaceModule
       ->registerComponents ([
         'LanguageSelector' => LanguageSelector::class,
       ])
-      ->registerControllersNamespace (Components::class)
+      ->registerControllersNamespace (Components::class, 'adminInterface')
       ->onPostConfig (function () use ($module) {
         $module
           ->registerRouter ($this)
