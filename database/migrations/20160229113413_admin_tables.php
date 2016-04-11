@@ -15,8 +15,15 @@ class AdminTables extends Migration
   {
     $schema = $this->db->schema ();
 
-    if ($schema->hasTable ('users'))
+    if ($schema->hasTable ('files')) {
+      $schema->drop ('files');
+      $this->output->writeln ("  Dropped table <info>files</info>.");
+    }
+
+    if ($schema->hasTable ('users')) {
       $schema->drop ('users');
+      $this->output->writeln ("  Dropped table <info>users</info>.");
+    }
   }
 
   /**
@@ -35,7 +42,7 @@ class AdminTables extends Migration
         $t->timestamp ('lastLogin')->nullable ();
         $t->string ('username', 30)->unique ();
         $t->string ('password', 60);
-        $t->string ('realName', 30);
+        $t->string ('realName', 30)->nullable ();
         $t->tinyInteger ('role');
         $t->boolean ('active')->default (false);
         $t->rememberToken ();
@@ -43,6 +50,7 @@ class AdminTables extends Migration
       $now = Carbon::now ();
       $this->db->table ('users')->insert ([
         'username'   => 'admin',
+        'password'   => '',
         'role'       => UserInterface::USER_ROLE_ADMIN,
         'created_at' => $now,
         'updated_at' => $now,
