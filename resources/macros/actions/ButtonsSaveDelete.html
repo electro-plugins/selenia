@@ -11,7 +11,7 @@
             class="btn-danger"
             action="delete"
             confirm
-            message="$APP_DELETE_CONFIRM {@model.gender} {@model.singular}?"
+            message="{'$APP_DELETE_CONFIRM ' + @model.gender + ' ' + @model.singular + '?'}"
             icon="fa fa-times"/>
   </If>
 

@@ -20,17 +20,17 @@
     <MacroParam name="groupClass" default="col-sm-10"/>
   </If>
 
-  <If the={@column2} not isSet atParsingTime>
+  <If {!@column2} atParsingTime>
 
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
       <div class={@formClass}>
         <Apply where="Field">
-          <Set class="{@fieldClass} {@fieldWidths}"
+          <Set class="{@fieldClass + @fieldWidths}"
                labelClass={@labelClass}
                controlClass={@controlClass}
                groupClass={@groupClass}/>
 
-          {@column1} {@column2}
+          {@column1|*} {@column2|*}
 
         </Apply>
       </div>
@@ -46,7 +46,7 @@
                    labelClass={@labelClass}
                    controlClass={@controlClass}
                    groupClass={@groupClass}/>
-              {@column1}
+              {@column1|*}
             </Apply>
           </div>
         </div>
@@ -57,7 +57,7 @@
                    labelClass={@labelClass}
                    controlClass={@controlClass}
                    groupClass="{@groupClass}"/>
-              {@column2}
+              {@column2|*}
             </Apply>
           </div>
         </div>

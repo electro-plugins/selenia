@@ -1,5 +1,5 @@
 <Content of="master">
-  <body class="with-sidebar {devMode|then(dev-mode)}">
+  <body class="with-sidebar {devMode|then 'dev-mode'}">
 
     <!--
     <if {devMode}>
@@ -22,6 +22,7 @@
         <div class="sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
             <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu={sideMenu} excludeRoot/>
+            Yo: {sideMenu|json}
           </div>
         </div>
         <!-- Links at left -->
@@ -41,18 +42,18 @@
       </nav>
 
       <div id="page-wrapper">
-        {!! statusMessage !!}
+        {statusMessage|*}
         <div class="page-header-bar">
-          {!! #topTools !!}
+          {#topTools|*}
           <h1 class="page-header">{navigation.currentLink.title}</h1>
           <NavigationPath navigation={navigation}/>
         </div>
         <div class="container-fluid">
           <div class="page-content">
-            {!! #main !!}
+            {#main|*}
           </div>
         </div>
-        <footer>{!! adminSettings.footer !!}</footer>
+        <footer>{adminSettings.footer|*}</footer>
       </div>
 
     </div>
@@ -60,4 +61,4 @@
   </body>
 </Content>
 
-<Include view="layouts/master.html"/>
+<Include view="adminInterface/layouts/master.html"/>

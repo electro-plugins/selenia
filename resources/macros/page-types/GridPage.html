@@ -1,14 +1,13 @@
 <Macro name="GridPage" defaultParam="content">
   <Param name="content" type="content"/>
-  <Param name="actions" type="content"/>
 
   <Content of="main">
 
     <article class="grid-page">
-      {@content}
+      {@content|*}
     </article>
 
   </Content>
 
-  <Include view="layouts/main.html"/>
+  <Include view="adminInterface/layouts/main.html"/>
 </Macro>

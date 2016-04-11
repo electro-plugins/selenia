@@ -2,17 +2,17 @@
   <Param name="content" type="content"/>
   <Param name="actions" type="content"/>
 
-  <Content of="main">
+  <Content of="main" preRender>
 
     <ActionBar>
-      {@actions}
+      {@actions|*}
     </ActionBar>
 
     <article class="form-page">
-      {@content}
+      {@content|*}
     </article>
 
   </Content>
 
-  <Include view="layouts/main.html"/>
+  <Include view="adminInterface/layouts/main.html"/>
 </Macro>
