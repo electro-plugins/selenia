@@ -14,16 +14,16 @@ use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
  */
 class UsersPage extends AdminPageComponent
 {
-  /** @var string */
-  private $userModel;
   /** @var SessionInterface */
   public $session;
+  /** @var string */
+  private $userModel;
 
   function inject ()
   {
     return function (AuthenticationSettings $settings, SessionInterface $session) {
       $this->userModel = $settings->userModel ();
-      $this->session = $session;
+      $this->session   = $session;
     };
   }
 
@@ -36,9 +36,9 @@ class UsersPage extends AdminPageComponent
 
     $class = $this->userModel;
     $users = $class::orderBy ('username')->get (); //TODO: order by custom username column
-    return filter ($users, function (UserInterface $user) use ($myRole) {
+    $this->modelController->setModel (filter ($users, function (UserInterface $user) use ($myRole) {
       return $user->roleField () <= $myRole;
-    });
+    }));
   }
 
 }

@@ -159,7 +159,7 @@ class UserPage extends AdminPageComponent
       'role'     => $user->roleField (),
     ];
 
-    return $login;
+    $this->modelController->setModel ($login);
   }
 
   protected function viewModel ()
