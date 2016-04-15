@@ -10,17 +10,17 @@
   <Param name="controlClass" type="string" default="form-control"/>
   <Param name="groupClass" type="string"/>
 
-  <If {@layout=="V"} atParsingTime>
+  <If {@layout=="V"}>
     <MacroParam name="fieldWidths" default="col-md-12 col-lg-10 col-lg-offset-1"/>
   </If>
 
-  <If {@layout=="H"} atParsingTime>
+  <If {@layout=="H"}>
     <MacroParam name="formClass" default="form-horizontal"/>
     <MacroParam name="labelClass" default="control-label col-sm-2"/>
     <MacroParam name="groupClass" default="col-sm-10"/>
   </If>
 
-  <If {!@column2} atParsingTime>
+  <If {!@column2}>
 
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
       <div class={@formClass}>
