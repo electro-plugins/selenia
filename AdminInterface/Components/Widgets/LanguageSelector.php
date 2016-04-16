@@ -12,9 +12,9 @@ class LanguageSelector extends CompositeComponent
 
     <ul class="LanguageSelector nav nav-pills bar">
       <For each=i:loc of={locale.getAvailableExt}>
-        <Link id=btn-{loc.name}
+        <Link id={'btn-'+loc.name}
               wrapper= li
-              script=  selenia.setLang('{loc.name}')
+              script=  {"selenia.setLang('"+loc.name+"')"}
               label=   {loc.label}
               active=  {!i}/>
       </For>

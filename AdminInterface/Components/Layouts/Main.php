@@ -39,6 +39,8 @@ class Main extends CompositeComponent
 
   protected function viewModel ()
   {
+    $this->viewModel = $this;
+
     $settings = $this->adminSettings;
     if ($settings->showMenu ()) {
       $target        = $settings->topMenuTarget ();
