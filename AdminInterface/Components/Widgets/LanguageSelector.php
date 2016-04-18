@@ -31,7 +31,7 @@ HTML;
   protected function init ()
   {
     parent::init ();
-    $this->context->addInlineScript (<<<JS
+    $this->context->getAssetsService ()->addInlineScript (<<<JS
       selenia.on ('languageChanged', function (lang) {
         $ ('.LanguageSelector li').removeClass ('active');
         $ ('#btn-' + lang).addClass ('active');
