@@ -10,6 +10,7 @@ use Selenia\Interfaces\UserInterface;
 use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Selenia\ViewEngine\Lib\ViewModel;
 
 /**
  * Notes:
@@ -162,9 +163,8 @@ class UserPage extends AdminPageComponent
     $this->modelController->setModel ($login);
   }
 
-  protected function viewModel ()
+  protected function viewModel (ViewModel $viewModel)
   {
-    parent::viewModel ();
     $user   = $this->user;
     $mySelf = $this->session->user ();
 

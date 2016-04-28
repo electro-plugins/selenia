@@ -8,6 +8,7 @@ use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Matisse\Components\Base\CompositeComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
+use Selenia\ViewEngine\Lib\ViewModel;
 
 class Main extends CompositeComponent
 {
@@ -19,12 +20,6 @@ class Main extends CompositeComponent
   public $navigation;
   /** @var SessionInterface */
   public $session;
-  /** @var NavigationLinkInterface */
-  public $sideMenu;
-  /** @var NavigationLinkInterface */
-  public $topMenu;
-  /** @var bool */
-  public $devMode;
 
   public function __construct (Application $app, NavigationInterface $navigation, AdminInterfaceSettings $adminSettings,
                                SessionInterface $session)
@@ -37,19 +32,17 @@ class Main extends CompositeComponent
     $this->session       = $session;
   }
 
-  protected function viewModel ()
+  protected function viewModel (ViewModel $viewModel)
   {
-    $this->viewModel = $this;
-
     $settings = $this->adminSettings;
     if ($settings->showMenu ()) {
       $target        = $settings->topMenuTarget ();
-      $this->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
+      $viewModel->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
     }
-    $this->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
+    $viewModel->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
     $user = $this->session->user ();
-    $this->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+    $viewModel->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
   }
 
 }
