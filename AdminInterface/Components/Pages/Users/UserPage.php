@@ -166,7 +166,7 @@ class UserPage extends AdminPageComponent
 
   protected function viewModel (ViewModel $viewModel)
   {
-    $user   = $this->user;
+    $user   = $viewModel->user = $this->user;
     $mySelf = $this->session->user ();
 
     $isDev   = $mySelf->roleField () == UserInterface::USER_ROLE_DEVELOPER;
