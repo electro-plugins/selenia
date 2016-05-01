@@ -24,10 +24,6 @@ class UserPage extends AdminPageComponent
 {
   /** Password to display when modifying an existing user. */
   const DUMMY_PASS = 'dummy password';
-
-  /** @var AdminInterfaceSettings */
-  public $adminSettings;
-
   public $canDelete;
   public $canRename;
   /**
@@ -46,12 +42,14 @@ class UserPage extends AdminPageComponent
   public $login;
   public $role;
   /** @var SessionInterface */
-  public $session;
-  public $show;
-  public $templateUrl = 'adminInterface/users/user.html';
-  /** @var UserInterface|Model */
-  public $user;
+  public    $session;
+  public    $show;
+  public    $templateUrl    = 'adminInterface/users/user.html';
   protected $autoRedirectUp = true;
+  /** @var AdminInterfaceSettings */
+  private $adminSettings;
+  /** @var UserInterface|Model */
+  private $user;
 
   public function action_delete ($param = null)
   {
@@ -73,6 +71,7 @@ class UserPage extends AdminPageComponent
     $username = get ($data, 'username');
     $password = get ($data, 'password');
     $role     = get ($data, 'role', false);
+    $realName = get ($data, 'realName');
 
     // Is the user being saved the logged-in user?
     $isSelf = $user->idField () == $this->session->user ()->idField ();
@@ -105,6 +104,7 @@ class UserPage extends AdminPageComponent
 
     $user->activeField ($active);
     $user->roleField ($role);
+    $user->realNameField ($realName ?: ucfirst ($username));
 
     if ($user->save ())
       $this->session->flashMessage ('$APP_MSG_SAVED');
@@ -155,7 +155,8 @@ class UserPage extends AdminPageComponent
     $login = [
       'id'       => null,
       'username' => $user->usernameField (),
-      'password' => strlen ($user->passwordField ()) ? self::DUMMY_PASS : '',
+      'realName' => $user->realNameField (),
+      'password' => strlen ($user->passwordField ()) || $id ? self::DUMMY_PASS : '',
       'active'   => $user->activeField (),
       'role'     => $user->roleField (),
     ];
@@ -170,37 +171,29 @@ class UserPage extends AdminPageComponent
 
     $isDev   = $mySelf->roleField () == UserInterface::USER_ROLE_DEVELOPER;
     $isAdmin = $mySelf->roleField () == UserInterface::USER_ROLE_ADMIN;
-    // Has the user the Standard or Admin roles?
-    $isStandard = $isAdmin || $mySelf->roleField () == UserInterface::USER_ROLE_STANDARD;
     // Are we editing the logged-in user?
     $isSelf = $user->idField () == $mySelf->idField ();
 
     if ($isSelf)
       $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
 
-    $this->is        = [
-      'admin'    => $isAdmin,
-      'dev'      => $isDev,
-      'standard' => $isStandard,
-      'self'     => $isSelf,
-    ];
-    $this->role      = [
+    $viewModel->role      = [
       'dev'      => UserInterface::USER_ROLE_DEVELOPER,
       'admin'    => UserInterface::USER_ROLE_ADMIN,
       'standard' => UserInterface::USER_ROLE_STANDARD,
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
-    $this->show      = [
+    $viewModel->show      = [
       'roles'  => $isDev || ($isAdmin && $this->adminSettings->allowEditRole ()),
       'active' => !$isSelf && $this->adminSettings->enableUsersDisabling (),
     ];
-    $this->canDelete = // Will be either true or null.
+    $viewModel->canDelete = // Will be either true or null.
       (
         $user->exists &&
         // User is not self or delete self is allowed.
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
-    $this->canRename = $this->adminSettings->allowRename ();
+    $viewModel->canRename = $this->adminSettings->allowRename ();
   }
 
 }

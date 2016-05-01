@@ -123,7 +123,7 @@ class AdminInterfaceModule
               '-'       => $navigation->divider (),
               ''        => $navigation
                 ->link ()
-                ->url ('javascript:selenia.doAction("logout")')
+                ->url ("javascript:selenia.doAction('logout')")
                 ->title ('$LOGOUT')
                 ->icon ('fa fa-sign-out'),
             ]),

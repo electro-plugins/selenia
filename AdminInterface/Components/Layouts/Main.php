@@ -1,9 +1,7 @@
 <?php
 namespace Selenia\Plugins\AdminInterface\Components\Layouts;
 
-use Selenia\Application;
 use Selenia\Interfaces\Navigation\NavigationInterface;
-use Selenia\Interfaces\Navigation\NavigationLinkInterface;
 use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
 use Selenia\Matisse\Components\Base\CompositeComponent;
@@ -13,20 +11,17 @@ use Selenia\ViewEngine\Lib\ViewModel;
 class Main extends CompositeComponent
 {
   /** @var AdminInterfaceSettings */
-  public $adminSettings;
-  /** @var Application */
-  public $app;
+  private $adminSettings;
   /** @var NavigationInterface */
-  public $navigation;
+  private $navigation;
   /** @var SessionInterface */
-  public $session;
+  private $session;
 
-  public function __construct (Application $app, NavigationInterface $navigation, AdminInterfaceSettings $adminSettings,
+  public function __construct (NavigationInterface $navigation, AdminInterfaceSettings $adminSettings,
                                SessionInterface $session)
   {
     parent::__construct ();
 
-    $this->app           = $app;
     $this->navigation    = $navigation;
     $this->adminSettings = $adminSettings;
     $this->session       = $session;
@@ -34,14 +29,14 @@ class Main extends CompositeComponent
 
   protected function viewModel (ViewModel $viewModel)
   {
-    $settings = $this->adminSettings;
+    $settings = $viewModel->adminSettings = $this->adminSettings;
     if ($settings->showMenu ()) {
-      $target        = $settings->topMenuTarget ();
+      $target             = $settings->topMenuTarget ();
       $viewModel->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
     }
     $viewModel->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
-    $user = $this->session->user ();
+    $user               = $this->session->user ();
     $viewModel->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
   }
 
