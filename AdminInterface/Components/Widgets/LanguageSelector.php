@@ -9,7 +9,7 @@ class LanguageSelector extends CompositeComponent
   /** @var Locale */
   public $locale;
   public $template = <<<'HTML'
-
+    <Import service="locale"/>
     <ul class="LanguageSelector nav nav-pills bar">
       <For each=i:loc of={locale.getAvailableExt}>
         <Link id={'btn-'+loc.name}
