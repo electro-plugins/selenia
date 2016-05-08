@@ -25,7 +25,7 @@
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
       <div class={@formClass}>
         <Apply where="Field">
-          <Set class="{@fieldClass + @fieldWidths}"
+          <Set class="{@fieldClass + ' ' + @fieldWidths}"
                labelClass={@labelClass}
                controlClass={@controlClass}
                groupClass={@groupClass}/>
@@ -57,7 +57,9 @@
                    labelClass={@labelClass}
                    controlClass={@controlClass}
                    groupClass="{@groupClass}"/>
+
               {@column2|*}
+
             </Apply>
           </div>
         </div>
