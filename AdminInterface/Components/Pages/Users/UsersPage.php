@@ -36,9 +36,11 @@ class UsersPage extends AdminPageComponent
 
     $class = $this->userModel;
     $users = $class::orderBy ('username')->get (); //TODO: order by custom username column
-    $this->modelController->setModel (filter ($users, function (UserInterface $user) use ($myRole) {
+    $users = filter ($users, function (UserInterface $user) use ($myRole) {
       return $user->roleField () <= $myRole;
-    }));
+    });
+    $users = map ($users, function (UserInterface $user) { return $user->getRecord(); });
+    $this->modelController->setModel ($users);
   }
 
 }

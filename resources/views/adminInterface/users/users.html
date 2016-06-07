@@ -2,27 +2,27 @@
 
 <GridPage>
 
-  <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm + r.idField}>
+  <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm + r.id}>
     <Column width="40" type="row-selector">
       {i|ord}
     </Column>
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
-      <Checkbox checked={r.activeField} disabled/>
+      <Checkbox checked={r.active} disabled/>
     </Column>
     <Column width="70%" title="$LOGIN_REAL_NAME">
-      {r.realNameField}
+      {r.realName}
     </Column>
     <Column width="30%" title="$LOGIN_USERNAME">
-      {r.usernameField}
+      {r.username}
     </Column>
     <Column width="145" title="$LOGIN_REGISTRATION_DATE">
-      {r.registrationDateField}
+      {r.registrationDate}
     </Column>
     <Column width="145" title="$LOGIN_LAST_LOGIN">
-      {r.lastLoginField}
+      {r.lastLogin}
     </Column>
     <Column width="110" title="$LOGIN_ROLE">
-      $LOGIN_ROLE_{r.roleField}
+      $LOGIN_ROLE_{r.role}
     </Column>
 
     <Actions>
