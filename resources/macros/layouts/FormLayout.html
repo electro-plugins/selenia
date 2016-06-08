@@ -23,12 +23,12 @@
   <If {!@column2}>
 
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
-      <div class={@formClass}>
+      <div class="{@formClass}">
         <Apply where="Field">
           <Set class="{@fieldClass + ' ' + @fieldWidths}"
-               labelClass={@labelClass}
-               controlClass={@controlClass}
-               groupClass={@groupClass}/>
+               labelClass="{@labelClass}"
+               controlClass="{@controlClass}"
+               groupClass="{@groupClass}"/>
 
           {@column1|*}
 
@@ -39,23 +39,25 @@
     <Else>
 
       <div class="row form-layout form-layout-2-cols form-layout-{@layout}">
-        <div class={@columnClass}>
-          <div class={@formClass}>
+        <div class="{@columnClass}">
+          <div class="{@formClass}">
             <Apply where="Field">
-              <Set class={@fieldClass}
-                   labelClass={@labelClass}
-                   controlClass={@controlClass}
-                   groupClass={@groupClass}/>
+              <Set class="{@fieldClass}"
+                   labelClass="{@labelClass}"
+                   controlClass="{@controlClass}"
+                   groupClass="{@groupClass}"/>
+
               {@column1|*}
+
             </Apply>
           </div>
         </div>
-        <div class={@columnClass}>
-          <div class={@formClass}>
+        <div class="{@columnClass}">
+          <div class="{@formClass}">
             <Apply where="Field">
-              <Set class={@fieldClass}
-                   labelClass={@labelClass}
-                   controlClass={@controlClass}
+              <Set class="{@fieldClass}"
+                   labelClass="{@labelClass}"
+                   controlClass="{@controlClass}"
                    groupClass="{@groupClass}"/>
 
               {@column2|*}
