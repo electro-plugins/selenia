@@ -5,11 +5,10 @@ use Illuminate\Database\Eloquent\Model;
 use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
 use Selenia\Exceptions\HttpException;
-use Selenia\Http\Components\PageComponent;
 use Selenia\Interfaces\SessionInterface;
 use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
 
-class AdminPageComponent extends PageComponent
+class AdminPageComponent extends \Selenia\Plugins\Matisse\Components\Base\PageComponent
 {
   /**
    * The page's data model.
