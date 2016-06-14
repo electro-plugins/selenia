@@ -2,7 +2,7 @@
 namespace Selenia\Plugins\AdminInterface\Components\Widgets;
 
 use Selenia\Localization\Services\Locale;
-use Selenia\Matisse\Components\Base\CompositeComponent;
+use Selenia\Plugins\Matisse\Components\Base\CompositeComponent;
 
 class LanguageSelector extends CompositeComponent
 {

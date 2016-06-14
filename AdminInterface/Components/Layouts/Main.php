@@ -4,7 +4,7 @@ namespace Selenia\Plugins\AdminInterface\Components\Layouts;
 use Selenia\Interfaces\Navigation\NavigationInterface;
 use Selenia\Interfaces\SessionInterface;
 use Selenia\Interfaces\UserInterface;
-use Selenia\Matisse\Components\Base\CompositeComponent;
+use Selenia\Plugins\Matisse\Components\Base\CompositeComponent;
 use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
 use Selenia\ViewEngine\Lib\ViewModel;
 
