@@ -1,8 +1,8 @@
-# Admin Interface
+# Selenia Platform
 
-> An administration interface or base infrastructure for your app.
+> An extensible application base, built on Electro
 
-This plugin is an integrant, but optional, part of the Selenia framework.
+This package is meant to be installed on an Electro framework blank application.
 
 ## Features
 
@@ -10,7 +10,7 @@ This plugin provides:
 
 ###### Design
 
-1. Administration layouts based on Twitter Bootstrap.
+1. Administration layouts based on Twitter Bootstrap 3.
 * A main menu for your app.
 * Breadcrumb navigation.
 * Custom UI components.
@@ -73,14 +73,8 @@ UserMenu           | The default user session menu.
 
 To install this plugin on your application, using the terminal, `cd` to your app's directory and type:
 
-```shell
-selenia module:install-plugin
-```
-
-and select `selenia-plugins/admin-interface` from the displayed list, or type
-
-```shell
-selenia module:install-plugin selenia-plugins/admin-interface
+```bash
+workman module:install-plugin selenia/selenia
 ```
 
 > For correct operation, do not install this package directly with Composer.
@@ -134,8 +128,8 @@ If the app does not display the menu, you'll need to navigate manually to the pr
 
 If you want pages on your app to inherit the bundled administration graphical layout and default functionality, you'll need to:
 
-1. make your controller classes inherit from `Selenia\Plugins\AdminInterface\Controllers\AdminController`
-2. include on each of your views, as root tag, one of the bundled layout templates (ex: `<Admin>`).
+1. make your controller classes inherit from `Selenia\Controllers\SeleniaController`
+2. include on each of your views, as root tag, one of the bundled layout templates (ex: `<Selenia>`).
 
 > See the bundled administration pages' source code for concrete examples.
 
@@ -146,7 +140,7 @@ If you need to perform modifications on this plugin's assets, you'll need to reb
 #### Installing the development tools
 
 ```sh
-cd private/plugins/selenia-plugins/admin-interface
+cd private/plugins/selenia/platform
 npm install
 bower install
 ```
@@ -154,12 +148,12 @@ bower install
 #### Rebuilding the plugin
 
 ```sh
-cd private/plugins/selenia-plugins/admin-interface
+cd private/plugins/selenia/platform
 npm run build
 ```
 
 ## License
 
-The Selenia framework is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The Selenia Platform is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-**Selenia framework** - Copyright &copy; 2015 Impactwave, Lda.
+**Selenia Platform** - Copyright &copy; Impactwave, Lda.
