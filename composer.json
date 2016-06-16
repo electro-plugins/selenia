@@ -19,14 +19,14 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
-  "homepage": "https://github.com/selenia-platform/platform",
+  "homepage": "https://github.com/selenia/platform",
   "require": {
     "php": ">=5.6.0",
-    "selenia/installers": "^1.0.0",
-    "selenia-plugins/matisse": "dev-master",
-    "selenia-plugins/matisse-components": "dev-master",
-    "selenia-plugins/login": "dev-master",
-    "selenia-plugins/illuminate-database": "dev-master"
+    "electro/installers": "^1.0.0",
+    "electro-modules/matisse": "dev-master",
+    "electro-modules/matisse-components": "dev-master",
+    "selenia-modules/login": "dev-master",
+    "selenia-modules/illuminate-database": "dev-master"
   },
   "extra": {
     "bower": {
