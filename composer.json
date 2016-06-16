@@ -26,7 +26,7 @@
     "electro-modules/matisse": "dev-master",
     "electro-modules/matisse-components": "dev-master",
     "selenia-modules/login": "dev-master",
-    "selenia-modules/illuminate-database": "dev-master"
+    "electro-modules/illuminate-database": "dev-master"
   },
   "extra": {
     "bower": {
