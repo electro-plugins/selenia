@@ -37,7 +37,7 @@ This plugin provides:
 #### Bundled UI components
 
 ##### Administration / Generic App layouts
- 
+
 Tag name  | Description
 ----------|------------
 Admin     | The base layout for all administration pages.
@@ -139,7 +139,7 @@ If you need to perform modifications on this plugin's assets, you'll need to reb
 
 #### Installing the development tools
 
-```sh
+```bash
 cd private/plugins/selenia/platform
 npm install
 bower install
@@ -147,7 +147,7 @@ bower install
 
 #### Rebuilding the plugin
 
-```sh
+```bash
 cd private/plugins/selenia/platform
 npm run build
 ```
@@ -156,4 +156,4 @@ npm run build
 
 The Selenia Platform is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-**Selenia Platform** - Copyright &copy; Impactwave, Lda.
+**Selenia Platform** - Copyright &copy; Cláudio Silva and Impactwave, Lda.

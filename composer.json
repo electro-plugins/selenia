@@ -1,9 +1,10 @@
 {
-  "name": "selenia-plugins/admin-interface",
-  "description": "An administration interface for you app",
-  "type": "selenia-plugin",
+  "name": "selenia/platform",
+  "description": "An extensible application base, built on Electro",
+  "type": "electro-plugin",
   "keywords": [
     "plugin",
+    "electro",
     "selenia"
   ],
   "license": "MIT",
@@ -18,7 +19,7 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
-  "homepage": "https://github.com/selenia-plugins/admin-interface",
+  "homepage": "https://github.com/selenia-platform/platform",
   "require": {
     "php": ">=5.6.0",
     "selenia/installers": "^1.0.0",
