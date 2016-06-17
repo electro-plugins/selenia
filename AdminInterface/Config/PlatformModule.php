@@ -24,6 +24,7 @@ use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 class PlatformModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
+  const ACTION_FIELD = 'selenia-action';
   /** @var RedirectionInterface */
   private $redirection;
   /** @var RouterInterface */
