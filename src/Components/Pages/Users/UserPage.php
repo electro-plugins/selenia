@@ -44,7 +44,7 @@ class UserPage extends AdminPageComponent
   /** @var SessionInterface */
   public    $session;
   public    $show;
-  public    $templateUrl    = 'adminInterface/users/user.html';
+  public    $templateUrl    = 'platform/users/user.html';
   protected $autoRedirectUp = true;
   /** @var PlatformSettings */
   private $adminSettings;

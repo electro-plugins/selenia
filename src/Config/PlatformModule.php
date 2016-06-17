@@ -1,6 +1,8 @@
 <?php
 namespace Selenia\Platform\Config;
 
+use Electro\Application;
+use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Electro\Authentication\Config\AuthenticationSettings;
@@ -19,12 +21,14 @@ use Selenia\Platform\Components\Pages\Users\UserPage;
 use Selenia\Platform\Components\Pages\Users\UsersPage;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
+use Selenia\Platform\Middleware\AutoRoutingMiddleware;
 use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
   const ACTION_FIELD = 'selenia-action';
+  const PUBLIC_DIR   = 'modules/selenia/platform';
   /** @var RedirectionInterface */
   private $redirection;
   /** @var RouterInterface */
@@ -46,7 +50,7 @@ class PlatformModule
               [
                 'users' => factory (function (UsersPage $page) {
                   // This is done here just to show off this possibility
-                  $page->templateUrl = 'adminInterface/users/users.html';
+                  $page->templateUrl = 'platform/users/users.html';
                   return $page;
                 }),
 
@@ -62,6 +66,12 @@ class PlatformModule
       ->__invoke ($request, $response, $next);
   }
 
+  function boot (Application $app, ApplicationMiddlewareInterface $middleware)
+  {
+    if ($app->isWebBased)
+      $middleware->add (AutoRoutingMiddleware::class, null, 'router');
+  }
+
   function configure (ModuleServices $module, PlatformSettings $settings, RouterInterface $router,
                       RedirectionInterface $redirection, AuthenticationSettings $authSettings)
   {
@@ -70,7 +80,7 @@ class PlatformModule
     $this->redirection = $redirection;
     $authSettings->userModel (UserModel::class);
     $module
-      ->publishPublicDirAs ('modules/selenia/platform')
+      ->publishPublicDirAs (self::PUBLIC_DIR)
       ->provideTranslations ()
       ->provideMacros ()
       ->provideViews ()
@@ -78,7 +88,7 @@ class PlatformModule
       ->registerComponents ([
         'LanguageSelector' => LanguageSelector::class,
       ])
-      ->registerControllersNamespace (Components::class, 'adminInterface')
+      ->registerControllersNamespace (Components::class, 'platform')
       ->onPostConfig (function () use ($module) {
         $module
           ->registerRouter ($this)
@@ -89,11 +99,11 @@ class PlatformModule
   function defineNavigation (NavigationInterface $navigation)
   {
     $navigation->add ([
-       $navigation
+      $navigation
         ->group ()
         ->id ('app_home')
         ->title ('$APP_HOME')
-         ->url($this->settings->urlPrefix ())
+        ->url ($this->settings->urlPrefix ())
         ->links ([
           'settings' => $navigation
             ->group ()
