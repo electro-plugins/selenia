@@ -74,7 +74,7 @@ class PlatformModule
       ->provideTranslations ()
       ->provideMacros ()
       ->provideViews ()
-      ->registerPresets ([Config\AdminPresets::class])
+      ->registerPresets ([Config\PlatformPresets::class])
       ->registerComponents ([
         'LanguageSelector' => LanguageSelector::class,
       ])

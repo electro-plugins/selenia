@@ -8,7 +8,7 @@ use Electro\Plugins\MatisseComponents\Input;
 use Electro\Plugins\MatisseComponents\Select;
 use Electro\Plugins\MatisseComponents\Switch_;
 
-class AdminPresets
+class PlatformPresets
 {
   /**
    * @var Locale

@@ -1,8 +1,8 @@
 <?php
 use Carbon\Carbon;
 use Illuminate\Database\Schema\Blueprint;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\IlluminateDatabase\Migration;
+use Electro\Interfaces\UserInterface;
+use Electro\Plugins\IlluminateDatabase\Migration;
 
 class AdminTables extends Migration
 {
