@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Pages\Translations;
-use Selenia\Plugins\Matisse\DataSet;
-use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
-use Selenia\Plugins\AdminInterface\Models\TranslationData;
+namespace Selenia\Platform\Components\Pages\Translations;
+use Electro\Plugins\Matisse\DataSet;
+use Selenia\Platform\Components\AdminPageComponent;
+use Selenia\Platform\Models\TranslationData;
 
 class TranslationsPage extends AdminPageComponent
 {

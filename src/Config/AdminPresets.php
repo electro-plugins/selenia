@@ -1,12 +1,12 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Config;
+namespace Selenia\Platform\Config;
 
-use Selenia\Localization\Services\Locale;
-use Selenia\Plugins\MatisseComponents\DataGrid;
-use Selenia\Plugins\MatisseComponents\Field;
-use Selenia\Plugins\MatisseComponents\Input;
-use Selenia\Plugins\MatisseComponents\Select;
-use Selenia\Plugins\MatisseComponents\Switch_;
+use Electro\Localization\Services\Locale;
+use Electro\Plugins\MatisseComponents\DataGrid;
+use Electro\Plugins\MatisseComponents\Field;
+use Electro\Plugins\MatisseComponents\Input;
+use Electro\Plugins\MatisseComponents\Select;
+use Electro\Plugins\MatisseComponents\Switch_;
 
 class AdminPresets
 {

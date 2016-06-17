@@ -38,7 +38,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Selenia\\Plugins\\AdminInterface\\": "AdminInterface/"
+      "Selenia\\Platform\\": "src/"
     }
   }
 }

@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Widgets;
+namespace Selenia\Platform\Components\Widgets;
 
-use Selenia\Localization\Services\Locale;
-use Selenia\Plugins\Matisse\Components\Base\CompositeComponent;
+use Electro\Localization\Services\Locale;
+use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
 
 class LanguageSelector extends CompositeComponent
 {

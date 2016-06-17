@@ -1,23 +1,23 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Layouts;
+namespace Selenia\Platform\Components\Layouts;
 
-use Selenia\Interfaces\Navigation\NavigationInterface;
-use Selenia\Interfaces\SessionInterface;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\Matisse\Components\Base\CompositeComponent;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
-use Selenia\ViewEngine\Lib\ViewModel;
+use Electro\Interfaces\Navigation\NavigationInterface;
+use Electro\Interfaces\SessionInterface;
+use Electro\Interfaces\UserInterface;
+use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
+use Selenia\Platform\Config\PlatformSettings;
+use Electro\ViewEngine\Lib\ViewModel;
 
 class Main extends CompositeComponent
 {
-  /** @var AdminInterfaceSettings */
+  /** @var PlatformSettings */
   private $adminSettings;
   /** @var NavigationInterface */
   private $navigation;
   /** @var SessionInterface */
   private $session;
 
-  public function __construct (NavigationInterface $navigation, AdminInterfaceSettings $adminSettings,
+  public function __construct (NavigationInterface $navigation, PlatformSettings $adminSettings,
                                SessionInterface $session)
   {
     parent::__construct ();

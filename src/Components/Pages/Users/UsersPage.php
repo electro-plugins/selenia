@@ -1,11 +1,11 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
+namespace Selenia\Platform\Components\Pages\Users;
 
-use Selenia\Authentication\Config\AuthenticationSettings;
-use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\SessionInterface;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
+use Electro\Authentication\Config\AuthenticationSettings;
+use Electro\Exceptions\HttpException;
+use Electro\Interfaces\SessionInterface;
+use Electro\Interfaces\UserInterface;
+use Selenia\Platform\Components\AdminPageComponent;
 
 /**
  * Notes:

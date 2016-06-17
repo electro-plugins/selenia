@@ -1,14 +1,15 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components;
+namespace Selenia\Platform\Components;
 
+use Electro\Plugins\Matisse\Components\Base\PageComponent;
 use Illuminate\Database\Eloquent\Model;
 use PhpKit\ConnectionInterface;
 use PhpKit\ExtPDO;
-use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\SessionInterface;
-use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
+use Electro\Exceptions\HttpException;
+use Electro\Interfaces\SessionInterface;
+use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
 
-class AdminPageComponent extends \Selenia\Plugins\Matisse\Components\Base\PageComponent
+class AdminPageComponent extends PageComponent
 {
   /**
    * The page's data model.

@@ -1,9 +1,9 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Models;
+namespace Selenia\Platform\Models;
 
 use Carbon\Carbon;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\IlluminateDatabase\BaseModel;
+use Electro\Interfaces\UserInterface;
+use Electro\Plugins\IlluminateDatabase\BaseModel;
 
 class User extends BaseModel implements UserInterface
 {

@@ -1,13 +1,13 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Middleware;
+namespace Selenia\Platform\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Selenia\Application;
-use Selenia\Interfaces\Http\RequestHandlerInterface;
-use Selenia\Plugins\IlluminateDatabase\DatabaseAPI;
-use Selenia\Plugins\MatisseComponents\Models\File;
+use Electro\Interfaces\Http\RequestHandlerInterface;
+use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
+use Electro\Plugins\MatisseComponents\Models\File;
 
 class FileUploader implements RequestHandlerInterface
 {

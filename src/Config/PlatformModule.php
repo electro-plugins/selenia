@@ -1,25 +1,25 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Config;
+namespace Selenia\Platform\Config;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Selenia\Authentication\Config\AuthenticationSettings;
-use Selenia\Authentication\Middleware\AuthenticationMiddleware;
-use Selenia\Core\Assembly\Services\ModuleServices;
-use Selenia\Interfaces\DI\InjectorInterface;
-use Selenia\Interfaces\DI\ServiceProviderInterface;
-use Selenia\Interfaces\Http\RedirectionInterface;
-use Selenia\Interfaces\Http\RequestHandlerInterface;
-use Selenia\Interfaces\Http\RouterInterface;
-use Selenia\Interfaces\ModuleInterface;
-use Selenia\Interfaces\Navigation\NavigationInterface;
-use Selenia\Interfaces\Navigation\NavigationProviderInterface;
-use Selenia\Plugins\AdminInterface\Components;
-use Selenia\Plugins\AdminInterface\Components\Pages\Users\UserPage;
-use Selenia\Plugins\AdminInterface\Components\Pages\Users\UsersPage;
-use Selenia\Plugins\AdminInterface\Components\Widgets\LanguageSelector;
-use Selenia\Plugins\AdminInterface\Config;
-use Selenia\Plugins\AdminInterface\Models\User as UserModel;
+use Electro\Authentication\Config\AuthenticationSettings;
+use Electro\Authentication\Middleware\AuthenticationMiddleware;
+use Electro\Core\Assembly\Services\ModuleServices;
+use Electro\Interfaces\DI\InjectorInterface;
+use Electro\Interfaces\DI\ServiceProviderInterface;
+use Electro\Interfaces\Http\RedirectionInterface;
+use Electro\Interfaces\Http\RequestHandlerInterface;
+use Electro\Interfaces\Http\RouterInterface;
+use Electro\Interfaces\ModuleInterface;
+use Electro\Interfaces\Navigation\NavigationInterface;
+use Electro\Interfaces\Navigation\NavigationProviderInterface;
+use Selenia\Platform\Components;
+use Selenia\Platform\Components\Pages\Users\UserPage;
+use Selenia\Platform\Components\Pages\Users\UsersPage;
+use Selenia\Platform\Components\Widgets\LanguageSelector;
+use Selenia\Platform\Config;
+use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
@@ -29,7 +29,7 @@ class PlatformModule
   private $redirection;
   /** @var RouterInterface */
   private $router;
-  /** @var AdminInterfaceSettings */
+  /** @var PlatformSettings */
   private $settings;
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
@@ -62,7 +62,7 @@ class PlatformModule
       ->__invoke ($request, $response, $next);
   }
 
-  function configure (ModuleServices $module, AdminInterfaceSettings $settings, RouterInterface $router,
+  function configure (ModuleServices $module, PlatformSettings $settings, RouterInterface $router,
                       RedirectionInterface $redirection, AuthenticationSettings $authSettings)
   {
     $this->settings    = $settings;
@@ -70,7 +70,7 @@ class PlatformModule
     $this->redirection = $redirection;
     $authSettings->userModel (UserModel::class);
     $module
-      ->publishPublicDirAs ('modules/selenia-plugins/admin-interface')
+      ->publishPublicDirAs ('modules/selenia/platform')
       ->provideTranslations ()
       ->provideMacros ()
       ->provideViews ()
@@ -135,7 +135,7 @@ class PlatformModule
   function register (InjectorInterface $injector)
   {
     $injector
-      ->share (AdminInterfaceSettings::class);
+      ->share (PlatformSettings::class);
   }
 
 }

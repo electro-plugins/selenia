@@ -1,12 +1,12 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Config;
+namespace Selenia\Platform\Config;
 
-use Selenia\Interfaces\AssignableInterface;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Traits\ConfigurationTrait;
+use Electro\Interfaces\AssignableInterface;
+use Electro\Interfaces\UserInterface;
+use Electro\Traits\ConfigurationTrait;
 
 /**
- * Configuration settings for the AdminInterface module.
+ * Configuration settings for the Platform module.
  *
  * @method $this|int     sideMenuOffset (int $v = null) The offs. on the active nav. trail from where to begin the menu
  * @method $this|string  topMenuTarget (string $v = null) The target navigation id for generatibg the top menu
@@ -23,7 +23,7 @@ use Selenia\Traits\ConfigurationTrait;
  * @method $this|boolean showMenu (boolean $v = null) Display an item for the admin area on the main menu?
  * @method $this|string  urlPrefix (string $v = null) Relative URL that prefixes all URLs to your app (ex: 'admin')
  */
-class AdminInterfaceSettings implements AssignableInterface
+class PlatformSettings implements AssignableInterface
 {
   use ConfigurationTrait;
 

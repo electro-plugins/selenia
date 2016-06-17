@@ -1,16 +1,16 @@
 <?php
-namespace Selenia\Plugins\AdminInterface\Components\Pages\Users;
+namespace Selenia\Platform\Components\Pages\Users;
 
 use Illuminate\Database\Eloquent\Model;
-use Selenia\Exceptions\FatalException;
-use Selenia\Exceptions\Flash\ValidationException;
-use Selenia\Exceptions\HttpException;
-use Selenia\Interfaces\SessionInterface;
-use Selenia\Interfaces\UserInterface;
-use Selenia\Plugins\AdminInterface\Components\AdminPageComponent;
-use Selenia\Plugins\AdminInterface\Config\AdminInterfaceSettings;
-use Selenia\Plugins\AdminInterface\Models\User as UserModel;
-use Selenia\ViewEngine\Lib\ViewModel;
+use Electro\Exceptions\FatalException;
+use Electro\Exceptions\Flash\ValidationException;
+use Electro\Exceptions\HttpException;
+use Electro\Interfaces\SessionInterface;
+use Electro\Interfaces\UserInterface;
+use Selenia\Platform\Components\AdminPageComponent;
+use Selenia\Platform\Config\PlatformSettings;
+use Selenia\Platform\Models\User as UserModel;
+use Electro\ViewEngine\Lib\ViewModel;
 
 /**
  * Notes:
@@ -46,7 +46,7 @@ class UserPage extends AdminPageComponent
   public    $show;
   public    $templateUrl    = 'adminInterface/users/user.html';
   protected $autoRedirectUp = true;
-  /** @var AdminInterfaceSettings */
+  /** @var PlatformSettings */
   private $adminSettings;
   /** @var UserInterface|Model */
   private $user;
@@ -114,7 +114,7 @@ class UserPage extends AdminPageComponent
 
   function inject ()
   {
-    return function (AdminInterfaceSettings $settings, UserInterface $user, SessionInterface $session) {
+    return function (PlatformSettings $settings, UserInterface $user, SessionInterface $session) {
       $this->adminSettings = $settings;
       $this->user          = $user;
       $this->session       = $session;
