@@ -21,7 +21,7 @@ use Selenia\Plugins\AdminInterface\Components\Widgets\LanguageSelector;
 use Selenia\Plugins\AdminInterface\Config;
 use Selenia\Plugins\AdminInterface\Models\User as UserModel;
 
-class AdminInterfaceModule
+class PlatformModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
   /** @var RedirectionInterface */
