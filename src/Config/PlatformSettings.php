@@ -8,8 +8,6 @@ use Electro\Traits\ConfigurationTrait;
 /**
  * Configuration settings for the Platform module.
  *
- * @method $this|int     sideMenuOffset (int $v = null) The offs. on the active nav. trail from where to begin the menu
- * @method $this|string  topMenuTarget (string $v = null) The target navigation id for generatibg the top menu
  * @method $this|boolean allowDeleteSelf (boolean $v = null) Allow a user to delete him(her)self?
  * @method $this|boolean allowEditRole (boolean $v = null) Allow users to edit their role?
  * @method $this|boolean allowRename (boolean $v = null) Allow users to change their usernames?
@@ -21,6 +19,8 @@ use Electro\Traits\ConfigurationTrait;
  * @method $this|string  footer (string $v = null) Sets the footer text displayed on all pages.
  * @method $this|boolean requireAuthentication (boolean $v = null) Enable the authentication middleware for all routes?
  * @method $this|boolean showMenu (boolean $v = null) Display an item for the admin area on the main menu?
+ * @method $this|int     sideMenuOffset (int $v = null) The offs. on the active nav. trail from where to begin the menu
+ * @method $this|string  topMenuTarget (string $v = null) The target navigation id for generating the top menu
  * @method $this|string  urlPrefix (string $v = null) Relative URL that prefixes all URLs to your app (ex: 'admin')
  */
 class PlatformSettings implements AssignableInterface
@@ -38,9 +38,9 @@ class PlatformSettings implements AssignableInterface
   private $footer                = 'Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
   private $requireAuthentication = true;
-  private $showMenu              = false;
+  private $showMenu              = true;
   private $sideMenuOffset        = 1;
-  private $topMenuTarget         = '';
+  private $topMenuTarget         = 'mainMenu';
   private $urlPrefix             = '';
 
   /**

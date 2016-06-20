@@ -32,7 +32,11 @@ class Main extends CompositeComponent
     $settings = $viewModel->adminSettings = $this->adminSettings;
     if ($settings->showMenu ()) {
       $target             = $settings->topMenuTarget ();
-      $viewModel->topMenu = exists ($target) ? $this->navigation [$target] : $this->navigation;
+      $viewModel->topMenu = exists ($target)
+        ? (
+          isset($this->navigation [$target]) ? $this->navigation [$target] : null
+        )
+        : $this->navigation;
     }
     $viewModel->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 

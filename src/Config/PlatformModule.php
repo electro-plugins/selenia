@@ -89,11 +89,8 @@ class PlatformModule
         'LanguageSelector' => LanguageSelector::class,
       ])
       ->registerControllersNamespace (Components::class, 'platform')
-      ->onPostConfig (function () use ($module) {
-        $module
-          ->registerRouter ($this)
-          ->registerNavigation ($this);
-      });
+      ->registerRouter ($this)
+      ->registerNavigation ($this);
   }
 
   function defineNavigation (NavigationInterface $navigation)
