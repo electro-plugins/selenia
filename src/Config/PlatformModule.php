@@ -21,7 +21,7 @@ use Selenia\Platform\Components\Pages\Users\UserPage;
 use Selenia\Platform\Components\Pages\Users\UsersPage;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
-use Selenia\Platform\Middleware\AutoRoutingMiddleware;
+use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule
