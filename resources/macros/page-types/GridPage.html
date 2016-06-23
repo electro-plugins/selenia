@@ -1,7 +1,12 @@
 <Macro name="GridPage" defaultParam="content">
   <Param name="content" type="content"/>
+  <Param name="actions" type="content"/>
 
   <Content of="main">
+
+    <ActionBar>
+      {@actions|*}
+    </ActionBar>
 
     <article class="grid-page">
       {@content|*}
