@@ -2,9 +2,11 @@
   <Param name="content" type="content"/>
   <Param name="extra" type="content"/>
 
-  <div class="action-bar">
-    <div class="extra">{@extra|*}</div>
-    {@content|*}
-  </div>
+  <If {@content!=null}>
+    <div class="action-bar">
+      <div class="extra">{@extra|*}</div>
+      {@content|*}
+    </div>
+  </If>
 
 </Macro>

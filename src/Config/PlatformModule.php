@@ -107,7 +107,6 @@ class PlatformModule
             ->id ('settings')
             ->icon ('fa fa-user')
             ->title ('$APP_USER_MENU')
-            ->visible (N)
             ->links ([
               'profile' => $navigation
                 ->link ()

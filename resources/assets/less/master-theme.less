@@ -79,7 +79,7 @@
   .content-background {
   }
 
-  .top-bar { background: @theme-color1; border: none; }
+  .top-bar { background: @theme-color3; border: none; }
   .top-bar-menu { background-color: #FFF; color: #333 }
   .top-bar-selected { background-color: @theme-color3 !important; color: contrast(@theme-color3, #333, #FFF) !important }
   .top-bar-text { color: contrast(@theme-color1, #333, #FFF); }
@@ -90,20 +90,20 @@
   // It is partially hidden by .top-bar.
   .navbar-header {
     color: #FFF;
-    background-color: @theme-color4;
-    border-bottom: @sidebar-border-width solid @theme-backdrop;
+    //background-color: @theme-color4;
+    //border-bottom: @sidebar-border-width solid @theme-backdrop;
     height: @topbar-height;
   }
 
   .sidebar {
-    background: @alt-color2;
+    background: hsl(209,10%,24%);
   }
   .sidebar-border {
     //border-right: 2px solid #D2D4D5;
     //box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
     border-right: @sidebar-border-width solid rgba(0,0,0,0.2);
   }
-  .main-menu-item { color: @theme-text-color2; font-weight: 700; }
+  .main-menu-item { color: #BBB; font-weight: 300; }
   .main-menu-hover-item {
     background-color: @theme-color3;
     color: contrast(@theme-color3, #333, #FFF, 70%) !important;
@@ -111,11 +111,11 @@
   .main-menu-active-item { color: @theme-text-selected2; }
   .main-menu-disabled-item { color: darken(@theme-backdrop, 10%); }
   .main-menu-current-item {
-    color: @theme-text-selected2;
+    color: #FFF;
     //background-color: lighten(@alt-color2, 4%);
     //outline: 1px solid hsla(210,8%,85%,1);
     border-left: 5px solid @theme-color4;
-    padding-left: 38px - 5px;
+    padding-left: 20px - 5px;
   }
   .main-menu-header-item { font-size: 15px; }
 
