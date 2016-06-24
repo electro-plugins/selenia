@@ -31,33 +31,33 @@
       #theme.tab;
     }
 
-    & > li.active a {
-      #theme.tab-selected;
-      &::before {
-        #layer();
-        border-bottom: @tabs-border-style;
-        border-bottom-color: @main-background;
-        border-bottom-width: 2px;
-        width: 100%;
-        top: 100%;
-        left: 0;
-      }
-    }
-
-    & > li.grid-page-tab.active a {
-      background-color: @header-color;
-      color: @header-text-color;
-    }
+    //& > li.active a {
+    //  #theme.tab-selected;
+    //  &::before {
+    //    #layer();
+    //    border-bottom: @tabs-border-style;
+    //    border-bottom-color: @main-background;
+    //    border-bottom-width: 2px;
+    //    width: 100%;
+    //    top: 100%;
+    //    left: 0;
+    //  }
+    //}
+    //
+    //& > li.grid-page-tab.active a {
+    //  background-color: @header-color;
+    //  color: @header-text-color;
+    //}
 
     & > li.active a:hover {
       #theme.tab-selected !important;
       //#theme.tab-selected-hover !important;
     }
 
-    & > li.grid-page-tab.active a:hover {
-      background-color: @header-color !important;
-      color: @header-text-color !important;
-    }
+    //& > li.grid-page-tab.active a:hover {
+    //  background-color: @header-color !important;
+    //  color: @header-text-color !important;
+    //}
 
   }
 }

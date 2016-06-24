@@ -1,39 +1,21 @@
-//-----------------------------
-// Palette Generator
-//-----------------------------
-
-@alt-color1: hsl(@hue,@sat2,21% * @mult2);
-@alt-color2: hsl(@hue,@sat2,26% * @mult2);
-
-@theme-color1: hsl(@hue,@sat,26% * @mult);
-@theme-color2: hsl(@hue,@sat,38% * @mult);
-@theme-color3: hsl(@hue,@sat,42% * @mult);
-@theme-color4: hsl(@hue,@sat,56% * @mult);
-@theme-color5: hsl(@hue,@sat,76% * @mult);
-@theme-color6: hsl(@hue,16%,85% * @mult);
-@theme-backdrop: hsl(@hue,10%,70%);//hsl(@hue,3%,35%);
-
-@theme-hilight: contrast(@theme-color4, @theme-color1, @theme-color4);
-@theme-text-hilight: contrast(@theme-hilight, #333, #FFF);
-
 // Semantic colors.
-@brand-primary: hsl(@hue,50%,62% * @mult); // Original: #428bca
-@brand-primary-color: contrast(@brand-primary, #333, #EEE);
+@brand-primary: #0b82d6;
+@brand-primary-color: rgba(255,255,255,0.85);
 
-@brand-success-color: contrast(@brand-success, #333, #EEE);
-@brand-info-color: contrast(@brand-info, #333, #EEE);
-@brand-warning-color: contrast(@brand-warning, #333, #EEE);
-@brand-danger-color: contrast(@brand-danger, #333, #EEE);
+@brand-success-color: rgba(255,255,255,0.85);
+@brand-info-color: rgba(255,255,255,0.85);
+@brand-warning-color: rgba(255,255,255,0.85);
+@brand-danger-color: rgba(255,255,255,0.85);
 
 // Button colors.
-@btn-default-color: hsl(@hue, 30%, 92%);
-@btn-default-border: hsl(@hue, 0%, 82%);
-@btn-default-text: contrast(@btn-default-color, #666, #EEE);
+@btn-default-color: #FFF;
+@btn-default-border: transparent;
+@btn-default-text: #039be5;
 @btn-border-darken: 0%;
 
 @sidebar-border-width: 1px;
-@header-color: hsl(@hue,16%, 56% * @mult);
-@header-text-color: contrast(@header-color, #666, #EEE);
+@theme-text-hilight: #333;
+@theme-hilight: #F5F5F5;
 
 //-----------------------------
 // The Theme
@@ -45,130 +27,147 @@
     outline-offset: -5px;
   }
   .hover {
-    color: @theme-text-hilight !important;
-    background-color: @theme-hilight !important;
+    color: rgba(0,0,0,.64) !important;
+    background-color: #ECEFF1 !important;
   }
   .form-label {
     font-weight: 700;
     color: #333;
   }
 
-  .background { background: @theme-backdrop; }
-  .login-background { background: @theme-color2; }
+  .background {
+  }
+  .login-background {  }
   // Main background, behind the .content-background.
-  .main-background {
-    background: @main-background;
-    border-right: 1px solid darken(@theme-backdrop, 40%)
+  .body-background {
+    background: #ECEFF1;
   }
 ;
 
-  // Large bar befpre main content.
+  // Large bar before main content.
   .page-header-bar {
-    background: @theme-color3;
-    color: contrast(@theme-color3, #333, #FFF);
+    background: #039BE5;
+    color: #FFF;
   }
-  .page-header-text2 { color: contrast(@theme-color3, @theme-color1, @theme-color5) }
-  .page-header-text2H { color: contrast(@theme-color3, darken(@theme-color1,10%),lighten(@theme-color5,10%)) }
-  .page-header-disabled-text { color: contrast(@theme-color3, @theme-color2, @theme-color4); }
-  .page-header-selected-text {
-    border-bottom: 2px solid contrast(@theme-color3,#FFF,@theme-color1);
-    color: contrast(@theme-color3,#FFF,@theme-color1) !important;
-  }
+  .page-header-text2 { color: rgba(255,255,255,.8); font-weight: 400 } //breadcrumbs
+  .page-header-text2H { color: #FFF }
+  .page-header-disabled-text { color: rgba(255,255,255,.4); }
 
     // Central content area.
   .content-background {
   }
 
-  .top-bar { background: @theme-color3; border: none; }
-  .top-bar-menu { background-color: #FFF; color: #333 }
-  .top-bar-selected { background-color: @theme-color3 !important; color: contrast(@theme-color3, #333, #FFF) !important }
-  .top-bar-text { color: contrast(@theme-color1, #333, #FFF); }
-  .top-bar-disabled-text { color: #888; }
-  .top-bar-hover { #theme.hover; }
+  .top-bar {
+    background: #0288D1; border: none;
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14),0 3px 3px -2px rgba(0,0,0,0.12),0 1px 8px 0 rgba(0,0,0,0.2);
+  }
+  .top-bar-menu { }
+  .top-bar-selected { color: #FFF !important }
+  .top-bar-text { color: rgba(255, 255, 255, 0.7); }
+  .top-bar-disabled-text { color: rgba(255, 255, 255, 0.4); }
+  .top-bar-hover { color: #FFF; }
 
   // The topmost bar, includes the brand text.
   // It is partially hidden by .top-bar.
   .navbar-header {
     color: #FFF;
-    //background-color: @theme-color4;
+    background-color: #0288D1 !important;
     //border-bottom: @sidebar-border-width solid @theme-backdrop;
     height: @topbar-height;
   }
 
   .sidebar {
-    background: hsl(209,10%,24%);
+    background: #FFF;
   }
   .sidebar-border {
     //border-right: 2px solid #D2D4D5;
     //box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-    border-right: @sidebar-border-width solid rgba(0,0,0,0.2);
+    //border-right: 1px solid #CCCED0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+    z-index: 1;
   }
-  .main-menu-item { color: #BBB; font-weight: 300; }
+  .main-menu-item {
+    color: rgba(0,0,0,0.54);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 20px;
+    padding: 6px 24px;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
   .main-menu-hover-item {
-    background-color: @theme-color3;
-    color: contrast(@theme-color3, #333, #FFF, 70%) !important;
+    #theme.hover;
   }
-  .main-menu-active-item { color: @theme-text-selected2; }
-  .main-menu-disabled-item { color: darken(@theme-backdrop, 10%); }
+  .main-menu-active-item {  }
+  .main-menu-disabled-item { color: #DDD; }
   .main-menu-current-item {
-    color: #FFF;
-    //background-color: lighten(@alt-color2, 4%);
-    //outline: 1px solid hsla(210,8%,85%,1);
-    border-left: 5px solid @theme-color4;
-    padding-left: 20px - 5px;
+    color: #039be5;
+    //border-left: 5px solid #F00;
+    //padding-left: 20px - 5px;
   }
   .main-menu-header-item { font-size: 15px; }
 
+  .table-pre-header {
+    color: @grid-header-text-color;
+    font-size: 14px;
+    line-height: 15px;
+    padding: 3px;
+    font-weight: 400;
+    background-color: #f5f5f5;
+  }
   .table-head {
     border: none;
-    border-bottom: 1px solid darken(@theme-color6,20%);
+    border-bottom: 1px solid #D7D7D7;
   }
   .table-header {
-    background-color: @theme-color6;
-    color: contrast(@theme-color6,@theme-color1,#EEE);
+    background-color: #F5F5F5;
+    color: rgba(0, 0, 0, 0.64);
+    font-weight: 900;
+    font-size: 12px;
     #theme.table-head;
   }
   .table-responsive-header { border-color: #E0E6EB !important; background-color: #F4F7FB !important; }
-  .table-stripe { background-color: hsla(210,9%,97%,1); }
-  .table-borders { border-color: hsla(210,9%,91%,1) !important; }
-  .table-row-active { #theme.hover !important; }
+  .table-row { background-color: #FFF; }
+  .table-stripe { background-color: #FFF; }
+  .table-borders { border-color: rgba(0,0,0,0.04) !important; }
+  .table-row-active { #theme.hover; }
+  .table-row-hover { #theme.hover; }
   .table-footer {
-    background-color: hsl(@hue, 20%, 94%);
-    border-top: 1px solid hsl(@hue, 5%, 80%);
-    border-bottom: 1px solid hsl(@hue, 5%, 80%);
+    border-top: 1px solid #E1E1E1;
+    background-color: #F5F5F5;
+    color: #546e7a;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    padding: 4px;
   }
 
   // Action bar and its tabs.
   .action-bar {
-    background-color: @theme-color3;
-    border-bottom: @tabs-border-style;
+    position: fixed;
+    right: 0;
+    top: 103px;
   }
   .tab {
-    background-color: @theme-color2;
-    border: @tabs-border-style;
-    border-bottom: none;
-    color: contrast(@theme-color3, lighten(@theme-color2, 40%), darken(@theme-color3, 40%));
+    //background-color: #F00;
+    border: none;
+    border-bottom: 2px transparent;
+    color: #95cbe8;
   }
   .tab-hover {
-    #theme.hover;
-    border: @tabs-border-style;
-    border-bottom: none;
   }
   .tab-selected {
-    background-color: @main-background;
-    color: contrast(@main-background, #333, #FFF);
-    border: @tabs-border-style;
-    border-bottom: none;
-    font-weight: 700;
+    border-bottom: 2px solid #FFF;
+    color: #FFF;
   }
   .tab-selected-hover {
-    border-bottom-color: @main-background;
   }
 
-  .admin-bar { background-color: hsl(@hue, 0%, 20%); }
-  .admin-icon { color: hsl(@hue, 9%, 60%); }
-  .admin-selected-icon { background-color: hsl(@hue, 9%, 30%); color: #EEE; }
-  .admin-hover-icon { color: #EEE; }
+  .admin-bar { background-color: #F00; }
+  .admin-icon { color: #FF0; }
+  .admin-selected-icon { color: #F00; }
+  .admin-hover-icon { color: #F00; }
 }
 
 .btn-default {
@@ -194,4 +193,10 @@
 // Danger and error appear as red
 .btn-danger {
   .button-variant(@brand-danger-color; @brand-danger; darken(@brand-danger,@btn-border-darken));
+}
+
+// TEMPORARY OVERRIDE
+.ImageField.form-control .wrapper {
+  outline: 1px solid #ccc;
+  box-shadow: none;
 }
