@@ -130,7 +130,7 @@ class PlatformModule
               '-'       => $navigation->divider (),
               ''        => $navigation
                 ->link ()
-                ->url ("javascript:selenia.doAction('logout')")
+                ->url ("../login/logout")
                 ->title ('$LOGOUT')
                 ->icon ('fa fa-sign-out'),
             ]),
