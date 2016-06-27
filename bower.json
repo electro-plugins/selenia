@@ -1,5 +1,5 @@
 {
-  "name": "*",
+  "name": "selenia",
   "description": "Used only on development for rebuilding the plugin's assets",
   "dependencies": {
     "bootstrap": "^3.3.6"

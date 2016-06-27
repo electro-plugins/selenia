@@ -1,0 +1,54 @@
+<Import services="app navigation session"/>
+
+<Content of="master">
+  <body class="with-sidebar">
+
+    <div id="wrapper">
+
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+        <!-- Top bar -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand" href={app.homeURI}>{app.appName}</a>
+        </div>
+        <!-- Side Menu -->
+        <div class="sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+            <MainMenu class="nav" id="side-menu" expandIcon="fa.arrow" menu={sideMenu} excludeRoot/>
+          </div>
+        </div>
+        <!-- Links at left -->
+        <ul class="nav navbar-top-links navbar-left">
+          <MenuBar navigation={topMenu} withDropdowns/>
+        </ul>
+        <!-- Links at right -->
+        <ul class="nav navbar-top-links navbar-right">
+          <LinkDropdown link={navigation.settings} title={session.user.realName}/>
+        </ul>
+
+      </nav>
+
+      <div id="page-wrapper">
+        {#statusMessage|*}
+        <div class="page-header-bar">
+          {#topTools|*}
+          <h1 class="page-header">{navigation.currentLink.title}</h1>
+          <NavigationPath navigation={navigation}/>
+        </div>
+        <div class="container-fluid">
+          <div class="page-content">
+            {#main|*}
+          </div>
+        </div>
+        <footer>{adminSettings.footer|*}</footer>
+      </div>
+
+    </div>
+    <Include scripts/>
+  </body>
+</Content>
+
+<Include view="platform/layouts/master.html"/>

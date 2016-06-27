@@ -2,9 +2,6 @@
 namespace Selenia\Platform\Config;
 
 use Electro\Application;
-use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Authentication\Middleware\AuthenticationMiddleware;
 use Electro\Core\Assembly\Services\ModuleServices;
@@ -13,15 +10,17 @@ use Electro\Interfaces\DI\ServiceProviderInterface;
 use Electro\Interfaces\Http\RedirectionInterface;
 use Electro\Interfaces\Http\RequestHandlerInterface;
 use Electro\Interfaces\Http\RouterInterface;
+use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Interfaces\ModuleInterface;
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\Navigation\NavigationProviderInterface;
-use Selenia\Platform\Components;
+use Electro\Routing\Middleware\AutoRoutingMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Platform\Components\Pages\Users\UserPage;
 use Selenia\Platform\Components\Pages\Users\UsersPage;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
-use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule
@@ -88,7 +87,8 @@ class PlatformModule
       ->registerComponents ([
         'LanguageSelector' => LanguageSelector::class,
       ])
-      ->registerControllersNamespace (Components::class, 'platform')
+      // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+      ->registerControllersNamespace (\Selenia\Platform\Components::class, 'platform')
       ->registerRouter ($this)
       ->registerNavigation ($this);
   }
@@ -100,6 +100,7 @@ class PlatformModule
         ->group ()
         ->id ('app_home')
         ->title ('$APP_HOME')
+        ->icon ('fa fa-home')
         ->url ($this->settings->urlPrefix ())
         ->links ([
           'settings' => $navigation
