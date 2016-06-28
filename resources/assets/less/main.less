@@ -35,3 +35,34 @@
   float: right;
   min-width: 100px;
 }
+
+// Sidebar customization
+
+.site_title {
+  padding-left: 0;
+  text-align: center;
+}
+
+.nav.side-menu>li.active>a {
+  box-shadow: rgba(0,0,0,0.15) 0 1px 0,inset rgba(0,0,0,0.15) 0 1px 0;
+}
+
+// Support for icons on submenus the reduced sidebar
+
+.nav-sm ul.nav.child_menu li i {
+  text-align: left;
+  font-size: 18px !important;
+  width: 30px !important;
+  line-height: 16px;
+  vertical-align: middle;
+}
+
+// Style first and last child menu items
+
+.nav-md ul.nav.child_menu li:last-of-type:after {
+  bottom: 18px;
+}
+
+.nav-md ul.nav.child_menu li:first-of-type:after {
+  top: -5px;
+}

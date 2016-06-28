@@ -106,20 +106,20 @@ class PlatformModule
           'settings' => $navigation
             ->group ()
             ->id ('settings')
-            ->icon ('fa fa-user')
+            ->icon ('fa ion-person')
             ->title ('$APP_USER_MENU')
             ->links ([
               'profile' => $navigation
                 ->link ()
                 ->id ('profile')
                 ->title ('$LOGIN_PROFILE')
-                ->icon ('fa fa-user')
+                ->icon ('fa ion-person')
                 ->visible ($this->settings->enableProfile ()),
               'users'   => $navigation
                 ->link ()
                 ->id ('users')
                 ->title ('$APP_SETTINGS_USERS')
-                ->icon ('fa fa-users')
+                ->icon ('fa ion-person-stalker')
                 ->visible ($this->settings->enableUsersManagement ())
                 ->links ([
                   '@id' => $navigation
@@ -133,7 +133,7 @@ class PlatformModule
                 ->link ()
                 ->url ("../login/logout")
                 ->title ('$LOGOUT')
-                ->icon ('fa fa-sign-out'),
+                ->icon ('fa ion-log-out'),
             ]),
         ]),
     ]);
