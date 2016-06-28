@@ -38,28 +38,36 @@ class PlatformModule
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
     $this->redirection->setRequest ($request);
-    $base = strJoin ($this->settings->urlPrefix (), 'settings...', '/');
+    $base        = $this->settings->urlPrefix ();
+    $base = $base ? "$base..." : '*';
     return $this->router
       ->set ([
         $base =>
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
 
-            when ($this->settings->enableUsersManagement (),
-              [
-                'users' => factory (function (UsersPage $page) {
-                  // This is done here just to show off this possibility
-                  $page->templateUrl = 'platform/users/users.html';
-                  return $page;
-                }),
+            '.' => UserPage::class,
 
-                'users/@id' => UserPage::class,
+            'settings...' => [
+              when ($this->settings->enableUsersManagement (),
+                [
+                  'users-management...' => [
+                    'users' => factory (function (UsersPage $page) {
+                      // This is done here just to show off this possibility
+                      $page->templateUrl = 'platform/users/users.html';
+                      return $page;
+                    }),
 
-                'profile' => factory (function (UserPage $page) {
-                  $page->editingSelf = true;
-                  return $page;
-                }),
-              ]),
+                    'users/@id' => UserPage::class,
+
+                    'profile' => factory (function (UserPage $page) {
+                      $page->editingSelf = true;
+                      return $page;
+                    }),
+                  ],
+                ]
+              ),
+            ],
           ],
       ])
       ->__invoke ($request, $response, $next);
@@ -95,6 +103,41 @@ class PlatformModule
 
   function defineNavigation (NavigationInterface $navigation)
   {
+    $userMenu = [
+      'users-management' => $navigation
+        ->group ()
+        ->id ('userMenu')
+        ->icon ('fa ion-person')
+        ->title ('$APP_USER_MENU')
+        ->links ([
+          'profile' => $navigation
+            ->link ()
+            ->id ('profile')
+            ->title ('$LOGIN_PROFILE')
+            ->icon ('fa ion-person')
+            ->visible ($this->settings->enableProfile ()),
+          'users'   => $navigation
+            ->link ()
+            ->id ('users')
+            ->title ('$APP_SETTINGS_USERS')
+            ->icon ('fa ion-person-stalker')
+            ->visible ($this->settings->enableUsersManagement ())
+            ->links ([
+              '@id' => $navigation
+                ->link ()
+                ->id ('userForm')
+                ->title ('$APP_SETTINGS_USER')
+                ->visible (N),
+            ]),
+          '-'       => $navigation->divider (),
+          ''        => $navigation
+            ->link ()
+            ->url ("../login/logout")
+            ->title ('$LOGOUT')
+            ->icon ('fa ion-log-out'),
+        ]),
+    ];
+
     $navigation->add ([
       $navigation
         ->group ()
@@ -103,38 +146,24 @@ class PlatformModule
         ->icon ('fa fa-home')
         ->url ($this->settings->urlPrefix ())
         ->links ([
+          ''         => $navigation
+            ->group ()
+            ->id ('mainMenu')
+            ->icon ('fa ion-navicon')
+            ->title ('Main Menu')
+            ->links ([
+              '' => $navigation
+                ->link ()
+                ->id ('home')
+                ->icon ('fa ion-home')
+                ->title ('Home'),
+            ]),
           'settings' => $navigation
             ->group ()
             ->id ('settings')
-            ->icon ('fa ion-person')
-            ->title ('$APP_USER_MENU')
-            ->links ([
-              'profile' => $navigation
-                ->link ()
-                ->id ('profile')
-                ->title ('$LOGIN_PROFILE')
-                ->icon ('fa ion-person')
-                ->visible ($this->settings->enableProfile ()),
-              'users'   => $navigation
-                ->link ()
-                ->id ('users')
-                ->title ('$APP_SETTINGS_USERS')
-                ->icon ('fa ion-person-stalker')
-                ->visible ($this->settings->enableUsersManagement ())
-                ->links ([
-                  '@id' => $navigation
-                    ->link ()
-                    ->id ('userForm')
-                    ->title ('$APP_SETTINGS_USER')
-                    ->visible (N),
-                ]),
-              '-'       => $navigation->divider (),
-              ''        => $navigation
-                ->link ()
-                ->url ("../login/logout")
-                ->title ('$LOGOUT')
-                ->icon ('fa ion-log-out'),
-            ]),
+            ->icon ('fa ion-gear-a')
+            ->title ('Platform')
+            ->links ($userMenu),
         ]),
     ]);
   }
