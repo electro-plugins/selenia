@@ -22,12 +22,15 @@ use Selenia\Platform\Components\Pages\Users\UsersPage;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
 use Selenia\Platform\Models\User as UserModel;
+use Selenia\Plugins\Login\Config\LoginSettings;
 
 class PlatformModule
   implements ModuleInterface, ServiceProviderInterface, NavigationProviderInterface, RequestHandlerInterface
 {
   const ACTION_FIELD = 'selenia-action';
   const PUBLIC_DIR   = 'modules/selenia/platform';
+  /** @var LoginSettings */
+  private $loginSettings;
   /** @var RedirectionInterface */
   private $redirection;
   /** @var RouterInterface */
@@ -38,7 +41,7 @@ class PlatformModule
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
     $this->redirection->setRequest ($request);
-    $base        = $this->settings->urlPrefix ();
+    $base = $this->settings->urlPrefix ();
     $base = $base ? "$base..." : '*';
     return $this->router
       ->set ([
@@ -76,15 +79,17 @@ class PlatformModule
   function boot (Application $app, ApplicationMiddlewareInterface $middleware)
   {
     if ($app->isWebBased)
-      $middleware->add (AutoRoutingMiddleware::class, null, 'router');
+      $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
   }
 
   function configure (ModuleServices $module, PlatformSettings $settings, RouterInterface $router,
-                      RedirectionInterface $redirection, AuthenticationSettings $authSettings)
+                      RedirectionInterface $redirection, AuthenticationSettings $authSettings,
+                      LoginSettings $loginSettings)
   {
-    $this->settings    = $settings;
-    $this->router      = $router;
-    $this->redirection = $redirection;
+    $this->settings      = $settings;
+    $this->router        = $router;
+    $this->redirection   = $redirection;
+    $this->loginSettings = $loginSettings;
     $authSettings->userModel (UserModel::class);
     $module
       ->publishPublicDirAs (self::PUBLIC_DIR)
@@ -97,68 +102,68 @@ class PlatformModule
       ])
       // DO NOT IMPORT THE FOLLOWING NAMESPACE!
       ->registerControllersNamespace (\Selenia\Platform\Components::class, 'platform')
-      ->registerRouter ($this)
+      ->registerRouter ($this, 'platform')
       ->registerNavigation ($this);
   }
 
-  function defineNavigation (NavigationInterface $navigation)
+  function defineNavigation (NavigationInterface $nav)
   {
     $userMenu = [
-      'users-management' => $navigation
+      'users-management' => $nav
         ->group ()
         ->id ('userMenu')
         ->icon ('fa ion-person')
         ->title ('$APP_USER_MENU')
         ->links ([
-          'profile' => $navigation
+          'profile' => $nav
             ->link ()
             ->id ('profile')
             ->title ('$LOGIN_PROFILE')
             ->icon ('fa ion-person')
             ->visible ($this->settings->enableProfile ()),
-          'users'   => $navigation
+          'users'   => $nav
             ->link ()
             ->id ('users')
             ->title ('$APP_SETTINGS_USERS')
             ->icon ('fa ion-person-stalker')
             ->visible ($this->settings->enableUsersManagement ())
             ->links ([
-              '@id' => $navigation
+              '@id' => $nav
                 ->link ()
                 ->id ('userForm')
                 ->title ('$APP_SETTINGS_USER')
                 ->visible (N),
             ]),
-          '-'       => $navigation->divider (),
-          ''        => $navigation
+          '-'       => $nav->divider (),
+          ''        => $nav
             ->link ()
-            ->url ("../login/logout")
+            ->url ($this->loginSettings->urlPrefix () . '/logout')
             ->title ('$LOGOUT')
             ->icon ('fa ion-log-out'),
         ]),
     ];
 
-    $navigation->add ([
-      $navigation
+    $nav->add ([
+      $nav
         ->group ()
         ->id ('app_home')
         ->title ('$APP_HOME')
         ->icon ('fa fa-home')
         ->url ($this->settings->urlPrefix ())
         ->links ([
-          ''         => $navigation
+          ''         => $nav
             ->group ()
             ->id ('mainMenu')
             ->icon ('fa ion-navicon')
             ->title ('Main Menu')
             ->links ([
-              '' => $navigation
+              '' => $nav
                 ->link ()
                 ->id ('home')
                 ->icon ('fa ion-home')
                 ->title ('Home'),
             ]),
-          'settings' => $navigation
+          'settings' => $nav
             ->group ()
             ->id ('settings')
             ->icon ('fa ion-gear-a')
