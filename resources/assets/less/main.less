@@ -1,6 +1,10 @@
 @bootstrap-path: '../../../bower_components/bootstrap/less';
 @import 'mixins';
 
+.main_container {
+  max-width: 1280px;
+}
+
 .breadcrumb {
   padding: 5px 0 0;
 }
@@ -32,6 +36,21 @@
 .Checkbox span {
   font-weight: normal;
   line-height: 21px;
+}
+
+
+// Panels
+
+.x_title {
+  margin-bottom: 30px;
+}
+
+.FormPanel {
+  padding-top: 25px;
+
+  .x_title {
+    margin-top: -20px;
+  }
 }
 
 // Panel footers and action-bars

@@ -1,10 +1,11 @@
 <Macro name="Panel" defaultParam=content>
   <Param name=title type=string/>
   <Param name=content type=content/>
+  <Param name=class type=string/>
   <Param name=type type=string/>
   <Param name=footer type="content"/>
 
-  <div class="x_panel">
+  <div class="x_panel {@class}">
     <If {@title!=null}>
       <div class="x_title">
         <h2>{@title}</h2>
