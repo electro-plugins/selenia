@@ -1,0 +1,15 @@
+<Macro name=GridPanel defaultParam=content>
+  <Param name=title type=string/>
+  <Param name=content type=content/>
+  <Param name=actions type=content/>
+
+  <Panel title={@title}>
+    {@content|*}
+    <Footer>
+      <div class="action-bar">
+        {@actions|*}
+      </div>
+    </Footer>
+  </Panel>
+
+</Macro>

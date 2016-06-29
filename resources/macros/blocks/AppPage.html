@@ -1,0 +1,9 @@
+<Macro name="AppPage" defaultParam="content">
+  <Param name="content" type="content"/>
+
+  <Content of="main">
+    {@content|*}
+  </Content>
+
+  <Include view="platform/layouts/main.html"/>
+</Macro>

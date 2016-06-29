@@ -1,11 +1,9 @@
 <Macro name="ActionBar" defaultParam="content">
+  <Param name="title" type="string"/>
   <Param name="content" type="content"/>
-  <Param name="extra" type="content"/>
 
-  <If {@content!=null}>
-    <div class="ActionBar">
-      {@content|*}
-    </div>
-  </If>
+  <Content of=actions>
+    {@content}
+  </Content>
 
 </Macro>

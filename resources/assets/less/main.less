@@ -1,3 +1,6 @@
+@bootstrap-path: '../../../bower_components/bootstrap/less';
+@import 'mixins';
+
 .breadcrumb {
   padding: 5px 0 0;
 }
@@ -31,9 +34,31 @@
   line-height: 21px;
 }
 
-.ActionBar > button {
-  float: right;
-  min-width: 100px;
+// Panel footers and action-bars
+
+.x_footer {
+  border: 1px solid #E6e9ed;
+  padding: 5px;
+  margin: 15px -23px -17px;
+  background: #fcfcfc;
+}
+
+.action-bar {
+  .clearfix;
+
+  & > button {
+    float: right;
+    min-width: 100px;
+    margin-bottom: 0;
+
+    &:first-of-type {
+      margin-right: 0;
+    }
+
+    i {
+      margin-right: 10px;
+    }
+  }
 }
 
 // Sidebar customization
@@ -48,8 +73,9 @@
   margin-bottom: 15px;
 }
 
-.nav.side-menu>li>a {
+.nav.side-menu a {
   margin-bottom: 0;
+  font-weight: 300 !important;
 }
 
 .nav.side-menu>li.active>a {

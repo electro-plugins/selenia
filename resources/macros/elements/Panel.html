@@ -1,6 +1,8 @@
 <Macro name="Panel" defaultParam=content>
   <Param name=title type=string/>
   <Param name=content type=content/>
+  <Param name=type type=string/>
+  <Param name=footer type="content"/>
 
   <div class="x_panel">
     <If {@title!=null}>
@@ -28,6 +30,11 @@
     </If>
     <div class="x_content">
       {@content|*}
+      <If {@footer!=null}>
+        <div class="x_footer">
+          {@footer|*}
+        </div>
+      </If>
     </div>
   </div>
 

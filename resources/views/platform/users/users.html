@@ -1,6 +1,7 @@
 <Import service="navigation"/>
 
-<GridPage>
+<AppPage>
+  <GridPanel>
 
   <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm + r.id}>
     <Column width="40" type="row-selector">
@@ -31,4 +32,5 @@
     <ButtonDelete/>
   </Actions>
 
-</GridPage>
+  </GridPanel>
+</AppPage>
