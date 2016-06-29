@@ -132,7 +132,7 @@ class PlatformModule
                 ->link ()
                 ->id ('userForm')
                 ->title ('$APP_SETTINGS_USER')
-                ->visible (N),
+                ->visibleIfUnavailable(Y),
             ]),
           '-'       => $nav->divider (),
           ''        => $nav
