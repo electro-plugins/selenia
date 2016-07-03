@@ -60,7 +60,7 @@ Tag name           | Description
 ActionBar          | A bar container for buttons of your page / form actions.
 ButtonNew          | A button to create a new record.
 ButtonSave         | A button to save the current record.
-ButtonsSaveDelete  | Standard buttons to save or delete the current record. The delete button is not displayed for new records.
+StandardFormActions  | Standard buttons to save or delete the current record. The delete button is not displayed for new records.
 ButtonSubmit       | A generic submit button.
 MenuItem           | A navigation link that is auto-highlighted when it matches the current URL.
 Paginator          | A default configuration for the Paginator component.

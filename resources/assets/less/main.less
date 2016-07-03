@@ -2,7 +2,7 @@
 @import 'mixins';
 
 .body {
-  background-color: hsl(210,10%,90%);
+  background-color: hsl(210,10%,80%);
 }
 
 .main_container {
@@ -22,9 +22,59 @@
   }
 }
 
+.nav_menu {
+  background: hsl(210,33%,95%);
+}
+
+body .container.body .right_col {
+  background: hsl(210, 33%, 98%);
+}
+
+// Layout adjustments
+
+.top_search {
+  padding-top: 10px;
+}
+
 .breadcrumb {
   padding: 5px 0 0;
 }
+
+// "Enhance" form inputs styling
+
+.form-control {
+  border-color: hsl(0,0%,91%);
+  background: hsl(0,0%,98%);
+  box-shadow: none;
+
+  &:focus {
+    border-bottom-color: #47acff;
+  }
+}
+
+.form-horizontal .control-label {
+  text-align: left;
+  font-weight: 300;
+}
+
+.breadcrumb {
+  background-color: transparent;
+}
+
+.dropdown-menu {
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1) !important;
+
+  li a i {
+    font-size: 18px;
+    margin-top: -1px;
+  }
+}
+
+.dropdown-menu .divider {
+  margin: 0;
+}
+
+// Make input placeholders lighter
 
 ::-webkit-input-placeholder {
   color: #CCC !important;
@@ -41,12 +91,10 @@
   opacity: 1;
 }
 
+// Adjust text size on form inputs
+
 .form-control {
   font-size: 13px;
-}
-
-.top_search {
-  padding-top: 10px;
 }
 
 .RadioButton span,
@@ -55,18 +103,25 @@
   line-height: 21px;
 }
 
-
 // Panels
+
+.x_panel {
+  //box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  //border-right-color: #D8D8DE;
+}
 
 .x_title {
   margin-bottom: 30px;
 }
 
 .FormPanel {
-  padding-top: 25px;
+  padding-top: 35px;
 
   .x_title {
     margin-top: -20px;
+  }
+  .x_footer {
+    margin-top: 40px;
   }
 }
 
@@ -77,6 +132,7 @@
   padding: 5px;
   margin: 15px -23px -17px;
   background: #fcfcfc;
+  border-bottom-color: #D8D8DE;
 }
 
 .action-bar {
@@ -145,7 +201,7 @@
   }
 }
 
-// Support for icons on submenus the reduced sidebar
+// Support for icons on submenus in the reduced sidebar
 
 .nav-sm ul.nav.child_menu li i {
   text-align: left;
@@ -163,4 +219,22 @@
 
 .nav-md ul.nav.child_menu li:first-of-type:after {
   top: 1px;
+}
+
+// DataGrid
+
+.DataGrid {
+  .rh:nth-child(1) {
+    padding-left: 35px;
+  }
+
+  .Checkbox.sel {
+    position: absolute;
+    left: 19px;
+
+    i::before {
+      border: 1px solid #DDD;
+    }
+  }
+
 }

@@ -1,0 +1,8 @@
+<Macro name="ButtonCancel" defaultParam="content">
+  <Param name="label" type="string" default="$BUTTON_CANCEL"/>
+
+  <Import service="navigation"/>
+
+  <Button icon="ion-close" class="btn-link ActionCancel" label={@label} url={navigation.currentLink.parent}/>
+
+</Macro>
