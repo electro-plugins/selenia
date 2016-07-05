@@ -22,9 +22,9 @@
   }
 }
 
-body .container.body .right_col {
+.nav-md .container.body .right_col {
   background: ~"hsla(210,33%,98%,1)";
-  //background: #FFF;
+  padding-top: 0 !important;
 }
 
 .nav_menu {
@@ -36,9 +36,15 @@ body .container.body .right_col {
   height: auto;
   width: auto;
   background: #fff;
-  margin: 0 -20px;
-  padding: 0 20px;
+  margin: 0 -10px;
+  padding: 0;
   border-bottom: ~"1px solid hsla(0,0%,91%,1)";
+
+  h3 { margin: 0 }
+}
+
+.title_left1 {
+  padding: 20px 20px 20px 25px;
 }
 
 .ActionCancel {
@@ -47,12 +53,10 @@ body .container.body .right_col {
 
 // Layout adjustments
 
-.top_search {
-  padding-top: 10px;
-}
-
 .breadcrumb {
-  padding: 5px 0 0;
+  background-color: transparent;
+  padding: 0;
+  margin: 15px 0 0;
 }
 
 // "Enhance" form inputs styling
@@ -65,10 +69,6 @@ body .container.body .right_col {
 .form-horizontal .control-label {
   text-align: left;
   font-weight: 500;
-}
-
-.breadcrumb {
-  background-color: transparent;
 }
 
 .dropdown-menu {
@@ -167,10 +167,10 @@ body .container.body .right_col {
   border-bottom-color: #D8D8DE;
 }
 
-.action-bar {
+.action-bar, .dataTables_buttons {
   .clearfix;
 
-  & > button {
+  .btn {
     float: right;
     min-width: 100px;
     margin-bottom: 0;
@@ -181,6 +181,55 @@ body .container.body .right_col {
 
     i {
       margin-right: 10px;
+    }
+  }
+}
+
+div.dt-buttons a.btn {
+  float: right;
+}
+
+.dataTables_filter input {
+  color: inherit;
+}
+
+.dataTables_buttons {
+  margin-left: 9px !important;
+  .btn {
+    padding: 4px 12px;
+    border-radius: 1px;
+    background: transparent;
+    color: inherit;
+    min-width: 0;
+
+    &:hover {
+      outline: 1px solid rgba(0,0,0,0.1);
+      outline-offset: -1px;
+      background: #FFF;
+    }
+
+    &:not(.btn-link) {
+      margin-left: 9px;
+      i {
+        margin-right: 10px;
+        margin-top: 2px;
+        float: left;
+      }
+    }
+
+    &.btn-link {
+      font-size: 0;
+      margin-left: 0;
+      i {
+        font-size: 14px;
+        margin-right: 0;
+      }
+    }
+
+    &.btn-success {
+      color: #1abb9c;
+      border-color: rgba(38, 185, 154, 0.4);
+      background: #f0f8f4;
     }
   }
 }
