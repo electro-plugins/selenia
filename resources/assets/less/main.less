@@ -1,8 +1,11 @@
 @bootstrap-path: '../../../bower_components/bootstrap/less';
-@import 'mixins';
+@import 'master';
 
-.body {
-  background-color: hsl(210,10%,80%);
+html, body, .grid { height: 100% }
+.grid { position: absolute; top: 0; bottom: 0; left: 0; right: 0}
+
+body {
+  margin: 0;
 }
 
 .main_container {
@@ -20,6 +23,27 @@
     box-shadow: 0 0 7px rgba(0,0,0,.5);
     z-index: -1;
   }
+}
+
+.nav-md .container.body .col-md-3.left_col {
+  width: 230px;
+  padding: 0;
+  position: absolute;
+  display: flex;
+}
+.nav-md .container.body .col-md-3.left_col.menu_fixed {
+  height: 100%;
+  position: fixed;
+}
+.nav_title {
+  width: 230px;
+  float: left;
+  background: #2A3F54;
+  border-radius: 0;
+  height: 57px;
+}
+.left_col {
+  background: #2A3F54;
 }
 
 .nav-md .container.body .right_col {
@@ -162,7 +186,7 @@
 .x_footer {
   border: 1px solid #E6e9ed;
   padding: 5px;
-  margin: 15px -23px -17px;
+  //margin: 15px -23px -17px;
   background: #fcfcfc;
   border-bottom-color: #D8D8DE;
 }
