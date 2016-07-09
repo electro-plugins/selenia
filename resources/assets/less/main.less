@@ -1,13 +1,16 @@
 @bootstrap-path: '../../../bower_components/bootstrap/less';
 @import 'master';
 
-html, body, .grid { height: 100% }
-.grid { position: absolute; top: 0; bottom: 0; left: 0; right: 0}
+html, body > form, .main.grid { height: 100% }
 
 body {
   margin: 0;
 }
 
+.nav-md {
+  height: 100%;
+}
+/*
 .main_container {
   max-width: 1280px;
   background: #2A3F54;
@@ -24,16 +27,10 @@ body {
     z-index: -1;
   }
 }
-
-.nav-md .container.body .col-md-3.left_col {
-  width: 230px;
+*/
+.left_col {
   padding: 0;
-  position: absolute;
-  display: flex;
-}
-.nav-md .container.body .col-md-3.left_col.menu_fixed {
-  height: 100%;
-  position: fixed;
+  background: #2A3F54;
 }
 .nav_title {
   width: 230px;
@@ -42,13 +39,17 @@ body {
   border-radius: 0;
   height: 57px;
 }
-.left_col {
-  background: #2A3F54;
-}
 
-.nav-md .container.body .right_col {
+.right_col {
   background: ~"hsla(210,33%,98%,1)";
-  padding-top: 0 !important;
+}
+#content {
+  // nothing yet
+}
+.right_col footer {
+  padding: 1rem;
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
 }
 
 .nav_menu {
@@ -56,12 +57,7 @@ body {
 }
 
 .page-title {
-  .clearfix;
-  height: auto;
-  width: auto;
   background: #fff;
-  margin: 0 -10px;
-  padding: 0;
   border-bottom: ~"1px solid hsla(0,0%,91%,1)";
 
   h3 { margin: 0 }
@@ -69,10 +65,6 @@ body {
 
 .title_left1 {
   padding: 20px 20px 20px 25px;
-}
-
-.ActionCancel {
-  color: inherit;
 }
 
 // Layout adjustments
@@ -167,7 +159,7 @@ body {
 .GridPanel {
   background: inherit;
   border: none;
-  padding: 10px 0;
+  padding: 1rem;
 
   .x_content {
     padding: 0;
@@ -207,6 +199,10 @@ body {
       margin-right: 10px;
     }
   }
+}
+
+.ActionCancel {
+  color: inherit;
 }
 
 div.dt-buttons a.btn {
@@ -318,11 +314,11 @@ div.dt-buttons a.btn {
 
 // Style first and last child menu items
 
-.nav-md ul.nav.child_menu li:last-of-type:after {
+ul.nav.child_menu li:last-of-type:after {
   bottom: 18px;
 }
 
-.nav-md ul.nav.child_menu li:first-of-type:after {
+ul.nav.child_menu li:first-of-type:after {
   top: 1px;
 }
 
