@@ -1,0 +1,33 @@
+<Macro name=tabs-layout defaultParam=tabs>
+  <Param name=tabs type=content/>
+  <Param name=class type=string/>
+  <Param name=autofocus type=bool/>
+
+  {@tabs|*}
+
+  <div class=tabs-layout>
+
+    <ul class="nav nav-tabs {@class}" role=tablist>
+      {#TabsLayout_tabs|*}
+    </ul>
+
+    <div class=tab-content>
+      {#TabsLayout_panes|*}
+    </div>
+
+  </div>
+
+  <Script name=TabsLayout_init>
+    <If {@autofocus}>
+    // Autofocus first tab input.
+    $ ('.tabs-layout a[data-toggle=tab]').on ('shown.bs.tab', function (e) {
+      var page = $ ($ (e.target).attr ('href'));
+      page.find ('.form-control:visible').first ().focus ();
+      selenia.topic ('tabChanged').send (page);
+    });
+    </If>
+    // Show first tab.
+    $ ('.tabs-layout li:first-of-type a').tab ('show');
+  </Script>
+
+</Macro>

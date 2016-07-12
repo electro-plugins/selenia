@@ -1,0 +1,16 @@
+<Macro name=TabPane defaultParam=content>
+  <Param name=id type=id required/>
+  <Param name=title type=string/>
+  <Param name=content type=content/>
+
+  <Content appendTo=TabsLayout_tabs>
+    <li role=presentation><a href="#{@id}" id="{@id}-tab" aria-controls="{@id}" role=tab data-toggle=tab>{@title}</a></li>
+  </Content>
+
+  <Content appendTo=TabsLayout_panes>
+    <div role=tabpanel aria-labelledby="{@id}-tab" class=tab-pane id={@id}>
+      {@content|*}
+    </div>
+  </Content>
+
+</Macro>
