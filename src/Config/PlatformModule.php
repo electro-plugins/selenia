@@ -49,7 +49,7 @@ class PlatformModule
           [
             when ($this->settings->requireAuthentication (), AuthenticationMiddleware::class),
 
-            '.' => page ('platform/home'),
+            '.' => page ('platform/home.html'),
 
             'settings...' => [
               when ($this->settings->enableUsersManagement (),
