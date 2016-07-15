@@ -25,12 +25,11 @@
     <Column width="110" title="$LOGIN_ROLE">
       $LOGIN_ROLE_{r.role}
     </Column>
+    <Actions>
+      <ButtonNew url={navigation.userForm}/>
+      <ButtonDelete/>
+    </Actions>
   </DataGrid>
-
-  <Actions>
-    <ButtonNew url={navigation.userForm}/>
-    <ButtonDelete/>
-  </Actions>
 
   </GridPanel>
 </AppPage>
