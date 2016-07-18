@@ -2,46 +2,43 @@
   <FormPanel>
 
     <!-- disable browser's autofill and password-saving prompt -->
-    <input type="text"
-           name="prevent_autofill"
-           id="prevent_autofill"
+    <input type=text
+           name=prevent_autofill
+           id=prevent_autofill
            value=""
            style="visibility:hidden;position:absolute"/>
-    <input type="password"
-           name="password_fake"
-           id="password_fake"
+    <input type=password
+           name=password_fake
+           id=password_fake
            value=""
            style="visibility:hidden;position:absolute"/>
 
-    <FormLayout layout="H">
+    <FormLayout layout=H>
 
       <If {show.active}>
-        <Field name="active" label="$LOGIN_ACTIVE" name="active">
-          <Switch testValue="{model.active}"/>
+        <Field label=$LOGIN_ACTIVE bind=model.active>
+          <Switch/>
         </Field>
       </If>
 
-      <Field label="$LOGIN_USERNAME" name="username">
-        <Input required maxLength="30" autofocus autoselect autocomplete="no" value="{model.username}"/>
+      <Field label=$LOGIN_USERNAME bind=model.username>
+        <Input required maxLength=30 autofocus autoselect autocomplete=no/>
       </Field>
 
-      <Field label="$LOGIN_PASSWORD" name="password">
-        <Input type="password" required minLength="6" autocomplete="no" value="{model.password}"/>
+      <Field label=$LOGIN_PASSWORD bind=model.password>
+        <Input type=password required minLength=6 autocomplete=no/>
       </Field>
 
-      <Field label="$LOGIN_REAL_NAME" name="realName">
-        <Input autocomplete="no" value="{model.realName}"/>
+      <Field label=$LOGIN_REAL_NAME bind=model.realName>
+        <Input autocomplete=no/>
       </Field>
 
       <If {show.roles}>
-        <Field label="$LOGIN_ROLE" name="role">
-          <RadioButton value={role.dev} label="$LOGIN_ROLE_3" testValue={model.role} hidden={model.role!=role.dev}/>
-            <RadioButton value={role.admin}
-                         label="$LOGIN_ROLE_2"
-                         testValue={model.role}
-                         hidden="{model.role!=role.admin && model.role!=role.dev}"/>
-            <RadioButton value={role.standard} label="$LOGIN_ROLE_1" testValue={model.role}/>
-              <RadioButton value={role.guest} label="$LOGIN_ROLE_0" testValue={model.role}/>
+        <Field label=$LOGIN_ROLE bind=model.role>
+          <RadioButton value={role.dev} label=$LOGIN_ROLE_3 hidden={model.role!=role.dev}/>
+          <RadioButton value={role.admin} label=$LOGIN_ROLE_2 hidden={model.role!=role.admin && model.role!=role.dev}/>
+          <RadioButton value={role.standard} label=$LOGIN_ROLE_1/>
+          <RadioButton value={role.guest} label=$LOGIN_ROLE_0/>
         </Field>
       </If>
 
