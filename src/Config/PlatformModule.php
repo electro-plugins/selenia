@@ -132,12 +132,12 @@ class PlatformModule
                 ->link ()
                 ->id ('userForm')
                 ->title ('$APP_SETTINGS_USER')
-                ->visibleIfUnavailable(Y),
+                ->visibleIfUnavailable (Y),
             ]),
           '-'       => $nav->divider (),
           ''        => $nav
             ->link ()
-            ->url ($this->loginSettings->urlPrefix () . '/logout')
+            ->url ('/' . $this->loginSettings->urlPrefix () . '/logout')
             ->title ('$LOGOUT')
             ->icon ('fa ion-log-out'),
         ]),
