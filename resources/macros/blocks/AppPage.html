@@ -4,9 +4,7 @@
   <Content of="main">
     <Presets>
       <Where match=DataGrid>
-        <Prepend>
-          <Column type=row-selector width=40>{i|ord}</Column>
-        </Prepend>
+        <Set rowSelector/>
         <NoData>
           <div class="alert">
             $APP_NO_ITEMS
