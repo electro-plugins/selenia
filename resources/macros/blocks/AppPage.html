@@ -6,10 +6,10 @@
       <Where match=DataGrid>
         <Set rowSelector/>
         <NoData>
-          <div class="alert">
-            $APP_NO_ITEMS
+          <div class="well well-lg">
+            <h5 align=center>$APP_NO_ITEMS</h5>
           </div>
-          <ButtonNew url={navigation.currentLink+'/'}/>
+          <ButtonNew class="pull-right" url={navigation.currentLink+'/'}/>
         </NoData>
       </Where>
 

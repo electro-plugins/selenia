@@ -1,6 +1,7 @@
 <Macro name="ButtonSave">
   <Param name="label" type="string" default="$BUTTON_SAVE"/>
+  <Param name="class" type="string"/>
 
-  <Button icon="ion-checkmark" class="btn-primary ActionSave" type="submit" label={@label}/>
+  <Button icon="ion-checkmark" class="{'btn-primary ActionSave '+@class}" type="submit" label={@label}/>
 
 </Macro>

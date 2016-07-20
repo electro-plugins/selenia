@@ -1,8 +1,9 @@
 <Macro name="ButtonDelete" defaultParam="content">
   <Param name="label" type="string" default="$BUTTON_DELETE"/>
+  <Param name="class" type="string"/>
 
   <Button label={@label}
-          class="btn-link red ActionDelete"
+          class="{'btn-link red ActionDelete '+@class}"
           action="delete"
           confirm
           message="$APP_DELETE_CONFIRM"

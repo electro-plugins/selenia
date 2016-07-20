@@ -1,7 +1,8 @@
 <Macro name="ButtonNew" defaultParam="content">
   <Param name="url" type="string"/>
   <Param name="label" type="string" default="$BUTTON_CREATE"/>
+  <Param name="class" type="string"/>
 
-  <Button icon="ion-plus" class="btn-success ActionNew" label={@label} url={@url}/>
+  <Button icon="ion-plus" class="{'btn-success ActionNew '+@class}" label={@label} url={@url}/>
 
 </Macro>

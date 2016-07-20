@@ -1,10 +1,11 @@
 <Macro name="ButtonSubmit" defaultParam="content">
   <Param name="label" type="string" default="$BUTTON_SAVE"/>
   <Param name="autoDisable" type="bool"/>
+  <Param name="class" type="string"/>
 
   <If {@autoDisable}>
     <Button id="submitBtn"
-            class="btn btn-primary ActionSave"
+            class="{'btn btn-primary ActionSave '+@class}"
             label={@label}
             script="selenia.doAction('submit')"/>
     <Else>
