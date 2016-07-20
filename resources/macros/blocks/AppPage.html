@@ -2,7 +2,22 @@
   <Param name="content" type="content"/>
 
   <Content of="main">
-    {@content|*}
+    <Presets>
+      <Where match=DataGrid>
+        <Prepend>
+          <Column type=row-selector width=40>{i|ord}</Column>
+        </Prepend>
+        <NoData>
+          <div class="alert">
+            $APP_NO_ITEMS
+          </div>
+          <ButtonNew url={navigation.currentLink+'/'}/>
+        </NoData>
+      </Where>
+
+      {@content|*}
+
+    </Presets>
   </Content>
 
   <Include view="platform/layouts/main.html"/>
