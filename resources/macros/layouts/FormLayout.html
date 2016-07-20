@@ -24,15 +24,17 @@
 
     <div class="row form-layout form-layout-1-col form-layout-{@layout}">
       <div class="{@formClass}">
-        <Apply where="Field">
-          <Set class="{@fieldClass + ' ' + @fieldWidths}"
-               labelClass="{@labelClass}"
-               controlClass="{@controlClass}"
-               groupClass="{@groupClass}"/>
+        <Presets>
+          <Where match=Field>
+            <Set fieldClass="{@fieldClass + ' ' + @fieldWidths}"
+                 labelClass="{@labelClass}"
+                 controlClass="{@controlClass}"
+                 groupClass="{@groupClass}"/>
+          </Where>
 
           {@column1|*}
 
-        </Apply>
+        </Presets>
       </div>
     </div>
 
@@ -41,28 +43,32 @@
       <div class="row form-layout form-layout-2-cols form-layout-{@layout}">
         <div class="{@columnClass}">
           <div class="{@formClass}">
-            <Apply where="Field">
-              <Set class="{@fieldClass}"
-                   labelClass="{@labelClass}"
-                   controlClass="{@controlClass}"
-                   groupClass="{@groupClass}"/>
+            <Presets>
+              <Where match=Field>
+                <Set fieldClass="{@fieldClass}"
+                     labelClass="{@labelClass}"
+                     controlClass="{@controlClass}"
+                     groupClass="{@groupClass}"/>
+              </Where>
 
               {@column1|*}
 
-            </Apply>
+            </Presets>
           </div>
         </div>
         <div class="{@columnClass}">
           <div class="{@formClass}">
-            <Apply where="Field">
-              <Set class="{@fieldClass}"
-                   labelClass="{@labelClass}"
-                   controlClass="{@controlClass}"
-                   groupClass="{@groupClass}"/>
+            <Presets>
+              <Where match=Field>
+                <Set fieldClass="{@fieldClass}"
+                     labelClass="{@labelClass}"
+                     controlClass="{@controlClass}"
+                     groupClass="{@groupClass}"/>
+              </Where>
 
               {@column2|*}
 
-            </Apply>
+            </Presets>
           </div>
         </div>
       </div>
