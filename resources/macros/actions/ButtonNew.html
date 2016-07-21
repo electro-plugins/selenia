@@ -1,5 +1,6 @@
 <Macro name="ButtonNew" defaultParam="content">
-  <Param name="url" type="string"/>
+  <Import service="navigation"/>
+  <Param name="url" type="string" default={navigation.currentLink+'/'}/>
   <Param name="label" type="string" default="$BUTTON_CREATE"/>
   <Param name="class" type="string"/>
 
