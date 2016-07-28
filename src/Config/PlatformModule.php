@@ -39,8 +39,10 @@ class PlatformModule implements ModuleInterface, ServiceProviderInterface
       ])
       // DO NOT IMPORT THE FOLLOWING NAMESPACE!
       ->registerControllersNamespace (\Selenia\Platform\Components::class, 'platform')
-      ->registerRouter (Routes::class, 'platform')
-      ->registerNavigation (Navigation::class);
+      ->registerNavigation (Navigation::class)
+      ->onPostConfig (function () use ($module) {
+        $module->registerRouter (Routes::class, 'platform');
+      });;
 
     $authSettings->userModel (UserModel::class);
   }
