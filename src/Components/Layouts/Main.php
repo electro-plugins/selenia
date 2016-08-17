@@ -41,7 +41,7 @@ class Main extends CompositeComponent
     $viewModel->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
     $user               = $this->session->user ();
-    $viewModel->devMode = $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+    $viewModel->devMode = $user && $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
   }
 
 }
