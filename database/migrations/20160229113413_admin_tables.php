@@ -75,7 +75,6 @@ class AdminTables extends Migration
           $t->string ('metadata', 1024)->nullable ();
 
           $t->primary ('id');
-          $t->index ('owner_type');
           $t->index ('image');
         });
 
