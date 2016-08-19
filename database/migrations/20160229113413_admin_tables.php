@@ -15,13 +15,13 @@ class AdminTables extends Migration
   {
     $schema = $this->db->schema ();
 
-    if ($schema->hasTable ('files')) {
+    if ($this->db->hasTable ('files')) {
       $schema->drop ('files');
       $this->output->writeln ("  Dropped table <info>files</info>.");
     }
     else $this->output->writeln (" == Table <info>files</info> doesn't exist. Skipped.");
 
-    if ($schema->hasTable ('users')) {
+    if ($this->db->hasTable ('users')) {
       $schema->drop ('users');
       $this->output->writeln ("  Dropped table <info>users</info>.");
     }
@@ -37,7 +37,7 @@ class AdminTables extends Migration
   {
     $schema = $this->db->schema ();
 
-    if (!$schema->hasTable ('users')) {
+    if (!$this->db->hasTable ('users')) {
       $schema->create ('users', function (Blueprint $t) {
         $t->increments ('id');
         $t->timestamps ();
@@ -62,7 +62,7 @@ class AdminTables extends Migration
     }
     else $this->output->writeln (" == Table <info>users</info> already exists. Skipped.");
 
-    if (!$schema->hasTable ('files'))
+    if (!$this->db->hasTable ('files'))
       $schema->create ('files', function (Blueprint $t) {
         $t->uuid ('id');
         $t->timestamps ();
