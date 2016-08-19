@@ -8,6 +8,10 @@ use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
 use Selenia\Platform\Config\PlatformSettings;
 use Electro\ViewEngine\Lib\ViewModel;
 
+/**
+ * Provides a controller for the `views/platform/layouts/main.html` view.
+ * ><p>**Note:** the template is provided by a theme plugin.
+ */
 class Main extends CompositeComponent
 {
   /** @var PlatformSettings */
