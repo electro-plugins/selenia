@@ -1,10 +1,10 @@
 <?php
 use Carbon\Carbon;
 use Electro\Interfaces\UserInterface;
-use Electro\Plugins\IlluminateDatabase\Migration;
+use Electro\Plugins\IlluminateDatabase\AbstractMigration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AdminTables extends Migration
+class AdminTables extends AbstractMigration
 {
   /**
    * Reverse the migration.
