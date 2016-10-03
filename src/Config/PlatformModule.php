@@ -29,7 +29,6 @@ class PlatformModule implements ModuleInterface, ServiceProviderInterface
   function configure (ModuleServices $module, AuthenticationSettings $authSettings)
   {
     $module
-      ->publishPublicDirAs (self::PUBLIC_DIR)
       ->provideTranslations ()
       ->provideMacros ()
       ->provideViews ()
