@@ -1,6 +1,19 @@
 function nop () {}
 
-function bootSeleniaClient () {
+/**
+* Provides string interpolation for ES5 browsers.
+* Usage: eval($$("expression"))
+* @param {string} exp A string with interpolated javascript expresssions.
+* Ex: "You have ${n} apples for ${price(n)+1} EUR"
+* @returns {string} The resulting string is a javascript expression that can be evaluated on the
+* current javascript scope using eval().
+*/
+function $$ (exp)
+{
+  return "'" + exp.replace (/'/g, "\\'").replace (/\$\{(.*?)\}/g, "'+($1)+'") + "'";
+}
+
+!(function () {
   if (!('$' in window))
     return console.error ("jQuery is required");
 
@@ -233,7 +246,7 @@ function bootSeleniaClient () {
       .prependTo (body);
   }) ();
 
-}
+})();
 
 /*--------------------------------------------------------------------
  LOCAL STORAGE API
