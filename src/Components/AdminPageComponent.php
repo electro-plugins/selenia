@@ -1,13 +1,13 @@
 <?php
 namespace Selenia\Platform\Components;
 
-use Selenia\Platform\Components\Base\PageComponent;
-use Illuminate\Database\Eloquent\Model;
-use PhpKit\ConnectionInterface;
-use PhpKit\ExtPDO;
 use Electro\Exceptions\HttpException;
 use Electro\Interfaces\SessionInterface;
 use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
+use Illuminate\Database\Eloquent\Model;
+use PhpKit\ConnectionInterface;
+use PhpKit\ExtPDO;
+use Selenia\Platform\Components\Base\PageComponent;
 
 class AdminPageComponent extends PageComponent
 {
@@ -50,14 +50,6 @@ class AdminPageComponent extends PageComponent
     $this->session->flashMessage ('$APP_MSG_SAVED');
   }
 
-  protected function initialize ()
-  {
-    $user = $this->session->user ();
-    if (!$user)
-      throw new HttpException(403, 'Access denied', 'No user is logged-in');
-    parent::initialize ();
-  }
-
   function inject ()
   {
     return function (ConnectionInterface $con, DatabaseAPI $db, SessionInterface $session) {
@@ -65,6 +57,15 @@ class AdminPageComponent extends PageComponent
       $this->sql     = $con->getPdo ();
       $this->session = $session;
     };
+  }
+
+  protected function initialize ()
+  {
+    $user = $this->session->user ();
+    if (!$user)
+      throw new HttpException (403, 'Access denied.',
+        "No user is logged-in.<p><br>Did you forget to setup an authentication middleware?");
+    parent::initialize ();
   }
 
   /**
