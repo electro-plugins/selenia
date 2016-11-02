@@ -1,26 +1,27 @@
 <?php
 namespace Selenia\Platform\Config;
 
+use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\Navigation\NavigationProviderInterface;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
-use Selenia\Plugins\Login\Config\LoginSettings;
 
 class Navigation implements NavigationProviderInterface
 {
-  /** @var LoginSettings */
-  private $loginSettings;
+  /** @var AuthenticationSettings */
+  private $authenticationSettings;
   /** @var SessionInterface */
   private $session;
   /** @var PlatformSettings */
   private $settings;
 
-  public function __construct (PlatformSettings $settings, LoginSettings $loginSettings, SessionInterface $session)
+  public function __construct (PlatformSettings $settings, AuthenticationSettings $authenticationSettings,
+                               SessionInterface $session)
   {
-    $this->settings      = $settings;
-    $this->loginSettings = $loginSettings;
-    $this->session       = $session;
+    $this->settings               = $settings;
+    $this->authenticationSettings = $authenticationSettings;
+    $this->session                = $session;
   }
 
   function defineNavigation (NavigationInterface $nav)
@@ -58,7 +59,7 @@ class Navigation implements NavigationProviderInterface
           '-'       => $nav->divider (),
           ''        => $nav
             ->link ()
-            ->url (sprintf ('/%s/logout', $this->loginSettings->urlPrefix ()))
+            ->url ($this->authenticationSettings->getLogoutUrl())
             ->title ('$LOGOUT')
             ->icon ('fa ion-log-out'),
         ]),
