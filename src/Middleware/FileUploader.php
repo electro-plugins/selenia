@@ -1,25 +1,25 @@
 <?php
 namespace Selenia\Platform\Middleware;
 
+use Electro\Interfaces\Http\RequestHandlerInterface;
+use Electro\Kernel\Config\KernelSettings;
+use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
+use Electro\Plugins\MatisseComponents\Models\File;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
-use Selenia\Application;
-use Electro\Interfaces\Http\RequestHandlerInterface;
-use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
-use Electro\Plugins\MatisseComponents\Models\File;
 
 class FileUploader implements RequestHandlerInterface
 {
   const SOURCE_PATH = 'private/storage/files';
   /**
-   * @var Application
+   * @var KernelSettings
    */
-  private $app;
+  private $kernelSettings;
 
-  public function __construct (Application $app, DatabaseAPI $db)
+  public function __construct (KernelSettings $kernelSettings, DatabaseAPI $db)
   {
-    $this->app = $app;
+    $this->kernelSettings = $kernelSettings;
   }
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
@@ -48,7 +48,7 @@ class FileUploader implements RequestHandlerInterface
         $fileRec->id         = $uid;
         $fileRec->ext        = $ext;
 
-        $base = $this->app->baseDirectory . '/';
+        $base = $this->kernelSettings->baseDirectory . '/';
         $path = $base . dirname ($fileRec->path);
         @mkdir ($path, 0777, true);
 

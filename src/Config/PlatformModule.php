@@ -1,26 +1,26 @@
 <?php
 namespace Selenia\Platform\Config;
 
-use Electro\Application;
 use Electro\Authentication\Config\AuthenticationSettings;
-use Electro\Core\Assembly\ModuleInfo;
-use Electro\Core\Assembly\Services\Bootstrapper;
-use Electro\Core\Profiles\WebProfile;
 use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Interfaces\Http\Shared\ApplicationRouterInterface;
 use Electro\Interfaces\ModuleInterface;
+use Electro\Kernel\Config\KernelSettings;
+use Electro\Kernel\Lib\ModuleInfo;
+use Electro\Kernel\Services\Bootstrapper;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
 use Electro\Plugins\Matisse\Config\MatisseSettings;
+use Electro\Profiles\WebProfile;
 use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Electro\ViewEngine\Config\ViewEngineSettings;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
 use Selenia\Platform\Models\User as UserModel;
-use const Electro\Core\Assembly\Services\CONFIGURE;
-use const Electro\Core\Assembly\Services\RECONFIGURE;
-use const Electro\Core\Assembly\Services\REGISTER_SERVICES;
+use const Electro\Kernel\Services\CONFIGURE;
+use const Electro\Kernel\Services\RECONFIGURE;
+use const Electro\Kernel\Services\REGISTER_SERVICES;
 
 class PlatformModule implements ModuleInterface
 {
@@ -39,8 +39,8 @@ class PlatformModule implements ModuleInterface
           })
         //
         ->on (CONFIGURE,
-          function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings, Application $app,
-                    ApplicationMiddlewareInterface $middleware, LocalizationSettings $localizationSettings,
+          function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings,
+                    KernelSettings $kernelSettings,ApplicationMiddlewareInterface $middleware, LocalizationSettings $localizationSettings,
                     NavigationSettings $navigationSettings, ViewEngineSettings $viewEngineSettings)
           use ($moduleInfo) {
             $localizationSettings->registerTranslations ($moduleInfo);
@@ -56,7 +56,7 @@ class PlatformModule implements ModuleInterface
               // DO NOT IMPORT THE FOLLOWING NAMESPACE!
               ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
 
-            if ($app->isWebBased) {
+            if ($kernelSettings->isWebBased) {
               $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
               //$middleware->add (route ('admin/', page ('platform/home.html')), null, 'notFound');
             };

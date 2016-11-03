@@ -1,7 +1,6 @@
 <?php
 namespace Selenia\Platform\Components\Base;
 
-use Electro\Application;
 use Electro\Exceptions\Fatal\DataModelException;
 use Electro\Exceptions\FatalException;
 use Electro\Exceptions\Flash\FileException;
@@ -15,6 +14,7 @@ use Electro\Interfaces\ModelControllerInterface;
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\Navigation\NavigationLinkInterface;
 use Electro\Interfaces\SessionInterface;
+use Electro\Kernel\Config\KernelSettings;
 use Electro\Plugins\Matisse\Components\Base\Component;
 use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
 use Electro\Plugins\Matisse\Parser\DocumentContext;
@@ -56,9 +56,9 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    */
   protected $URI_noPage;
   /**
-   * @var Application
+   * @var KernelSettings
    */
-  protected $app;
+  protected $kernelSettings;
   /**
    * When true and `$indexPage` is not set, upon a POST the page will redirect to the parent navigation link.
    *
@@ -114,14 +114,14 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    */
   private $injector;
 
-  function __construct (InjectorInterface $injector, Application $app,
+  function __construct (InjectorInterface $injector, KernelSettings $kernelSettings,
                         RedirectionInterface $redirection, NavigationInterface $navigation,
                         ModelControllerInterface $modelController)
   {
     parent::__construct ();
 
     $this->injector        = $injector;
-    $this->app             = $app;
+    $this->kernelSettings             = $kernelSettings;
     $this->redirection     = $redirection;
     $this->navigation      = $navigation;
     $this->modelController = $modelController;
@@ -156,7 +156,7 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    */
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
-    if (!$this->app)
+    if (!$this->kernelSettings)
       throw new FatalException("Class <kbd class=type>" . get_class ($this) .
                                "</kbd>'s constructor forgot to call <kbd>parent::__construct()</kbd>");
     $this->request  = $request;
@@ -169,7 +169,7 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
 
     // remove page number parameter
     $this->URI_noPage =
-      preg_replace ('#&?' . $this->app->pageNumberParam . '=\d*#', '', $this->request->getUri ()->getPath ());
+      preg_replace ('#&?' . $this->kernelSettings->pageNumberParam . '=\d*#', '', $this->request->getUri ()->getPath ());
     $this->URI_noPage = preg_replace ('#\?$#', '', $this->URI_noPage);
 
     $this->initialize (); //custom setup
@@ -265,7 +265,7 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
     $this->context->getFilterHandler ()->registerFallbackHandler ($this);
 
     $title           = $this->getTitle ();
-    $this->pageTitle = exists ($title) ? str_replace ('@', $title, $this->app->title) : $this->app->appName;
+    $this->pageTitle = exists ($title) ? str_replace ('@', $title, $this->kernelSettings->title) : $this->kernelSettings->appName;
   }
 
   /**
@@ -320,7 +320,7 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
       if ($shadowDOM) {
 
         $VMFilter = function ($k, $v, $o) {
-          if ($v instanceof Application ||
+          if ($v instanceof KernelSettings ||
               $v instanceof NavigationInterface ||
               $v instanceof NavigationLinkInterface ||
               $v instanceof SessionInterface ||
