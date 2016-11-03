@@ -5,10 +5,10 @@ use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Interfaces\Http\Shared\ApplicationRouterInterface;
+use Electro\Interfaces\KernelInterface;
 use Electro\Interfaces\ModuleInterface;
 use Electro\Kernel\Config\KernelSettings;
 use Electro\Kernel\Lib\ModuleInfo;
-use Electro\Kernel\Services\Bootstrapper;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
 use Electro\Plugins\Matisse\Config\MatisseSettings;
@@ -18,29 +18,26 @@ use Electro\ViewEngine\Config\ViewEngineSettings;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
 use Selenia\Platform\Models\User as UserModel;
-use const Electro\Kernel\Services\CONFIGURE;
-use const Electro\Kernel\Services\RECONFIGURE;
-use const Electro\Kernel\Services\REGISTER_SERVICES;
 
 class PlatformModule implements ModuleInterface
 {
   const ACTION_FIELD = 'selenia-action';
   const PUBLIC_DIR   = 'modules/selenia/platform';
 
-  static function bootUp (Bootstrapper $bootstrapper, ModuleInfo $moduleInfo)
+  static function startUp (KernelInterface $kernel, ModuleInfo $moduleInfo)
   {
-    if ($bootstrapper->profile instanceof WebProfile)
-      $bootstrapper
-        //
-        ->on (REGISTER_SERVICES,
+    if ($kernel->getProfile () instanceof WebProfile)
+      $kernel
+        ->onRegisterServices (
           function (InjectorInterface $injector) {
             $injector
               ->share (PlatformSettings::class);
           })
         //
-        ->on (CONFIGURE,
+        ->onConfigure (
           function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings,
-                    KernelSettings $kernelSettings,ApplicationMiddlewareInterface $middleware, LocalizationSettings $localizationSettings,
+                    KernelSettings $kernelSettings, ApplicationMiddlewareInterface $middleware,
+                    LocalizationSettings $localizationSettings,
                     NavigationSettings $navigationSettings, ViewEngineSettings $viewEngineSettings)
           use ($moduleInfo) {
             $localizationSettings->registerTranslations ($moduleInfo);
@@ -62,7 +59,7 @@ class PlatformModule implements ModuleInterface
             };
           })
         //
-        ->on (RECONFIGURE,
+        ->onReconfigure (
           function (ApplicationRouterInterface $router) {
             $router->add (Routes::class, 'platform');
           });
