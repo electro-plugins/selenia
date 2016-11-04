@@ -56,10 +56,6 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    */
   protected $URI_noPage;
   /**
-   * @var KernelSettings
-   */
-  protected $kernelSettings;
-  /**
    * When true and `$indexPage` is not set, upon a POST the page will redirect to the parent navigation link.
    *
    * @var bool
@@ -79,6 +75,10 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    * @var string
    */
   protected $indexPage = null;
+  /**
+   * @var KernelSettings
+   */
+  protected $kernelSettings;
   /**
    * @var array|Object The page's data model.
    */
@@ -121,7 +121,7 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
     parent::__construct ();
 
     $this->injector        = $injector;
-    $this->kernelSettings             = $kernelSettings;
+    $this->kernelSettings  = $kernelSettings;
     $this->redirection     = $redirection;
     $this->navigation      = $navigation;
     $this->modelController = $modelController;
@@ -169,7 +169,8 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
 
     // remove page number parameter
     $this->URI_noPage =
-      preg_replace ('#&?' . $this->kernelSettings->pageNumberParam . '=\d*#', '', $this->request->getUri ()->getPath ());
+      preg_replace ('#&?' . $this->kernelSettings->pageNumberParam . '=\d*#', '',
+        $this->request->getUri ()->getPath ());
     $this->URI_noPage = preg_replace ('#\?$#', '', $this->URI_noPage);
 
     $this->initialize (); //custom setup
@@ -265,7 +266,8 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
     $this->context->getFilterHandler ()->registerFallbackHandler ($this);
 
     $title           = $this->getTitle ();
-    $this->pageTitle = exists ($title) ? str_replace ('@', $title, $this->kernelSettings->title) : $this->kernelSettings->appName;
+    $this->pageTitle =
+      exists ($title) ? str_replace ('@', $title, $this->kernelSettings->title) : $this->kernelSettings->appName;
   }
 
   /**

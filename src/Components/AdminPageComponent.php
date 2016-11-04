@@ -6,7 +6,7 @@ use Electro\Interfaces\SessionInterface;
 use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
 use Illuminate\Database\Eloquent\Model;
 use PhpKit\ExtPDO\ExtPDO;
-use PhpKit\ExtPDO\Interfaces\ConnectionInterface;
+use PhpKit\ExtPDO\Interfaces\ConnectionsInterface;
 use Selenia\Platform\Components\Base\PageComponent;
 
 class AdminPageComponent extends PageComponent
@@ -52,9 +52,9 @@ class AdminPageComponent extends PageComponent
 
   function inject ()
   {
-    return function (ConnectionInterface $con, DatabaseAPI $db, SessionInterface $session) {
+    return function (ConnectionsInterface $cons, DatabaseAPI $db, SessionInterface $session) {
       $this->db      = $db;
-      $this->sql     = $con->getPdo ();
+      $this->sql     = $cons->get ()->getPdo ();
       $this->session = $session;
     };
   }
