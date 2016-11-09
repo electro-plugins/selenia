@@ -9,6 +9,7 @@ use Electro\Http\Lib\Http;
 use Electro\Interfaces\Http\RequestHandlerInterface;
 use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
 use Electro\ViewEngine\Lib\ViewModel;
+use PhpKit\WebConsole\Lib\Debug;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionException;
@@ -69,7 +70,7 @@ class HttpAwareComponent extends CompositeComponent implements RequestHandlerInt
         if ($res) {
           if ($res instanceof ResponseInterface)
             throw new FatalException (sprintf ("Invalid HTTP response type: %s<p>Expected: <kbd>ResponseInterface</kbd>",
-              typeInfoOf ($res)));
+              Debug::typeInfoOf ($res)));
           $response = $res;
         }
         if (!$this->renderOnAction) {
