@@ -1,7 +1,6 @@
 <?php
 namespace Selenia\Platform\Components\Base;
 
-use Electro\Exceptions\Fatal\DataModelException;
 use Electro\Exceptions\FatalException;
 use Electro\Exceptions\Flash\FileException;
 use Electro\Exceptions\FlashMessageException;
@@ -214,7 +213,6 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
    * @param null $param
    * @return ResponseInterface
    * @throws FlashMessageException
-   * @throws DataModelException
    * @throws Exception
    * @throws FatalException
    */
