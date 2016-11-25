@@ -7,7 +7,6 @@ use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Interfaces\Http\Shared\ApplicationRouterInterface;
 use Electro\Interfaces\KernelInterface;
 use Electro\Interfaces\ModuleInterface;
-use Electro\Kernel\Config\KernelSettings;
 use Electro\Kernel\Lib\ModuleInfo;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
@@ -31,42 +30,38 @@ class PlatformModule implements ModuleInterface
 
   static function startUp (KernelInterface $kernel, ModuleInfo $moduleInfo)
   {
-      $kernel
-        ->onRegisterServices (
-          function (InjectorInterface $injector) {
-            $injector
-              ->share (PlatformSettings::class);
-          })
-        //
-        ->onConfigure (
-          function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings,
-                    KernelSettings $kernelSettings, ApplicationMiddlewareInterface $middleware,
-                    LocalizationSettings $localizationSettings,
-                    NavigationSettings $navigationSettings, ViewEngineSettings $viewEngineSettings)
-          use ($moduleInfo) {
-            $localizationSettings->registerTranslations ($moduleInfo);
-            $navigationSettings->registerNavigation (Navigation::class);
-            $authSettings->userModel (UserModel::class);
-            $viewEngineSettings->registerViews ($moduleInfo);
-            $matisseSettings
-              ->registerMacros ($moduleInfo)
-              ->registerPresets ([Config\PlatformPresets::class])
-              ->registerComponents ([
-                'LanguageSelector' => LanguageSelector::class,
-              ])
-              // DO NOT IMPORT THE FOLLOWING NAMESPACE!
-              ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
+    $kernel
+      ->onRegisterServices (
+        function (InjectorInterface $injector) {
+          $injector
+            ->share (PlatformSettings::class);
+        })
+      //
+      ->onConfigure (
+        function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings,
+                  ApplicationMiddlewareInterface $middleware, LocalizationSettings $localizationSettings,
+                  NavigationSettings $navigationSettings, ViewEngineSettings $viewEngineSettings)
+        use ($moduleInfo) {
+          $localizationSettings->registerTranslations ($moduleInfo);
+          $navigationSettings->registerNavigation (Navigation::class);
+          $authSettings->userModel (UserModel::class);
+          $viewEngineSettings->registerViews ($moduleInfo);
+          $matisseSettings
+            ->registerMacros ($moduleInfo)
+            ->registerPresets ([Config\PlatformPresets::class])
+            ->registerComponents ([
+              'LanguageSelector' => LanguageSelector::class,
+            ])
+            // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+            ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
 
-            if ($kernelSettings->isWebBased) {
-              $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
-              //$middleware->add (route ('admin/', page ('platform/home.html')), null, 'notFound');
-            };
-          })
-        //
-        ->onReconfigure (
-          function (ApplicationRouterInterface $router) {
-            $router->add (Routes::class, 'platform');
-          });
+          $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
+        })
+      //
+      ->onReconfigure (
+        function (ApplicationRouterInterface $router) {
+          $router->add (Routes::class, 'platform');
+        });
   }
 
 }
