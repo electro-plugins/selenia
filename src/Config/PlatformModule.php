@@ -24,9 +24,13 @@ class PlatformModule implements ModuleInterface
   const ACTION_FIELD = 'selenia-action';
   const PUBLIC_DIR   = 'modules/selenia/platform';
 
+  static function getCompatibleProfiles ()
+  {
+    return [WebProfile::class];
+  }
+
   static function startUp (KernelInterface $kernel, ModuleInfo $moduleInfo)
   {
-    if ($kernel->getProfile () instanceof WebProfile)
       $kernel
         ->onRegisterServices (
           function (InjectorInterface $injector) {
