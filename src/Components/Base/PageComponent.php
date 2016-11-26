@@ -310,8 +310,8 @@ class PageComponent extends CompositeComponent implements RequestHandlerInterfac
     // DOM panel
     //-----------
     if (DebugConsole::hasLogger ('DOM')) {
-//      $insp = $this->inspect (true);
-//      DebugConsole::logger ('DOM')->write ($insp);
+      $insp = $this->inspect (true);
+      DebugConsole::logger ('DOM')->write ($insp);
     }
 
     if (DebugConsole::hasLogger ('model')) {
