@@ -4,7 +4,7 @@ namespace Selenia\Platform\Components\Layouts;
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
-use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
+use Matisse\Components\Base\CompositeComponent;
 use Selenia\Platform\Config\PlatformSettings;
 use Electro\ViewEngine\Lib\ViewModel;
 

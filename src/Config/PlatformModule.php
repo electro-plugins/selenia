@@ -10,7 +10,7 @@ use Electro\Interfaces\ModuleInterface;
 use Electro\Kernel\Lib\ModuleInfo;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
-use Electro\Plugins\Matisse\Config\MatisseSettings;
+use Matisse\Config\MatisseSettings;
 use Electro\Profiles\WebProfile;
 use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Electro\ViewEngine\Config\ViewEngineSettings;

@@ -1,6 +1,6 @@
 <?php
 namespace Selenia\Platform\Components\Pages\Translations;
-use Electro\Plugins\Matisse\DataSet;
+use Matisse\DataSet;
 use Selenia\Platform\Components\AdminPageComponent;
 use Selenia\Platform\Models\TranslationData;
 

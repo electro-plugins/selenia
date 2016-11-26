@@ -2,7 +2,7 @@
 namespace Selenia\Platform\Components\Widgets;
 
 use Electro\Localization\Services\Locale;
-use Electro\Plugins\Matisse\Components\Base\CompositeComponent;
+use Matisse\Components\Base\CompositeComponent;
 
 class LanguageSelector extends CompositeComponent
 {
