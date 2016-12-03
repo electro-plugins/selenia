@@ -5,9 +5,9 @@ use Electro\Exceptions\HttpException;
 use Electro\Interfaces\SessionInterface;
 use Electro\Plugins\IlluminateDatabase\DatabaseAPI;
 use Illuminate\Database\Eloquent\Model;
+use Matisse\Components\Base\PageComponent;
 use PhpKit\ExtPDO\ExtPDO;
 use PhpKit\ExtPDO\Interfaces\ConnectionsInterface;
-use Selenia\Platform\Components\Base\PageComponent;
 
 class AdminPageComponent extends PageComponent
 {
