@@ -3,11 +3,13 @@ namespace Selenia\Platform\Config;
 
 use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Exceptions\ExceptionWithTitle;
+use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Interfaces\Http\Shared\ApplicationRouterInterface;
 use Electro\Interfaces\KernelInterface;
 use Electro\Interfaces\ModuleInterface;
+use Electro\Interfaces\Views\ViewServiceInterface;
 use Electro\Kernel\Lib\ModuleInfo;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
@@ -21,8 +23,9 @@ use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule implements ModuleInterface
 {
-  const ACTION_FIELD = 'selenia-action';
-  const PUBLIC_DIR   = 'modules/selenia/platform';
+  const ACTION_FIELD  = 'selenia-action';
+  const MASTER_LAYOUT = 'platform/layouts/master.html';
+  const PUBLIC_DIR    = 'modules/selenia/platform';
 
   static function getCompatibleProfiles ()
   {
@@ -57,18 +60,24 @@ class PlatformModule implements ModuleInterface
             ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
 
           $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
-
-          // Check if the platform is correctly installed.
-          if ($kernel->devEnv ()) {
-            if (!file_exists ("$moduleInfo->path/{$viewEngineSettings->moduleViewsPath()}/platform/layouts/master.html"))
-              throw new ExceptionWithTitle ("No theme installed", "Please install a theme.");
-          }
         })
       //
       ->onReconfigure (
         function (ApplicationRouterInterface $router) {
           $router->add (Routes::class, 'platform');
         });
+
+    // Check if there is a theme installed. Without it, the platform won't work.
+    if ($kernel->devEnv ())
+      $kernel->onReconfigure (function (ViewServiceInterface $viewService) {
+        try {
+          $viewService->resolveTemplatePath (self::MASTER_LAYOUT);
+        }
+        catch (FileNotFoundException $e) {
+          throw new ExceptionWithTitle ("No theme installed",
+            sprintf ("Please install a theme that provides a <kbd>%s</kbd> template file.", self::MASTER_LAYOUT));
+        }
+      });
   }
 
 }
