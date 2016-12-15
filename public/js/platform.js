@@ -181,8 +181,9 @@ function $$ (exp)
     },
 
     go: function (url, /*Event*/ ev) {
-      window.location = url;
-      if (ev) ev.stopImmediatePropagation();
+      var base = $ ('base').attr ('href') || '';
+      window.location.assign (url[0] == '/' ? url : base + url);
+      if (ev) ev.stopImmediatePropagation ();
     },
 
     saveScrollPos: function (form) {
