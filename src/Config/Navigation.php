@@ -32,6 +32,9 @@ class Navigation implements NavigationProviderInterface
         ->id ('userMenu')
         ->icon ('fa ion-person')
         ->title ('$APP_USER_MENU')
+        ->visible (function () {
+          return $this->settings->enableUsersManagement () ;
+        })
         ->links ([
           'profile' => $nav
             ->link ()
@@ -47,7 +50,7 @@ class Navigation implements NavigationProviderInterface
             ->visible (function () {
               $user = $this->session->user ();
               if (!$user) return false;
-              return $this->settings->enableUsersManagement () && $user->roleField () >= UserInterface::USER_ROLE_ADMIN;
+              return $user->roleField () >= UserInterface::USER_ROLE_ADMIN;
             })
             ->links ([
               '@id' => $nav
