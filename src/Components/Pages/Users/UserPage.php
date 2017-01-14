@@ -166,6 +166,8 @@ class UserPage extends AdminPageComponent
 
   protected function viewModel (ViewModel $viewModel)
   {
+    parent::viewModel($viewModel);
+
     $user   = $viewModel->user = $this->user;
     $mySelf = $this->session->user ();
 

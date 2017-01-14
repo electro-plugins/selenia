@@ -62,6 +62,7 @@ class Navigation implements NavigationProviderInterface
           '-'       => $nav->divider (),
           ''        => $nav
             ->link ()
+            ->id ('logout')
             ->url ($this->authenticationSettings->getLogoutUrl())
             ->title ('$LOGOUT')
             ->icon ('fa ion-log-out'),
