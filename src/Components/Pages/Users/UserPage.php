@@ -1,16 +1,16 @@
 <?php
 namespace Selenia\Platform\Components\Pages\Users;
 
-use Illuminate\Database\Eloquent\Model;
 use Electro\Exceptions\FatalException;
 use Electro\Exceptions\Flash\ValidationException;
 use Electro\Exceptions\HttpException;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
+use Electro\Interop\ViewModel;
+use Illuminate\Database\Eloquent\Model;
 use Selenia\Platform\Components\AdminPageComponent;
 use Selenia\Platform\Config\PlatformSettings;
 use Selenia\Platform\Models\User as UserModel;
-use Electro\ViewEngine\Lib\ViewModel;
 
 /**
  * Notes:
