@@ -1,18 +1,18 @@
 <?php
-namespace Selenia\Platform\Components\Layouts;
+
+namespace Selenia\Platform\ViewModels\Layouts;
 
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
 use Electro\Interop\ViewModel;
-use Matisse\Components\Base\CompositeComponent;
 use Selenia\Platform\Config\PlatformSettings;
 
 /**
- * Provides a controller for the `views/platform/layouts/main.html` view.
+ * Provides a view model for the `views/platform/layouts/main.html` view.
  * ><p>**Note:** the template is provided by a theme plugin.
  */
-class Main extends CompositeComponent
+class Main extends ViewModel
 {
   /** @var PlatformSettings */
   private $adminSettings;
@@ -29,23 +29,20 @@ class Main extends CompositeComponent
     $this->navigation    = $navigation;
     $this->adminSettings = $adminSettings;
     $this->session       = $session;
-  }
 
-  protected function viewModel (ViewModel $viewModel)
-  {
-    $settings = $viewModel->adminSettings = $this->adminSettings;
+    $settings = $this['adminSettings'] = $this->adminSettings;
     if ($settings->showMenu ()) {
-      $target             = $settings->topMenuTarget ();
-      $viewModel->topMenu = exists ($target)
+      $target          = $settings->topMenuTarget ();
+      $this['topMenu'] = exists ($target)
         ? (
-          isset($this->navigation [$target]) ? $this->navigation [$target] : null
+        isset($this->navigation [$target]) ? $this->navigation [$target] : null
         )
         : $this->navigation;
     }
-    $viewModel->sideMenu = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
+    $this['sideMenu'] = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
-    $user               = $this->session->user ();
-    $viewModel->devMode = $user && $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+    $user            = $this->session->user ();
+    $this['devMode'] = $user && $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
   }
 
 }

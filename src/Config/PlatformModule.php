@@ -1,4 +1,5 @@
 <?php
+
 namespace Selenia\Platform\Config;
 
 use Electro\Authentication\Config\AuthenticationSettings;
@@ -49,15 +50,16 @@ class PlatformModule implements ModuleInterface
           $localizationSettings->registerTranslations ($moduleInfo);
           $navigationSettings->registerNavigation (Navigation::class);
           $authSettings->userModel (UserModel::class);
-          $viewEngineSettings->registerViews ($moduleInfo);
+          // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+          $viewEngineSettings->registerViews ($moduleInfo, \Selenia\Platform\ViewModels::class);
           $matisseSettings
             ->registerMacros ($moduleInfo)
             ->registerPresets ([Config\PlatformPresets::class])
             ->registerComponents ([
               'LanguageSelector' => LanguageSelector::class,
-            ])
-            // DO NOT IMPORT THE FOLLOWING NAMESPACE!
-            ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
+            ]);
+          // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+//            ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
 
           $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
         })

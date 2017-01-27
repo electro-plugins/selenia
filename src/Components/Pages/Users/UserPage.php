@@ -164,7 +164,7 @@ class UserPage extends AdminPageComponent
     $this->modelController->setModel ($login);
   }
 
-  protected function viewModel (ViewModel $viewModel)
+  protected function viewModel (ViewModelInterface $viewModel)
   {
     parent::viewModel($viewModel);
 
