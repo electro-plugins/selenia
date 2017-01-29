@@ -22,6 +22,7 @@ use Electro\Traits\ConfigurationTrait;
  * @method $this|int     sideMenuOffset (int $v = null) The offs. on the active nav. trail from where to begin the menu
  * @method $this|string  topMenuTarget (string $v = null) The target navigation id for generating the top menu
  * @method $this|string  urlPrefix (string $v = null) Relative URL that prefixes all URLs to your app (ex: 'admin')
+ * @method $this|boolean autoRouting (boolean $v = null) Enable the auto routing middleware?
  */
 class PlatformSettings implements AssignableInterface
 {
@@ -42,6 +43,7 @@ class PlatformSettings implements AssignableInterface
   private $sideMenuOffset        = 1;
   private $topMenuTarget         = 'mainMenu';
   private $urlPrefix             = '';
+  private $autoRouting           = false;
 
   /**
    * @return string Gets a route pattern suitable for defining a routing group for routes whose URL begins with

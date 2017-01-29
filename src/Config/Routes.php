@@ -1,10 +1,13 @@
 <?php
+
 namespace Selenia\Platform\Config;
 
 use Electro\Authentication\Middleware\AuthenticationMiddleware;
 use Electro\Interfaces\Http\RedirectionInterface;
 use Electro\Interfaces\Http\RequestHandlerInterface;
 use Electro\Interfaces\Http\RouterInterface;
+use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
+use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Selenia\Platform\Components\Pages\Users\UserPage;
@@ -19,11 +22,15 @@ class Routes implements RequestHandlerInterface
   /** @var PlatformSettings */
   private $settings;
 
-  public function __construct (RouterInterface $router, RedirectionInterface $redirection, PlatformSettings $settings)
+  public function __construct (RouterInterface $router, RedirectionInterface $redirection, PlatformSettings $settings,
+                               ApplicationMiddlewareInterface $middleware)
   {
     $this->router      = $router;
     $this->redirection = $redirection;
     $this->settings    = $settings;
+
+    if ($settings->autoRouting ())
+      $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
   }
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
