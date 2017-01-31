@@ -49,7 +49,9 @@ class PlatformModule implements ModuleInterface
           $navigationSettings->registerNavigation (Navigation::class);
           $authSettings->userModel (UserModel::class);
           // DO NOT IMPORT THE FOLLOWING NAMESPACE!
-          $viewEngineSettings->registerViews ($moduleInfo, \Selenia\Platform\ViewModels::class);
+          $viewEngineSettings
+            ->registerViews ($moduleInfo)
+            ->registerViewModelsNamespace (\Selenia\Platform\ViewModels::class);
           $matisseSettings
             ->registerMacros ($moduleInfo)
             ->registerPresets ([Config\PlatformPresets::class])

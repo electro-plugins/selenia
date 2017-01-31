@@ -1,6 +1,6 @@
 <?php
 
-namespace Selenia\Platform\ViewModels\Layouts;
+namespace Selenia\Platform\ViewModels\Platform\Layouts;
 
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\SessionInterface;
@@ -25,6 +25,7 @@ class Main extends ViewModel
                                SessionInterface $session)
   {
     parent::__construct ();
+    return;
 
     $this->navigation    = $navigation;
     $this->adminSettings = $adminSettings;
