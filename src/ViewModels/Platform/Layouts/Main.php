@@ -46,4 +46,8 @@ class Main extends ViewModel
     $this['devMode'] = $user && $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
   }
 
+  function init ()
+  {
+    // TODO: Implement init() method.
+  }
 }

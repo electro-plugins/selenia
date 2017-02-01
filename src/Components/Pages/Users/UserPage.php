@@ -6,7 +6,7 @@ use Electro\Exceptions\Flash\ValidationException;
 use Electro\Exceptions\HttpException;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
-use Electro\Interop\ViewModel;
+use Electro\Interfaces\Views\ViewModelInterface;
 use Illuminate\Database\Eloquent\Model;
 use Selenia\Platform\Components\AdminPageComponent;
 use Selenia\Platform\Config\PlatformSettings;
