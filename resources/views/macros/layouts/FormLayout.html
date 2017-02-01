@@ -11,13 +11,11 @@
   <Param name="groupClass" type="string"/>
 
   <If {@layout=="V"}>
-    <MacroParam name="fieldWidths" default="col-xs-12"/>
+    <Defaults @fieldWidths="col-xs-12"/>
   </If>
 
   <If {@layout=="H"}>
-    <MacroParam name="formClass" default="form-horizontal"/>
-    <MacroParam name="labelClass" default="control-label col-sm-2"/>
-    <MacroParam name="groupClass" default="col-sm-10 col-lg-7"/>
+    <Defaults @formClass="form-horizontal" @labelClass="control-label col-sm-2" @groupClass="col-sm-10 col-lg-7"/>
   </If>
 
   <If {!@column2}>
