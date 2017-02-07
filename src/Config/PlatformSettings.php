@@ -38,7 +38,7 @@ class PlatformSettings implements AssignableInterface
   private $enableUsersManagement = true;
   private $footer                = 'Copyright &copy; <a href="http://impactwave.com">Impactwave; Lda</a>. All rights reserved.' .
                                    '<div class="pull-right hidden-xs">Version 1.0</div>';
-  private $requireAuthentication = true;
+  private $requireAuthentication = false;
   private $showMenu              = true;
   private $sideMenuOffset        = 1;
   private $topMenuTarget         = 'mainMenu';
