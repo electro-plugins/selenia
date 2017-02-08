@@ -50,7 +50,7 @@ class Routes implements RequestHandlerInterface
               when ($this->settings->enableUsersManagement (),
                 [
                   'users-management...' => [
-                    'users' => factory (function (UsersPage $page) {
+                    'users' => injectable (function (UsersPage $page) {
                       // This is done here just to show off this possibility
                       $page->templateUrl = 'platform/users/users.html';
                       return $page;
@@ -58,7 +58,7 @@ class Routes implements RequestHandlerInterface
 
                     'users/@id' => UserPage::class,
 
-                    'profile' => factory (function (UserPage $page) {
+                    'profile' => injectable (function (UserPage $page) {
                       $page->editingSelf = true;
                       return $page;
                     }),
