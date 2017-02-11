@@ -12,4 +12,10 @@
     </Footer>
   </Panel>
 
+  <Script name=FormPanel>
+    // Autofocus the first text field if no field has the autofocus attribute.
+    if (!$ ('[autofocus]').length)
+      $ ('input[type=text]').eq (0).focus ();
+  </Script>
+
 </Macro>
