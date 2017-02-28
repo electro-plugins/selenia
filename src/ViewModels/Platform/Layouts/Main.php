@@ -15,7 +15,7 @@ use Selenia\Platform\Config\PlatformSettings;
 class Main extends ViewModel
 {
   /** @var PlatformSettings */
-  private $adminSettings;
+  private $platformSettings;
   /** @var NavigationInterface */
   private $navigation;
   /** @var SessionInterface */
@@ -25,13 +25,12 @@ class Main extends ViewModel
                                SessionInterface $session)
   {
     parent::__construct ();
-    return;
 
-    $this->navigation    = $navigation;
-    $this->adminSettings = $adminSettings;
-    $this->session       = $session;
+    $this->platformSettings = $adminSettings;
+    $this->session          = $session;
+    $this->navigation = $navigation;
 
-    $settings = $this['adminSettings'] = $this->adminSettings;
+    $settings = $this['settings'] = $this->platformSettings;
     if ($settings->showMenu ()) {
       $target          = $settings->topMenuTarget ();
       $this['topMenu'] = exists ($target)
