@@ -72,11 +72,12 @@ class AdminTables extends AbstractMigration
         $t->morphs ('owner');
         $t->string ('group', 16)->nullable ();
         $t->boolean ('image')->default (false);
-        $t->string ('path', 40);
+        $t->string ('path', 255);
         $t->string ('metadata', 1024)->nullable ();
 
         $t->primary ('id');
         $t->index ('image');
+        $t->index ('path');
       });
 
   }
