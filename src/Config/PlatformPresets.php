@@ -7,6 +7,7 @@ use Electro\Plugins\MatisseComponents\Field;
 use Electro\Plugins\MatisseComponents\Input;
 use Electro\Plugins\MatisseComponents\Select;
 use Electro\Plugins\MatisseComponents\Switch_;
+use Matisse\Components\Include_;
 
 class PlatformPresets
 {
@@ -32,6 +33,13 @@ class PlatformPresets
       type: "inline"
     }
   }',
+      'rowSelector'        => true,
+    ]);
+    $grid->setSlot ('noData', [
+      Include_::create ($grid, [
+        'view' => 'platform/misc/EmptyDataGrid',
+        'grid' => $grid, // custom property, accessible on the template via {@grid}
+      ]),
     ]);
   }
 
@@ -63,7 +71,7 @@ class PlatformPresets
     $sw->props->apply ([
       'labelOn'  => '$COMPONENT_SWITCH_LABEL_ON',
       'labelOff' => '$COMPONENT_SWITCH_LABEL_OFF',
-//      'color'    => 'black',
+      //      'color'    => 'black',
     ]);
   }
 

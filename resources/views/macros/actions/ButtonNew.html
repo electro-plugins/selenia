@@ -1,8 +1,10 @@
 <Macro name="ButtonNew">
   <Import service="navigation"/>
-  <Param name="url" type="string" default={navigation.currentLink+'/'}/>
+  <Param name="url" type="string"/>
   <Param name="label" type="string" default="$BUTTON_CREATE"/>
   <Param name="class" type="string"/>
+
+  <Defaults @url={navigation.currentLink+'/'}/>
 
   <Button icon="ion-plus" class="{'btn-success ActionNew '+@class}" label={@label} url={@url}/>
 

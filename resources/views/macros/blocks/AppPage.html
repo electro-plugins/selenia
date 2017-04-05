@@ -2,22 +2,7 @@
   <Param name="content" type="content"/>
 
   <Content of="main">
-    <Presets>
-      <Where match=DataGrid>
-        <Set rowSelector/>
-        <NoData>
-          <div class="no-data clearfix">
-            <div class="well well-lg">
-              <h5 align=center>$APP_NO_ITEMS</h5>
-            </div>
-            <ButtonNew class="pull-right"/>
-          </div>
-        </NoData>
-      </Where>
-
       {@content|*}
-
-    </Presets>
   </Content>
 
   <Include view="platform/layouts/main.html"/>
