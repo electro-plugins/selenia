@@ -14,7 +14,7 @@ class LanguageSelector extends CompositeComponent
       <For each=i:loc of={locale.getAvailableExt}>
         <Link id={'btn-'+loc.name}
               wrapper= li
-              script=  {"selenia.setLang('"+loc.name+"')"}
+              script=  {'selenia.setLang(\''+loc.name+'\')'}
               label=   {loc.label}
               active=  {!i}/>
       </For>
