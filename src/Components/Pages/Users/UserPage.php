@@ -168,7 +168,7 @@ class UserPage extends AdminPageComponent
   {
     parent::viewModel($viewModel);
 
-    $user   = $viewModel->user = $this->user;
+    $user   = $viewModel['user'] = $this->user;
     $mySelf = $this->session->user ();
 
     $isDev   = $mySelf->roleField () == UserInterface::USER_ROLE_DEVELOPER;
@@ -179,23 +179,23 @@ class UserPage extends AdminPageComponent
     if ($isSelf)
       $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
 
-    $viewModel->role      = [
+    $viewModel['role']      = [
       'dev'      => UserInterface::USER_ROLE_DEVELOPER,
       'admin'    => UserInterface::USER_ROLE_ADMIN,
       'standard' => UserInterface::USER_ROLE_STANDARD,
       'guest'    => UserInterface::USER_ROLE_GUEST,
     ];
-    $viewModel->show      = [
+    $viewModel['show']      = [
       'roles'  => $isDev || ($isAdmin && $this->adminSettings->allowEditRole ()),
       'active' => !$isSelf && $this->adminSettings->enableUsersDisabling (),
     ];
-    $viewModel->canDelete = // Will be either true or null.
+    $viewModel['canDelete'] = // Will be either true or null.
       (
         $user->exists &&
         // User is not self or delete self is allowed.
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
-    $viewModel->canRename = $this->adminSettings->allowRename ();
+    $viewModel['canRename'] = $this->adminSettings->allowRename ();
   }
 
 }
