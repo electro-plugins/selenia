@@ -4,9 +4,6 @@
   <GridPanel>
 
   <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm + r.id}>
-    <Column width="40" type="row-selector">
-      {i|ord}
-    </Column>
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
       <Checkbox checked={r.active} disabled/>
     </Column>
@@ -27,7 +24,6 @@
     </Column>
     <Actions>
       <ButtonNew url={navigation.userForm}/>
-      <ButtonDelete/>
     </Actions>
   </DataGrid>
 
