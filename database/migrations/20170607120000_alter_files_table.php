@@ -35,7 +35,7 @@ class AlterFilesTable extends AbstractMigration
     if ($this->db->hasTable ('files'))
 	{
 		$schema->table ('files', function (Blueprint $t) {
-			$t->integer('owner_id')->nullable()->change();
+			$t->integer('owner_id')->unsigned()->nullable()->change();
 	    });
 	}
 	else $this->output->writeln (" == Table <info>files</info> doesn't exist. Skipped.");
