@@ -4,6 +4,7 @@ namespace Selenia\Platform\Models;
 use Carbon\Carbon;
 use Electro\Interfaces\UserInterface;
 use Electro\Plugins\IlluminateDatabase\BaseModel;
+use Electro\Plugins\IlluminateDatabase\Config\IlluminateDatabaseModule;
 
 class User extends BaseModel implements UserInterface
 {
@@ -60,6 +61,11 @@ class User extends BaseModel implements UserInterface
       'token'            => $this->tokenField (),
       'username'         => $this->usernameField (),
     ];
+  }
+
+  function getUsers ()
+  {
+    return $this->newQuery ()->where ('role', '<=', $this->role)->orderBy ('username')->get ()->all ();
   }
 
   function idField ($set = null)

@@ -34,11 +34,7 @@ class UsersPage extends AdminPageComponent
       // Can't view other users.
       throw new HttpException (403);
 
-    $class = $this->userModel;
-    $users = $class::orderBy ('username')->get (); //TODO: order by custom username column
-    $users = filter ($users, function (UserInterface $user) use ($myRole) {
-      return $user->roleField () <= $myRole;
-    });
+    $users = $this->session->user ()->getUsers ();
     $users = map ($users, function (UserInterface $user) { return $user->getRecord(); });
     $this->modelController->setModel ($users);
   }
