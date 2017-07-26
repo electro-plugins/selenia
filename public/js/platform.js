@@ -240,7 +240,9 @@ function $$ (exp)
         else selenia.prevFocus = $ ();
       });
 
-    form = $ ('<form id="selenia-form" method="post" action="' + location.pathname + '" novalidate></form>')
+    var formClass = $('body').data("formclass") ? $('body').data("formclass") : '';
+
+    form = $ ('<form id="selenia-form" class="'+formClass+'" method="post" action="' + location.pathname + '" novalidate></form>')
       .submit (selenia.onSubmit)
       .append ('<input type="hidden" name="selenia-action" value="submit">')
       .append (body.children (':not(script)'))
