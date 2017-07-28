@@ -50,6 +50,7 @@ class Routes implements RequestHandlerInterface
               when ($this->settings->enableUsersManagement (),
                 [
                   'users-management...' => [
+                    '.' => redirectTo ('app_home'),
                     'users' => injectableWrapper (function (UsersPage $page) {
                       // This is done here just to show off this possibility
                       $page->templateUrl = 'platform/users/users.html';
