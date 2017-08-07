@@ -140,6 +140,11 @@ function $$ (exp)
           inputs.each (function () {
             if (!this.checkValidity ()) {
               if (first) {
+                // Check if it's inside a tab pane
+                if ($ (this).parents ('.tab-pane').length) {
+                  var tabID = $ (this).parents ('.tab-pane');
+                  $ ('.nav-tabs a[href="#' + tabID.attr ('id') + '"]').tab ('show');
+                }
                 $ (this).focus ();
                 first    = false;
                 var lang = $ (this).attr ('lang');
