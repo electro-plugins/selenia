@@ -27,6 +27,17 @@ class Navigation implements NavigationProviderInterface
   function defineNavigation (NavigationInterface $nav)
   {
     $userMenu = [
+      'translations' => $nav
+        ->link()
+        ->id('translations')
+        ->icon('fa fa-flag')
+        ->title('Chaves de Tradução')
+        ->links([
+          '@key' => $nav
+            ->link()
+            ->id('translation')
+            ->title('Chave de Tradução')
+        ]),
       'users-management' => $nav
         ->group ()
         ->id ('userMenu')

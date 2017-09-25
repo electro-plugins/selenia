@@ -10,6 +10,8 @@ use Electro\Interfaces\Http\Shared\ApplicationMiddlewareInterface;
 use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Selenia\Platform\Components\Pages\Translations\TranslationsForm;
+use Selenia\Platform\Components\Pages\Translations\TranslationsList;
 use Selenia\Platform\Components\Pages\Users\UserPage;
 use Selenia\Platform\Components\Pages\Users\UsersPage;
 
@@ -47,6 +49,8 @@ class Routes implements RequestHandlerInterface
             '.' => page ('platform/home.html'),
 
             'settings...' => [
+              'translations' => TranslationsList::class,
+              'translations/@key' => TranslationsForm::class,
               when ($this->settings->enableUsersManagement (),
                 [
                   'users-management...' => [
