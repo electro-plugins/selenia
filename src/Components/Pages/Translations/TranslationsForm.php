@@ -8,6 +8,7 @@ use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\RedirectionInterface;
 use Electro\Interfaces\ModelControllerInterface;
 use Electro\Interfaces\Navigation\NavigationInterface;
+use Electro\Interfaces\UserInterface;
 use Electro\Interfaces\Views\ViewModelInterface;
 use Electro\Kernel\Config\KernelSettings;
 use Electro\Kernel\Services\ModulesRegistry;
@@ -15,6 +16,8 @@ use Electro\Localization\Services\Locale;
 use Electro\Localization\Services\TranslationService;
 use League\Flysystem\Adapter\Local;
 use Selenia\Platform\Components\AdminPageComponent;
+use Selenia\Platform\Models\TranslationData;
+use WriteiniFile\WriteiniFile;
 
 class TranslationsForm extends AdminPageComponent
 {
@@ -28,18 +31,23 @@ class TranslationsForm extends AdminPageComponent
    */
   private $modulesRegistry;
   /**
+   * @var TranslationData
+   */
+  private $translationData;
+  /**
    * @var TranslationService
    */
   private $translationService;
 
   public function __construct (InjectorInterface $injector, KernelSettings $kernelSettings,
                                RedirectionInterface $redirection, NavigationInterface $navigation,
-                               ModelControllerInterface $modelController, DebugSettings $debugSettings, ModulesRegistry $modulesRegistry, TranslationService $translationService, Locale $locale)
+                               ModelControllerInterface $modelController, DebugSettings $debugSettings, ModulesRegistry $modulesRegistry, TranslationService $translationService, Locale $locale, TranslationData $translationData)
   {
     parent::__construct ($injector, $kernelSettings, $redirection, $navigation, $modelController, $debugSettings);
     $this->modulesRegistry = $modulesRegistry;
     $this->translationService = $translationService;
     $this->locale = $locale;
+    $this->translationData = $translationData;
   }
 
   public $template = <<<'HTML'
@@ -54,6 +62,9 @@ class TranslationsForm extends AdminPageComponent
             <Field required label="Módulos" name="modulo">
               <Select emptySelection data={modulos} valueField=id labelField=title autoTag/>
             </Field>
+            <Else>
+              <Field readOnly labelAfterInput name="modulo" label="Private Módulo" bind=modulo/>
+            </Else>
   	  </If>
   	  
   	  <If {chave}>
@@ -63,12 +74,17 @@ class TranslationsForm extends AdminPageComponent
             </Else>
           </If>
           
-          <Field labelAfterInput lang="{language}" languages="{languages}" name="valor" label="Valor" multilang bind=valor required/>
+          <Field labelAfterInput lang="{language}" languages="{languages}" name="valor" label="Valor" multilang bind=valor/>
   	  
   	</FormLayout>
   		
     <Actions>
-      <StandardFormActions/>
+      <If {canDelete && chave && !isPlugin}>
+        <StandardFormActions key="{chave}"/>
+        <Else>
+          <StandardFormActions/>
+        </Else>
+      </If>
     </Actions>
     <Script>
     $('input[lang]').first().addClass('active');
@@ -84,11 +100,25 @@ HTML;
   {
     $sKey = $this->request->getAttribute('@key');
 
+    $privateModulo = "";
     $isPlugin = false;
     $modulesOfKey = $this->translationService->getAvailableModulesOfKey($sKey);
+    sort($modulesOfKey);
+
     foreach ($modulesOfKey as $moduleOfKey)
+    {
+      if ($this->modulesRegistry->isPrivateModule($moduleOfKey))
+      {
+        $privateModulo = $moduleOfKey;
+        break;
+      }
+
       if ($this->modulesRegistry->isPlugin($moduleOfKey) || $this->modulesRegistry->isSubsystem($moduleOfKey))
+      {
         $isPlugin = true;
+        break;
+      }
+    }
 
     $displayModulos = [];
     $privateModulos = $this->modulesRegistry->onlyPrivate();
@@ -105,6 +135,13 @@ HTML;
       'isPlugin' => $isPlugin,
     ];
 
+    $oUser = $this->session->user();
+
+    if ($oUser->roleField() == UserInterface::USER_ROLE_DEVELOPER)
+      $data['canDelete'] = true;
+    else
+      $data['canDelete'] = false;
+
     $langsAvailable = [];
     $langsOfKey = $this->translationService->getAvailableLangsOfKey($sKey);
     foreach ($langsOfKey as $langOfKey)
@@ -114,6 +151,13 @@ HTML;
       $langsAvailable[] = Locale::$LOCALES[Locale::$DEFAULTS[$langOfKey]];
       $fieldName = self::valorNameField.$lang->locale();
       $data[$fieldName] = $this->translationService->get($sKey,$lang->locale());
+    }
+
+    if (!$isPlugin && $sKey)
+    {
+      unset($data['modulos']);
+      $modulesOfLang = $this->translationService->getAvailableModulesOfKey($sKey);
+      $data['modulo'] = $privateModulo ? $privateModulo : $modulesOfLang[0];
     }
 
     $data['language'] = $langsAvailable ? $langsAvailable[0]['name'] : $this->locale->locale();
@@ -131,36 +175,51 @@ HTML;
     $sChave = get($oParsedBody,'chave');
 
     if (!$sModulo || !$sChave)
-      throw new FlashMessageException('Por favor preencha os campos que são obrigatórios',FlashType::ERROR);
+      throw new FlashMessageException('Os Campos Módulo e Chave são obrigatórios!',FlashType::ERROR);
+
+    $oModulo = $this->modulesRegistry->getModule($sModulo);
 
     if ($sKey)
-    {
-      // update
       $langsOfKey = $this->translationService->getAvailableLangsOfKey($sKey);
-      foreach ($langsOfKey as $langOfKey)
+    else
+      $langsOfKey = $this->locale->getAvailableExt();
+
+    foreach ($langsOfKey as $langOfKey)
+    {
+      if ($sKey)
       {
         $langOfKey = strtolower($langOfKey);
         $lang = Locale::$LOCALES[Locale::$DEFAULTS[$langOfKey]];
         $fieldName = self::valorNameField.$lang['name'];
-        $fieldValue = get($oParsedBody, $fieldName);
-
-        $oModulo = $this->modulesRegistry->getModule($sModulo);
-        $path = $this->translationService->getResourcesLangPath($oModulo);
-        $path = "$path/".$lang['name'].'.ini';
-
-        if (fileExists($path))
-        {
-          dd($fieldValue);
-
-        }
+        $langFile = $lang['name'].'.ini';
       }
-    }
-    else
-    {
-      // create
+      else
+      {
+        $sKey = $sChave;
+        $fieldName = self::valorNameField.$langOfKey['name'];
+        $langFile = $langOfKey['name'].'.ini';
+      }
 
+      $fieldValue = get($oParsedBody, $fieldName);
+      $path = $this->translationService->getResourcesLangPath($oModulo);
+      $path = "$path/$langFile";
+
+      $dataIni = [$sKey => $fieldValue];
+      $this->translationData->save($dataIni, $path);
     }
 
-//    parent::action_submit ($param); // TODO: Change the autogenerated stub
+    $this->session->flashMessage ('Chave de Tradução actualizada com sucesso!');
   }
+
+  function action_delete ($param = null)
+  {
+    $oParsedBody = $this->request->getParsedBody();
+    $sKey = get($oParsedBody,'key');
+    $sModulo = get($oParsedBody,'modulo');
+
+    dd($sModulo);
+    return parent::action_delete ($param); // TODO: Change the autogenerated stub
+  }
+
+
 }

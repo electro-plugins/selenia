@@ -27,8 +27,7 @@
     "electro-modules/matisse": "^0.10",
     "electro-modules/matisse-components": "^0.10",
     "electro-modules/illuminate-database": "  ^0.10",
-    "electro-modules/login": "^0.10",
-    "magicalex/write-ini-file": "1.2.*"
+    "electro-modules/login": "^0.10"
   },
   "extra": {
     "bower": {

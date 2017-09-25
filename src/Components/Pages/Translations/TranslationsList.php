@@ -1,15 +1,19 @@
 <?php
 
 namespace Selenia\Platform\Components\Pages\Translations;
+use Electro\Authentication\Middleware\AuthenticationMiddleware;
 use Electro\Debugging\Config\DebugSettings;
 use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\RedirectionInterface;
 use Electro\Interfaces\ModelControllerInterface;
 use Electro\Interfaces\Navigation\NavigationInterface;
+use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\Views\ViewModelInterface;
 use Electro\Kernel\Config\KernelSettings;
 use Electro\Localization\Services\TranslationService;
+use Illuminate\Support\Facades\Auth;
 use Selenia\Platform\Components\AdminPageComponent;
+use Selenia\Platform\Models\User;
 
 class TranslationsList extends AdminPageComponent
 {
@@ -20,10 +24,11 @@ class TranslationsList extends AdminPageComponent
 
   public function __construct (InjectorInterface $injector, KernelSettings $kernelSettings,
                                RedirectionInterface $redirection, NavigationInterface $navigation,
-                               ModelControllerInterface $modelController, DebugSettings $debugSettings, TranslationService $translationService)
+                               ModelControllerInterface $modelController, DebugSettings $debugSettings, TranslationService $translationService, SessionInterface $session)
   {
     parent::__construct ($injector, $kernelSettings, $redirection, $navigation, $modelController, $debugSettings);
     $this->translationService = $translationService;
+    $this->session = $session;
   }
 
   public $template = <<<'HTML'
@@ -50,8 +55,9 @@ class TranslationsList extends AdminPageComponent
       </Column>
       
       <Actions>
-        <ButtonNew/>
+         <ButtonNew/>
       </Actions>
+      
     </DataGrid>
   </GridPanel>
 </AppPage>
@@ -62,6 +68,7 @@ HTML;
     $data = [
       'translations' => $this->translationService->getAllTranslations()
     ];
+
     $viewModel->set($data);
     parent::viewModel ($viewModel);
   }
