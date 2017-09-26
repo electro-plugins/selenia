@@ -121,17 +121,17 @@ HTML;
     sort($modulesOfKey);
 
     foreach ($modulesOfKey as $moduleOfKey)
-    {
       if ($this->modulesRegistry->isPrivateModule($moduleOfKey))
-      {
         $privateModulo = $moduleOfKey;
-        break;
-      }
 
-      if ($this->modulesRegistry->isPlugin($moduleOfKey) || $this->modulesRegistry->isSubsystem($moduleOfKey))
+    if (!$privateModulo)
+    {
+      foreach ($modulesOfKey as $moduleOfKey)
       {
-        $isPlugin = true;
-        break;
+        if ($this->modulesRegistry->isPlugin ($moduleOfKey) || $this->modulesRegistry->isSubsystem ($moduleOfKey)) {
+          $isPlugin = true;
+          break;
+        }
       }
     }
 
