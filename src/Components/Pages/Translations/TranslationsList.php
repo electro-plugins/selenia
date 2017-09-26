@@ -1,19 +1,17 @@
 <?php
 
 namespace Selenia\Platform\Components\Pages\Translations;
-use Electro\Authentication\Middleware\AuthenticationMiddleware;
 use Electro\Debugging\Config\DebugSettings;
 use Electro\Interfaces\DI\InjectorInterface;
 use Electro\Interfaces\Http\RedirectionInterface;
 use Electro\Interfaces\ModelControllerInterface;
 use Electro\Interfaces\Navigation\NavigationInterface;
 use Electro\Interfaces\SessionInterface;
+use Electro\Interfaces\UserInterface;
 use Electro\Interfaces\Views\ViewModelInterface;
 use Electro\Kernel\Config\KernelSettings;
 use Electro\Localization\Services\TranslationService;
-use Illuminate\Support\Facades\Auth;
 use Selenia\Platform\Components\AdminPageComponent;
-use Selenia\Platform\Models\User;
 
 class TranslationsList extends AdminPageComponent
 {
@@ -36,38 +34,73 @@ class TranslationsList extends AdminPageComponent
 
 <AppPage>
   <GridPanel>
-    <DataGrid data={translations} as="i:r" onClickGoTo={navigation.translation + r.key} multiSearch>
+  
+    <If {canCreate}>
     
-      <Column width="25%" title="Key">
-        {r.key}
-      </Column>
+      <DataGrid data={translations} as="i:r" onClickGoTo={navigation.translation + r.key} multiSearch>
+    
+        <Column width="25%" title="Chave">
+          {r.key}
+        </Column>
+        
+        <Column width="25%" title="Valor">
+          {r.value}
+        </Column>
+        
+        <Column width="25%" title="Módulo">
+          {r.module}
+        </Column>
+        
+        <Column width="25%" title="Idiomas">
+          {r.locale}
+        </Column>
+        
+        <Actions>
+           <ButtonNew/>
+        </Actions>
+        
+      </DataGrid>
+    
+      <Else>
       
-      <Column width="25%" title="Value">
-        {r.value}
-      </Column>
+        <DataGrid data={translations} as="i:r" onClickGoTo={navigation.translation + r.key} multiSearch>
+    
+          <Column width="25%" title="Chave">
+            {r.key}
+          </Column>
+          
+          <Column width="25%" title="Valor">
+            {r.value}
+          </Column>
+          
+          <Column width="25%" title="Módulo">
+            {r.module}
+          </Column>
+          
+          <Column width="25%" title="Idiomas">
+            {r.locale}
+          </Column>
+          
+          <Actions/>
+          
+        </DataGrid>
       
-      <Column width="25%" title="Module">
-        {r.module}
-      </Column>
-      
-      <Column width="25%" title="Langs">
-        {r.locale}
-      </Column>
-      
-      <Actions>
-         <ButtonNew/>
-      </Actions>
-      
-    </DataGrid>
+      </Else>
+    </If>
+    
   </GridPanel>
 </AppPage>
 HTML;
 
   protected function viewModel (ViewModelInterface $viewModel)
   {
-    $data = [
-      'translations' => $this->translationService->getAllTranslations()
-    ];
+    $oUser = $this->session->user();
+    if ($oUser->roleField() == UserInterface::USER_ROLE_DEVELOPER)
+      $data['canCreate'] = true;
+    else
+      $data['canCreate'] = false;
+
+    $data['translations'] = $this->translationService->getAllTranslations();
 
     $viewModel->set($data);
     parent::viewModel ($viewModel);
