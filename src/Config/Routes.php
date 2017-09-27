@@ -13,6 +13,7 @@ use Electro\Interfaces\UserInterface;
 use Electro\Routing\Middleware\AutoRoutingMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Selenia\Platform\Components\Pages\Languages\LanguagesList;
 use Selenia\Platform\Components\Pages\Translations\TranslationsForm;
 use Selenia\Platform\Components\Pages\Translations\TranslationsList;
 use Selenia\Platform\Components\Pages\Users\UserPage;
@@ -58,6 +59,7 @@ class Routes implements RequestHandlerInterface
             '.' => page ('platform/home.html'),
 
             'settings...' => [
+              'languages' => LanguagesList::class,
               'translations' => TranslationsList::class,
               'translations/@key' => [
                 function ($req,$res,$next)

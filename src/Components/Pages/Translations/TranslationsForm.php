@@ -170,9 +170,11 @@ HTML;
       unset($data['modulos']);
       $modulesOfLang = $this->translationService->getAvailableModulesOfKey($sKey);
       $data['modulo'] = $privateModulo ? $privateModulo : $modulesOfLang[0];
+      $languagesOfModulo = $this->getAvailableLanguagesOfModulo($data['modulo']);
     }
+    else
+      $languagesOfModulo = $this->getAvailableLanguagesOfModulo(get($oParsedBody,'modulo'));
 
-    $languagesOfModulo = $this->getAvailableLanguagesOfModulo();
     $data['language'] = $languagesOfModulo ? $languagesOfModulo[0]['name'] : ($langsAvailable ? $langsAvailable[0]['name'] : '');
     $data['languages'] = $languagesOfModulo ? $languagesOfModulo : ($langsAvailable ? $langsAvailable : []);
 
@@ -183,11 +185,8 @@ HTML;
     parent::viewModel ($viewModel);
   }
 
-  private function getAvailableLanguagesOfModulo()
+  private function getAvailableLanguagesOfModulo($sModulo)
   {
-    $oParsedBody = $this->request->getParsedBody();
-    $sModulo = get($oParsedBody,'modulo');
-
     if (!$sModulo)
       return;
 

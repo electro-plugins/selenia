@@ -38,6 +38,11 @@ class Navigation implements NavigationProviderInterface
             ->id('translation')
             ->title('Chave de Tradução')
         ]),
+      'languages' => $nav
+        ->link()
+        ->id('languages')
+        ->icon('fa fa-flag')
+        ->title('Idiomas - Ficheiros'),
       'users-management' => $nav
         ->group ()
         ->id ('userMenu')
