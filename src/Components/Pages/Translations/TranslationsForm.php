@@ -58,7 +58,7 @@ class TranslationsForm extends AdminPageComponent
       <input type="hidden" name="key" value="{KeyValue}"/>
       
       <If {isPlugin || !KeyValue}>
-        <Field required label="Módulos" name="modulo" bind=modulo>
+        <Field required label="Módulos *" name="modulo" bind=modulo>
           <Select emptySelection data={modulos} valueField=id labelField=title autoTag/>
         </Field>
         <Else>
@@ -79,6 +79,11 @@ class TranslationsForm extends AdminPageComponent
           <Field readOnly labelAfterInput name="valor" label="Valor" defaultValue="Escolha um módulo para editar este campo"/>
         </Else>
       </If>
+      
+      <If {isPlugin || !KeyValue}>
+        <p class="pull-right" style="font-size: 12px">* <i>só serão mostrados módulos privados e se tiverem ficheiros ini criados</i></p>
+      </If>
+      
     </FormLayout>
   		
     <Actions>
@@ -139,8 +144,8 @@ HTML;
     $privateModulos = $this->modulesRegistry->onlyPrivate();
     foreach ($privateModulos->getModules() as $module)
     {
-      $path = $this->translationService->getResourcesLangPath($module);
-      if (fileExists($path))
+      $iniFiles = $this->translationService->getIniFilesOfModule($module);
+      if ($iniFiles)
         $displayModulos[] = ['id' => $module->name, 'title' => $module->name];
     }
 
@@ -209,6 +214,13 @@ HTML;
 
     $oModulo = $this->modulesRegistry->getModule($sModulo);
     $iniFiles = $this->translationService->getIniFilesOfModule($oModulo);
+
+    if (count($iniFiles)==0)
+    {
+      $this->session->flashMessage ("Não é possível ".($sKey ? 'actualizar' : 'criar')." a chave de tradução por não existirem ficheiros .ini criados no módulo seleccionado",FlashType::ERROR);
+      $this->redirection->setRequest($this->request);
+      return $this->redirection->back();
+    }
 
     $sMsgWord = $sKey ? 'actualizada' : 'criada';
 
