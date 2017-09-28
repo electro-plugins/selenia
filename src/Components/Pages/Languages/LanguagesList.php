@@ -14,7 +14,6 @@ use Electro\Kernel\Services\ModulesRegistry;
 use Electro\Localization\Services\Locale;
 use Electro\Localization\Services\TranslationService;
 use Electro\Plugins\MatisseComponents\Checkbox;
-use League\Flysystem\Exception;
 use Matisse\Components\Metadata;
 use Matisse\Components\Text;
 use Matisse\Parser\Expression;
@@ -70,7 +69,7 @@ class LanguagesList extends AdminPageComponent
         $('.btSaveInfos').on('click',function(e){
           swal({
             title: '',
-            text: 'Tem a certeza que pretende gravar as alterações?',
+            text: '$APP_MSG_KEY_DELETE_CONFIRM',
             type: 'warning',
             showCancelButton: true
           },
@@ -126,7 +125,7 @@ HTML;
 
     $colModulo = new Metadata($this->getShadowDOM()->context,'Column',type::metadata,[
       'width' => '100%',
-      'title' => 'Módulo',
+      'title' => 'Module',
     ]);
     $colModulo->addChild(Text::create($colModulo, [], [
       'value' => new Expression ('{i}')
@@ -181,6 +180,6 @@ HTML;
         fopen($finalPath, "w");
     }
 
-    $this->session->flashMessage("Alterações gravadas com sucesso!",FlashType::SUCCESS);
+    $this->session->flashMessage('$APP_MSG_SAVED',FlashType::SUCCESS);
   }
 }

@@ -59,9 +59,9 @@ class Routes implements RequestHandlerInterface
             '.' => page ('platform/home.html'),
 
             'settings...' => [
-              'languages' => LanguagesList::class,
-              'translations' => TranslationsList::class,
-              'translations/@key' => [
+              'languages/files' => LanguagesList::class,
+              'languages/translations' => TranslationsList::class,
+              'languages/translations/@key' => [
                 function ($req,$res,$next)
                 {
                   $oUser = $this->session->user();

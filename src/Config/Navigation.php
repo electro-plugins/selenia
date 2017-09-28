@@ -27,22 +27,34 @@ class Navigation implements NavigationProviderInterface
   function defineNavigation (NavigationInterface $nav)
   {
     $userMenu = [
-      'translations' => $nav
-        ->link()
-        ->id('translations')
-        ->icon('fa fa-flag')
-        ->title('Chaves de Tradução')
-        ->links([
-          '@key' => $nav
-            ->link()
-            ->id('translation')
-            ->title('Chave de Tradução')
-        ]),
       'languages' => $nav
-        ->link()
-        ->id('languages')
+        ->group()
         ->icon('fa fa-flag')
-        ->title('Idiomas - Ficheiros'),
+        ->title('Idiomas')
+        ->visible (function () {
+          $user = $this->session->user ();
+          if (!$user) return false;
+          return $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+        })
+        ->links([
+          'translations' => $nav
+            ->link()
+            ->id('translations')
+            ->icon('fa fa-flag')
+            ->title('Chaves de Tradução')
+            ->links([
+              '@key' => $nav
+                ->link()
+                ->id('translation')
+                ->title('Chave de Tradução')
+                ->visibleIfUnavailable(N)
+            ]),
+          'files' => $nav
+            ->link()
+            ->id('languages')
+            ->icon('fa fa-flag')
+            ->title('Idiomas'),
+        ]),
       'users-management' => $nav
         ->group ()
         ->id ('userMenu')
@@ -114,5 +126,4 @@ class Navigation implements NavigationProviderInterface
         ]),
     ]);
   }
-
 }

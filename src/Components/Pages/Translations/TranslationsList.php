@@ -39,19 +39,19 @@ class TranslationsList extends AdminPageComponent
     
       <DataGrid data={translations} as="i:r" onClickGoTo={navigation.translation + r.key} multiSearch>
     
-        <Column width="25%" title="Chave">
+        <Column width="25%" title="Key">
           {r.key}
         </Column>
         
-        <Column width="25%" title="Valor">
+        <Column width="25%" title="Value">
           {r.value}
         </Column>
         
-        <Column width="25%" title="Módulo">
+        <Column width="25%" title="Module">
           {r.module}
         </Column>
         
-        <Column width="25%" title="Idiomas">
+        <Column width="25%" title="Locales">
           {r.locale}
         </Column>
         
@@ -65,19 +65,19 @@ class TranslationsList extends AdminPageComponent
       
         <DataGrid data={translations} as="i:r" onClickGoTo={navigation.translation + r.key} multiSearch>
     
-          <Column width="25%" title="Chave">
+          <Column width="25%" title="Key">
             {r.key}
           </Column>
           
-          <Column width="25%" title="Valor">
+          <Column width="25%" title="Value">
             {r.value}
           </Column>
           
-          <Column width="25%" title="Módulo">
+          <Column width="25%" title="Module">
             {r.module}
           </Column>
           
-          <Column width="25%" title="Idiomas">
+          <Column width="25%" title="Locales">
             {r.locale}
           </Column>
           

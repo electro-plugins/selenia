@@ -58,30 +58,30 @@ class TranslationsForm extends AdminPageComponent
       <input type="hidden" name="key" value="{KeyValue}"/>
       
       <If {isPlugin || !KeyValue}>
-        <Field required label="Módulos *" name="modulo" bind=modulo>
+        <Field required label="Modules *" name="modulo" bind=modulo>
           <Select emptySelection data={modulos} valueField=id labelField=title autoTag/>
         </Field>
         <Else>
-          <Field readOnly labelAfterInput name="modulo" label="Private Módulo" bind=modulo/>
+          <Field readOnly labelAfterInput name="modulo" label="Private Module" bind=modulo/>
         </Else>
       </If>
       
       <If {KeyValue}>
-        <Field readOnly labelAfterInput name="chave" label="Chave" bind=chave required/>
+        <Field readOnly labelAfterInput name="chave" label="Key" bind=chave required/>
         <Else>
-          <Field labelAfterInput name="chave" label="Chave" bind=chave required/>
+          <Field labelAfterInput name="chave" label="Key" bind=chave required/>
         </Else>
       </If>
       
       <If {languages}>
-        <Field labelAfterInput lang="{language}" languages="{languages}" name="valor" label="Valor" multilang bind=valor/>
+        <Field labelAfterInput lang="{language}" languages="{languages}" name="valor" label="Value" multilang bind=valor/>
         <Else>
-          <Field readOnly labelAfterInput name="valor" label="Valor" defaultValue="Escolha um módulo para editar este campo"/>
+          <Field readOnly labelAfterInput name="valor" label="Value" defaultValue="$APP_MSG_SELECT_MODULE"/>
         </Else>
       </If>
       
       <If {isPlugin || !KeyValue}>
-        <p class="pull-right" style="font-size: 12px">* <i>só serão mostrados módulos privados e se tiverem ficheiros ini criados</i></p>
+        <p class="pull-right" style="font-size: 12px">* <i>$APP_MSG_INFO_KEYS</i></p>
       </If>
       
     </FormLayout>
@@ -209,19 +209,21 @@ HTML;
     $sChave = get($oParsedBody,'chave');
 
     if (!$sModulo || !$sChave)
-      throw new FlashMessageException('Os Campos Módulo e Chave são obrigatórios!',FlashType::ERROR);
+      throw new FlashMessageException('$APP_MSG_MODULE_AND_KEY_REQUIRED',FlashType::ERROR);
 
     $oModulo = $this->modulesRegistry->getModule($sModulo);
     $iniFiles = $this->translationService->getIniFilesOfModule($oModulo);
 
     if (count($iniFiles)==0)
     {
-      $this->session->flashMessage ("Não é possível ".($sKey ? 'actualizar' : 'criar')." a chave de tradução por não existirem ficheiros .ini criados no módulo seleccionado",FlashType::ERROR);
+      if ($sKey)
+        $this->session->flashMessage ('$APP_MSG_KEY_NOT_UPDATED',FlashType::ERROR);
+      else
+        $this->session->flashMessage ('$APP_MSG_KEY_NOT_CREATED',FlashType::ERROR);
+
       $this->redirection->setRequest($this->request);
       return $this->redirection->back();
     }
-
-    $sMsgWord = $sKey ? 'actualizada' : 'criada';
 
     foreach ($iniFiles as $iniFile)
     {
@@ -239,7 +241,10 @@ HTML;
       $this->translationData->save($dataIni, $path);
     }
 
-    $this->session->flashMessage ("Chave de Tradução $sMsgWord com sucesso!",FlashType::SUCCESS);
+    if ($sKey)
+      $this->session->flashMessage ('$APP_MSG_KEY_UPDATED',FlashType::SUCCESS);
+    else
+      $this->session->flashMessage ('$APP_MSG_KEY_CREATED',FlashType::SUCCESS);
   }
 
   function action_delete ($param = null)
@@ -249,7 +254,7 @@ HTML;
     $sModulo = get($oParsedBody,'modulo');
 
     if (!$sModulo && $sKey)
-      throw new FlashMessageException('Não foi possível eliminar esta chave de tradução!',FlashType::ERROR);
+      throw new FlashMessageException('$APP_MSG_KEY_ERROR_DELETE',FlashType::ERROR);
 
     $oModulo = $this->modulesRegistry->getModule($sModulo);
     $path = $this->translationService->getResourcesLangPath($oModulo);
@@ -258,8 +263,10 @@ HTML;
     foreach ($iniFiles as $iniFile)
       $this->translationData->delete($sKey, "$path/$iniFile");
 
-    $this->session->flashMessage ('Chave de Tradução apagada com sucesso!',FlashType::SUCCESS);
+    $this->session->flashMessage ('$APP_MSG_KEY_SUCCESS_DELETE',FlashType::SUCCESS);
     $this->redirection->setRequest($this->request);
-    return $this->redirection->to('admin/settings/translations');
+
+    $menu = get($this->navigation->IDs(),'translations');
+    return $this->redirection->to($menu->url());
   }
 }
