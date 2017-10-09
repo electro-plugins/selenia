@@ -2,7 +2,6 @@
 
 namespace Selenia\Platform\Config;
 
-use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Exceptions\ExceptionWithTitle;
 use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Interfaces\DI\InjectorInterface;
@@ -18,7 +17,6 @@ use Electro\ViewEngine\Config\ViewEngineSettings;
 use Matisse\Config\MatisseSettings;
 use Selenia\Platform\Components\Widgets\LanguageSelector;
 use Selenia\Platform\Config;
-use Selenia\Platform\Models\User as UserModel;
 
 class PlatformModule implements ModuleInterface
 {
@@ -41,13 +39,12 @@ class PlatformModule implements ModuleInterface
         })
       //
       ->onConfigure (
-        function (MatisseSettings $matisseSettings, AuthenticationSettings $authSettings,
+        function (MatisseSettings $matisseSettings,
                   LocalizationSettings $localizationSettings, NavigationSettings $navigationSettings,
                   ViewEngineSettings $viewEngineSettings)
         use ($moduleInfo, $kernel) {
           $localizationSettings->registerTranslations ($moduleInfo);
           $navigationSettings->registerNavigation (Navigation::class);
-          $authSettings->userModel (UserModel::class);
           // DO NOT IMPORT THE FOLLOWING NAMESPACE!
           $viewEngineSettings
             ->registerViews ($moduleInfo)

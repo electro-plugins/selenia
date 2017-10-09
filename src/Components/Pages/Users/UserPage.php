@@ -7,10 +7,10 @@ use Electro\Exceptions\HttpException;
 use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
 use Electro\Interfaces\Views\ViewModelInterface;
+use Electro\Plugins\IlluminateDatabase\Services\User as UserModel;
 use Illuminate\Database\Eloquent\Model;
 use Selenia\Platform\Components\AdminPageComponent;
 use Selenia\Platform\Config\PlatformSettings;
-use Selenia\Platform\Models\User as UserModel;
 
 /**
  * Notes:
