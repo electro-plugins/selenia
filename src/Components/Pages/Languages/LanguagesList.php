@@ -61,24 +61,23 @@ class LanguagesList extends AdminPageComponent
             icon="ion-checkmark" 
             class="btn-primary ActionSave btSaveInfos" 
             label=$BUTTON_SAVE
+            script="showAlertBtSaveInfos();"
           />
         </Actions>
       </DataGrid>
       <Script>
-      $(function(){
-        $('.btSaveInfos').on('click',function(e){
-          swal({
+      function showAlertBtSaveInfos()
+      {
+        swal({
             title: '',
             text: '$APP_MSG_KEY_DELETE_CONFIRM',
             type: 'warning',
             showCancelButton: true
-          },
-          function() {
+        },
+        function() {
             selenia.doAction('submit');
-          });
         });
-      });
-      
+      };
       </Script>
   </GridPanel>
 </AppPage>
