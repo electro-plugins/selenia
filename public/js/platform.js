@@ -256,10 +256,11 @@ function $$ (exp)
     }
     else
     {
-      form = $('body').find('form#selenia-form')
-				.prepend('<input type="hidden" name="selenia-action" value="submit">');
-      if (form.length == 0)
-        alert('Form with id #selenia-form not found');
+      form = $('form#selenia-form');
+      if (!form.length)
+        console.error('Form with id #selenia-form not found');
+      else
+				form.prepend('<input type="hidden" name="selenia-action" value="submit">');
     }
   }) ();
 
