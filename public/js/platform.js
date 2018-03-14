@@ -89,7 +89,7 @@ function $$ (exp)
      * @param {string} param
      */
     setAction: function (name, param) {
-      form.find ('input[name=selenia-action]').val (name + (param ? ':' + param : ''));
+			form.find ('input[name=selenia-action]').val (name + (param ? ':' + param : ''));
     },
 
     /**
@@ -253,6 +253,13 @@ function $$ (exp)
         .append ('<input type="hidden" name="selenia-action" value="submit">')
         .append (body.children (':not(script)'))
         .prependTo (body);
+    }
+    else
+    {
+      form = $('body').find('form#selenia-form')
+				.prepend('<input type="hidden" name="selenia-action" value="submit">');
+      if (form.length == 0)
+        alert('Form with id #selenia-form not found');
     }
   }) ();
 
