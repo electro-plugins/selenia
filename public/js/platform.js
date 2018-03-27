@@ -257,9 +257,7 @@ function $$ (exp)
     else
     {
       form = $('form#selenia-form');
-      if (!form.length)
-        console.error('Form with id #selenia-form not found');
-      else
+      if (form.length)
 				form.prepend('<input type="hidden" name="selenia-action" value="submit">');
     }
   }) ();
