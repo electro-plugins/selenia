@@ -2,10 +2,11 @@
   <Param name=tabs type=content/>
   <Param name=class type=string/>
   <Param name=autofocus type=bool/>
+  <Param name=tabSelect type=string/>
 
   {@tabs|*}
 
-  <div class=tabs-layout>
+  <div id="myTabs" class=tabs-layout>
 
     <ul class="nav nav-tabs {@class}" role=tablist>
       {#TabsLayout_tabs|*}
@@ -31,6 +32,10 @@
     // Show first tab
     $ ('[role=tabpanel]:first-of-type').addClass ('active');
     $ ('.tabs-layout li:first-of-type').addClass ('active').find ('a').trigger ('shown.bs.tab');
+
+    <If {@tabSelect}>console.log(1);
+    $('#myTabs a[href="' + '{@tabSelect}' + '"]').tab('show');
+    </If>
 
     // We are not using tab plugin here as it has a bug that causes an error with tabs having multilingual fields.
     // $ ('.tabs-layout li:first-of-type a').tab ('show');
