@@ -78,9 +78,22 @@ function $$ (exp)
      * @param {string} name
      * @param {string} param
      */
-    doAction: function (name, param) {
-      selenia.setAction (name, param);
-      form.submit ();
+    doAction: function (name, param,target)
+    {
+    	if (target===undefined)
+			{
+				formTarget = $('form').first();
+			}
+    	else if (typeof target == "string")
+			{
+				formTarget = $("form[name='" + target + "']").first()
+			}
+			else
+			{
+				formTarget = $(target).parents('form').first()
+			}
+      selenia.setAction (name, param, formTarget);
+			formTarget.submit ();
     },
 
     /**
@@ -88,16 +101,16 @@ function $$ (exp)
      * @param {string} name
      * @param {string} param
      */
-    setAction: function (name, param) {
-			form.find ('input[name=selenia-action]').val (name + (param ? ':' + param : ''));
+    setAction: function (name, param, formTarget) {
+			formTarget.find ('input[name=selenia-action]').val (name + (param ? ':' + param : ''));
     },
 
     /**
      * Returns the POST action currently set for submission.
      * @returns {*}
      */
-    getAction: function () {
-      return form.find ('input[name=selenia-action]').val ().split (':')[0];
+    getAction: function (formTarget) {
+      return formTarget.find ('input[name=selenia-action]').val ().split (':')[0];
     },
 
     /**
@@ -106,34 +119,36 @@ function $$ (exp)
      * @param {Event} ev
      * @returns {boolean|*}
      */
-    onSubmit: function (ev) {
-      // Re-enable all buttons if form sbmission is aborted.
+    onSubmit: function (ev)
+		{
+			formTarget = $(ev.target);
+			// Re-enable all buttons if form sbmission is aborted.
       setTimeout (function () {
         if (ev.isDefaultPrevented ())
-          selenia.enableButtons (true);
+          selenia.enableButtons (true,formTarget);
       });
       // Disable all buttons while for is being submitted.
-      selenia.enableButtons (false);
-      return selenia.getAction () != 'submit' || selenia.validateForm ();
+      selenia.enableButtons (false,formTarget);
+      return selenia.getAction (formTarget) != 'submit' || selenia.validateForm (formTarget);
     },
 
     /**
      * Validates all form inputs that have validation rules.
      * @returns {boolean} true if the for is valid and can be submitted.
      */
-    validateForm: function () {
+    validateForm: function (formTarget) {
       var i18nInputs = $ ('input[lang]');
       i18nInputs.addClass ('validating'); // hide inputs but allow field validation
 
       // HTML5 native validation integration.
       // Note: validateInput() is provided by the Input component.
-      var inputs = $ ('input,textarea,select');
+      var inputs = formTarget.find('input,textarea,select');
       inputs.each (function () {
         $ (this).parents ('.Field').find ('.help-block').remove ();
       });
       if (selenia.validateInput)
         inputs.each (function () { selenia.validateInput (this) });
-      var valid = form[0].checkValidity ();
+      var valid = formTarget[0].checkValidity ();
       if (!valid) {
         var first = true;
         setTimeout (function () {
@@ -168,12 +183,13 @@ function $$ (exp)
       return true;
     },
 
-    /**
-     * Disables or re-enables all buttons, but re-enables only those that were not previously disabled.
-     * @param {boolean} enable
-     */
-    enableButtons: function (enable) {
-      form.find ('button,input[type=button],input[type=submit]').each (function () {
+		/**
+		 * Disables or re-enables all buttons, but re-enables only those that were not previously disabled.
+		 * @param {boolean} enable
+		 * @param formTarget
+		 */
+    enableButtons: function (enable,formTarget) {
+			formTarget.find ('button,input[type=button],input[type=submit]').each (function () {
         var btn      = $ (this)
           , disabled = btn.prop ('disabled');
         if (enable) {
@@ -246,7 +262,7 @@ function $$ (exp)
       });
 
     var formClass = $('body').data("formclass") ? $('body').data("formclass") : '';
-    if (!$('form').length > 0)
+    if ($('form').length == 0)
     {
       form = $ ('<form id="selenia-form" class="'+formClass+'" method="post" action="' + location.pathname + '" novalidate></form>')
         .submit (selenia.onSubmit)
@@ -256,9 +272,11 @@ function $$ (exp)
     }
     else
     {
-      form = $('form#selenia-form');
-      if (form.length)
-				form.prepend('<input type="hidden" name="selenia-action" value="submit">');
+			$( "form" ).each(function( index ) {
+				$( this ).attr('novalidate');
+				$( this ).submit (selenia.onSubmit);
+				$( this ).prepend('<input type="hidden" name="selenia-action" value="submit">');
+			});
     }
   }) ();
 
