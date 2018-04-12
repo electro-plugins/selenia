@@ -12,6 +12,7 @@ use Electro\Interfaces\Views\ViewServiceInterface;
 use Electro\Kernel\Lib\ModuleInfo;
 use Electro\Localization\Config\LocalizationSettings;
 use Electro\Navigation\Config\NavigationSettings;
+use Electro\Plugins\Login\Config\LoginSettings;
 use Electro\Profiles\WebProfile;
 use Electro\ViewEngine\Config\ViewEngineSettings;
 use Matisse\Config\MatisseSettings;
@@ -41,7 +42,7 @@ class PlatformModule implements ModuleInterface
       ->onConfigure (
         function (MatisseSettings $matisseSettings,
                   LocalizationSettings $localizationSettings, NavigationSettings $navigationSettings,
-                  ViewEngineSettings $viewEngineSettings)
+                  ViewEngineSettings $viewEngineSettings, LoginSettings $loginSettings)
         use ($moduleInfo, $kernel) {
           $localizationSettings->registerTranslations ($moduleInfo);
           $navigationSettings->registerNavigation (Navigation::class);
@@ -55,6 +56,7 @@ class PlatformModule implements ModuleInterface
             ->registerComponents ([
               'LanguageSelector' => LanguageSelector::class,
             ]);
+          $loginSettings->masterLayout = 'platform/layouts/master.html';
           // DO NOT IMPORT THE FOLLOWING NAMESPACE!
 //            ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
         })
