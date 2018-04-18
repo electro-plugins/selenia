@@ -106,7 +106,7 @@ class UserPage extends AdminPageComponent
     $user->roleField ($role);
     $user->realNameField ($realName ?: ucfirst ($username));
 
-    if ($user->save ())
+    if ($user->submit ())
       $this->session->flashMessage ('$APP_MSG_SAVED');
 
     if ($isSelf) return $this->redirection->to ($this->session->previousUrl ());
