@@ -42,22 +42,29 @@ class AdminTables extends AbstractMigration
         $t->increments ('id');
         $t->timestamps ();
         $t->timestamp ('lastLogin')->nullable ();
+        $t->timestamp ('registrationDate');
         $t->string ('username', 30)->unique ();
+        $t->string ('email', 100)->unique ();
         $t->string ('password', 60);
         $t->string ('realName', 30);
         $t->tinyInteger ('role');
+        $t->tinyInteger ('enabled')->default (true);
         $t->boolean ('active')->default (false);
-        $t->rememberToken ();
+        $t->string ('token', 100);
       });
       $now = Carbon::now ();
       $this->db->table ('users')->insert ([
-        'username'   => 'admin',
-        'password'   => '',
-        'realName'   => 'Admin',
-        'role'       => UserInterface::USER_ROLE_ADMIN,
-        'created_at' => $now,
-        'updated_at' => $now,
-        'active'     => true,
+        'username'         => 'admin',
+        'password'         => '',
+        'realName'         => 'Admin',
+        'email'            => 'Admin',
+        'role'             => UserInterface::USER_ROLE_ADMIN,
+        'created_at'       => $now,
+        'updated_at'       => $now,
+        'registrationDate' => $now,
+        'active'           => true,
+        'enabled'          => true,
+        'token'            => '',
       ]);
     }
     else $this->output->writeln (" == Table <info>users</info> already exists. Skipped.");
