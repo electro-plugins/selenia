@@ -42,7 +42,7 @@ class Main extends ViewModel
     $this['sideMenu'] = get ($this->navigation->getCurrentTrail ($settings->sideMenuOffset ()), 0);
 
     $user            = $this->session->user ();
-    $this['devMode'] = $user && $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+    $this['devMode'] = $user && $user->role == UserInterface::USER_ROLE_DEVELOPER;
   }
 
   function init ()
