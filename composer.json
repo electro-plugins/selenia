@@ -23,11 +23,11 @@
   "require": {
     "php": ">=5.6.0",
     "electro/installers": "^1.0.0",
-    "electro/framework": "^0.10",
+    "electro/framework": "^1.0.0",
     "electro-modules/matisse": "^0.10",
     "electro-modules/matisse-components": "^0.10",
-    "electro-modules/illuminate-database": "^0.10",
-    "electro-modules/login": "^0.10"
+    "electro-modules/illuminate-database": "^1.0.0",
+    "electro-modules/login": "^1.0.0"
   },
   "extra": {
     "bower": {
@@ -37,7 +37,7 @@
       }
     },
     "branch-alias": {
-      "dev-master": "0.10.x-dev"
+      "dev-master": "1.0.0.x-dev"
     }
   },
   "autoload": {
