@@ -60,7 +60,7 @@ class AdminTables extends AbstractMigration
         'password'         => '',
         'realName'         => 'Admin',
         'email'            => 'admin',
-        'role'             => UserInterface::USER_ROLE_ADMIN,
+        'role'             => UserInterface::USER_ROLE_DEVELOPER,
         User::CREATED_AT       => $now,
         User::UPDATED_AT       => $now,
         'registrationDate' => $now,
