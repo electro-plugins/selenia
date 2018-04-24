@@ -2,6 +2,7 @@
 use Carbon\Carbon;
 use Electro\Interfaces\UserInterface;
 use Electro\Plugins\IlluminateDatabase\AbstractMigration;
+use Electro\Plugins\IlluminateDatabase\Services\User;
 use Illuminate\Database\Schema\Blueprint;
 
 class AdminTables extends AbstractMigration
@@ -40,24 +41,32 @@ class AdminTables extends AbstractMigration
     if (!$this->db->hasTable ('users')) {
       $schema->create ('users', function (Blueprint $t) {
         $t->increments ('id');
-        $t->timestamps ();
+        $t->timestamp(User::CREATED_AT)->useCurrent();
+        $t->timestamp(User::UPDATED_AT)->nullable();
         $t->timestamp ('lastLogin')->nullable ();
-        $t->string ('username', 30)->unique ();
+        $t->timestamp ('registrationDate');
+        $t->string ('username', 30)->unique ()->nullable();
+        $t->string ('email', 100)->unique ();
         $t->string ('password', 60);
         $t->string ('realName', 30);
         $t->tinyInteger ('role');
+        $t->tinyInteger ('enabled')->default (true);
         $t->boolean ('active')->default (false);
-        $t->rememberToken ();
+        $t->string ('token', 100);
       });
       $now = Carbon::now ();
       $this->db->table ('users')->insert ([
-        'username'   => 'admin',
-        'password'   => '',
-        'realName'   => 'Admin',
-        'role'       => UserInterface::USER_ROLE_ADMIN,
-        'created_at' => $now,
-        'updated_at' => $now,
-        'active'     => true,
+        'username'         => 'admin',
+        'password'         => '',
+        'realName'         => 'Admin',
+        'email'            => 'admin',
+        'role'             => UserInterface::USER_ROLE_DEVELOPER,
+        User::CREATED_AT       => $now,
+        User::UPDATED_AT       => $now,
+        'registrationDate' => $now,
+        'active'           => true,
+        'enabled'          => true,
+        'token'            => '',
       ]);
     }
     else $this->output->writeln (" == Table <info>users</info> already exists. Skipped.");
