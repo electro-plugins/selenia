@@ -1,4 +1,5 @@
 <Import services="session"/>
+<Import service="Electro\Plugins\Login\Config\LoginSettings" as="settings"/>
 <AppPage>
   <FormPanel>
 
@@ -25,9 +26,11 @@
         </Field>
       </If>
 
-      <Field label=$LOGIN_USERNAME bind=model.username>
-        <Input required maxLength=30 autofocus autoselect autocomplete=no/>
-      </Field>
+      <If {!settings.varUserOrEmailOnLogin}>
+        <Field label=$LOGIN_USERNAME bind=model.username>
+          <Input required maxLength=30 autofocus autoselect autocomplete=no/>
+        </Field>
+      </If>
 
       <Field label=$LOGIN_EMAIL bind=model.email>
         <Input required maxLength=100 autofocus autoselect autocomplete=no/>
