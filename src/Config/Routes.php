@@ -66,7 +66,7 @@ class Routes implements RequestHandlerInterface
                 function ($req, $res, $next) {
                   $oUser = $this->session->user ();
                   $sKey  = $req->getAttribute ('@key');
-                  if (!$sKey && $oUser && $oUser->roleField () != UserInterface::USER_ROLE_DEVELOPER)
+                  if (!$sKey && $oUser && $oUser->getFields ()['role'] != UserInterface::USER_ROLE_DEVELOPER)
                     return Http::response ($res, 'Not allowed', 403);
                   return $next();
                 },

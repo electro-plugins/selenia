@@ -95,7 +95,7 @@ HTML;
   protected function viewModel (ViewModelInterface $viewModel)
   {
     $oUser = $this->session->user();
-    if ($oUser->roleField() == UserInterface::USER_ROLE_DEVELOPER)
+    if ($oUser->getFields()['role'] == UserInterface::USER_ROLE_DEVELOPER)
       $data['canCreate'] = true;
     else
       $data['canCreate'] = false;
