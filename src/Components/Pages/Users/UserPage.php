@@ -55,8 +55,9 @@ class UserPage extends AdminPageComponent
   {
     $this->model = $data = $this->user;
     parent::action_delete ($param);
+
     /** @var UserInterface $data */
-    if ($data->idField () == $this->session->user ()->idField ()) {
+    if ($data->getFields ()['id'] == $this->session->user ()->getFields ()['id']) {
       $this->session->logout ();
       return $this->redirection->home ();
     }
@@ -69,19 +70,27 @@ class UserPage extends AdminPageComponent
 //    echo "<pre>";var_dump($user);exit;
 
     $username = get ($data, 'username');
+    $email    = get ($data, 'email');
     $password = get ($data, 'password');
     $role     = get ($data, 'role', false);
     $realName = get ($data, 'realName');
 
     // Is the user being saved the logged-in user?
-    $isSelf = $user->idField () == $this->session->user ()->idField ();
+    $isSelf = $user->getFields ()['id'] == $this->session->user ()->getFields ()['id'];
 
     // If the user active checkbox is not shown, $active is always true.
     $showActive = !$isSelf && $this->adminSettings->enableUsersDisabling ();
     $active     = get ($data, 'active', !$showActive);
+    $enabled    = get ($data, 'enabled');
 
     if ($username == '')
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
+
+    if ($email == '')
+      throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_EMAIL');
+
+    if (!filter_var ($email, FILTER_VALIDATE_EMAIL))
+      throw new ValidationException(ValidationException::INVALID_EMAIL, '$LOGIN_EMAIL');
 
     if ($password == self::DUMMY_PASS) $password = '';
 
@@ -91,20 +100,29 @@ class UserPage extends AdminPageComponent
       // Do not change the password if the user already exists and the password field was not modified (or left empty)
       // on the form.
     }
-    else $user->passwordField ($password);
+
+    else $user->mergeFields (['password' => $password]);
 
     // Check if the username has been changed
 
-    if ($username != $user->usernameField ()) {
+    if ($username != $user->getFields ()['username']) {
       $tmp = clone $user;
       if ($tmp->findByName ($username))
         throw new ValidationException(ValidationException::DUPLICATE_RECORD, '$LOGIN_USERNAME');
-      $user->usernameField ($username);
+      $user->mergeFields (['username' => $username]);
     }
 
-    $user->activeField ($active);
-    $user->roleField ($role);
-    $user->realNameField ($realName ?: ucfirst ($username));
+    if ($email != $user->getFields ()['email']) {
+      $tmp = clone $user;
+      if ($tmp->findByEmail ($email))
+        throw new ValidationException(ValidationException::DUPLICATE_RECORD, '$LOGIN_EMAIL');
+      $user->mergeFields (['email' => $email]);
+    }
+
+    $user->mergeFields ([
+      'active' => $active, 'enabled' => $enabled,
+      'role'   => $role, 'realName' => ($realName ?: ucfirst ($username)),
+    ]);
 
     if ($user->submit ())
       $this->session->flashMessage ('$APP_MSG_SAVED');
@@ -128,37 +146,48 @@ class UserPage extends AdminPageComponent
 
     /** @var UserModel $user */
     if ($this->editingSelf) {
-      $id = $mySelf->idField ();
+      $id = $mySelf->getFields ()['id'];
       $f  = $user->findById ($id);
       if (!$f)
         throw new FatalException ("User $id not found");
     }
     else {
-      $myRole = $mySelf->roleField ();
+      $myRole = $mySelf->getFields ()['role'];
       $id     = $this->request->getAttribute ("@id");
       if ($id) {
         $f = $user->findById ($id);
         if (!$f)
           throw new FatalException ("User $id not found");
       }
-      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->idField () != $user->idField ())
+      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->getFields ()['id'] != $user->getFields ()['id'])
         // Can't edit other users.
         throw new HttpException (403);
-      if ($user->roleField () > $myRole)
+      if ($user->getFields ()['role'] > $myRole)
         // Can't edit a user with a higher role.
         throw new HttpException (403);
     }
+
     // Set a default role for a new user.
-    if (!exists ($user->roleField ()))
-      $user->roleField ($this->adminSettings->defaultRole ());
+    if (!exists ($user->getFields ()['role']))
+      $user->mergeFields (['role' => $this->adminSettings->defaultRole ()]);
+
+    // Set default 'enabled' for a new user.
+    if (!exists ($user->getFields ()['enabled']))
+      $user->mergeFields (['enabled' => 1]);
+
+    // Set default 'active' for a new user.
+    if (!exists ($user->getFields ()['active']))
+      $user->mergeFields (['active' => 1]);
 
     $login = [
       'id'       => null,
-      'username' => $user->usernameField (),
-      'realName' => $user->realNameField (),
-      'password' => strlen ($user->passwordField ()) || $id ? self::DUMMY_PASS : '',
-      'active'   => $user->activeField (),
-      'role'     => $user->roleField (),
+      'username' => $user->getFields ()['username'],
+      'email'    => $user->getFields ()['email'],
+      'realName' => $user->getFields ()['realName'],
+      'password' => strlen ($user->getFields ()['password']) || $id ? self::DUMMY_PASS : '',
+      'active'   => $user->getFields ()['active'],
+      'enabled'  => $user->getFields ()['enabled'],
+      'role'     => $user->getFields ()['role'],
     ];
 
     $this->modelController->setModel ($login);
@@ -166,15 +195,16 @@ class UserPage extends AdminPageComponent
 
   protected function viewModel (ViewModelInterface $viewModel)
   {
-    parent::viewModel($viewModel);
+    parent::viewModel ($viewModel);
 
-    $user   = $viewModel['user'] = $this->user;
+    $user = $viewModel['user'] = $this->user;
+
     $mySelf = $this->session->user ();
 
-    $isDev   = $mySelf->roleField () == UserInterface::USER_ROLE_DEVELOPER;
-    $isAdmin = $mySelf->roleField () == UserInterface::USER_ROLE_ADMIN;
+    $isDev   = $mySelf->getFields ()['role'] == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $mySelf->getFields ()['role'] == UserInterface::USER_ROLE_ADMIN;
     // Are we editing the logged-in user?
-    $isSelf = $user->idField () == $mySelf->idField ();
+    $isSelf = $user->getFields ()['id'] == $mySelf->getFields ()['id'];
 
     if ($isSelf)
       $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
@@ -196,6 +226,13 @@ class UserPage extends AdminPageComponent
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
     $viewModel['canRename'] = $this->adminSettings->allowRename ();
-  }
 
+    $viewModel['oldActive']   = $this->session->getOldInput ('model/active');
+    $viewModel['oldEnabled']  = $this->session->getOldInput ('model/enabled');
+    $viewModel['oldUsername'] = $this->session->getOldInput ('model/username');
+    $viewModel['oldEmail']    = $this->session->getOldInput ('model/email');
+    $viewModel['oldPassword'] = $this->session->getOldInput ('model/password');
+    $viewModel['oldRealName'] = $this->session->getOldInput ('model/realName');
+    $viewModel['oldRole']     = $this->session->getOldInput ('model/role');
+  }
 }

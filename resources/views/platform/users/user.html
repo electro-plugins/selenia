@@ -1,3 +1,4 @@
+<Import services="session"/>
 <AppPage>
   <FormPanel>
 
@@ -19,17 +20,24 @@
         <Field label=$LOGIN_ACTIVE bind=model.active>
           <Switch/>
         </Field>
+        <Field label=$LOGIN_ENABLED bind=model.enabled>
+          <Switch/>
+        </Field>
       </If>
 
-      <Field label=$LOGIN_USERNAME bind=model.username>
+      <Field label=$LOGIN_USERNAME bind=model.username defaultValue={oldUsername}>
         <Input required maxLength=30 autofocus autoselect autocomplete=no/>
       </Field>
 
-      <Field label=$LOGIN_PASSWORD bind=model.password>
+      <Field label=$LOGIN_EMAIL bind=model.email defaultValue={oldEmail}>
+        <Input required maxLength=100 autofocus autoselect autocomplete=no/>
+      </Field>
+
+      <Field label=$LOGIN_PASSWORD bind=model.password defaultValue={oldPassword}>
         <Input type=password required minLength=6 autocomplete=no/>
       </Field>
 
-      <Field label=$LOGIN_REAL_NAME bind=model.realName>
+      <Field label=$LOGIN_REAL_NAME bind=model.realName defaultValue={oldRealName}>
         <Input autocomplete=no/>
       </Field>
 

@@ -29,13 +29,13 @@ class UsersPage extends AdminPageComponent
 
   public function model ()
   {
-    $myRole = $this->session->user ()->roleField ();
+    $myRole = $this->session->user ()->getFields ()['role'];
     if ($myRole < UserInterface::USER_ROLE_ADMIN)
       // Can't view other users.
-      throw new HttpException (403);
+      throw new HttpException (403, '$FORBIDDEN_ERROR');
 
     $users = $this->session->user ()->getUsers ();
-    $users = map ($users, function (UserInterface $user) { return $user->getRecord(); });
+    $users = map ($users, function (UserInterface $user) { return $user->getFields(); });
     $this->modelController->setModel ($users);
   }
 

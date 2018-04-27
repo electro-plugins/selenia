@@ -10,11 +10,17 @@
     <Column width="80" title="$LOGIN_ACTIVE" align="center" type="field">
       <Checkbox checked={r.active} disabled/>
     </Column>
-    <Column width="70%" title="$LOGIN_REAL_NAME">
+    <Column width="90" title="$LOGIN_ENABLED" align="center" type="field">
+      <Checkbox checked={r.enabled} disabled/>
+    </Column>
+    <Column width="30%" title="$LOGIN_REAL_NAME">
       {r.realName}
     </Column>
     <Column width="30%" title="$LOGIN_USERNAME">
       {r.username}
+    </Column>
+    <Column width="40%" title="$LOGIN_EMAIL">
+      {r.email}
     </Column>
     <Column width="145" title="$LOGIN_REGISTRATION_DATE">
       {r.registrationDate}
