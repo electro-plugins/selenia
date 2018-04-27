@@ -142,52 +142,59 @@ class UserPage extends AdminPageComponent
   protected function model ()
   {
     $mySelf = $this->session->user ();
-    $user   = $this->user;
-
     /** @var UserModel $user */
+    $user     = $this->user;
+    $myFields = $mySelf->getFields ();
+
     if ($this->editingSelf) {
-      $id = $mySelf->getFields ()['id'];
+      $id = $myFields['id'];
       $f  = $user->findById ($id);
       if (!$f)
         throw new FatalException ("User $id not found");
+      $fields = $user->getFields ();
     }
     else {
-      $myRole = $mySelf->getFields ()['role'];
+      $myRole = $myFields['role'];
       $id     = $this->request->getAttribute ("@id");
       if ($id) {
         $f = $user->findById ($id);
         if (!$f)
           throw new FatalException ("User $id not found");
       }
-      if ($myRole < UserInterface::USER_ROLE_ADMIN && $mySelf->getFields ()['id'] != $user->getFields ()['id'])
+      $fields = $user->getFields ();
+      if ($myRole < UserInterface::USER_ROLE_ADMIN && $myFields['id'] != $fields['id'])
         // Can't edit other users.
         throw new HttpException (403);
-      if ($user->getFields ()['role'] > $myRole)
+      if ($fields['role'] > $myRole)
         // Can't edit a user with a higher role.
         throw new HttpException (403);
     }
 
+    $defaults = [];
+
     // Set a default role for a new user.
-    if (!exists ($user->getFields ()['role']))
-      $user->mergeFields (['role' => $this->adminSettings->defaultRole ()]);
+    if (!exists ($fields['role']))
+      $defaults['role'] = $this->adminSettings->defaultRole ();
 
     // Set default 'enabled' for a new user.
-    if (!exists ($user->getFields ()['enabled']))
-      $user->mergeFields (['enabled' => 1]);
+    if (!exists ($fields['enabled']))
+      $defaults['enabled'] = 1;
 
     // Set default 'active' for a new user.
-    if (!exists ($user->getFields ()['active']))
-      $user->mergeFields (['active' => 1]);
+    if (!exists ($fields['active']))
+      $defaults['active'] = 1;
+
+    array_mergeInto ($fields, $defaults);
 
     $login = [
       'id'       => null,
-      'username' => $user->getFields ()['username'],
-      'email'    => $user->getFields ()['email'],
-      'realName' => $user->getFields ()['realName'],
-      'password' => strlen ($user->getFields ()['password']) || $id ? self::DUMMY_PASS : '',
-      'active'   => $user->getFields ()['active'],
-      'enabled'  => $user->getFields ()['enabled'],
-      'role'     => $user->getFields ()['role'],
+      'username' => $fields['username'],
+      'email'    => $fields['email'],
+      'realName' => $fields['realName'],
+      'password' => strlen ($fields['password']) || $id ? self::DUMMY_PASS : '',
+      'active'   => $fields['active'],
+      'enabled'  => $fields['enabled'],
+      'role'     => $fields['role'],
     ];
 
     $this->modelController->setModel ($login);
@@ -199,12 +206,13 @@ class UserPage extends AdminPageComponent
 
     $user = $viewModel['user'] = $this->user;
 
-    $mySelf = $this->session->user ();
+    $mySelf   = $this->session->user ();
+    $myFields = $mySelf->getFields ();
 
-    $isDev   = $mySelf->getFields ()['role'] == UserInterface::USER_ROLE_DEVELOPER;
-    $isAdmin = $mySelf->getFields ()['role'] == UserInterface::USER_ROLE_ADMIN;
+    $isDev   = $myFields['role'] == UserInterface::USER_ROLE_DEVELOPER;
+    $isAdmin = $myFields['role'] == UserInterface::USER_ROLE_ADMIN;
     // Are we editing the logged-in user?
-    $isSelf = $user->getFields ()['id'] == $mySelf->getFields ()['id'];
+    $isSelf = $user->getFields ()['id'] == $myFields['id'];
 
     if ($isSelf)
       $this->session->setPreviousUrl ($this->request->getHeaderLine ('Referer'));
@@ -226,13 +234,5 @@ class UserPage extends AdminPageComponent
         ($isDev || !$isSelf || $this->adminSettings->allowDeleteSelf ())
       ) ?: null;
     $viewModel['canRename'] = $this->adminSettings->allowRename ();
-
-    $viewModel['oldActive']   = $this->session->getOldInput ('model/active');
-    $viewModel['oldEnabled']  = $this->session->getOldInput ('model/enabled');
-    $viewModel['oldUsername'] = $this->session->getOldInput ('model/username');
-    $viewModel['oldEmail']    = $this->session->getOldInput ('model/email');
-    $viewModel['oldPassword'] = $this->session->getOldInput ('model/password');
-    $viewModel['oldRealName'] = $this->session->getOldInput ('model/realName');
-    $viewModel['oldRole']     = $this->session->getOldInput ('model/role');
   }
 }

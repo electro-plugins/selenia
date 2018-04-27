@@ -25,19 +25,19 @@
         </Field>
       </If>
 
-      <Field label=$LOGIN_USERNAME bind=model.username defaultValue={oldUsername}>
+      <Field label=$LOGIN_USERNAME bind=model.username>
         <Input required maxLength=30 autofocus autoselect autocomplete=no/>
       </Field>
 
-      <Field label=$LOGIN_EMAIL bind=model.email defaultValue={oldEmail}>
+      <Field label=$LOGIN_EMAIL bind=model.email>
         <Input required maxLength=100 autofocus autoselect autocomplete=no/>
       </Field>
 
-      <Field label=$LOGIN_PASSWORD bind=model.password defaultValue={oldPassword}>
+      <Field label=$LOGIN_PASSWORD bind=model.password>
         <Input type=password required minLength=6 autocomplete=no/>
       </Field>
 
-      <Field label=$LOGIN_REAL_NAME bind=model.realName defaultValue={oldRealName}>
+      <Field label=$LOGIN_REAL_NAME bind=model.realName>
         <Input autocomplete=no/>
       </Field>
 
