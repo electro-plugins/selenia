@@ -74,8 +74,9 @@ class UserPage extends AdminPageComponent
     $password = get ($data, 'password');
     $role     = get ($data, 'role', false);
     $realName = get ($data, 'realName');
+		$token           = bin2hex (openssl_random_pseudo_bytes (16));
 
-    // Is the user being saved the logged-in user?
+		// Is the user being saved the logged-in user?
     $isSelf = $user->getFields ()['id'] == $this->session->user ()->getFields ()['id'];
 
     // If the user active checkbox is not shown, $active is always true.
@@ -122,6 +123,7 @@ class UserPage extends AdminPageComponent
     $user->mergeFields ([
       'active' => $active, 'enabled' => $enabled,
       'role'   => $role, 'realName' => ($realName ?: ucfirst ($username)),
+			'token' => $token
     ]);
 
     if ($user->submit ())
