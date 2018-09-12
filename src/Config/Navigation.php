@@ -34,7 +34,7 @@ class Navigation implements NavigationProviderInterface
         ->visible (function () {
           $user = $this->session->user ();
           if (!$user) return false;
-          return $user->getFields ()['role'] == UserInterface::USER_ROLE_DEVELOPER;
+          return $user->getFields ()['role'] >= UserInterface::USER_ROLE_STANDARD;
         })
         ->links([
           'translations' => $nav
@@ -53,7 +53,12 @@ class Navigation implements NavigationProviderInterface
             ->link()
             ->id('languages')
             ->icon('fa fa-flag')
-            ->title('Idiomas'),
+            ->title('Idiomas')
+            ->visible(function () {
+              $user = $this->session->user ();
+              if (!$user) return false;
+              return $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+             }),
         ]),
       'users-management' => $nav
         ->group ()
