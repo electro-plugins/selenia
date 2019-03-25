@@ -57,7 +57,7 @@ class Navigation implements NavigationProviderInterface
             ->visible(function () {
               $user = $this->session->user ();
               if (!$user) return false;
-              return $user->roleField () == UserInterface::USER_ROLE_DEVELOPER;
+              return $user->getFields ()['role'] >= UserInterface::USER_ROLE_DEVELOPER;
              }),
         ]),
       'users-management' => $nav
