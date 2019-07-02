@@ -114,13 +114,13 @@ class Navigation implements NavigationProviderInterface
             ->group ()
             ->id ('mainMenu')
             ->icon ('fa ion-navicon')
-            ->title ('Main Menu')
+            ->title ('$MAIN_MENU')
             ->links ([
               '' => $nav
                 ->link ()
                 ->id ('home')
                 ->icon ('fa ion-home')
-                ->title ('Home'),
+                ->title ('$HOME'),
             ]),
           'settings' => $nav
             ->group ()

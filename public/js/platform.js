@@ -119,10 +119,10 @@ function $$ (exp)
      * @param {Event} ev
      * @returns {boolean|*}
      */
-    onSubmit: function (ev)
-		{
-			formTarget = $(ev.target);
-			// Re-enable all buttons if form sbmission is aborted.
+    onSubmit: function (ev) {
+      formTarget = $ (ev.target);
+      // Re-enable all buttons if form sbmission is aborted.
+      formTarget.addClass ('validated');
       setTimeout (function () {
         if (ev.isDefaultPrevented ())
           selenia.enableButtons (true,formTarget);
