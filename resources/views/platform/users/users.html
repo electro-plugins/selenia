@@ -1,6 +1,8 @@
 <Import service="navigation"/>
+<Import service="Electro\Plugins\Login\Config\LoginSettings" as="settings"/>
 
 <AppPage>
+  Settings: {settings.displayEmail|json}
   <GridPanel>
 
   <DataGrid data={model} as="i:r" onClickGoTo={navigation.userForm + r.id}>
@@ -16,10 +18,10 @@
     <Column width="30%" title="$LOGIN_REAL_NAME">
       {r.realName}
     </Column>
-    <Column width="30%" title="$LOGIN_USERNAME">
+    <Column width="30%" title="$LOGIN_USERNAME" if={settings.displayUsername}>
       {r.username}
     </Column>
-    <Column width="40%" title="$LOGIN_EMAIL">
+    <Column width="40%" title="$LOGIN_EMAIL" if={settings.displayEmail}>
       {r.email}
     </Column>
     <Column width="145" title="$LOGIN_REGISTRATION_DATE">

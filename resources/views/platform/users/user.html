@@ -1,5 +1,6 @@
 <Import services="session"/>
 <Import service="Electro\Plugins\Login\Config\LoginSettings" as="settings"/>
+
 <AppPage>
   <FormPanel>
 
@@ -17,41 +18,47 @@
 
     <FormLayout layout=H>
 
-      <If {show.active}>
-        <Field label=$LOGIN_ACTIVE bind=model.active>
-          <Switch/>
+      <Column1>
+        <If {show.active}>
+          <Field label=$LOGIN_ACTIVE bind=model.active>
+            <Switch/>
+          </Field>
+          <Field label=$LOGIN_ENABLED bind=model.enabled>
+            <Switch/>
+          </Field>
+        </If>
+
+        <If {settings.displayUsername}>
+          <Field label=$LOGIN_USERNAME bind=model.username>
+            <Input required maxLength=30 autofocus autoselect autocomplete=no/>
+          </Field>
+        </If>
+
+        <If {settings.displayEmail}>
+          <Field label=$LOGIN_EMAIL bind=model.email>
+            <Input required maxLength=100 autofocus autoselect autocomplete=no/>
+          </Field>
+        </If>
+
+        <Field label=$LOGIN_REAL_NAME bind=model.realName>
+          <Input autocomplete=no/>
         </Field>
-        <Field label=$LOGIN_ENABLED bind=model.enabled>
-          <Switch/>
+      </Column1>
+
+      <Column2>
+        <Field label=$LOGIN_PASSWORD bind=model.password>
+          <Input type=password required minLength=6 autocomplete=no/>
         </Field>
-      </If>
 
-      <If {!settings.varUserOrEmailOnLogin}>
-        <Field label=$LOGIN_USERNAME bind=model.username>
-          <Input required maxLength=30 autofocus autoselect autocomplete=no/>
-        </Field>
-      </If>
-
-      <Field label=$LOGIN_EMAIL bind=model.email>
-        <Input required maxLength=100 autofocus autoselect autocomplete=no/>
-      </Field>
-
-      <Field label=$LOGIN_PASSWORD bind=model.password>
-        <Input type=password required minLength=6 autocomplete=no/>
-      </Field>
-
-      <Field label=$LOGIN_REAL_NAME bind=model.realName>
-        <Input autocomplete=no/>
-      </Field>
-
-      <If {show.roles}>
-        <Field label=$LOGIN_ROLE bind=model.role>
-          <RadioButton value={role.dev} label=$LOGIN_ROLE_3 hidden={model.role!=role.dev}/>
-          <RadioButton value={role.admin} label=$LOGIN_ROLE_2 hidden={model.role!=role.admin && model.role!=role.dev}/>
-          <RadioButton value={role.standard} label=$LOGIN_ROLE_1/>
-          <RadioButton value={role.guest} label=$LOGIN_ROLE_0/>
-        </Field>
-      </If>
+        <If {show.roles}>
+          <Field label=$LOGIN_ROLE bind=model.role>
+            <RadioButton value={role.dev} label=$LOGIN_ROLE_3 hidden={model.role!=role.dev}/>
+            <RadioButton value={role.admin} label=$LOGIN_ROLE_2 hidden={model.role!=role.admin && model.role!=role.dev}/>
+            <RadioButton value={role.standard} label=$LOGIN_ROLE_1/>
+            <RadioButton value={role.guest} label=$LOGIN_ROLE_0/>
+          </Field>
+        </If>
+      </Column2>
 
     </FormLayout>
 

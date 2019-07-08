@@ -32,6 +32,8 @@ class Navigation implements NavigationProviderInterface
         ->icon('fa fa-flag')
         ->title('Idiomas')
         ->visible (function () {
+          if (!$this->settings->enableTranslations ())
+            return false;
           $user = $this->session->user ();
           if (!$user) return false;
           return $user->getFields ()['role'] >= UserInterface::USER_ROLE_STANDARD;

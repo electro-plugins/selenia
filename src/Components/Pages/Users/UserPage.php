@@ -8,6 +8,7 @@ use Electro\Interfaces\SessionInterface;
 use Electro\Interfaces\UserInterface;
 use Electro\Interfaces\Views\ViewModelInterface;
 use Electro\Plugins\IlluminateDatabase\Services\User as UserModel;
+use Electro\Plugins\Login\Config\LoginSettings;
 use Illuminate\Database\Eloquent\Model;
 use Selenia\Platform\Components\AdminPageComponent;
 use Selenia\Platform\Config\PlatformSettings;
@@ -48,6 +49,8 @@ class UserPage extends AdminPageComponent
   protected $autoRedirectUp = true;
   /** @var PlatformSettings */
   private $adminSettings;
+  /** @var LoginSettings */
+  private $loginSettings;
   /** @var UserInterface|Model */
   private $user;
 
@@ -84,14 +87,16 @@ class UserPage extends AdminPageComponent
     $active     = get ($data, 'active', !$showActive);
     $enabled    = get ($data, 'enabled');
 
-    if ($username == '')
+    if ($username == '' && $this->loginSettings->displayUsername)
       throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_USERNAME');
 
-    if ($email == '')
-      throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_EMAIL');
+    if ($this->loginSettings->displayEmail) {
+      if ($email == '')
+        throw new ValidationException(ValidationException::REQUIRED_FIELD, '$LOGIN_EMAIL');
 
-    if (!filter_var ($email, FILTER_VALIDATE_EMAIL))
-      throw new ValidationException(ValidationException::INVALID_EMAIL, '$LOGIN_EMAIL');
+      if (!filter_var ($email, FILTER_VALIDATE_EMAIL))
+        throw new ValidationException(ValidationException::INVALID_EMAIL, '$LOGIN_EMAIL');
+    }
 
     if ($password == self::DUMMY_PASS) $password = '';
 
@@ -134,8 +139,9 @@ class UserPage extends AdminPageComponent
 
   function inject ()
   {
-    return function (PlatformSettings $settings, UserInterface $user, SessionInterface $session) {
+    return function (PlatformSettings $settings, UserInterface $user, SessionInterface $session, LoginSettings $loginSettings) {
       $this->adminSettings = $settings;
+      $this->loginSettings = $loginSettings;
       $this->user          = $user;
       $this->session       = $session;
     };
