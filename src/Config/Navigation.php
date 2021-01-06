@@ -30,37 +30,32 @@ class Navigation implements NavigationProviderInterface
       'languages' => $nav
         ->group()
         ->icon('fa fa-flag')
-        ->title('Idiomas')
+        ->title('$LANGUAGES')
         ->visible (function () {
           if (!$this->settings->enableTranslations ())
             return false;
           $user = $this->session->user ();
           if (!$user) return false;
-          return $user->getFields ()['role'] >= UserInterface::USER_ROLE_STANDARD;
+          return $user->getFields ()['role'] >= UserInterface::USER_ROLE_ADMIN;
         })
         ->links([
+          'enabled' => $nav
+            ->link()
+            ->id('languages')
+            ->icon('fa fa-flag')
+            ->title('$LANGUAGES'),
           'translations' => $nav
             ->link()
             ->id('translations')
             ->icon('fa fa-flag')
-            ->title('Chaves de Tradução')
+            ->title('$TRANSLATIONS')
             ->links([
               '@key' => $nav
                 ->link()
                 ->id('translation')
-                ->title('Chave de Tradução')
+                ->title('$TRANSLATION')
                 ->visibleIfUnavailable(N)
             ]),
-          'files' => $nav
-            ->link()
-            ->id('languages')
-            ->icon('fa fa-flag')
-            ->title('Idiomas')
-            ->visible(function () {
-              $user = $this->session->user ();
-              if (!$user) return false;
-              return $user->getFields ()['role'] >= UserInterface::USER_ROLE_DEVELOPER;
-             }),
         ]),
       'users-management' => $nav
         ->group ()

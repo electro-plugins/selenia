@@ -2,7 +2,6 @@
 
 namespace Selenia\Platform\Config;
 
-use Electro\Authentication\Config\AuthenticationSettings;
 use Electro\Authentication\Middleware\AuthenticationMiddleware;
 use Electro\Http\Lib\Http;
 use Electro\Interfaces\Http\RedirectionInterface;
@@ -43,14 +42,14 @@ class Routes implements RequestHandlerInterface
     if ($settings->autoRouting ())
       $middleware->add (AutoRoutingMiddleware::class, null, null, 'router');
 
-    $this->session      = $session;
+    $this->session = $session;
   }
 
   function __invoke (ServerRequestInterface $request, ResponseInterface $response, callable $next)
   {
     $this->redirection->setRequest ($request);
-    $base      = $this->settings->urlPrefix ();
-    $base      = $base ? "$base..." : '*';
+    $base = $this->settings->urlPrefix ();
+    $base = $base ? "$base..." : '*';
     return $this->router
       ->set ([
         $base =>
@@ -60,13 +59,13 @@ class Routes implements RequestHandlerInterface
             '.' => page ('platform/home.html'),
 
             'settings...' => [
-              'languages/files'             => LanguagesList::class,
+              'languages/enabled'           => LanguagesList::class,
               'languages/translations'      => TranslationsList::class,
               'languages/translations/@key' => [
                 function ($req, $res, $next) {
                   $oUser = $this->session->user ();
                   $sKey  = $req->getAttribute ('@key');
-                  if (!$sKey && $oUser && $oUser->getFields ()['role'] != UserInterface::USER_ROLE_DEVELOPER)
+                  if (!$sKey && $oUser && $oUser->getFields ()['role'] < UserInterface::USER_ROLE_ADMIN)
                     return Http::response ($res, 'Not allowed', 403);
                   return $next();
                 },
