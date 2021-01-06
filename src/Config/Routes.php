@@ -59,23 +59,22 @@ class Routes implements RequestHandlerInterface
             '.' => page ('platform/home.html'),
 
             'settings...' => [
-              'languages/files' => LanguagesList::class,
-              'languages/translations' => TranslationsList::class,
+              'languages/enabled'           => LanguagesList::class,
+              'languages/translations'      => TranslationsList::class,
               'languages/translations/@key' => [
-                function ($req,$res,$next)
-                {
-                  $oUser = $this->session->user();
-                  $sKey = $req->getAttribute('@key');
-                  if (!$sKey && $oUser && $oUser->roleField() != UserInterface::USER_ROLE_DEVELOPER)
-                    return Http::response($res, 'Not allowed', 403);
+                function ($req, $res, $next) {
+                  $oUser = $this->session->user ();
+                  $sKey  = $req->getAttribute ('@key');
+                  if (!$sKey && $oUser && $oUser->roleField () < UserInterface::USER_ROLE_ADMIN)
+                    return Http::response ($res, 'Not allowed', 403);
                   return $next();
                 },
-                TranslationsForm::class
+                TranslationsForm::class,
               ],
               when ($this->settings->enableUsersManagement (),
                 [
                   'users-management...' => [
-                    '.' => redirectTo ('app_home'),
+                    '.'     => redirectTo ('app_home'),
                     'users' => injectableWrapper (function (UsersPage $page) {
                       // This is done here just to show off this possibility
                       $page->templateUrl = 'platform/users/users.html';
