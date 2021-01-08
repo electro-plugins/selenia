@@ -111,7 +111,6 @@ class Navigation implements NavigationProviderInterface
             ->group ()
             ->id ('mainMenu')
             ->icon ('fa ion-navicon')
-            ->title ('$MAIN_MENU')
             ->links ([
               '' => $nav
                 ->link ()
@@ -123,7 +122,7 @@ class Navigation implements NavigationProviderInterface
             ->group ()
             ->id ('settings')
             ->icon ('fa ion-gear-a')
-            ->title ('Platform')
+            ->title ('$APP_SETTINGS')
             ->links ($userMenu),
         ]),
     ]);
